@@ -1,0 +1,91 @@
+.index {
+  flex-direction: column;
+}
+.top-view{
+  padding-left: 1em;
+  .fmg-logo{
+    float: left;
+    margin-top:0.7rem;
+  }
+  .search-box{
+    width: 18rem;
+    margin-left: 0.6rem;
+    float: left;
+  }
+  .bell{
+    float: left;
+    margin-top:0.6rem;
+    margin-left: 0.4rem;
+  }
+
+}
+
+.slide-photo{
+  margin-top: 2rem;
+  .photo-1{
+    background-color: #eed5d5;
+    height: 1rem; //这里的高度 会随着屏幕变化显示的比例会有改变，后面换上图片后直接用百分比
+    width: 94%;
+    margin-left: 3%;
+    border-radius: 20px;
+  }
+  .photo-2{
+    background-color: #eef7c7;
+    height: 220px;
+    width: 94%;
+    margin-left: 3%;
+    border-radius: 20px;
+  }
+  .photo-3{
+    background-color: #c7e1e7;
+    height: 220px;
+    width: 94%;
+    margin-left: 3%;
+    border-radius: 20px;
+  }
+}
+.recommend-wrap{
+  .slide-photo{
+    margin-top: 2%;
+    .photo-1{
+      background-color: #eed5d5;
+      height: 220px; //这里的高度 会随着屏幕变化显示的比例会有改变，后面换上图片后直接用百分比
+      width: 94%;
+      margin-left: 3%;
+      border-radius: 20px;
+    }
+    .photo-2{
+      background-color: #eef7c7;
+      height: 220px;
+      width: 94%;
+      margin-left: 3%;
+      border-radius: 20px;
+    }
+    .photo-3{
+      background-color: #c7e1e7;
+      height: 220px;
+      width: 94%;
+      margin-left: 3%;
+      border-radius: 20px;
+    }
+  }
+  .squareCard{
+    .at-row{
+      .at-col{
+        padding-left: 25px;
+        .card-photo{
+          height:145px;
+          width: 145px;
+          background-color: #e4e595;
+        }
+        .card-text{
+          font-size: 25px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+
+@import '~taro-ui/dist/style/index.scss';
