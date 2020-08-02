@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Button, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
+import Taro from '@tarojs/taro';
 import { AtGrid } from "taro-ui"
 import './index.scss';
 import imgList1 from '../../assets/img/recommend3.jpg';
@@ -55,6 +56,11 @@ class Recommend extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
+  handleClick (value) {
+    this.setState({
+      current: value
+    })
+  }
 
   render () {
     return (

@@ -213,7 +213,7 @@ class CartListView extends Component {
                         onClick={this.selectList.bind(this,item.id)}
                       ></Icon>
                     )}
-                    <Navigator url={'../details/details?id=' + item.id}>
+                    <Navigator url={'../details/index'}>
                       <Image className='cart-thumb' src={item.image}></Image>
                     </Navigator>
                     <Text className='cart-pro-name'>{item.title}</Text>

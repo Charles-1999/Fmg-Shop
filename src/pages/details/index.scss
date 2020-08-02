@@ -1,0 +1,124 @@
+.detail-page {
+    padding-bottom: 120px;
+    .image-box {
+        position: relative;
+        overflow: hidden;
+    }
+    .container {
+        padding: 0 35px;
+        padding-top: 10px;
+        text-align: left;
+        .info-business-card {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .name {
+                display: inline-block;
+                color: #333;
+                width: 85%;
+                height: 80px;
+                font-size: 30px;
+                line-height: 150%;
+                font-weight: bold;
+                padding-right: 20px;
+            }
+            .share-button {
+                display: inline-block;
+                width: 80px;
+                height: 80px;
+                background-image: url('http://static-r.msparis.com/uploads/f/8/f88a268b97504707e39104d00ca644fc.png');
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: -20px;
+                .button {
+                    opacity: 0;
+                }
+            }
+        }
+        .info-price {
+            color: red;
+            font-weight: bold;
+        }
+        .info-sendprice {
+            display: flex;
+            flex-direction: row;
+            .amount {
+                position: absolute;
+                right: 60px;
+            }
+        }
+        .info-img {
+            display: flex;
+            flex-direction: column;
+            .img {
+                width: 700px;
+                height: 200px;
+            }
+        }
+    }
+    .detail-bottom {
+        background-color: #ffffff;
+        box-sizing: border-box;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100px;
+        align-items: center;
+        z-index: 3;
+        .nav {
+            // background-color: rebeccapurple;
+            text-align: center;
+            // font-size: 25px;
+            position: relative;
+            display: block;
+            padding: 20px;
+            margin-top: 10px;
+            height: 80px;
+            .nav-icon {
+                display: block;
+            }
+        }
+        .nav-right {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 429px;
+            .nav-join {
+                height: 100px;
+                flex: 1;
+                align-items: center;
+                border: 10px,solid,palegoldenrod;
+                text-align: center;
+                background-color: gray;
+                .nav-join-txt {
+                    font-size: 30px;
+                    line-height: 100px;
+                    text-align: center;
+                    color: #ffffff;
+                    font-weight: bold;
+                }
+            }
+            .nav-buy {
+                height: 100px;
+                flex: 1;
+                align-items: center;
+                border: 10px,solid,palegoldenrod;
+                text-align: center;
+                background-color:red;
+                .nav-buy-txt {
+                    font-size: 30px;
+                    line-height: 100px;
+                    text-align: center;
+                    color: #ffffff;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

@@ -6,6 +6,7 @@ export default {
     'pages/cart/index',
     'pages/category/index',
     'pages/find/index',
+    'pages/details/index',
   ],
   window: {
     backgroundTextStyle: 'light',
