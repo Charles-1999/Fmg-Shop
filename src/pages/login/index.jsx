@@ -1,67 +1,51 @@
 import React, { Component } from 'react'
-import { View, Text, Button, OpenData } from '@tarojs/components'
+import { View, Text, Button, OpenData, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro';
+import './index.scss'
 import Menu from '../../components/menu/menu';
+import headerjpg from '../../assets/img/fmgLoginLogo.png'
 
 class LoginView extends Component {
   constructor() {
     super(...arguments)
   }
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-  }
-  componentWillUnmount () { }
 
-  componentDidShow () { }
+  tobegin = () => {
+    Taro.switchTab({
+      url: '/pages/index/index'
+    });
+  };
 
-  componentDidHide () { }
-
-  handleWXGetUserInfo = (event) => {
-    console.log(event.detail)
-  }
-  onloginTest = (event) => {
-    console.log(event);
-    Taro.login({
-      success: function (res) {
-        if (res.code) {
-          //发起网络请求
-          Taro.request({
-            url: 'https://test.com/onLogin',
-            data: {
-              code: res.code
-            }
-          })
-          console.log('登录！' + res.errMsg)
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }
+  componentDidMount(){
+    try {
+      const value = Taro.getStorageSync('userInfo')
+      if (value) {
+        Taro.redirectTo({
+          url: '/pages/index/index'
+        })
       }
-    })
+    } catch (e) {
+      console.log("error: " + e);
+      // Do something when catch error
+    }
+    
   }
-  // wx.getUserInfo({
-  //   success: function(res) {
-  //     var userInfo = res.userInfo //用户基本信息
-  //     var nickName = userInfo.nickName //用户名
-  //     var avatarUrl = userInfo.avatarUrl //头像链接
-  //     var gender = userInfo.gender //性别 0：未知、1：男、2：女
-  //     var province = userInfo.province //所在省
-  //     var city = userInfo.city //所在市
-  //     var country = userInfo.country //所在国家
-  //   }
-  // })
+  // handleWXGetUserInfo = (event) => {
+  //   console.log(event.detail)
+  // }
+
+
   render () {
     return (
       <View className='loginViewWrap'>
-        {/* <button openType='getUserInfo'>获取用户登录信息</button> */}
-        <Button openType='getUserInfo' onGetUserInfo={this.handleWXGetUserInfo.bind(this)} >微信授权登录</Button>
-        <Button onloginTest={this.onloginTest.bind(this)} >登录</Button>
-        <Button
-          className='login-buttoNor'
-          type="primary"
-          open-type="getUserInfo"
-          onGetUserInfo={this.tobegin}
-        >微信获取用户信息</Button>
-
+        <Image src={headerjpg} className='fmg-logo' />
+        <View className='fmg-name'>凤鸣谷</View>
+        <View className='fmg-login'>该程序将获取以下授权</View>
+        <View className='fmg-login-info'>·获得您的公开信息（昵称，头像等）</View>
+        {/* <Button openType='getUserInfo' onGetUserInfo={this.handleWXGetUserInfo.bind(this)} >微信授权登录</Button> */}
+        <Button className='btn' openType='getUserInfo' onGetUserInfo={this.tobegin} type='primary' lang='zh_CN'>
+            微信授权登录
+        </Button>
       </View>
     )
   }

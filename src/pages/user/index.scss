@@ -41,6 +41,9 @@
       font-style: initial;
     }
   }
+  .all-order{
+    margin: 0 1rem;
+  }
   .numberInfo{
     margin:0.8rem 0.8rem;
     .number{
@@ -55,41 +58,7 @@
       color: #9999;
     }
   }
-  .myOrderTab{
-    padding: 1rem 1.5rem;
-    .myOrder{
-      float: left;
-      font-weight: 800;
-    }
-    .allOrder{
-      display: flex;
-      font-size: 25px;
-      float: right;
-      margin-top: 0.2rem;
-      color: rgb(39, 39, 39);
-    }
-  }
-  .IconTab{
-    margin-top:1.6rem;
-  }
   .menu-list-tab{
-    padding:0.8rem 1.2rem;
-    .shopping-cart,.pisition,.person-info,.setting{
-      padding:0.8rem 1.2rem;
-      padding-bottom: 0.5rem;
-      .icon{
-        float: left;
-      }
-      .text{
-        float: left;
-        margin-left: 0.6rem;
-        font-size: 28px;
-        margin-top:0.32rem;
-      }
-      .more{
-        float: right;
-        margin-top: 0.05rem;
-      }
-    }
+    margin: 0 1rem;
   }
 }

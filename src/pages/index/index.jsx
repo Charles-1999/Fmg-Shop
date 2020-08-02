@@ -1,19 +1,28 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components'
-import Menu from '../../components/menu/menu'
+//import Menu from '../../components/menu/menu'
 import './index.scss'
-import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon} from 'taro-ui'
+import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import Recommend from './recommend'
 
 class Index extends Component {
   constructor () {
     super(...arguments)
     this.state = {
-      value: ''
+      typeTab:[
+        { id:1, name:'推荐'},
+        { id:2, name:'香草小镇'},
+        { id:3, name:'一号营地'},
+        { id:4, name:'红耕乐园'},
+        { id:5, name:'运动基地'},
+        { id:6, name:'水上营地'},
+      ],
+      value: '',
+      current: 0,
     }
   }
-  
+
   componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
   }
@@ -63,7 +72,8 @@ class Index extends Component {
               { title: '运动基地' },
               { title: '水上营地' }
             ]}
-            onClick={this.handleClick.bind(this)}>
+            onClick={this.handleClick.bind(this)} 
+          >
             <AtTabsPane current={this.state.current} index={0}>
               <View style='font-size:18px;text-align:center;'>
                 <Recommend />
@@ -88,10 +98,11 @@ class Index extends Component {
             </AtTabsPane>
           </AtTabs>
         </View>
-        <Menu isActive={0} />
-
+        
+   
+        {/* <Menu isActive={0} /> */}
+          
       </View>
-
     )
   }
 }

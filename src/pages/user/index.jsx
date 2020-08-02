@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import { AtIcon, AtAvatar, AtTabBar} from 'taro-ui'
+import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import './index.scss'
 import Taro from '@tarojs/taro';
 import headerjpg from '../../assets/img/TouXiang.jpg'
-import Menu from '../../components/menu/menu';
+//import Menu from '../../components/menu/menu';
 
 class UserList extends Component {
   
@@ -65,10 +65,14 @@ class UserList extends Component {
             </View>
           </View>
         </View>
-        <View className='myOrderTab'>
-          <View className='myOrder'>我的订单</View>
-          <View className='allOrder'>查看全部订单<AtIcon value='chevron-right' size='20' color='#9999' class='more'></AtIcon></View>
-        </View>
+        <AtList>
+          <AtListItem
+            title='我的订单'
+            extraText='查看全部订单'
+            arrow='right'
+            className='all-order'
+          />
+        </AtList>
         <View className='IconTab'>
         <AtTabBar
           iconSize={20}
@@ -85,31 +89,30 @@ class UserList extends Component {
         />
         </View>
         <View className='menu-list-tab'>
-          <View className='shopping-cart'>
-            <View className='icon'><AtIcon value='shopping-cart' size='20' color='black' class='more'></AtIcon></View>
-            <View className='text'>购物车</View>
-            <View className='more'><AtIcon value='chevron-right' size='18' color='black' class='more'></AtIcon></View>
-          </View>
-          <View style="clear:both"></View>
-          <View className='pisition'>
-            <View className='icon'><AtIcon value='map-pin' size='20' color='black' class='more'></AtIcon></View>
-              <View className='text'>收货地址</View>
-              <View className='more'><AtIcon value='chevron-right' size='18' color='black' class='more'></AtIcon></View>
-            </View>
-            <View style="clear:both"></View>
-            <View className='person-info'>
-              <View className='icon'><AtIcon value='list' size='20' color='black' class='more'></AtIcon></View>
-              <View className='text'>个人信息</View>
-              <View className='more'><AtIcon value='chevron-right' size='18' color='black' class='more'></AtIcon></View>
-            </View>
-            <View style="clear:both"></View>
-            <View className='setting'>
-              <View className='icon'><AtIcon value='settings' size='20' color='black' class='more'></AtIcon></View>
-              <View className='text'>账号设置</View>
-              <View className='more'><AtIcon value='chevron-right' size='18' color='black' class='more'></AtIcon></View>
-            </View>
+          <AtList>
+            <AtListItem
+              title='购物车'
+              arrow='right'
+              iconInfo={{ size: 20, color: 'black', value: 'shopping-cart', }}
+            />
+            <AtListItem
+              title='收货地址'
+              arrow='right'
+              iconInfo={{ size: 20, color: 'black', value: 'map-pin', }}
+            />
+            <AtListItem
+              title='个人信息'
+              arrow='right'
+              iconInfo={{ size: 20, color: 'black', value: 'list', }}
+            />
+            <AtListItem
+              title='账号设置'
+              arrow='right'
+              iconInfo={{ size: 20, color: 'black', value: 'settings', }}
+            />
+          </AtList>
         </View>
-       <Menu isActive={4} />
+       {/* <Menu isActive={4} /> */}
       </View>
     )
   }

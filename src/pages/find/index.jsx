@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text } from '@tarojs/components'
 
-import Menu from '../../components/menu/menu';
+//import Menu from '../../components/menu/menu';
 
 class FindListView extends Component {
   constructor() {
@@ -19,7 +19,7 @@ class FindListView extends Component {
     return (
       <View className='findlist'>
         发现
-       <Menu isActive={2} />
+       {/* <Menu isActive={2} /> */}
       </View>
     )
   }
