@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Taro from '@tarojs/taro';
 import { View, Button, Text, Swiper, SwiperItem } from '@tarojs/components'
 import { AtGrid } from "taro-ui"
 import './index.scss';
@@ -17,6 +18,7 @@ class Recommend extends Component {
       current: value
     })
   }
+
   render () {
     return (
       <View className='recommend-wrap'>

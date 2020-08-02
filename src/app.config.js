@@ -6,6 +6,7 @@ export default {
     'pages/category/index',
     'pages/find/index',
     'pages/login/index',
+    'pages/details/index',
   ],
   window: {
     backgroundTextStyle: 'light',
