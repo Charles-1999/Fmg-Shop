@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { View, Icon, Navigator, Image, Text, } from '@tarojs/components';
 //import Menu from '../../components/menu/menu'
+import Taro from '@tarojs/taro'
 import { AtIcon, AtAvatar, AtTabBar, AtInputNumber } from 'taro-ui'
 import './index.scss'
 import storepic from '../../assets/img/shangPing.jpg'
@@ -65,12 +66,9 @@ class CartListView extends Component {
   }
 
   componentDidShow() {
-    // const cart = []
-    // this.setState({
-    //   carts: cart
-    // })
     this.getTotalPrice();
   }
+
   getTotalPrice() {
     let carts = this.state.carts // 获取购物车列表
     let total = 0
@@ -106,61 +104,104 @@ class CartListView extends Component {
       carts: carts, 
       // selectAllStatus: false
     })
+
     this.getTotalPrice();
   }
  /**
    * 购物车全选事件
    */
   onSelectAll() {
-    let carts = this.carts
-    console.log(carts)
-    // items.map((item,index)=>{
-    //   if(item.selected){
-    //     items[index].selected = true
-    //   }else{
-    //     items[index].selected = false
-    //   }
-    //   this.setState({
-    //     carts:items,
-    //     selectAllStatus:true,
-
-    //   })
-    // })
-    //////
-    // let select = this.state.selectAllStatus;
-    // console.log("dfs"+select);
-    // select = !select;
-    // console.log(select)
-    // let carts = this.state.carts
-    // for (let i = 0; i < carts.length; i++) {
-    //   carts[i].selected = select;
-    // }
-    // this.setState({
-    //   selectAllStatus: select,
-    //   carts: carts
-    // })
-    
+    let select = this.state.selectAllStatus;
+    select = !select;
+    let carts = this.state.carts
+    for (let i = 0; i < carts.length; i++) {
+      carts[i].selected = select;
+    }
+    this.setState({
+      selectAllStatus: select,
+      carts: carts
+    })
+    this.closeFun();
     this.getTotalPrice()
+  }
+  
+  deleteList(e) {
+    this.addCartList();
+    let checklist = this.state.hascheckList;
+    let carts = this.state.carts;
+    Taro.showModal({
+      title: '确定删除吗',
+      content: '确定删除选中的商品吗？',
+      success(res) {
+        if (res.confirm) {
+          for (let i = 0; i < checklist.length; i++) {
+            for (let j = 0; j < carts.length; j++) {
+              if(checklist[i].id == carts[j].id)
+              {
+                carts.splice(j,1);  
+              }
+            }
+          }
+          console.log(carts);
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+    }
+  })
+  console.log("finally"+ carts);
+  }
+
+  addCartList() {
+    let list = []
+    let listTotal = []
+    this.state.carts.map((v, k) => {
+     // console.log('购物车数据', v)
+      if (v.selected) {
+        list.push(v)
+      } else {
+        listTotal.push(v)
+      }
+    })
+    this.setState({
+      hascheckList: list,
+    })
+    console.log(this.state.hascheckList);
+  }
+
+  onChangeEditState(){
+    let status = this.state.editState;
+    status = !status;
+    this.setState({
+      editState: status,
+    })
   }
 
   closeFun() {
     let list = []
     let listTotal = []
     this.state.carts.map((v, k) => {
-      console.log('购物车数据', v)
-      if (v.select) {
+     // console.log('购物车数据', v)
+      if (v.selected) {
         list.push(v)
       } else {
         listTotal.push(v)
       }
     })
+    this.setState({
+      hascheckList: list,
+    })
+    console.log(this.state.hascheckList);
+ 
   }
+
   onChangeEditState(){
     let status = this.state.editState;
+    status = !status;
     this.setState({
-      editState: !status,
+      editState: status,
     })
   }
+
   handleNumChange(t,item) {
     let carts = this.state.carts
     console.log(carts)
@@ -180,6 +221,7 @@ class CartListView extends Component {
         count++;
       }
     })
+    
     return (
       <View className='cartlist'>
         <View className='top-cart'>
@@ -187,8 +229,8 @@ class CartListView extends Component {
           <View className='store-name'>凤鸣商城</View>
           <View className='more'><AtIcon value='chevron-right' size='18' color='black' class='more'></AtIcon></View>
           {!this.state.editState ? 
-          <View className='store-edit' onClick={this.onChangeEditState}>编辑</View>:
-          <View className='store-edit'>完成</View>
+          <View className='store-edit' onClick={this.onChangeEditState.bind(this)}>编辑</View>:
+          <View className='store-edit' onClick={this.onChangeEditState.bind(this)}>完成</View>
           }
           
         </View>
@@ -254,14 +296,14 @@ class CartListView extends Component {
             type='success_circle'
             color='#b30000'
             className='total-select'
-            onClick={this.onSelectAll}
+            onClick={this.onSelectAll.bind(this)}
           ></Icon>
           ) : (
           <Icon
             type='circle'
             color='#b30000'
             className='total-select'
-            onClick={this.onSelectAll}
+            onClick={this.onSelectAll.bind(this)}
           ></Icon>
         )}
         <View className='select-all'>全选</View>
@@ -269,9 +311,15 @@ class CartListView extends Component {
           {/* <Text >{count> 0? `已选(${count})`: '全选'}</Text> */}
           <Text className='cart-toatl-price'>{'合计￥' + totalPrice}</Text>
         </View>
-        <View className='cont' onClick={this.closeFun}>
-          结算
+        {!this.state.editState ? 
+          <View className='cont' onClick={this.closeFun.bind(this)}>
+            结算
+          </View> :
+          <View className='cont' onClick={this.deleteList.bind(this)}>
+            删除
         </View>
+        }
+
         </View>
         {/* <Menu isActive={3} /> */}
       </View>

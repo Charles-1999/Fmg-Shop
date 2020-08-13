@@ -43,6 +43,14 @@
   }
   .all-order{
     margin: 0 1rem;
+    .at-list__item {
+      font-size: 30px;
+      font-weight: 800;
+      .item-extra__info{
+        font-size: 26px;
+      }
+    }
+    
   }
   .numberInfo{
     margin:0.8rem 0.8rem;
@@ -60,5 +68,42 @@
   }
   .menu-list-tab{
     margin: 0 1rem;
+    .at-list__item {
+      font-size: 26px;
   }
+  }
+}
+.userInfoList{
+  .at-list__item--thumb .item-thumb {
+    width: 56rpx;
+    height: 56rpx;
+    position: absolute;
+    right:40px;
+  }
+  .at-list__item .item-content__info-title {
+    color: inherit;
+    font-size: 30px;  
+    }
+    
+  // .list-item{
+  //   background-color: rgb(248, 244, 244);
+  //   padding:0rem 1rem;
+  //   .title{
+  //     display: inline-flex;
+  //     line-height: 100px;
+  //   }
+  //   .info {
+  //     display: inline-flex;
+  //     line-height: 100px;
+  //     margin-top: 10px;
+  //   }
+  //   .right{
+  //     display: inline-flex;
+  //     line-height: 100px;
+  //     float: right;
+  //   }
+  // }
+  // image{
+  //   position
+  // }
 }

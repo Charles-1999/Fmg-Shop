@@ -41,6 +41,11 @@
             color: red;
             font-weight: bold;
         }
+        .info-select-tab{
+            .at-list__item {
+                font-size: 26px;
+            }
+        }
         .info-sendprice {
             display: flex;
             flex-direction: row;
@@ -82,6 +87,7 @@
             height: 80px;
             .nav-icon {
                 display: block;
+                font-size: 1rem;
             }
         }
         .nav-right {

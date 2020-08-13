@@ -1,0 +1,51 @@
+.orderlist-wrap{
+  background-color: rgb(234, 237, 245);
+  .toplist{
+
+  }
+  .allList{
+    background-color: white;
+    padding:0.6rem 1rem;
+    margin: 1rem 0;
+    .orderId{
+      float: left;
+      font-size: 25px;
+      columns: #818181;
+    }
+    .orderStatus{
+      float: right;
+      font-weight: 800;
+      color: rgb(156, 30, 30);
+    }
+    .midCard{
+      .orderPic{
+        float: left;
+      }
+      .orderTitle{
+        font-size: 30px;
+        font-weight: 700;
+        columns: #252525;
+      }
+      .orderType{
+        font-size: 25px;
+        font-weight: 500;
+        columns: #5e5e5e;
+      }
+      .orderPrice{
+        float: left;
+        font-size: 25px;
+        font-weight: 700;
+        color: #b40f0f;
+      }
+      .orderQuality{
+        float: right;
+        font-size: 25px;
+        columns: #5e5e5e;
+      }
+    }
+    .orderTotal{
+     float: right;
+     margin-right: 0.3rem;
+    }
+  }
+}

@@ -2,33 +2,35 @@ import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import './index.scss'
-import Taro from '@tarojs/taro';
+import Taro from '@tarojs/taro'; 
 import headerjpg from '../../assets/img/TouXiang.jpg'
 //import Menu from '../../components/menu/menu';
 
 class UserList extends Component {
-  
-  constructor() {
-    super(...arguments)
+  state = {
+    userInfo: {},
   }
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  componentDidMount () {
+    let user = Taro.getStorageSync('userInfo');
+    console.log(user);
+    this.setState({
+      userInfo: user,
+    })
+    console.log(this.state.userInfo);
   }
   handleGetUserInfo = (event) => {
-    console.log(event.detail)
+    console.log(event.detail);
   }
-
-  // Taro.getUserInfo({
-  //   success: getInfo(res) {
-  //     var userInfo = res.userInfo
-  //     var nickName = userInfo.nickName
-  //     var avatarUrl = userInfo.avatarUrl
-  //     var gender = userInfo.gender //性别 0：未知、1：男、2：女
-  //     var province = userInfo.province
-  //     var city = userInfo.city
-  //     var country = userInfo.country
-  //   }
-  // })
+  myOrder = () => {
+    Taro.navigateTo({
+      url: '/pages/order/orderList'
+    });
+  }
+  myInfoList = () => {
+    Taro.navigateTo({
+      url: '/pages/user/userInfoList'
+    });
+  }
   
   render () {
     return (
@@ -65,12 +67,12 @@ class UserList extends Component {
             </View>
           </View>
         </View>
-        <AtList>
+        <AtList className='all-order'>
           <AtListItem
             title='我的订单'
             extraText='查看全部订单'
             arrow='right'
-            className='all-order'
+            onClick={this.myOrder}
           />
         </AtList>
         <View className='IconTab'>
@@ -103,6 +105,7 @@ class UserList extends Component {
             <AtListItem
               title='个人信息'
               arrow='right'
+              onClick={this.myInfoList}
               iconInfo={{ size: 20, color: 'black', value: 'list', }}
             />
             <AtListItem
@@ -112,7 +115,6 @@ class UserList extends Component {
             />
           </AtList>
         </View>
-       {/* <Menu isActive={4} /> */}
       </View>
     )
   }

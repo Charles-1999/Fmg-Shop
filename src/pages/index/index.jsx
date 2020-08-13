@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import Taro from '@tarojs/taro';
+import Taro, { get } from '@tarojs/taro';
+import { connect } from '@tarojs/redux';
 import { View } from '@tarojs/components'
-//import Menu from '../../components/menu/menu'
-import './index.scss'
 import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
+import './index.scss'
 import Recommend from './recommend'
+
+// @connect(({ placeList }) => ({
+//   placeList,
+// }))
 
 class Index extends Component {
   constructor () {
@@ -22,16 +26,15 @@ class Index extends Component {
       current: 0,
     }
   }
-
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  componentDidMount() {
+    console.log("sdf"+this.props.dispatch);
+    //初始化拉取表格数据
+    // this.props.dispatch({
+    //   type: 'home/getGoodsPlace'
+    // })
+   // this.handleGetListData();
   }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
+  
   handleClick (value) {
     this.setState({
       current: value
@@ -43,7 +46,16 @@ class Index extends Component {
     })
   }
 
+  handleGetListData = () => {
+    console.log(this.props.dispatch());
+    this.props.dispatch({
+      type: 'placeList/getGoodsPlace',
+      payload: { page: 1, limit: 5 }, 
+    });
+  };
+
   render () {
+//console.log(this.props.dispatch && this.props.dispatch());
     return (
       <View className='index'>
         <View className='top-view'>

@@ -42,6 +42,21 @@ const config = {
       }
     }
   },
+  babel: {
+    // ...
+    plugins: [
+      // ...
+      [
+        'transform-runtime',
+        {
+          helpers: false,
+          polyfill: false,
+          regenerator: true,
+          moduleName: 'babel-runtime',
+        },
+      ],
+    ],
+  },
   h5: {
     publicPath: '/',
     staticDirectory: 'static',

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View, Icon, Navigator, Image, Text, Button } from '@tarojs/components';
-import { AtIcon } from 'taro-ui'
+import { AtIcon, AtListItem } from 'taro-ui'
 import MySwiper from '../../components/MySwiper/index';
 import img1 from './assets/1.png'
 import img2 from './assets/2.png'
@@ -49,6 +49,10 @@ class Details extends Component {
               <Text className="sendprice">运费 {detail.sendprice}</Text>
               <Text className="amount">剩余 {detail.amount}</Text>
             </View>
+            <view className='info-select-tab'>
+            <AtListItem title='选择：类型' arrow='right' />
+            <AtListItem title='配送：快递' arrow='right' />
+            </view>
             <View className='info-img'>
               {detail.imgList.map((item, index) => (
                 <Image

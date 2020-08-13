@@ -6,6 +6,7 @@ import './index.scss';
 import imgList1 from '../../assets/img/recommend3.jpg';
 import imgList2 from '../../assets/img/recommend2.jpg';
 import dfs from '../../assets/img/recommend-place.jpg';
+import ProductList from './pruductList';
 
 class Recommend extends Component {
   state = {
@@ -48,14 +49,6 @@ class Recommend extends Component {
       },
     ],
   }
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-  }
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
   handleClick (value) {
     this.setState({
       current: value
@@ -112,8 +105,7 @@ class Recommend extends Component {
      
         </View>
         <View className='new-product'>
-          {/* <View>新品上市</View>
-          <View>进入专题</View> */}
+          <ProductList />
         </View>
       </View>
     )

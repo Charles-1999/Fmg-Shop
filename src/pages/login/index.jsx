@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Button, OpenData, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro';
 import './index.scss'
-import Menu from '../../components/menu/menu';
+import { AtButton } from "taro-ui"
 import headerjpg from '../../assets/img/fmgLoginLogo.png'
 
 class LoginView extends Component {
@@ -20,7 +20,7 @@ class LoginView extends Component {
     try {
       const value = Taro.getStorageSync('userInfo')
       if (value) {
-        Taro.redirectTo({
+        Taro.switchTab({
           url: '/pages/index/index'
         })
       }
@@ -33,7 +33,6 @@ class LoginView extends Component {
   // handleWXGetUserInfo = (event) => {
   //   console.log(event.detail)
   // }
-
 
   render () {
     return (
