@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { View, Icon, Navigator, Image, Text, Button } from '@tarojs/components';
 import { AtIcon, AtListItem } from 'taro-ui'
+import Taro from '@tarojs/taro';
 import MySwiper from '../../components/MySwiper/index';
 import img1 from './assets/1.png'
 import img2 from './assets/2.png'
@@ -22,7 +23,11 @@ class Details extends Component {
         imgList : [img1,img2,img3,img4,img5],
       },
     }
-
+    handleTypeSelect = () => {
+      Taro.navigateTo({
+        url: '/pages/details/typeSelect'
+      });
+    }
     render() { 
       const {detail} = this.state;
       return (  
@@ -50,7 +55,7 @@ class Details extends Component {
               <Text className="amount">剩余 {detail.amount}</Text>
             </View>
             <view className='info-select-tab'>
-            <AtListItem title='选择：类型' arrow='right' />
+            <AtListItem title='选择：类型' arrow='right' onClick={this.handleTypeSelect} />
             <AtListItem title='配送：快递' arrow='right' />
             </view>
             <View className='info-img'>

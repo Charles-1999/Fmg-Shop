@@ -5,7 +5,10 @@ import { AtGrid } from "taro-ui"
 import './index.scss';
 import product from '../../assets/img/shangPing.jpg';
 
+
+
 class ProductList extends Component {
+
   state = {
     productList:[
       {

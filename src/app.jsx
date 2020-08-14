@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { Provider } from 'react-redux'
-import configStore from './store'
 import './app.scss'
 import dva from './utils/dva'
 import models from './model'
@@ -44,9 +43,10 @@ class App extends Component {
       fail() {
         return Taro.login()
           .then(response=>{
+            console.log(response.code)
             return Taro.request({
               url: 'https://test.com/onLogin',
-              code: response.code
+              code: response.code,
             })
               .then(res=>{
                 if(res.statusCode===200){

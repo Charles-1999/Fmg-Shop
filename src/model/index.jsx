@@ -1,6 +1,6 @@
 
-import home from '../pages/index/model'
+import placeList from '../pages/index/model'
 
 export default [
-  home
+  placeList
 ];

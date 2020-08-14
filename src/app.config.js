@@ -1,13 +1,15 @@
 export default {
   pages: [
-    'pages/login/index',
     'pages/index/index',
+    'pages/login/index',
+   
     'pages/user/index',
     'pages/cart/index',
     'pages/category/index',
     'pages/find/index',
     'pages/order/orderList',
     'pages/details/index',
+    'pages/details/typeSelect',
     'pages/user/userInfoList',
   ],
   window: {

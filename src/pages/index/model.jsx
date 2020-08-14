@@ -1,4 +1,4 @@
-import * as getGoodsPlaceListApi from './service';
+import  {getGoodsPlace} from './service';
 
 export default {
   namespace: 'placeList',
@@ -6,30 +6,15 @@ export default {
     placeList: [],
   },
   effects: {
-    *getGoodsPlace({ payload }, { call, put }) {
-      const response = yield call(getGoodsPlaceListApi.getGoodsPlace, {...payload});
-      const { data } = response;
+    * getGoodsPlace({ payload }, { call, put }) {
+      const response = yield call(getGoodsPlace, {...payload});
+      // const { data } = response;
       yield put({
         type: 'save',
-        payload: data,
+        payload: response,
       });
     },
-
-    // *getGoodsPlace({payload}, { call, put, select }) {
-    //   const { page, limit } = yield select(state => state.common);
-    //   const { status, data } = yield call(getGoodsPlaceListApi.getGoodsPlace, {
-    //     page,
-    //     limit,
-    //   });
-    //   if (status === 'ok') {
-    //     yield put({
-    //       type: 'save',
-    //       payload: {
-    //         placeList: data.rows,
-    //       },
-    //     });
-    //   }
-    // },
+  
   },
 
   reducers: {

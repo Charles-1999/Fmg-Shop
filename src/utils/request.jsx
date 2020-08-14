@@ -1,55 +1,89 @@
 import Taro from '@tarojs/taro';
-import { baseUrl, noConsole } from '../config';
+// import { baseUrl, noConsole } from '../config';
 
-const request_data = {
-  platform: 'wap',
-  rent_mode: 2,
-};
+export default function request(url, option) {
 
-export default (options = { method: 'GET', data: {} }) => {
-  if (!noConsole) {
-    console.log(
-      `${new Date().toLocaleString()}【 M=${options.url} 】P=${JSON.stringify(
-        options.data
-      )}`
-    );
-  }
+  console.log('url', url)
+
+  const options = {
+    ...option
+  };
+  const body = JSON.stringify(options.body);
+  const _host = 'http://106.52.218.85';
   return Taro.request({
-    url: baseUrl + options.url,
-    data: {
-      ...request_data,
-      ...options.data,
-    },
-    header: {
+    url: _host + url,
+    data: body,
+    headers: {
       'Content-Type': 'application/json',
     },
     method: options.method.toUpperCase(),
-  }).then(res => {
-    const { statusCode, data } = res;
+  }).then((res) => {
+    console.log('res', res)
+    const {statusCode, data} = res;
     if (statusCode >= 200 && statusCode < 300) {
-      if (!noConsole) {
-        console.log(
-          `${new Date().toLocaleString()}【 M=${options.url} 】【接口响应：】`,
-          res.data
-        );
-      }
-      if (data.status !== 'ok') {
-        Taro.showToast({
-          title: `${res.data.error.message}~` || res.data.error.code,
-          icon: 'none',
-          mask: true,
-        });
-      }
+
+      // TODO 异常处理
+      return new Promise(resolve => {
+        resolve(data);
+      });
       return data;
-    } else {
-      throw new Error(`网络请求错误，状态码${statusCode}`);
     }
-  });
-};
+  }).catch((error) => {
+    console.log('error:', error)
+    Taro.showToast({
+      title: '请求错误，稍后再试',
+      icon: 'none',
+      mask: true,
+    });
+    return null;
+  })
+}
 
+// const request_data = {
+//   platform: 'wap',
+//   rent_mode: 2,
+// };
 
-
-
+// export default (options = { method: 'GET', data: {} }) => {
+//   if (!noConsole) {
+//     console.log(
+//       `${new Date().toLocaleString()}【 M=${options.url} 】P=${JSON.stringify(
+//         options.data
+//       )}`
+//     );
+//   }
+//   return Taro.request({
+//     url: baseUrl + options.url,
+//     data: {
+//       ...request_data,
+//       ...options.data,
+//     },
+//     header: {
+//       'Content-Type': 'application/json',
+//     },
+//     method: options.method.toUpperCase(),
+//   }).then(res => {
+//     const { statusCode, data } = res;
+//     if (statusCode >= 200 && statusCode < 300) {
+//       if (!noConsole) {
+//         console.log(
+//           `${new Date().toLocaleString()}【 M=${options.url} 】【接口响应：】`,
+//           res.data
+//         );
+//       }
+//       if (data.status !== 'ok') {
+//         Taro.showToast({
+//           title: `${res.data.error.message}~` || res.data.error.code,
+//           icon: 'none',
+//           mask: true,
+//         });
+//       }
+//       return data;
+//     } else {
+//       throw new Error(`网络请求错误，状态码${statusCode}`);
+//     }
+//   });
+// };
 
 
 
