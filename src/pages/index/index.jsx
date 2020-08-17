@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
-import { connect } from '@tarojs/redux';
+import { connect } from 'react-redux';
 import { View } from '@tarojs/components'
 import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
+import { get } from 'lodash';
+import PropTypes from 'prop-types';
 import './index.scss'
 import Recommend from './recommend'
 
-@connect(({ placeList }) => ({
-  placeList,
+
+@connect(({ goods }) => ({
+   ...goods
 }))
 
 class Index extends Component {
@@ -26,11 +29,25 @@ class Index extends Component {
       current: 0,
     }
   }
+  static defaultProps = {
+    placeList: [],
+  }
   componentDidMount() {
-    // const { dispatch } = this.props;
-    // console.log("this.props.patch:"+ dispatch);
+    //const { dispatch } = this.props;
+    this.props.dispatch({
+      type: 'goods/getGoodsPlace',
+      payload: { page: 1, limit: 5 }, 
+    });
+    this.props.dispatch({
+      type: 'goods/getGoodsCategory',
+      payload: { page: 1, limit: 5 }, 
+    });
     // this.props.dispatch({
-    //   type: 'placeList/getGoodsPlace',
+    //   type: 'good/getGoodsSale',
+    //   payload: { page: 1, limit: 5 }, 
+    // });
+    // this.props.dispatch({
+    //   type: 'good/getGoodsSpecification',
     //   payload: { page: 1, limit: 5 }, 
     // });
     // Taro.login()
@@ -54,9 +71,55 @@ class Index extends Component {
       value: value
     })
   }
+  //   /**
+  //  * 分类回调
+  //  * @param json
+  //  */
+  // onClassifyCall = json => {
+  //   if (isObj(json) && Object.keys(json).length > 0) {
+  //     this.fetchApi(json);
+  //   }
+  // };
 
+  // /**
+  //  * 列表滚动回调
+  //  * @param json
+  //  */
+  // onGoodsCall = json => {
+  //   if (json.type === 'loading') {
+  //     this.fetchApi(null, {
+  //       current: (this.props.pagination.current += 1),
+  //     });
+  //   }
+  // };
+
+  // /**
+  //  * 获取数据
+  //  * @param filters
+  //  * @param pagination
+  //  */
+  // fetchApi = (filters, pagination) => {
+  //   this.props.dispatch({
+  //     type: 'good/save',
+  //     payload: {
+  //       filters: {
+  //         ...this.props.filters,
+  //         ...filters,
+  //       },
+  //       pagination: {
+  //         ...this.props.pagination,
+  //         ...pagination,
+  //       },
+  //     },
+  //   });
+  //   this.props.dispatch({
+  //     type: 'good/getGoodsPlace',
+  //   });
+  // };
 
   render () {
+    const { placeList } = this.props;
+    console.log(placeList);
     return (
       <View className='index'>
         <View className='top-view'>
@@ -93,7 +156,9 @@ class Index extends Component {
               </View>
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={1}>
-              <View style='font-size:18px;text-align:center;height:100px;'>标签页二的内容</View>
+              <View style='font-size:18px;text-align:center;height:100px;'>
+                二
+              </View>
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={2}>
               <View style='font-size:18px;text-align:center;height:100px;'>标签页三的内容</View>
@@ -111,13 +176,19 @@ class Index extends Component {
             </AtTabsPane>
           </AtTabs>
         </View>
-        
-   
-        {/* <Menu isActive={0} /> */}
           
       </View>
     )
   }
 }
+
+// Index.propTypes = {
+//   dispatch: PropTypes.func.isRequired,
+//   placeList: PropTypes.arrayOf({}),
+// };
+// Index.defaultProps = {
+//   placeList: [],
+// };
+
 export default Index;
 

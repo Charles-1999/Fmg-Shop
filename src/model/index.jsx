@@ -1,6 +1,7 @@
 
-import placeList from '../pages/index/model'
+import goods from './Goods'
+import account from './Account'
 
 export default [
-  placeList
+  goods,account
 ];

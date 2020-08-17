@@ -2,15 +2,23 @@ import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import './index.scss'
+import { connect } from 'react-redux';
 import Taro from '@tarojs/taro'; 
 import headerjpg from '../../assets/img/TouXiang.jpg'
 //import Menu from '../../components/menu/menu';
 
+@connect(({ account }) => ({
+  ...account,
+}))
 class UserList extends Component {
   state = {
     userInfo: {},
   }
   componentDidMount () {
+    this.props.dispatch({
+      type: 'account/getAccountInfo',
+      payload: { page: 1, limit: 5 }, 
+    });
     let user = Taro.getStorageSync('userInfo');
     console.log(user);
     this.setState({

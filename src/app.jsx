@@ -9,6 +9,9 @@ import models from './model'
 const dvaApp = dva.createApp({
   initialState: {},
   models: models,
+  onError() {
+    
+  }
 });
 const store = dvaApp.getStore();
 

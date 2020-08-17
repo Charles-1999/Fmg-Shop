@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "fmg-taro",
 	"description": "",
-	"appid": "touristappid",
+	"appid": "wx1328c016e69fdf9f",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,
