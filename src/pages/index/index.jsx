@@ -3,11 +3,14 @@ import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { View } from '@tarojs/components'
 import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
+import Navbar from '../../components/navbar/navbar'
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import './index.scss'
 import Recommend from './recommend'
 import Goods from '../../model/Goods'
+import { get as getGlobalData } from '../../global_data'
+
 
 
 @connect(({ goods }) => ({
@@ -28,6 +31,8 @@ class Index extends Component {
       ],
       value: '',
       current: 0, 
+      statusBarHeight: getGlobalData('statusBarHeight'),
+      capsule: getGlobalData('capsule')
     }
   }
   
@@ -124,10 +129,17 @@ class Index extends Component {
 
   render () {
     const { placeList } = this.props;
-    console.log(placeList);
+    const {statusBarHeight, capsule} = this.state; 
+    const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
+
     return (
-      <View className='index'>
-        <View className='top-view'>
+      <View className='index' style={{ marginTop: statusBarHeight + capsuleHeight }}>
+        <Navbar
+          statusBarHeight={statusBarHeight}
+          capsuleHeight={capsuleHeight}
+          showLogo
+        ></Navbar>
+        {/* <View className='top-view'>
           <View className='fmg-logo'>
             LOGO
           </View>
@@ -140,7 +152,7 @@ class Index extends Component {
             />
           </View>
           <View className='bell'><AtIcon value='bell' size='20' color='#9999'></AtIcon></View>
-        </View>
+        </View> */}
         <View>
           <AtTabs
             current={this.state.current}
