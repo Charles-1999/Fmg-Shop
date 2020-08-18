@@ -1,8 +1,14 @@
 import request from '../utils/request';
 
-//获取产品属地
+//批量获取属地标签
+export const getGoodsPlaceEntity = params =>{
+  return request('/goods/place_tag/_mget', {
+    method: 'POST',
+    body: params,
+  });
+}
+//获取产品属地/goods/place_tag/_mget
 export const getGoodsPlace = params =>{
-
   return request('/goods/place_tag/list', {
     method: 'GET',
     body: params,

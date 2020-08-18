@@ -1,103 +1,38 @@
-
-
-.index {
- 
-  flex-direction: column;
+.index{
+  //background-color: white;
+  background-color: rgb(243, 243, 243);
 }
-.top-view{
-  padding-left: 1em;
+.topSearch{
+  background-color: white;
   .fmg-logo{
-    float: left;
+    display: inline-block;
     margin-top:0.7rem;
+    padding-left: 20rpx;
   }
   .search-box{
     width: 75%;
+    display: inline-block;
     margin-left: 0.3rem;
-    float: left;
   }
   .bell{
-    float: left;
+    display: inline-block;
     margin-top:0.6rem;
     margin-left: 0.4rem;
   }
-
 }
-
-.slide-photo{
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  .photo{
-    width: 94%;
-  }
-}
-
-.recommend-wrap{
-  .slide-photo{
-    margin-top: 2%;
-    .photo-1{
-      background-color: #eed5d5;
-      width: 94%;
-      margin-left: 3%;
-      border-radius: 20px;
-    }
-  }
-  .squareCard{
-    .at-row{
-      .at-col{
-        padding-left: 0.1rem;
-        // .card-photo{
-        //   height:145px;
-        //   width: 145px;
-        //   //background-color: #e4e595;
-        // }
-        .card-text{
-          font-size: 25px;
-          text-align: center;
-        }
-      }
+.home-list-wrap{
+  background-color: white;
+  border-radius: 30px;
+  margin: 30rpx 30rpx;
+  .place-tab-row{
+    padding: 30rpx 30rpx;
+    .place-tab-item{
+      height: 160rpx;
+      width: 160rpx;
+      border-radius: 30px;
+      background-color: rgb(243, 196, 134);
     }
   }
 }
-.product-wrap{
-  padding:0 0.5rem;
-  margin-top: 1rem;
-  .top{
-    margin-top: 20px;
-  }
-  .title{
-    float: left;
-    font-size: 35px;
-    font-weight: 800;
-    margin-bottom: 1rem;
-  }
-  .enter{
-    border: 1px solid black;
-    font-size: 25px;
-    float: right;
-    padding:5px 5px;
-    margin-bottom: 1rem;
-  }
-  .pic{
-    margin:0 0.3rem;
-    width:7rem;
-    height:7rem;
-  }
-  .introduction{
-    font-size: 20px;
-    width: 100px;
-    margin-left: 0.3rem;
-    text-align: justify;
-    text-justify: newspaper;
-    word-wrap:break-word ;
-  }
-  .price{
-    font-size: 30px;
-    font-weight: 700;
-    margin-left: 0.3rem;
-    float: left;
-    color: rgb(175, 2, 2);
-  }
-}
-
 
 @import '~taro-ui/dist/style/index.scss';

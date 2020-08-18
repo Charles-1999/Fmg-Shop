@@ -1,50 +1,35 @@
-import  { getGoodsPlace, getGoodsCategory, getGoodsSale, getGoodsSpecification } from '../service/Goods';
-
+import  { getGoodsPlace, getGoodsPlaceEntity, getGoodsCategory, getGoodsSale, getGoodsSpecification } from '../service/Goods';
+import { get } from 'lodash';
 
 export default {
   namespace: 'goods',
   state: {
     placeList: {},
-    // filters: {},
-    // pagination: {
-    //   current: 1,
-    //   pageSize: 5,
-    // },
   },
   effects: {
+
     //获取商品属地标签
     * getGoodsPlace({ payload }, { call, put }) {
       const res = yield call(getGoodsPlace, payload);
-      console.log(111)
-      console.log(res)
+      const ids = get(res.data, 'info',[]).map((arr) => {return arr.id})
+      console.log(ids)
       yield put({
         type: 'save',
         payload: {
           placeList: res
         }
       }); 
-      
-      // yield put({
-      //   type: 'save',
-      //   payload:res
-      // });
     },
-    // * getGoodsPlace(_, { call, put, select }) {
-    //   const { placeList, filters, pagination } = yield select(state => state.getGoodsPlace);
-    //   const response = yield call(getGoodsPlace, {
-    //     filters,pagination,
-    //   });
-    //   if(response.statusCode === 200){
-    //     if( Array.isArray(response.data) && response.data.length>0){
-    //       yield put({
-    //         type: 'save',
-    //         payload: {
-    //           placeList: pagination.current > 1 ? [...placeList, ...response.data] : response.data,
-    //         }
-    //       });
-    //     }
-    //   }
-    //},
+    //批量获取属地标签
+    * getGoodsPlaceEntity({ payload }, { call, put }) {
+      const res = yield call(getGoodsPlaceEntity, payload);
+      yield put({
+        type: 'save',
+        payload: {
+          placeList: res
+        }
+      }); 
+    }, 
     //获取种类标签列表
     * getGoodsCategory({ payload }, { call, put }) {
       const response = yield call(getGoodsCategory, {payload});
