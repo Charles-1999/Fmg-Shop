@@ -7,10 +7,6 @@ import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import './index.scss'
 import Recommend from './recommend'
-<<<<<<< HEAD
-=======
-import Goods from '../../model/Goods'
->>>>>>> 45991747250e5e0c203065310304ba03a78913c7
 
 
 @connect(({ goods }) => ({

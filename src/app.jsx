@@ -3,13 +3,9 @@ import Taro from '@tarojs/taro'
 import { Provider } from 'react-redux'
 import './app.scss'
 import dva from './utils/dva'
-<<<<<<< HEAD
-import models from './model/index'
-=======
 import models from './model'
 
 import { set as setGlobalData } from './global_data'
->>>>>>> 45991747250e5e0c203065310304ba03a78913c7
 
 //const store = configStore()
 const dvaApp = dva.createApp({
@@ -25,10 +21,7 @@ const store = dvaApp.getStore();
 class App extends Component {
   // 先看看有没有用 //网上搬过来的
   componentWillMount(){
-<<<<<<< HEAD
-=======
     this.getSysInfo();
->>>>>>> 45991747250e5e0c203065310304ba03a78913c7
     Taro.getSetting()
       .then(res=>{
         if(res.authSetting["scope.userInfo"]){
@@ -60,12 +53,7 @@ class App extends Component {
             return Taro.request({
               url: 'https://test.com/onLogin',
               code: response.code,
-<<<<<<< HEAD
-            },
-            )
-=======
             })
->>>>>>> 45991747250e5e0c203065310304ba03a78913c7
               .then(res=>{
                 if(res.statusCode===200){
                   Taro.setStorage({
@@ -91,8 +79,6 @@ class App extends Component {
     })
   }
 
-<<<<<<< HEAD
-=======
   getSysInfo() {
     // 先缓存获取
     let isIphoneX = Taro.getStorageSync('isIphoneX') || false;
@@ -118,7 +104,6 @@ class App extends Component {
     setGlobalData('capsule', capsule);
   }
 
->>>>>>> 45991747250e5e0c203065310304ba03a78913c7
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render () {
