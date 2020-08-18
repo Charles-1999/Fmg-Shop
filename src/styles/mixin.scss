@@ -1,0 +1,5 @@
+// 宽最小高
+@mixin wmh($width, $height) {
+  width: $width;
+  min-height: $height;
+}

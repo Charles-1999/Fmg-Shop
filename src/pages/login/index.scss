@@ -1,0 +1,29 @@
+.loginViewWrap{
+  padding-top: 5rem;
+  .fmg-logo{
+    width:7rem;
+    height:7rem;
+    margin-left: 36%;
+    text-align: center;
+  }
+  .fmg-name{
+    text-align: center;
+    font-size: 32px;
+  }
+  .fmg-login{
+    margin-left: 3rem;
+    margin-top: 3rem;
+    font-size: 29px;
+  }
+  .fmg-login-info{
+    color: rgb(51, 46, 45);
+    font-size: 25px;
+    margin-left: 3rem;
+    margin-top: 0.3rem;
+  }
+  .btn{
+    width: 80%;
+    border-radius: 99px;
+    margin-top: 4rem;
+  }
+}
