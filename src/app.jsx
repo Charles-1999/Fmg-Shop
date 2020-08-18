@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { Provider } from 'react-redux'
 import './app.scss'
 import dva from './utils/dva'
-import models from './model'
+import models from './model/index'
 
 //const store = configStore()
 const dvaApp = dva.createApp({
@@ -50,7 +50,8 @@ class App extends Component {
             return Taro.request({
               url: 'https://test.com/onLogin',
               code: response.code,
-            })
+            },
+            )
               .then(res=>{
                 if(res.statusCode===200){
                   Taro.setStorage({

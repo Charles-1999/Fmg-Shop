@@ -1,8 +1,7 @@
 export default {
   pages: [
-    'pages/index/index',
     'pages/login/index',
-   
+    'pages/index/index',
     'pages/user/index',
     'pages/cart/index',
     'pages/category/index',
@@ -20,7 +19,7 @@ export default {
   },
   'tabBar': {  //用来配置底部导航栏
     'color': "#333", //文字颜色
-    'selectedColor': "f5930b",  //文字选中后的颜色
+    'selectedColor': "#2a86d4",  //文字选中后的颜色
     'backgroundColor': "white",
     'borderStyle': "black",
     'list': [  //配置页面路径以及icon图标及其选中，最少2个，最多5个
