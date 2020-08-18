@@ -5,14 +5,26 @@
     width: 100%;
     z-index: 999;
     .status {
-        background-color: pink;
+        background-color: #cfcfcf;
     }
-    .capsule {
-        background-color: rgb(252, 169, 183);
+    .capsule { 
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        background-color: #cfcfcf;
+        .back {
+            image {
+                width: 100%;
+                height: 100%;
+            }
+        }
         .title{
             font-weight: 700;
             font-size: 36px;
             text-align: center;
+        }
+        .searchBar {
+            flex:1
         }
     }
 }

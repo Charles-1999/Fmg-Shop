@@ -52,6 +52,7 @@ class Details extends Component {
           <Navbar
             statusBarHeight={statusBarHeight}
             capsuleHeight={capsuleHeight}
+            showBack
           >
           </Navbar>
           <View className='image-box'>

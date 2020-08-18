@@ -86,6 +86,8 @@ class App extends Component {
     const sysInfo = Taro.getSystemInfoSync();
     // 状态栏高度
     const statusBarHeight = sysInfo.statusBarHeight;
+    // 窗口宽度
+    const windowWidth = sysInfo.windowWidth;
     // 胶囊信息
     const capsule = Taro.getMenuButtonBoundingClientRect();
     console.log(capsule);
@@ -102,6 +104,7 @@ class App extends Component {
     setGlobalData('isIphoneX', isIphoneX);
     setGlobalData('statusBarHeight', statusBarHeight);
     setGlobalData('capsule', capsule);
+    setGlobalData('windowWidth', windowWidth);
   }
 
   // 在 App 类中的 render() 函数没有实际作用
