@@ -5,29 +5,17 @@ export default {
   namespace: 'goods',
   state: {
     placeList: {},
-    // filters: {},
-    // pagination: {
-    //   current: 1,
-    //   pageSize: 5,
-    // },
+    filters: {},
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
   },
   effects: {
     //获取商品属地标签
     * getGoodsPlace({ payload }, { call, put }) {
-      const res = yield call(getGoodsPlace, payload);
-      console.log(111)
-      console.log(res)
-      yield put({
-        type: 'save',
-        payload: {
-          placeList: res
-        }
-      }); 
-      
-      // yield put({
-      //   type: 'save',
-      //   payload:res
-      // });
+      const data = yield call(getGoodsPlace, { payload }); 
+      yield put({ type: 'save', payload: { placeList: data } });
     },
     // * getGoodsPlace(_, { call, put, select }) {
     //   const { placeList, filters, pagination } = yield select(state => state.getGoodsPlace);

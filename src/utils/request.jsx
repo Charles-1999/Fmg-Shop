@@ -20,8 +20,6 @@ export default function request(url, option) {
   }).then((res) => {
     console.log('res', res)
     const {statusCode, data} = res;
-    console.log(data);
-    return data;
     if (statusCode >= 200 && statusCode < 300) {
 
       // TODO 异常处理
