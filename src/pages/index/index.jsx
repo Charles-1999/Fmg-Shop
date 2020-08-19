@@ -6,6 +6,12 @@ import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import './index.scss'
 import TopSearch from './Components/TopSearch'
 import PlaceTab from './Components/PlaceTab'
+import Navbar from '../../components/navbar/navbar'
+import Recommend from './recommend'
+import Goods from '../../model/Goods'
+import { get as getGlobalData } from '../../global_data'
+
+
 
 @connect(({ goods }) => ({
    ...goods
@@ -15,12 +21,16 @@ class Index extends Component {
   constructor () {
     super(...arguments);
     this.state={
-      
+      statusBarHeight: getGlobalData('statusBarHeight'),
+      capsule: getGlobalData('capsule')
     }
   }
-  componentDidMount() {
+  
+  componentDidMount= ()=> {
+    //const { dispatch } = this.props;
     this.props.dispatch({
       type: 'goods/getGoodsPlace',
+      payload: { page: 1, limit: 5 }, 
     });
     this.props.dispatch({
       type: 'goods/getGoodsCategory',
@@ -42,6 +52,7 @@ class Index extends Component {
   
   render () {
     const { placeList } = this.props;
+    console.log(placeList)
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
@@ -51,13 +62,11 @@ class Index extends Component {
           statusBarHeight={statusBarHeight}
           capsuleHeight={capsuleHeight}
           showLogo
-        />
+        ></Navbar>
         {/* <TopSearch /> */}
         <View className='home-list-wrap'>
           <PlaceTab />
         </View>
-
-          
       </View>
         
     )

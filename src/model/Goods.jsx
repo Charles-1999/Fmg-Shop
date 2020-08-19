@@ -25,7 +25,7 @@ export default {
         }
       }); 
     },
-    //批量获取属地标签
+    //批量获取属地标签  //没写好
     * getGoodsPlaceEntity({ payload }, { call, put }) {
       const res = yield call(getGoodsPlaceEntity, payload);
       yield put({
