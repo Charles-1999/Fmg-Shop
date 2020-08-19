@@ -11,7 +11,7 @@ import PlaceTab from './Components/PlaceTab'
    ...goods
 }))
 
-class HomeListView extends Component {
+class Index extends Component {
   constructor () {
     super(...arguments);
     this.state={
@@ -42,13 +42,22 @@ class HomeListView extends Component {
   
   render () {
     const { placeList } = this.props;
-    console.log(placeList)
+    const {statusBarHeight, capsule} = this.state; 
+    const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
+
     return (
-      <View className='index'>
-        <TopSearch />
+      <View className='index' style={{ marginTop: statusBarHeight + capsuleHeight }}>
+        <Navbar
+          statusBarHeight={statusBarHeight}
+          capsuleHeight={capsuleHeight}
+          showLogo
+        />
+        {/* <TopSearch /> */}
         <View className='home-list-wrap'>
           <PlaceTab />
         </View>
+
+          
       </View>
         
     )
@@ -56,5 +65,4 @@ class HomeListView extends Component {
 }
 
 
-export default HomeListView;
-
+export default Index;

@@ -5,6 +5,11 @@ export default {
   namespace: 'goods',
   state: {
     placeList: {},
+    filters: {},
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
   },
   effects: {
 
