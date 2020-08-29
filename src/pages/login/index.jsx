@@ -10,6 +10,7 @@ class LoginView extends Component {
     super(...arguments)
   }
 
+
   tobegin = () => {
     Taro.switchTab({
       url: '/pages/index/index'
@@ -17,6 +18,7 @@ class LoginView extends Component {
   };
 
   componentDidMount(){
+    //this.toLogin();
     try {
       const value = Taro.getStorageSync('userInfo')
       if (value) {
@@ -26,13 +28,45 @@ class LoginView extends Component {
       }
     } catch (e) {
       console.log("error: " + e);
-      // Do something when catch error
-    }
-    
+      //Do something when catch error
+    }  
   }
   // handleWXGetUserInfo = (event) => {
   //   console.log(event.detail)
   // }
+  toLogin = () => {
+    Taro.login()
+          .then(response=>{
+            console.log(response.code)
+            return Taro.request({
+              url: 'https://api.daosuan.net/account/login',
+              code: response.code,
+            })
+              .then(res=>{
+                if(res.statusCode===200){
+                  console.log(res)
+                  Taro.setStorage({
+                    key: 'session3rd',
+                    data: res.data.data.session3rd
+                  })
+                }else if(res.status === 500){
+                  console.log('发生错误，请重试！')
+                  Taro.showToast({
+                    title: '发生错误，请重试！',
+                    icon: 'none'
+                  })
+                }
+              })
+          })
+          .catch(err=>{
+            console.log(err);
+            Taro.showToast({
+              title: '发生错误，请重试!',
+              icon: 'none'
+            })
+          })
+      }
+  
 
   render () {
     return (

@@ -1,38 +1,432 @@
 .index{
   //background-color: white;
   background-color: rgb(243, 243, 243);
+  padding-top:10rpx;
+  .home-top-wrap{
+    background-color: white;
+    border-radius: 30px;
+    margin: 30rpx 30rpx;
+    padding: 30rpx 30rpx;
+    .place-tab-row::-webkit-scrollbar {display:none}
+    .place-tab-row{
+      //padding: 30rpx 30rpx;
+     // display: inline-flex;
+      // white-space: nowrap;
+      overflow-y:hidden;
+      overflow-x:auto;
+      white-space: nowrap;
+      
+      .place-tab-item{   
+        margin-right: 40rpx;
+        overflow-x: hidden;
+        //overflow-x: none;
+        display: inline-table;
+        vertical-align: top;
+        .pic{
+          height: 130rpx;
+          width: 130rpx;
+          border-radius: 30px;
+          background-color: #DCE9FF;
+          img{
+            height: 150rpx;
+            width: 150rpx;
+          }
+        }
+        .title{
+          text-align: center;
+        }
+      }
+    }
+    
+    .kind-tab-wrap{
+      .kind-tab-row::-webkit-scrollbar {display:none}
+      .kind-tab-row{
+        margin:30rpx 0;
+        overflow-y:hidden;
+        overflow-x:auto;
+        white-space: nowrap;
+        .kind-tab-item{   
+          overflow-x: hidden;
+          display: inline-table;
+          vertical-align: top;
+          margin-right: 25rpx;
+          .pic{
+            height: 95rpx;
+            width: 95rpx;
+            img{
+              height: 70rpx;
+              width: 70rpx;
+            }
+          }
+          .title{
+            text-align: center;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+      .kind-more{
+        .kind-more-pic{
+          height: 86rpx;
+          width: 45rpx;
+          background-color: rgb(212, 212, 212);
+          border-radius:40px;
+          padding-top:10rpx;
+        }
+        .title{
+          text-align: center;
+          font-size: 20px;
+        }
+      }
+    }
+  
+  .sale-top-wrap{
+    background-color: white;
+    border-radius: 30px;
+    margin: 30rpx 30rpx;
+    padding: 10rpx 30rpx;
+    .title-list-top{
+      display: block;
+      height:80rpx;
+      .icon{
+        margin-top: -10rpx;
+        left:100rpx;
+        float: left;
+      }
+      .name{
+        font-size: 36px;
+        font-weight: 500;
+        //position: absolute;
+        float: left;
+      }
+      .more{
+        display: inline-flex;
+        background-color: #D8D8D8;
+        height:40rpx;
+        border-radius: 30px;
+        padding-top:8rpx;
+        padding-left: 15rpx;
+        //float: right;
+        float: right;
+        left:16.4rem;
+        //position: absolute;
+        .checkmore{
+          font-size: 24px;
+          color: #3d3d3d;
+        }
+      }
+      
+    }
+    .goodsList{
+      display: inline-flex;
+      .left-item{ 
+        margin-right: 28rpx;
+        position: relative;
+        .range-1{
+          display: flex;
+          position:absolute;
+          left:-27rpx;
+          top:-19rpx;
+         
+        }
+        .number{
+          position:absolute;
+          font-size: 56rpx;
+          color: rgb(255, 255, 255);
+          font-weight: 700;
+          left: 16rpx;
+          top: -10rpx;
+          z-index:2;
+        }
+      }
+      .mid-item{
+        position: relative;
+        margin-right: 28rpx;
+        .range-2{
+          display: flex;
+          position:absolute;
+          left:-25rpx;
+          top:-17rpx;
+         
+        }
+        .number{
+          position:absolute;
+          font-size: 40rpx;
+          color: rgb(255, 255, 255);
+          font-weight: 700;
+          left: 4rpx;
+          top: -10rpx;
+          z-index:2;
+        }
+      }
+      .right-item{
+        position: relative;
+        .range-3{
+          display: flex;
+          position:absolute;
+          left:-22rpx;
+          top:85rpx;
+         
+        }
+        .number{
+          position:absolute;
+          font-size: 40rpx;
+          color: rgb(255, 255, 255);
+          font-weight: 700;
+          left: 6rpx;
+          top:91rpx;
+          z-index:2;
+        }
+        .intro{
+          height:100rpx;
+          width:160rpx;
+          font-size: 18rpx;
+          color: rgb(48, 48, 48);
+        }
+       
+      }
+    }
+  }
+  .sale-new-wrap{
+    .title-list{
+      background-color: white;
+      border-radius: 30px;
+      padding: 10rpx 30rpx;
+      //display: block;
+      height:50rpx;
+      margin: 30rpx 30rpx;
+      .icon{
+        margin-top: -15rpx;
+        left:100rpx;
+        float: left;
+      }
+      .name{
+        font-size: 36px;
+        font-weight: 500;
+        //position: absolute;
+        float: left;
+      }
+      .more{
+        display: inline-flex;
+        background-color: #D8D8D8;
+        height:40rpx;
+        border-radius: 30px;
+        padding-top:8rpx;
+        padding-left: 15rpx;
+        //float: right;
+        float: right;
+        left:16.4rem;
+        //position: absolute;
+        .checkmore{
+          font-size: 24px;
+          color: #3d3d3d;
+        }
+      }
+    }
+   
+  }
 }
-.topSearch{
-  background-color: white;
-  .fmg-logo{
-    display: inline-block;
-    margin-top:0.7rem;
-    padding-left: 20rpx;
-  }
-  .search-box{
-    width: 75%;
-    display: inline-block;
-    margin-left: 0.3rem;
-  }
-  .bell{
-    display: inline-block;
-    margin-top:0.6rem;
-    margin-left: 0.4rem;
+.place-goods-list-wrap{
+  background-color: rgb(243, 243, 243);
+  padding-top:10rpx;
+  .title-wrap{
+    padding:30rpx 30rpx;
+    display: inline-flex;
+    .info{
+      margin-left: 15rpx;
+      .name{
+        margin-top: 25rpx;
+        font-size: 50rpx;
+        font-weight: 400;
+      }
+      .check-info{
+        margin-top: 5rpx;
+        font-size: 19rpx;
+        border-radius: 30rpx;
+        border: 1rpx solid #535353;
+        color: #535353;
+        padding: 0.5px 9rpx;
+        width: 76rpx;
+
+      }
+    }
+   
   }
 }
-.home-list-wrap{
+.goods-card{
+  .goods-items-wrap{
+    padding:0rpx 30rpx;
+    width:100%; overflow:hidden;
+    //display: block;
+    //background-color: rgb(243, 243, 243);
+    .first-item{
+      margin-bottom: 30rpx;
+      margin-right: 45rpx;
+      height:400rpx;
+      width:280rpx;
+      background-color: white;
+      border-radius: 30px;
+      padding: 20rpx 20rpx;
+      float: left;
+      .cover{
+        width:280rpx;
+        border-radius: 30px;
+        image{
+          width:280rpx;
+          height: 250rpx;
+          border-radius: 30px;
+          clear: both;
+        }
+      }
+      .info{
+        float: left;
+        .count{
+          font-size: 14rpx;
+          color: rgb(192, 0, 0);
+          height: 18rpx;
+          width: 55rpx;
+          border: 1px solid rgb(192, 0, 0);
+          border-radius: 30rpx;
+          padding: 4rpx 8rpx;            
+        }
+        .count-null{
+          font-size: 14rpx;
+          height: 18rpx;
+          width: 55rpx;
+          padding: 4rpx 8rpx;    
+        }
+        .price{
+          .number{
+          font-size: 30rpx;
+          color: rgb(192, 0, 0);
+          font-weight:500;
+          float: left;
+          margin-top: 8rpx;
+          margin-left: 5rpx;
+          }
+        }
+      }
+      .like {
+        .join-cart{
+          background-color: #d80202;
+          color: white;
+          font-size: 27rpx;
+          border-radius: 20px;
+          padding: 3rpx 10rpx;
+          margin-top: 27rpx;
+        }
+        float:right;
+        image{
+          width: 70rpx;
+          height: 70rpx;
+          margin-top: -30rpx;
+        }
+        .like-font{
+          margin-top:-20rpx;
+          font-size: 24rpx;
+          margin-left: 10rpx;
+        }
+      }
+  }
+  }
+}
+.title-list{
   background-color: white;
   border-radius: 30px;
+  padding: 10rpx 30rpx;
+  //display: block;
+  height:50rpx;
   margin: 30rpx 30rpx;
-  .place-tab-row{
-    padding: 30rpx 30rpx;
-    .place-tab-item{
-      height: 160rpx;
-      width: 160rpx;
-      border-radius: 30px;
-      background-color: rgb(243, 196, 134);
+  .icon{
+    margin-top: -15rpx;
+    left:100rpx;
+    float: left;
+  }
+  .name{
+    font-size: 36px;
+    font-weight: 500;
+    //position: absolute;
+    float: left;
+  }
+  .more{
+    display: inline-flex;
+    background-color: #D8D8D8;
+    height:40rpx;
+    border-radius: 30px;
+    padding-top:8rpx;
+    padding-left: 15rpx;
+    //float: right;
+    float: right;
+    left:16.4rem;
+    //position: absolute;
+    .checkmore{
+      font-size: 24px;
+      color: #3d3d3d;
     }
   }
 }
+.place-kind-list{
+  .kind-item-wrap{
+    padding:30rpx 30rpx;
+    .kind-item{
+      width:200rpx;
+      .title{
+        text-align: center;
+        font-size: 30rpx;
+      }
+    }
+   
+  }
+}
+.kind-goods-list-wrap{
+  background-color: rgb(243, 243, 243);
+  .top-list::-webkit-scrollbar {display:none}
+  .top-list{
+    background-color: rgb(255, 255, 255);
+    //display: inline-flex;
+    margin-bottom: 30rpx;
+    padding:20rpx 30rpx;
+    display: flex;
+    overflow-y:hidden;
+    overflow-x:auto;
+    white-space: nowrap;
+    .kind-item{
+      margin-right: 30rpx;
+      display: inline-table;
+      vertical-align: top;
+      overflow-x: hidden;
+    }
+    .kind-item-active{
+      margin-right: 30rpx;
+      overflow-x: auto;
+      background-color: rgba(219, 219, 219, 0.6);
+      border-radius: 10rpx;
+      padding: 0rpx 20rpx;      
+      display: inline-table;
+      vertical-align: top;
+      overflow-x: hidden;
+    }
+
+  }
+}
+// .topSearch{
+//   background-color: white;
+//   .fmg-logo{
+//     display: inline-block;
+//     margin-top:0.7rem;
+//     padding-left: 20rpx;
+//   }
+//   .search-box{
+//     width: 75%;
+//     display: inline-block;
+//     margin-left: 0.3rem;
+//   }
+//   .bell{
+//     display: inline-block;
+//     margin-top:0.6rem;
+//     margin-left: 0.4rem;
+//   }
+// }
+
 
 @import '~taro-ui/dist/style/index.scss';

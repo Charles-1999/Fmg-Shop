@@ -1,24 +1,14 @@
 .swiper {
-  width: 100%;
-  height: 450px;
+  height: 250rpx;
+  margin-top: 20rpx;
   img {
-    height: 450px !important;
+    height: 250px !important;
   }
 }
 
 //效果图
 .photo-1{
   background-color: #eed5d5;
-  height: 450px; //这里的高度 会随着屏幕变化显示的比例会有改变，后面换上图片后直接用百分比
-  width: 100%;
-}
-.photo-2{
-  background-color: #eef7c7;
-  height: 450px; //这里的高度 会随着屏幕变化显示的比例会有改变，后面换上图片后直接用百分比
-  width: 100%;
-}
-.photo-3{
-  background-color: #c7e1e7;
-  height: 450px; //这里的高度 会随着屏幕变化显示的比例会有改变，后面换上图片后直接用百分比
+  height: 250px; //这里的高度 会随着屏幕变化显示的比例会有改变，后面换上图片后直接用百分比
   width: 100%;
 }

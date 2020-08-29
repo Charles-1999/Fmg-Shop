@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { View } from '@tarojs/components'
 import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import './index.scss'
-import TopSearch from './Components/TopSearch'
 import PlaceTab from './Components/PlaceTab'
+import Kindtab from './Components/KindTab'
+import SaleTop from './Components/SaleTop'
+import SaleNew from './Components/SaleNew'
+import MySwiper from '../../components/MySwiper'
+import PlaceKindTab from './Components/PlaceKindTab'
+//import HomeSwiper from './Components/HomeSwiper'
 import Navbar from '../../components/navbar/navbar'
-import Recommend from './recommend'
-import Goods from '../../model/Goods'
 import { get as getGlobalData } from '../../global_data'
-
-
 
 @connect(({ goods }) => ({
    ...goods
@@ -22,40 +23,35 @@ class Index extends Component {
     super(...arguments);
     this.state={
       statusBarHeight: getGlobalData('statusBarHeight'),
-      capsule: getGlobalData('capsule')
+      capsule: getGlobalData('capsule'),
     }
   }
-  
-  componentDidMount= ()=> {
-    //const { dispatch } = this.props;
+  componentDidMount(){
     this.props.dispatch({
       type: 'goods/getGoodsPlace',
-      payload: { page: 1, limit: 5 }, 
     });
     this.props.dispatch({
-      type: 'goods/getGoodsCategory',
-      payload: { page: 1, limit: 5 }, 
+      type: 'goods/getGoodsKind',
     });
     this.props.dispatch({
-      type: 'good/getGoodsSale',
-      payload: { page: 1, limit: 5 }, 
-    });
-    this.props.dispatch({
-      type: 'good/getGoodsSpecification',
-      payload: { page: 1, limit: 5 }, 
-    });
-    Taro.login() //获取jscode
-    .then(response=>{
-      console.log(response.code)
+      type: 'goods/getslideshow',
     })
+    // this.props.dispatch({
+    //   type: 'goods/getGoodsList',
+    // });
+  
+    // Taro.login() //获取jscode
+    // .then(response=>{
+    //   console.log(response.code)
+    // })
   }
   
   render () {
-    const { placeList } = this.props;
-    console.log(placeList)
+    const { placeList, kindList, slideshowList } = this.props;
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
+    
     return (
       <View className='index' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -64,9 +60,15 @@ class Index extends Component {
           showLogo
         ></Navbar>
         {/* <TopSearch /> */}
-        <View className='home-list-wrap'>
-          <PlaceTab />
+        <View className='home-top-wrap'>
+          <PlaceTab placeList={placeList} />
+          {/* <HomeSwiper /> */}
+          <MySwiper slideshowList={slideshowList} />
+          <Kindtab kindList={kindList} />
         </View>
+        <SaleTop />
+        <SaleNew />
+        <PlaceKindTab placeList={placeList} kindList={kindList} />
       </View>
         
     )

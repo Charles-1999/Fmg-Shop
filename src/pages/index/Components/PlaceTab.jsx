@@ -1,39 +1,60 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { AtSearchBar, AtIcon } from 'taro-ui'
+import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import '../index.scss'
 
 @connect(({ goods }) => ({
-   ...goods
+  ...goods
 }))
 
 class PlaceTab extends Component {
+  // static propTypes = {
+  //   placeList: PropTypes.arrayOf({}).isRequired,
+  // };
+  // static defaultProps = {
+  //   placeList: [],
+  // };
+
   constructor () {
     super(...arguments);
     this.state={
-     
+      currentId: 0,
     }
   }
-  componentDidMount() {
-    this.props.dispatch({
-      type: 'goods/getGoodsPlace',
-      payload: { page: 1, limit: 5,}, 
+  handleTypeTab = (e,id) => {
+    this.setState({
+      currentId: e,
+    })
+    Taro.navigateTo({
+      url: `/pages/index/placeGoodsList?id=${this.state.currentId}`,
     });
   }
-
   render () {
-    const { placeList } = this.props;
+    const { placeList } = this.props
+    const data = Array.from(placeList)
+ 
     return (
       <View className='place-tab-row'>
-        <View className='place-tab-item'>
-
+      {data.map(item => (
+        <View className='place-tab-item' key={item.id} onClick={this.handleTypeTab.bind(this,item.id)}>
+            <View className='pic'>
+              <Image src={'http://qiniu.daosuan.net/'+item.picture} style='width:130rpx;height:130rpx' />
+            </View>
+            <View className='title'>
+              {item.place}
+            </View>
         </View>
+      ))}
+       
       </View>
     )
   }
 }
+
 
 export default PlaceTab;
 

@@ -4,21 +4,23 @@ import Taro from '@tarojs/taro';
 export default function request(url, option) {
 
   console.log('url', url)
-
+  
   const options = {
     ...option
   };
-  const body = JSON.stringify(options.body);
+  const body = options.body;
   const _host = 'https://api.daosuan.net';
   return Taro.request({
     url: _host + url,
     data: body,
-    headers: {
+    header: {
       'Content-Type': 'application/json',
     },
     method: options.method.toUpperCase(),
   }).then((res) => {
-    console.log('res', res)
+   // console.log('res', res)
+  //  console.log(3434)
+  //  console.log(body)
     const {statusCode, data} = res;
     if (statusCode >= 200 && statusCode < 300) {
       // TODO 异常处理

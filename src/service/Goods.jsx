@@ -1,10 +1,24 @@
 import request from '../utils/request';
 
-//批量获取属地标签
-export const getGoodsPlaceEntity = params =>{
+//批量获取轮播图信息------------
+export const mgetslideshow = params =>{ 
+  return request('/goods/slideshow/_mget', {
+    method: 'POST',
+    body: { ids: params.payload },
+  });
+}
+//获取轮播图列表
+export const getslideshow = params =>{
+  return request('/goods/slideshow/list', {
+    method: 'GET',
+    body: params,
+  });
+}
+//批量获取属地标签----------
+export const mgetGoodsPlace = params =>{
   return request('/goods/place_tag/_mget', {
     method: 'POST',
-    body: params,
+    body: { ids: params.payload },
   });
 }
 //获取产品属地/goods/place_tag/_mget
@@ -14,24 +28,31 @@ export const getGoodsPlace = params =>{
     body: params,
   });
 }
+//批量获取种类标签-----------
+export const mgetGoodsKind = params =>{
+  return request('/goods/kind_tag/_mget', {
+    method: 'POST',
+    body: { ids: params.payload },
+  });
+}
 //获取种类标签列表
-export async function getGoodsCategory(params){
+export const getGoodsKind = params =>{
   return request('/goods/kind_tag/list', {
     method: 'GET',
     body: params,
   });
 }
-//获取销售标签列表
-export async function getGoodsSale(params){
-  return request('/goods/sale_tag/list', {
-    method: 'GET',
-    body: params,
+//批量获取商品信息------------
+export const mgetGoodsList = params =>{ 
+  return request('/goods/_mget', {
+    method: 'POST',
+    body: { ids: params.payload },
   });
 }
-//获取规格模版列表
-export async function getGoodsSpecification(params){
-  return request('/goods/sale_tag/list', {
+//获取商品列表
+export const getGoodsList = params =>{
+  return request('/goods/list', {
     method: 'GET',
-    body: params,
+    body: params
   });
 }

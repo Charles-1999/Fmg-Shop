@@ -10,6 +10,9 @@ export default {
     'pages/details/index',
     'pages/details/typeSelect',
     'pages/user/userInfoList',
+    'pages/index/placeGoodsList',
+    'pages/index/kindGoodsList',
+
   ],
   window: {
     backgroundTextStyle: 'light',

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Swiper, SwiperItem, Image, View } from '@tarojs/components';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import './index.scss';
 
 class MySwiper extends Component {
@@ -16,7 +17,8 @@ class MySwiper extends Component {
   };
 
   render() {
-    const { banner, home } = this.props;
+    const { banner, home, slideshowList } = this.props;
+    const data = Array.from(slideshowList)
     return (
       <Swiper
         className="swiper"
@@ -26,34 +28,18 @@ class MySwiper extends Component {
         indicatorActiveColor="#bf708f"
         autoplay
       >
-        {/* {banner.map((item, index) => (
-          <SwiperItem key={index}>
-            <Image mode="widthFix" src={`${item.image_src}!w750`} />
-
+        {data.map(item => (
+          <SwiperItem key={item.id}>
+            <View className='demo-text-1'>
+              <View className='photo-1'>
+                <Image src={'http://qiniu.daosuan.net/'+ get(item,'picture','')} className='first-img' style='height:138px;width:355.5px' />
+              </View>
+            </View>
           </SwiperItem>
-        ))} */}
-        {/* 效果图 */}
-        <SwiperItem>
-          <View className='demo-text-1'>
-            <View className='photo-1'>
-              111111
-            </View>
-          </View>
-        </SwiperItem>
-        <SwiperItem>
-          <View className='demo-text-2'>
-          <View className='photo-2'>
-              222222
-            </View>
-          </View>
-        </SwiperItem>
-        <SwiperItem>
-          <View className='demo-text-3'>
-          <View className='photo-3'>
-              333333
-            </View>
-          </View>
-        </SwiperItem>
+        ))}
+       
+ 
+       
       </Swiper>
     );
   }
