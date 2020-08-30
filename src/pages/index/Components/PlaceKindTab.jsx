@@ -19,15 +19,17 @@ class PlaceKindTab extends Component {
       currentId: 0,
     }
   }
- 
-  // handleTypeTab = (e,id) => {
-  //   this.setState({
-  //     currentId: e,
-  //   })
-  //   Taro.navigateTo({
-  //     url: `/pages/index/placeGoodsList?id=${this.state.currentId}`,
-  //   });
-  // }
+  handleTypeTab = (id) => {
+    Taro.navigateTo({
+      url: `/pages/index/placeGoodsList?id=${id}`,
+    });
+  }
+  enterGoodsKind = (id) => {
+    Taro.navigateTo({
+      url: `/pages/index/kindGoodsList?id=${id}`,
+    });
+  }
+
   render () {
     const { placeList, kindList} = this.props
     const placeListItem = Array.from(placeList)
@@ -44,14 +46,14 @@ class PlaceKindTab extends Component {
               {/* <View className='icon'>
                 <Image src={newGoods} style='width:140rpx;height:80rpx' />
               </View> */}
-              <View className='more'>
+              <View className='more' onClick={this.handleTypeTab.bind(this,item.id)}>
                 <View className='checkmore'>进入专题</View>
                 <Image src={more} style='width:50rpx;height:30rpx' />
               </View>
             </View>
             <View className='kind-item-wrap'>
               {kindListItem.filter(e => get(e, 'parent_id', '') == item.id).map(kind => (
-                <View className='kind-item' key={kind.id}>
+                <View className='kind-item' key={kind.id} onClick={this.enterGoodsKind.bind(this,kind.id)}>
                   <Image src={'http://qiniu.daosuan.net/'+get(kind,'picture','')} style='width:200rpx;height:200rpx;border-radius:20px' />
                   <View className='title'>{kind.title}</View>
                 </View>

@@ -228,6 +228,9 @@
 }
 .place-goods-list-wrap{
   background-color: rgb(243, 243, 243);
+  position:absolute;
+  width:100%;
+  height:100%;
   padding-top:10rpx;
   .title-wrap{
     padding:30rpx 30rpx;
@@ -336,7 +339,8 @@
   padding: 10rpx 30rpx;
   //display: block;
   height:50rpx;
-  margin: 30rpx 30rpx;
+  margin: 0rpx 30rpx;
+  margin-bottom: 30rpx;
   .icon{
     margin-top: -15rpx;
     left:100rpx;
@@ -379,7 +383,10 @@
   }
 }
 .kind-goods-list-wrap{
-  background-color: rgb(243, 243, 243);
+    background-color: rgb(243, 243, 243);
+    position:absolute;
+    width:100%;
+    height:100%;
   .top-list::-webkit-scrollbar {display:none}
   .top-list{
     background-color: rgb(255, 255, 255);

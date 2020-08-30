@@ -19,7 +19,6 @@ class kindGoodsList extends Component {
   static defaultProps = {
     goodsList: [],
     current_kind: [],
-    selected: false,
   };
   constructor () {
     super(...arguments);

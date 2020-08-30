@@ -12,10 +12,12 @@ import cart from '../../../assets/icon/购物车2.png'
 
 @connect(({ goods }) => ({
   ...goods
+  
 }))
 class GoodsCard extends Component {
   static defaultProps = {
     list: [],
+    goodsList:[],
   };
 
   constructor () {
@@ -50,6 +52,7 @@ class GoodsCard extends Component {
     const data = Array.from(goodsList);
     console.log(777)
     console.log(data)
+
     return (
       <View className='goods-card'>
         <View className='goods-items-wrap'>
