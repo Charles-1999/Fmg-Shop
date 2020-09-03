@@ -1,3 +1,5 @@
+import path from 'path'
+
 const config = {
   projectName: 'fmg-taro',
   date: '2020-7-27',
@@ -10,6 +12,9 @@ const config = {
   sourceRoot: 'src',
   outputRoot: 'dist',
   plugins: [],
+  alias: {
+    '@components': path.resolve(__dirname, '..', 'src/components')
+  },
   defineConstants: {
   },
   copy: {
@@ -77,7 +82,7 @@ const config = {
   }
 }
 
-module.exports = function (merge) {
+export default function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'))
   }

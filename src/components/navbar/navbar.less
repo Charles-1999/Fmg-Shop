@@ -5,13 +5,14 @@
     width: 100%;
     z-index: 999;
     .status {
-        background-color: #cfcfcf;
+        background-color: #e5e5e5;
     }
     .capsule { 
+        position: relative;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        background-color: #cfcfcf;
+        justify-content: flex-start;
+        background-color: #e5e5e5;
         .back {
             image {
                 width: 100%;
@@ -19,8 +20,11 @@
             }
         }
         .title{
-            font-weight: 700;
-            font-size: 36px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            font-size: 17PX;
             text-align: center;
         }
         .searchBar {
