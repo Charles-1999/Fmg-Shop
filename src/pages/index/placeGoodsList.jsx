@@ -55,6 +55,7 @@ class PlaceGoodsList extends Component {
           statusBarHeight={this.state.statusBarHeight}
           capsuleHeight={capsuleHeight}
           showBack
+          showSearch
         >
         </Navbar>
         <View className='title-wrap'>

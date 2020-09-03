@@ -51,10 +51,11 @@ class kindGoodsList extends Component {
           statusBarHeight={this.state.statusBarHeight}
           capsuleHeight={capsuleHeight}
           showBack
+          showSearch
         >
         </Navbar>
         <View className='top-list'>
-        {kindList.map(item =>(
+        {kindList.filter(item => item.parent_id == 0).map(item =>(
         item.id == this.state.current_index ? 
           <View>
             <View className='kind-item-active' key={item.id} onClick={this.setCurrentIndex.bind(this,item.id)} >

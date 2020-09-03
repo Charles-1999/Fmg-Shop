@@ -23,7 +23,7 @@ export default class Navbar extends Component {
 
     render() {
         const { windowWidth, capsule } = this.state;
-        const { statusBarHeight, capsuleHeight, title, color, showBack, showLogo } = this.props;
+        const { statusBarHeight, capsuleHeight, title, color, showBack, showLogo, showTitle, showSearch} = this.props;
         return (
             <View className='navbar'>
                 <View className='status' style={{ height: statusBarHeight }}></View>
@@ -38,8 +38,13 @@ export default class Navbar extends Component {
                         </View>
                         : ''
                      }
-                    {/* <View className='title' style={{ lineHeight: capsuleHeight + 'px', color: color }}>{title}</View> */}
-                    <SearchBar marginRight={windowWidth * 2 - capsule.right - capsule.left} marginLeft={windowWidth - capsule.right} />
+                     { showTitle ?
+                       <View className='title' style={{ lineHeight: capsuleHeight + 'px', color: color }}>{title}</View>
+                       : ''
+                     }
+                    { showSearch ?  <SearchBar marginRight={windowWidth * 2 - capsule.right - capsule.left} marginLeft={windowWidth - capsule.right} />
+                    :''}
+                   
                 </View>
             </View>
         )

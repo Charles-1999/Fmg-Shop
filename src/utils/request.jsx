@@ -9,7 +9,7 @@ export default function request(url, option) {
     ...option
   };
   const body = options.body;
-  const _host = 'https://api.daosuan.net';
+  const _host = 'https://api.fmg.net.cn';
   return Taro.request({
     url: _host + url,
     data: body,

@@ -58,6 +58,7 @@ class Index extends Component {
           statusBarHeight={statusBarHeight}
           capsuleHeight={capsuleHeight}
           showLogo
+          showSearch
         ></Navbar>
         {/* <TopSearch /> */}
         <View className='home-top-wrap'>
