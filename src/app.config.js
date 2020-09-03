@@ -8,7 +8,6 @@ export default {
     'pages/find/index',
     'pages/order/orderList',
     'pages/details/index',
-    'pages/details/typeSelect',
     'pages/user/userInfoList',
     'pages/index/placeGoodsList',
     'pages/index/kindGoodsList',
