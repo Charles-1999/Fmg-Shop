@@ -1,0 +1,54 @@
+.tool_bar {
+    display: flex;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 120rpx;
+    padding: 0 20rpx 10rpx;
+    border-top: 1px solid #f3f3f3;
+    background-color: #fff;
+    box-sizing: border-box;
+    .tool_item {
+        flex: 1;
+        position: relative;
+        height: 100rpx;
+        margin-right: 25rpx;
+        font-size: 24rpx;
+        text-align: center;
+        line-height: 20rpx;
+        image {
+            width: 100%;
+            height: 80rpx;
+        }
+        button {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+    }
+    .tool_item_2 {
+        flex: 2.5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 90rpx;
+        margin-top: 10rpx;
+        font-size: 32rpx;
+        color: #fff;
+        border-radius: 50rpx;
+        background-color: #e16d6d;
+        box-sizing: border-box;
+    }
+    .add_cart {
+        background-color: #5e83ff;
+        margin-right: 30rpx;
+    }
+}
+
+.isIphoneX {
+    height: 180rpx;
+}
