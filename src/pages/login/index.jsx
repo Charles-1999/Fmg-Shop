@@ -10,27 +10,36 @@ class LoginView extends Component {
     super(...arguments)
     this.state = {
       userId: Taro.getStorageSync('userId'),
+      userInfo: Taro.getStorageSync('userInfo')
     }
   }
 
-  componentDidMount(){
+  componentDidMount(){  
     if(!this.state.userId) {
-      this.getToken();
+      this.login();
+    }
+    if(this.state.userInfo) {
+      Taro.switchTab({ url: '/pages/index/index' })
     }
   }
 
-  getToken(){
+  login(){
     Taro.login({
       success: res => {
         console.log('小程序登录成功！')
-        request('/account/login', {
+        request('/account/login/wx_login', {
           body: {
             js_code: res.code
           },
           method: 'POST'
         }).then( data => {
+          console.log(data)
           Taro.setStorageSync('userId',data.id)
+          Taro.setStorageSync('token',data.token)
         })
+      },
+      fail: err => {
+        console.log(err)
       }
     })
   }
@@ -41,7 +50,6 @@ class LoginView extends Component {
       Taro.switchTab({ url: '/pages/index/index' })
     }
   }
-
 
   render () {
     return (
