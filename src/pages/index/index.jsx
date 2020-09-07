@@ -50,7 +50,6 @@ class Index extends Component {
     const { placeList, kindList, slideshowList } = this.props;
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
-
     
     return (
       <View className='index' style={{ marginTop: statusBarHeight + capsuleHeight }}>

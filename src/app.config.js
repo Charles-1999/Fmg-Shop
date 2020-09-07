@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/user/addressList',
     'pages/login/index',
     'pages/index/index',
     'pages/user/index',
@@ -11,7 +12,7 @@ export default {
     'pages/user/userInfoList',
     'pages/index/placeGoodsList',
     'pages/index/kindGoodsList',
-
+    'pages/user/addAddress',
   ],
   window: {
     backgroundTextStyle: 'light',

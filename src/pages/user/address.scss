@@ -1,0 +1,49 @@
+.address-list-wrap{
+  background-color: rgb(243, 243, 243);
+  position: relative;;
+  height: 100vh;
+  .address-list{
+    padding-top:10rpx;
+    .address-list-item{
+      margin:0 30rpx;
+      margin-top: 30rpx;
+      padding:30rpx 30rpx;
+      background-color:white;
+      border-radius: 25rpx;
+      height:100rpx;
+      .info{
+        float: left;
+        .name-phone{
+          font-size:40rpx;
+          font-weight: 500;
+        }
+        .detail{
+          font-size:30rpx;
+          color:rgb(119, 118, 118);
+        }
+      }
+      .edit{
+        float: right;
+        .text{
+          font-size:26rpx;
+          color:rgb(143, 143, 143);
+          text-align: center;
+        }
+      }
+    }
+  }
+  .add-address{
+    width: 200rpx;
+    height: 60rpx;
+    text-align: center;
+    color: white;
+    margin: 0 auto;
+    font-size: 43rpx;
+    background-color: #6372c7;
+    border-radius: 40rpx;
+    padding: 15rpx;
+    position: fixed;
+    bottom: 30rpx;
+    left: 35%;
+  }
+}

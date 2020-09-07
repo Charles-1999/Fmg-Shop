@@ -26,6 +26,7 @@ class kindGoodsList extends Component {
       statusBarHeight: getGlobalData('statusBarHeight'),
       capsule: getGlobalData('capsule'),
       current_index: Current.router.params.id,
+      kindList: [],
     }
     //this.setCurrentIndex = this.setCurrentIndex.bind(this)
   }
@@ -33,6 +34,10 @@ class kindGoodsList extends Component {
     this.props.dispatch({
       type: 'goods/getGoodsKind',
     });
+    const { kindList } = this.props;
+    this.setState({
+      kindList: kindList,
+    })
   }
   setCurrentIndex(event){
     this.setState({
@@ -42,7 +47,7 @@ class kindGoodsList extends Component {
 
   render () {
     const capsuleHeight = this.state.capsule.height + (this.state.capsule.top - this.state.statusBarHeight) * 3
-    const { kindList } = this.props
+  
 
 
     return (
@@ -55,7 +60,7 @@ class kindGoodsList extends Component {
         >
         </Navbar>
         <View className='top-list'>
-        {kindList.filter(item => item.parent_id == 0).map(item =>(
+        {this.state.kindList.filter(item => item.parent_id == 0).map(item =>(
         item.id == this.state.current_index ? 
           <View>
             <View className='kind-item-active' key={item.id} onClick={this.setCurrentIndex.bind(this,item.id)} >

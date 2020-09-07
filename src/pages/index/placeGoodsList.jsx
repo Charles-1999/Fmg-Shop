@@ -29,7 +29,8 @@ class PlaceGoodsList extends Component {
     this.state={
       statusBarHeight: getGlobalData('statusBarHeight'),
       capsule: getGlobalData('capsule'),
-
+      placeList: [],
+      kindList: [],
     }
   }
   componentDidMount(){
@@ -39,16 +40,20 @@ class PlaceGoodsList extends Component {
     this.props.dispatch({
       type: 'goods/getGoodsKind',
     });
+    const { placeList, kindList} = this.props
+    const current_place = placeList.filter(item => item.id == Current.router.params.id)[0];
+    const current_kind = kindList.filter(item => get(item, 'parent_id', '') == Current.router.params.id);
+    this.setState({
+      placeList: current_place,
+      kindList: current_kind,
+    })
   }
 
 
   render () {
     const capsuleHeight = this.state.capsule.height + (this.state.capsule.top - this.state.statusBarHeight) * 3
-    const { placeList, kindList} = this.props
-    const current_place = placeList.filter(item => item.id == Current.router.params.id)[0];
-    const current_kind = kindList.filter(item => get(item, 'parent_id', '') == Current.router.params.id);
+ 
 
-    console.log('restart')
     return (
       <View className='place-goods-list-wrap' style={{ marginTop: this.state.statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -60,14 +65,14 @@ class PlaceGoodsList extends Component {
         </Navbar>
         <View className='title-wrap'>
           <View className='pic'>
-            <Image src={'http://qiniu.daosuan.net/'+current_place.picture} style='width:170rpx;height:170rpx' />
+            <Image src={'http://qiniu.daosuan.net/'+this.state.placeList.picture} style='width:170rpx;height:170rpx' />
           </View>
           <View className='info'>
-            <View className='name'>{current_place.place}</View>
+            <View className='name'>{this.state.placeList.place}</View>
             <View className='check-info'>查看简介</View>
           </View>
         </View>
-        {current_kind.map(item => (
+        {this.state.kindList.map(item => (
           <View className='place-kind-goods-list' key={item.id}>
             <View className='title-list' >
               <View className='name'>

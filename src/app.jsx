@@ -22,66 +22,66 @@ class App extends Component {
   // 先看看有没有用 //网上搬过来的
   componentWillMount(){
     this.getSysInfo();
-    // Taro.getSetting()
-    //   .then(res=>{
-    //     if(res.authSetting["scope.userInfo"]){
-    //       return true;
-    //     }else {
-    //       throw new Error('没有授权')
-    //     }
-    //   })
-    //   .then( res =>{
-    //     return Taro.getUserInfo();
-    //   })
-    //   .then(res=>{
-    //     console.log(4444)
-    //     Taro.setStorage({
-    //       key: 'userInfo',
-    //       data: res.userInfo
-    //     })
-    //   })
-    //   .catch(err=>{
-    //     console.log(err)
-    //   })
-    // Taro.checkSession({
-    //   success() {
-    //     console.log('success-login')
-    //     return Taro.getStorage({key: 'session3rd'})
-    //   },
-    //   fail() {
-    //     console.log('fail-login')
-    //     return Taro.login()
-    //       .then(response=>{
-    //         console.log(response.code)
-    //         return Taro.request({
-    //           url: 'https://api.fmg.net.cn/account/login',
-    //           code: response.code,
-    //         })
-    //           .then(res=>{
-    //             if(res.statusCode===200){
-    //               console.log(res)
-    //               Taro.setStorage({
-    //                 key: 'session3rd',
-    //                 data: res.data.data.session3rd
-    //               })
-    //             }else if(res.status === 500){
-    //               console.log('发生错误，请重试！')
-    //               Taro.showToast({
-    //                 title: '发生错误，请重试！',
-    //                 icon: 'none'
-    //               })
-    //             }
-    //           })
-    //       })
-    //       .catch(err=>{
-    //         console.log(err);
-    //         Taro.showToast({
-    //           title: '发生错误，请重试!',
-    //           icon: 'none'
-    //         })
-    //       })
-    //   }
-    // })
+    Taro.getSetting()
+      .then(res=>{
+        if(res.authSetting["scope.userInfo"]){
+          return true;
+        }else {
+          throw new Error('没有授权')
+        }
+      })
+      .then( res =>{
+        return Taro.getUserInfo();
+      })
+      .then(res=>{
+        console.log(4444)
+        Taro.setStorage({
+          key: 'userInfo',
+          data: res.userInfo
+        })
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    Taro.checkSession({
+      success() {
+        console.log('success-login')
+        return Taro.getStorage({key: 'session3rd'})
+      },
+      fail() {
+        console.log('fail-login')
+        return Taro.login()
+          .then(response=>{
+            console.log(response.code)
+            return Taro.request({
+              url: 'https://api.fmg.net.cn/account/login',
+              code: response.code,
+            })
+              .then(res=>{
+                if(res.statusCode===200){
+                  console.log(res)
+                  Taro.setStorage({
+                    key: 'session3rd',
+                    data: res.data.data.session3rd
+                  })
+                }else if(res.status === 500){
+                  console.log('发生错误，请重试！')
+                  Taro.showToast({
+                    title: '发生错误，请重试！',
+                    icon: 'none'
+                  })
+                }
+              })
+          })
+          .catch(err=>{
+            console.log(err);
+            Taro.showToast({
+              title: '发生错误，请重试!',
+              icon: 'none'
+            })
+          })
+      }
+    })
   }
   
   getSysInfo() {

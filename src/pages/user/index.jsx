@@ -46,6 +46,13 @@ class UserList extends Component {
     });
   
   }
+  handlePage(e){
+    if(e == 'address'){
+      Taro.navigateTo({
+        url: `/pages/user/addressList`,
+      });
+    }
+  }
 
   render () {
     const {statusBarHeight, capsule} = this.state; 
@@ -115,7 +122,7 @@ class UserList extends Component {
         <View className='other-service-wrap'>
           <View className='other-service-title'>其他服务</View>
           <View className='other-service-list'>
-            <View className='other-service-item'>
+            <View className='other-service-item' onClick={this.handlePage.bind(this,'address')}>
               <Image src={'http://qiniu.daosuan.net/'+get(data.filter(item => item.name == '收货')[0],'picture','')} style='width:90rpx;height:90rpx' />
               <View className='name'>收货地址</View>
             </View>

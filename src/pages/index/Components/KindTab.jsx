@@ -7,17 +7,9 @@ import '../index.scss'
 import more from '../../../assets/icon/更多2.png'
 
 class KindTab extends Component {
-  // static propTypes = {
-  //   placeList: PropTypes.arrayOf({}).isRequired,
-  // };
-  static defaultProps = {
-    kindList: [],
-  };
-
   constructor () {
     super(...arguments);
     this.state={
-
     }
   }
   enterGoodsKind = (id) => {

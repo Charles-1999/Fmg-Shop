@@ -23,6 +23,7 @@ class LoginView extends Component {
     Taro.login({
       success: res => {
         console.log('小程序登录成功！')
+        console.log(res.code)
         request('/account/login', {
           body: {
             js_code: res.code

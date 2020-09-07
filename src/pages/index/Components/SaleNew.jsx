@@ -5,12 +5,9 @@ import { get } from 'lodash';
 import { View, Image } from '@tarojs/components'
 import PropTypes from 'prop-types';
 import '../index.scss'
-
 import GoodsCard from './GoodsCard'
 import newGoods from '../../../assets/icon/新品.png'
 import more from '../../../assets/icon/更多2.png'
-import like from '../../../assets/icon/赞.png'
-import Alike from '../../../assets/icon/已赞.png'
 
 @connect(({ goods }) => ({
   ...goods
@@ -48,7 +45,9 @@ class SaleNew extends Component {
   render () {
     const { goodsSaleNewList } = this.props;
     const data = Array.from(goodsSaleNewList)
-
+    console.log(444);
+    console.log(data)
+  //  console.log(get(get(data[0],'specification','')[0],'price'))
     return (
       <View className='sale-new-wrap'>
         <View className='title-list'>
@@ -69,7 +68,7 @@ class SaleNew extends Component {
         <View className='goods-items-wrap'>
           {data.map((item => (
             <View className='first-item' key={item.id}>
-            <View className='cover'>
+            <View className='cover' >
               <Image src={'http://qiniu.daosuan.net/'+get(item,'cover','')} className='first-img' />
             </View>
             <View className='goods-name'>
@@ -83,7 +82,17 @@ class SaleNew extends Component {
               </View>}
               <View className='price'>
                 <View style='font-size:40rpx;font-weoght:900;color:red;float:left;'>¥</View>
-                <View className='number'>{get(item,'min_sale','')}起</View>
+                {/* <View className='number'>{get(get(item,'specification','')[0],'price')}起</View> */}
+                <View className='number'>
+                  {get(item,'specification','').map(function(spe,index) {
+                    const currentPrice = get(get(item,'specification','')[0],'price');
+                    if( get(spe,'price') >= currentPrice){
+                      currentPrice === get(spe,'price');
+                    }
+                    if(index == get(item,'specification',[]).length-1)
+                      return <View>{currentPrice}</View>
+                  })}
+                </View>
               </View>
             </View>
               <View className='like' onClick={this.onLikeTab}>
