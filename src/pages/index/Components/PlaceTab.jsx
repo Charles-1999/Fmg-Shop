@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { View, Image } from '@tarojs/components'
-import { AtSearchBar, AtIcon } from 'taro-ui'
-import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import '../index.scss'
 
 @connect(({ goods }) => ({
@@ -12,12 +9,6 @@ import '../index.scss'
 }))
 
 class PlaceTab extends Component {
-  // static propTypes = {
-  //   placeList: PropTypes.arrayOf({}).isRequired,
-  // };
-  // static defaultProps = {
-  //   placeList: [],
-  // };
 
   constructor () {
     super(...arguments);

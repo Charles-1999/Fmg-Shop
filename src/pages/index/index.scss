@@ -285,12 +285,12 @@
         float: left;
         .count{
           font-size: 14rpx;
-          color: rgb(192, 0, 0);
+          color: #c00000;
           height: 18rpx;
-          width: 55rpx;
-          border: 1px solid rgb(192, 0, 0);
+          border: 1rpx solid #c00000;
           border-radius: 30rpx;
-          padding: 4rpx 8rpx;            
+          padding: 4rpx 10rpx;
+                 
         }
         .count-null{
           font-size: 14rpx;

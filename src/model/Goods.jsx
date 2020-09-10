@@ -101,9 +101,9 @@ export default {
       const goodsListIds = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
-        payload: {
-          goodsList:info
-        },
+        // payload: {
+        //   goodsList:info
+        // },
       });
       yield put({
         type: 'getGoodsListEntity',

@@ -6,10 +6,6 @@ import { View, Image } from '@tarojs/components'
 import PropTypes from 'prop-types';
 import '../index.scss'
 
-import like from '../../../assets/icon/赞.png'
-import Alike from '../../../assets/icon/已赞.png'
-import cart from '../../../assets/icon/购物车2.png'
-
 @connect(({ goods }) => ({
   ...goods
   
@@ -72,7 +68,16 @@ class GoodsCard extends Component {
               </View>}
               <View className='price'>
                 <View style='font-size:40rpx;font-weoght:900;color:red;float:left;'>¥</View>
-                <View className='number'>{get(item.specification, 'price', '')}.00起</View>
+                <View className='number'>
+                  {get(item,'specification','').map(function(spe,index) {
+                    const currentPrice = get(get(item,'specification','')[0],'price');
+                    if( get(spe,'price') >= currentPrice){
+                      currentPrice === get(spe,'price');
+                    }
+                    if(index == get(item,'specification',[]).length-1)
+                      return <View key={item.id}>{currentPrice}</View>
+                  })}
+                </View>
               </View>
             </View>
               <View className='like' onClick={this.onLikeTab}>

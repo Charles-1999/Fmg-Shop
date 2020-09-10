@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Taro from '@tarojs/taro'; 
 import { get as getGlobalData } from '../../global_data'
 import Navbar from '../../components/navbar/navbar'
+import AddressPicker from './AddressPicker'
 
 
 @connect(({ address }) => ({
@@ -21,6 +22,11 @@ class AddAddressList extends Component {
     capsule: getGlobalData('capsule'),
     addressInfo: [],
     value: '',
+
+    provinceCode: 0,
+    cityCode: 0,
+    province: '',
+    city: '',
   }
 
   onSubmit (event) {
@@ -31,6 +37,19 @@ class AddAddressList extends Component {
       value:''
     })
   }
+  callback =(pName, pCode, cName, cCode, aName, aCode )=> {
+    //this.getCityStore(cCode, this.state.longitudeLatitude);
+    this.setState({ 
+    provinceCode: pCode,
+    cityCode: cCode,
+    areaCode: aCode,
+    province: pName,
+    city: cName,
+    area: aName,
+    }, () => {
+   console.log(this.state);
+});
+ }
  
   render () {
     const {statusBarHeight, capsule} = this.state; 
@@ -45,7 +64,7 @@ class AddAddressList extends Component {
           showBack
         ></Navbar>
         <View className='add-address-list'>
-          <AtForm
+          {/* <AtForm
             onSubmit={this.onSubmit.bind(this)}
           >
           <AtInput 
@@ -54,7 +73,7 @@ class AddAddressList extends Component {
             type='text' 
             placeholder='单行文本' 
             value={this.state.value} 
-            onChange={this.handleChange.bind(this, 'value')} 
+            onChange={this.handleChange.bind(this, 'name')} 
           />
           <AtInput 
             name='phone' 
@@ -62,22 +81,12 @@ class AddAddressList extends Component {
             type='text' 
             placeholder='单行文本' 
             value={this.state.value} 
-            onChange={this.handleChange.bind(this, 'value')} 
+            onChange={this.handleChange.bind(this, 'phone')} 
           />
           <AtButton formType='submit'>提交</AtButton>
-        </AtForm>
-          <View className='name-item'>
-
-          </View>
-          <View className='phone-item'>
-            
-          </View>
-          <View className='address-item'>
-            
-          </View>
-          <View className='detail-item'>
-            
-          </View>
+        </AtForm> */}
+        <AddressPicker province={this.state.province} city={this.state.city} chooseCity={this.callback}></AddressPicker>
+        
         </View>
       </View>
     )

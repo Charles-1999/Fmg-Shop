@@ -27,16 +27,16 @@ class LoginView extends Component {
     Taro.login({
       success: res => {
         console.log('小程序登录成功！')
-        request('/account/login/wx_login', {
-          body: {
-            js_code: res.code
-          },
-          method: 'POST'
-        }).then( data => {
-          console.log(data)
-          Taro.setStorageSync('userId',data.id)
-          Taro.setStorageSync('token',data.token)
-        })
+        // request('/account/login/wx_login', {
+        //   body: {
+        //     js_code: res.code
+        //   },
+        //   method: 'POST'
+        // }).then( data => {
+        //   console.log(data)
+        //   Taro.setStorageSync('userId',data.id)
+        //   Taro.setStorageSync('token',data.token)
+        // })
       },
       fail: err => {
         console.log(err)

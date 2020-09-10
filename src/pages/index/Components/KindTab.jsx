@@ -4,7 +4,6 @@ import { View, Image } from '@tarojs/components'
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import '../index.scss'
-import more from '../../../assets/icon/更多2.png'
 
 class KindTab extends Component {
   constructor () {
@@ -26,7 +25,7 @@ class KindTab extends Component {
     return (
       <View className='kind-tab-wrap'>
         <View className='kind-tab-row'>
-        {data.filter(item => item.parent_id == 0).map(item => (
+        {data.map(item => (
           <View className='kind-tab-item' key={item.id} onclick={this.enterGoodsKind.bind(this,item.id)}>
               <View className='pic' >
                 <Image src={'http://qiniu.daosuan.net/'+item.picture} style='width:95rpx;height:95rpx' />
@@ -37,14 +36,6 @@ class KindTab extends Component {
           </View>
         ))}
         </View>
-      {/* <View className='kind-more'>
-        <View className='kind-more-pic'>
-          <Image src={more}  style='width:40rpx;height:70rpx' />
-        </View>
-        <View className='title'>
-          更多
-        </View>
-      </View> */}
        
       </View>
     )

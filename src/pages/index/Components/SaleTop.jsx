@@ -6,10 +6,6 @@ import { View, Image } from '@tarojs/components'
 import PropTypes from 'prop-types';
 import '../index.scss'
 
-import top from '../../../assets/icon/畅销.png'
-import more from '../../../assets/icon/更多2.png'
-import range from '../../../assets/icon/排名.png'
-
 @connect(({ goods }) => ({
   ...goods
 }))
@@ -47,22 +43,22 @@ class SaleTop extends Component {
             畅销榜
           </View>
           <View className='icon'>
-            <Image src={top} style='width:140rpx;height:70rpx' />
+            <Image src='http://qiniu.daosuan.net/picture-1598882342000' style='width:140rpx;height:70rpx' />
           </View>
           <View className='more'>
             <View className='checkmore'>进入专题</View>
-            <Image src={more} style='width:50rpx;height:30rpx' />
+            <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
           </View>
         </View>
         <View className='goodsList'>
           <View className='left-item'>
             <View className='number'>1</View>
-            <Image src={range} style='width:110rpx;height:130rpx' className='range-1' />
+            <Image src='http://qiniu.daosuan.net/picture-1599455855000' style='width:110rpx;height:130rpx' className='range-1' />
             <Image src={'http://qiniu.daosuan.net/'+get(data[0],'cover','')} style='width:280rpx;height: 250rpx;border-radius: 15px;' className='first-img' />
           </View>
           <View className='mid-item'>
           <View className='number'>2</View>
-            <Image src={range} style='width:80rpx;height:100rpx' className='range-2' />
+            <Image src='http://qiniu.daosuan.net/picture-1599455855000' style='width:80rpx;height:100rpx' className='range-2' />
             <Image src={'http://qiniu.daosuan.net/'+get(data[1],'cover','')} style='width:150rpx;height: 250rpx;border-radius: 15px;' className='first-img' />
           </View>
           <View className='right-item'>
@@ -71,7 +67,7 @@ class SaleTop extends Component {
               <View>  每24小时更新一次</View>
             </View>
             <View className='number'>3</View>
-            <Image src={range} style='width:80rpx;height:100rpx' className='range-3' />
+            <Image src='http://qiniu.daosuan.net/picture-1599455855000' style='width:80rpx;height:100rpx' className='range-3' />
             <Image src={'http://qiniu.daosuan.net/'+get(data[2],'cover','')} style='width:150rpx;height: 150rpx;border-radius: 15px;' className='first-img' />
           </View>  
         </View>

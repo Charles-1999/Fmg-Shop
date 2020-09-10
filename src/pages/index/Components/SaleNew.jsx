@@ -6,8 +6,6 @@ import { View, Image } from '@tarojs/components'
 import PropTypes from 'prop-types';
 import '../index.scss'
 import GoodsCard from './GoodsCard'
-import newGoods from '../../../assets/icon/新品.png'
-import more from '../../../assets/icon/更多2.png'
 
 @connect(({ goods }) => ({
   ...goods
@@ -55,11 +53,11 @@ class SaleNew extends Component {
             新品榜
           </View>
           <View className='icon'>
-            <Image src={newGoods} style='width:140rpx;height:80rpx' />
+            <Image src='http://qiniu.daosuan.net/picture-1598883875000' style='width:140rpx;height:80rpx' />
           </View>
           <View className='more'>
             <View className='checkmore'>进入专题</View>
-            <Image src={more} style='width:50rpx;height:30rpx' />
+            <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
           </View>
         </View>
         <View className='goods-items-wrap'>
@@ -90,7 +88,7 @@ class SaleNew extends Component {
                       currentPrice === get(spe,'price');
                     }
                     if(index == get(item,'specification',[]).length-1)
-                      return <View>{currentPrice}</View>
+                      return <View key={item.id}>{currentPrice}</View>
                   })}
                 </View>
               </View>

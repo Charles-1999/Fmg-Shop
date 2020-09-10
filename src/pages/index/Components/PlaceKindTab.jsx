@@ -6,7 +6,6 @@ import { AtSearchBar, AtIcon } from 'taro-ui'
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import '../index.scss'
-import more from '../../../assets/icon/更多2.png'
 
 @connect(({ goods }) => ({
   ...goods
@@ -48,7 +47,7 @@ class PlaceKindTab extends Component {
               </View> */}
               <View className='more' onClick={this.handleTypeTab.bind(this,item.id)}>
                 <View className='checkmore'>进入专题</View>
-                <Image src={more} style='width:50rpx;height:30rpx' />
+                <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
               </View>
             </View>
             <View className='kind-item-wrap'>

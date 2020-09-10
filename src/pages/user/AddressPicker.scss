@@ -1,0 +1,49 @@
+.addressBox {
+  width: 660px;
+  .addressTitle{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .address {
+          position: relative;
+      }
+      .rightIcon {
+          width: 44px;
+          height: 44px;
+          background: url('https://ueapp-oss-static.leapmotor.com/leapMiniApp/appointment_driving/go_to.png')no-repeat;
+          background-size: 44px 44px;
+          display: block;
+      }
+  }
+}
+.picker{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-top:1px solid #E5E5E5;
+  background: #fff;
+  z-index: 99;
+  .topList{
+      height:100px;
+      line-height:100px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-right:10px;
+      padding-left: 10px;
+      .title {
+          width: 260px;
+      }
+      .sure,
+      .close {
+          display: inline-block;
+          height: 50px;
+          width: 200px;
+          text-align: center;
+          line-height: 50px;
+          color: #3d7abd;
+      }
+  }
+}
