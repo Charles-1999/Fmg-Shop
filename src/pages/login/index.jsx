@@ -10,15 +10,11 @@ class LoginView extends Component {
     super(...arguments)
     this.state = {
       userId: Taro.getStorageSync('userId'),
-      userInfo: Taro.getStorageSync('userInfo')
     }
   }
 
-  componentDidMount(){  
-    if(!this.state.userId) {
-      this.login();
-    }
-    if(this.state.userInfo) {
+  componentDidMount(){
+    if(this.state.userId) {
       Taro.switchTab({ url: '/pages/index/index' })
     }
   }
@@ -26,28 +22,49 @@ class LoginView extends Component {
   login(){
     Taro.login({
       success: res => {
-        console.log('小程序登录成功！')
-        // request('/account/login/wx_login', {
-        //   body: {
-        //     js_code: res.code
-        //   },
-        //   method: 'POST'
-        // }).then( data => {
-        //   console.log(data)
-        //   Taro.setStorageSync('userId',data.id)
-        //   Taro.setStorageSync('token',data.token)
-        // })
+        console.log('小程序登录成功！',res.code);
+        request('/account/login/wx_login', {
+          body: {
+            js_code: res.code
+          },
+          method: 'POST'
+        }).then( data => {
+          console.log('wx_login',data);
+          if(data.key){
+            this.register(data.key);
+          }
+          Taro.setStorageSync('userId',data.id);
+          Taro.setStorageSync('token',data.token);
+          Taro.switchTab({ url: '/pages/index/index' })
+        })
       },
       fail: err => {
-        console.log(err)
+        console.log(err);
       }
     })
   }
 
-  getUserInfo(e) {
+  async register(key){
+    const userInfo = Taro.getStorageSync('userInfo');
+    const data = await request('/account/login/register', {
+      body: {
+        city: userInfo.city,
+        country: userInfo.country,
+        province: userInfo.province,
+        nickName: userInfo.nickName,
+        key
+      },
+      method: 'POST'
+    })
+    console.log('register',data);
+    Taro.setStorageSync('userId',data.id);
+    Taro.setStorageSync('token',data.token);
+  }
+
+  getUserInfo = (e) => {
     if(e.detail.userInfo){
-      Taro.setStorageSync('userInfo', e.detail.userInfo)
-      Taro.switchTab({ url: '/pages/index/index' })
+      Taro.setStorageSync('userInfo', e.detail.userInfo);
+      this.login();
     }
   }
 

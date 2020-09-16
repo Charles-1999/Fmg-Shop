@@ -1,16 +1,24 @@
 .addressBox {
-  width: 660px;
+    width: 360rpx;
+    background-color: rgba(206, 206, 206, 0.6);
+    border-radius: 30rpx;
+    margin: auto auto;
+    padding-left: 10rpx;
+    padding-bottom: 20rpx;
   .addressTitle{
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-top: 10rpx;
+      margin-left: 10rpx;
+      color:black;
       .address {
           position: relative;
       }
       .rightIcon {
           width: 44px;
           height: 44px;
-          background: url('https://ueapp-oss-static.leapmotor.com/leapMiniApp/appointment_driving/go_to.png')no-repeat;
+         
           background-size: 44px 44px;
           display: block;
       }

@@ -43,8 +43,6 @@ class SaleNew extends Component {
   render () {
     const { goodsSaleNewList } = this.props;
     const data = Array.from(goodsSaleNewList)
-    console.log(444);
-    console.log(data)
   //  console.log(get(get(data[0],'specification','')[0],'price'))
     return (
       <View className='sale-new-wrap'>

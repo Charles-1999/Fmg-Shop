@@ -46,8 +46,7 @@ class GoodsCard extends Component {
   render () {
     const { goodsList } = this.props;
     const data = Array.from(goodsList);
-    console.log(777)
-    console.log(data)
+
 
     return (
       <View className='goods-card'>
