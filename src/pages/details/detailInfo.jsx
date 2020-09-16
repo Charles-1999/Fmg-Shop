@@ -23,7 +23,6 @@ class DetailInfo extends Component {
     const {currentTab} = this.state
     let {data} = this.props;
     if(data) data = data.replace('<img', '<img style="width:100%;height:auto" ')
-    console.log(data)
     return (
       <View className='detail_info' >
         <View className='tabs'>

@@ -1,4 +1,375 @@
-.cart {
+page {
   background-color: #f3f3f3;
-  height: 100vh;
+  .cart {
+    .cart_list {
+      width: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 20rpx;
+      margin-bottom: 150rpx;
+      box-sizing: border-box;
+      movable-area {
+        left: -120rpx;
+        width: calc(100% + 120rpx);
+        height: 254rpx;
+        margin: 20rpx 0;
+        movable-view {
+          position: relative;
+          left: 120rpx;
+          width: calc(100% - 120rpx);
+          height: 100%;
+          z-index: 2;
+          .cart_item {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            width: 100%;
+            height: auto;
+            padding: 20rpx;
+            // margin: 20rpx;
+            border-radius: 20rpx;
+            background-color: #fff;
+            box-sizing: border-box;
+            .info_wrap {
+              flex: 1;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .pic {
+                width: 200rpx;
+                height: 200rpx;
+                margin: 0 20rpx;
+                border-radius: 20rpx;
+                overflow: hidden;
+                image {
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                font-size: 34rpx;
+                .name {
+                  height: 80rpx;
+                  font-size: 28rpx;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                }
+                .select {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 10rpx 0 20rpx;
+                  font-size: 26rpx;
+                  color: #686868;
+                  border-radius: 10rpx;
+                  .main {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #ededed;
+                    padding: 5rpx 10rpx;
+                    border-radius: 10rpx;
+                    image {
+                      margin-left: 10rpx;
+                      width: 40rpx;
+                      height: 40rpx;
+                    }
+                  }
+                  .flex {
+                    flex: 1;
+                  }
+                }
+                .price_wrap {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  .price {
+                    color: #D53E1D;
+                    font-size: 36rpx;
+                    font-weight: 700;
+                    .sign {
+                      font-size: 28rpx;
+                    }
+                  }
+                  .num_wrap {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 40rpx;
+                    padding: 8rpx 0;
+                    border-radius: 10rpx;
+                    color: #969696;
+                    font-weight: 700;
+                    background-color: #e9e9e9;
+                    .btn {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      width: 60rpx;
+                      height: 40rpx;
+                      font-size: 40rpx;
+                    }
+                    input {
+                      width: 60rpx;
+                      height: 30rpx; 
+                      text-align: center;
+                      color: #686868;
+                      border-radius: 10rpx;
+                      background-color: #f7f8fa;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .out_view {
+          position: absolute;
+          right: 0;
+          top: 0;
+          height: 100%;
+          border-radius: 20rpx;
+          font-size: 32rpx;
+          letter-spacing: 2rpx;
+          color: #fff;
+          overflow: hidden;
+          z-index: 1;
+          view {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120rpx;
+            height: 100%;
+            background-color: #D53E1D;
+          }
+        }
+      }
+    }
+    // 选择浮窗
+    .float_wrap {
+      visibility: hidden;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      transition: visibility 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+      .mask {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0 ,0 ,0 , 0.3);
+      }
+      .container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding-bottom: 120rpx;
+        border-radius: 20rpx 20rpx 0 0;
+        background: #fff;
+        transform: translate3d(0, 100%, 0);
+        transition: transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1), -webkit-transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+        .info_wrap {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          margin: 20rpx 30rpx 0;
+          padding-left: 200rpx;
+          height: 150rpx;
+          border-bottom: 1rpx solid #eee;
+          image {
+            position: absolute;
+            left: 0;
+            top: -50rpx;
+            width: 180rpx;
+            height: 180rpx;
+            border-radius: 20rpx;
+          }
+          .name {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            font-size: 32rpx;
+          }
+          .price {
+            margin-top: 10rpx;
+            color: #D53E1D;
+            font-size: 36rpx;
+            .sign {
+              font-size: 28rpx;
+            }
+          }
+        }
+        .select_wrap {
+          margin: 20rpx 25rpx 0;
+          padding-bottom: 20rpx;
+          border-bottom: 1rpx solid #eee;
+          font-size: 32rpx;
+          max-height: 350rpx;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          .options_list {
+            display: flex;
+            flex-flow: row wrap;         
+            .option {
+              margin-top: 20rpx;
+              margin-right: 20rpx;
+              padding: 10rpx 20rpx;
+              border: 1rpx solid #eee;
+              border-radius: 10rpx;
+            }
+            .active {
+              color: #5e83ff;
+              border: 1rpx solid #5e83ff;
+            }
+          }
+        }
+        .num_wrap {
+          margin: 20rpx 25rpx 0;
+          padding-bottom: 20rpx;
+          font-size: 32rpx;
+          display: flex;
+          justify-content: space-between;
+          .left {
+            .total {
+              margin-top: 20rpx;
+              color: #969696;
+              font-size: 26rpx;
+            }
+          }
+          .right {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 32rpx;
+            .btn {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 60rpx;
+              height: 60rpx;
+              background-color: #f7f8fa;
+            }
+            input {
+              width: 80rpx;
+              height: 60rpx;
+              margin: 0 10rpx;
+              text-align: center;
+              background-color: #f7f8fa;
+            }
+          }
+        }
+        .select_tool_bar {
+          display: flex;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 120rpx;
+          background-color: #5e83ff;
+          view {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36rpx;
+            color: #fff;
+          }
+        }
+      }
+      .active {
+        transform: translate3d(0, 0, 0);
+      }  
+    }
+    .active {
+      visibility: visible;
+    }
+    // 底部结算栏
+    .checkout_bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10rpx 20rpx;
+      color: #fff;
+      font-size: 32rpx;
+      background-color: rgba(159 ,159 ,159 , 0.6);
+      z-index: 99;
+      box-sizing: border-box;
+      .allCheckBox {
+        checkbox .wx-checkbox-input {
+          background-color: rgba(0,0,0,0);
+          border: 1rpx solid #fff;
+        }
+        checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+          background: #fff;
+          border: none;
+        }
+      }
+      .count {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        margin: 0 20rpx;
+        .num {
+          font-size: 26rpx;
+          margin-bottom: 10rpx;
+          text {
+            font-weight: 700;
+          }
+        }
+        .price {
+          text {
+            font-weight: 700;
+          }
+        }
+      }
+      .btn {
+        padding: 10rpx 30rpx;
+        border-radius: 30rpx;
+        background-color: #4885FB;
+      }
+    }
+    /*checkbox 选项框大小  */
+    checkbox .wx-checkbox-input {
+      width: 50rpx;
+      height: 50rpx;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+    /*checkbox选中后样式  */
+    checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+      background: #fff;
+      border: none;
+    }
+    /*checkbox选中后图标样式  */
+    checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+      width: 50rpx;
+      height: 50rpx;
+      line-height: 50rpx;
+      text-align: center;
+      font-size: 35rpx;
+      color: #4885FB;
+      border: 1rpx solid #4885FB;
+      border-radius: 50%;
+      background: transparent;
+      transform: translate(-50%, -50%) scale(1);
+      -webkit-transform: translate(-50%, -50%) scale(1);
+    }
+  }
 }

@@ -5,6 +5,7 @@ export default {
     'pages/index/index',
     'pages/user/index',
     'pages/cart/index',
+    'pages/cart/confirm/index',
     'pages/category/index',
     'pages/find/index',
     'pages/order/orderList',

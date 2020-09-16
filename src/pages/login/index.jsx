@@ -35,6 +35,7 @@ class LoginView extends Component {
           }
           Taro.setStorageSync('userId',data.id);
           Taro.setStorageSync('token',data.token);
+          Taro.setStorageSync('open_id',data.open_id);
           Taro.switchTab({ url: '/pages/index/index' })
         })
       },
@@ -59,6 +60,7 @@ class LoginView extends Component {
     console.log('register',data);
     Taro.setStorageSync('userId',data.id);
     Taro.setStorageSync('token',data.token);
+    Taro.setStorageSync('open_id',data.open_id);
   }
 
   getUserInfo = (e) => {

@@ -11,7 +11,7 @@ class OthersInfo extends Component {
       <View className='others_info' >
         <View className='info_wrap'>
           <Text className='title'>发货地</Text>
-          <Text className='content'>广东珠海</Text>
+          <Text className='content'>广东江门</Text>
         </View>
         <View className='info_wrap'>
           <Text className='title'>运费</Text>
