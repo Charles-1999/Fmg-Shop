@@ -140,7 +140,7 @@ class editAddress extends Component {
           </View>
           <View className='address-list-item'>
             <View className='title'>收货人地址</View>
-            <AddressPicker currentId={this.state.currentId} province={this.state.province} city={this.state.city} area={this.state.area} chooseCity={this.callback}></AddressPicker>
+            <AddressPicker currentId={this.state.currentId} chooseCity={this.callback}></AddressPicker>
           </View>
           <View className='address-detail-item'>
             <View className='title'>详细地址（门牌号/街道信息等）</View>

@@ -1,0 +1,14 @@
+.swiper {
+  height: 250rpx;
+  margin-top: 20rpx;
+  img {
+    height: 250px !important;
+  }
+}
+
+//效果图
+.photo-1{
+  background-color: #eed5d5;
+  height: 250px; //这里的高度 会随着屏幕变化显示的比例会有改变，后面换上图片后直接用百分比
+  width: 100%;
+}

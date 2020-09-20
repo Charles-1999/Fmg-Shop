@@ -10,6 +10,8 @@ import GoodsCard from './GoodsCard'
 @connect(({ goods }) => ({
   ...goods
 }))
+
+//新品榜
 class SaleNew extends Component {
   // static propTypes = {
   //   placeList: PropTypes.arrayOf({}).isRequired,
@@ -39,6 +41,11 @@ class SaleNew extends Component {
       like:!status,
     })
   }
+  toDetail = (id) => {
+    Taro.navigateTo({
+      url: `/pages/details/index?gid=${id}`,
+    });
+  }
 
   render () {
     const { goodsSaleNewList } = this.props;
@@ -62,9 +69,10 @@ class SaleNew extends Component {
           {/* <GoodsCard sale_tag={1} /> */}
           <View className='goods-card'>
         <View className='goods-items-wrap'>
-          {data.map((item => (
+          <GoodsCard goodsList={data} sale_tag={1} />
+          {/* {data.map((item => (
             <View className='first-item' key={item.id}>
-            <View className='cover' >
+            <View className='cover' onclick={this.toDetail.bind(this,item.id)}>
               <Image src={'http://qiniu.daosuan.net/'+get(item,'cover','')} className='first-img' />
             </View>
             <View className='goods-name'>
@@ -79,7 +87,7 @@ class SaleNew extends Component {
               <View className='price'>
                 <View style='font-size:40rpx;font-weoght:900;color:red;float:left;'>¥</View>
                 {/* <View className='number'>{get(get(item,'specification','')[0],'price')}起</View> */}
-                <View className='number'>
+                {/* <View className='number'>
                   {get(item,'specification','').map(function(spe,index) {
                     const currentPrice = get(get(item,'specification','')[0],'price');
                     if( get(spe,'price') >= currentPrice){
@@ -93,10 +101,10 @@ class SaleNew extends Component {
             </View>
               <View className='like' onClick={this.onLikeTab}>
               {/* <Image src={cart} className='like-img' /> */}
-              <View className='join-cart'> 加入购物车 </View>
+              {/* <View className='join-cart'> 加入购物车 </View>
             </View>
           </View>
-          )))}        
+          )))}         */} 
         </View>
       </View>
         </View>

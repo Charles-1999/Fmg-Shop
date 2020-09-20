@@ -48,8 +48,8 @@ export const editAddressInfo = params => {
 //删除地址
 export const deleteAddressInfo = params => {
   console.log(params)
-  return request('/address/info/delete/:aid', {
-    method: 'POST',
+  return request(`/address/info/delete/${params.aid}`, {
+    method: 'DELETE',
     body: params,
   });
 }

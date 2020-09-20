@@ -45,6 +45,7 @@ export default {
     //获取商品属地标签-----------------
     * getGoodsPlace({ payload }, { call, put }) {
       const res = yield call(getGoodsPlace, payload);
+      console.log(res)
       const info = get(res, 'tags',[]);
       const placeListIds = info.map((arr) => {return arr.id})
       yield put({

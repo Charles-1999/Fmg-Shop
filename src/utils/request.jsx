@@ -1,19 +1,23 @@
-import Taro from '@tarojs/taro';
+import Taro, { getStorageInfoSync } from '@tarojs/taro';
 // import { baseUrl, noConsole } from '../config';
 
 export default function request(url, option) {
   console.log('url', url);
 
   const options = { ...option };
+
+  console.log(option)
   const body = options.body;
   const _host = 'https://api.fmg.net.cn';
+  const token = Taro.getStorageSync("token")
   return new Promise((resolve, reject) => {
     Taro.request({
       url: _host + url,
       data: body,
       header: {
         'Content-Type': 'application/json',
-        'api-mode': 'client'
+        'api-mode': 'client',
+        'api-token': token,
       },
       method: options.method.toUpperCase(),
       success: res => {

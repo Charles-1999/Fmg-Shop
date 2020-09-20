@@ -44,7 +44,8 @@ class App extends Component {
       }
     }
     // 存储到缓存中
-    Taro.setStorageSync('isIphoneX', isIphoneX)
+    Taro.setStorageSync('isIphoneX', isIphoneX);
+    Taro.setStorageSync('sysInfo', sysInfo);
     // 设置全局变量
     setGlobalData('isIphoneX', isIphoneX);
     setGlobalData('statusBarHeight', statusBarHeight);

@@ -23,7 +23,6 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 620rpx;
       padding-bottom: 120rpx;
       border-radius: 20rpx 20rpx 0 0;
       background: #fff;
@@ -54,7 +53,7 @@
         }
         .price {
           margin-top: 10rpx;
-          color: #d5401f;
+          color: #D53E1D;
           font-size: 36rpx;
           .sign {
             font-size: 28rpx;
@@ -66,6 +65,9 @@
         padding-bottom: 20rpx;
         border-bottom: 1rpx solid #eee;
         font-size: 32rpx;
+        max-height: 350rpx;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         .options_list {
           display: flex;
           flex-flow: row wrap;         

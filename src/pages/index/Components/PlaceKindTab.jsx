@@ -11,6 +11,7 @@ import '../index.scss'
   ...goods
 }))
 
+//场地分类list
 class PlaceKindTab extends Component {
   constructor () {
     super(...arguments);

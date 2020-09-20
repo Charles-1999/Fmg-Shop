@@ -1,6 +1,6 @@
 export default {
   pages: [
-  
+   
     
     'pages/login/index',
     'pages/index/index',
@@ -16,7 +16,8 @@ export default {
     'pages/user/addressList',
     'pages/user/addAddress',
     'pages/user/editAddress',
-
+    'pages/user/myOrder',
+    'pages/cart/confirm/index',
   ],
   window: {
     backgroundTextStyle: 'light',

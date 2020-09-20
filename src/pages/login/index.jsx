@@ -23,7 +23,9 @@ class LoginView extends Component {
     Taro.login({
       success: res => {
         console.log('小程序登录成功！',res.code);
-        request('/account/login/wx_login', {
+        request(
+          '/account/login/wx_login', 
+          {
           body: {
             js_code: res.code
           },
@@ -35,6 +37,7 @@ class LoginView extends Component {
           }
           Taro.setStorageSync('userId',data.id);
           Taro.setStorageSync('token',data.token);
+          Taro.setStorageSync('open_id',data.open_id);
           Taro.switchTab({ url: '/pages/index/index' })
         })
       },
@@ -59,6 +62,7 @@ class LoginView extends Component {
     console.log('register',data);
     Taro.setStorageSync('userId',data.id);
     Taro.setStorageSync('token',data.token);
+    Taro.setStorageSync('open_id',data.open_id);
   }
 
   getUserInfo = (e) => {

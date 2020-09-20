@@ -1,0 +1,190 @@
+page {
+  background-color: #f3f3f3;
+  .order_confirm {
+    padding: 10rpx 20rpx;
+    .address_wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 20rpx;
+      margin: 20rpx 0;
+      border-radius: 20rpx;
+      background-color: #fff;
+      box-sizing: border-box;
+      .icon_address {
+        width: 100rpx;
+        height: 100rpx;
+        margin-right: 20rpx;
+      }
+      .address_info {
+        flex: 1;
+        .personal_info {
+          font-size: 32rpx;
+          margin-bottom: 20rpx;
+          .name {
+            font-weight: 700;
+          }
+          .phone {
+            margin-left: 20rpx;
+            font-size: 26rpx;
+            color: rgb(145, 145, 145);
+          }
+        }
+        .address {
+          font-size: 26rpx;
+        }
+      }
+      .icon_more {
+        width: 50rpx;
+        height: 50rpx;
+      }
+    }
+    .goods_list {
+      margin-bottom: 150rpx;
+      .goods {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 20rpx 0;
+        padding: 20rpx;
+        border-radius: 20rpx;
+        background-color: #fff;
+        box-sizing: border-box;
+        .goods_info {
+          width: 100%;
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          image {
+            width: 150rpx;
+            height: 150rpx;
+            border-radius: 10rpx;
+            overflow: hidden;
+          }
+          .info_wrap {
+            flex: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin: 0 20rpx;
+            font-size: 32rpx;
+            .specification {
+              margin-top: 20rpx;
+              padding: 10rpx 15rpx;
+              border-radius: 10rpx;
+              font-size: 26rpx;
+              color: #686868;
+              background-color: #eee;
+            }
+          }
+          .price_wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            .price {
+              font-size: 26rpx;
+              .sign {
+                font-size: 20rpx;
+              }
+            }
+            .count {
+              font-size: 26rpx;
+              color: #9c9c9c;
+            }
+          }
+        }
+        .other_info {
+          width: 100%;
+          .info_wrap {
+            width: 100%;
+            margin: 20rpx 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 26rpx;
+            .title {
+              width: 150rpx;
+              color: #3e3e3e;
+              letter-spacing: 2rpx;
+              text-align: right;
+            }
+            .content {
+              flex: 1;
+              margin-left: 20rpx;
+              color: #aaa;
+            }
+          }
+        }
+        .price_info {
+          width: 100%;
+          text-align: right;
+          font-size: 26rpx;
+          .count {
+            color: #aaa;
+          }
+          .price {
+            .sign {
+              font-size: 20rpx;
+              color: #D80202;
+            }
+            .text {
+              color: #D80202;
+            }
+          }
+        }
+      }
+    }
+    .bottom_bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      width: 100%;
+      height: 110rpx;
+      padding: 20rpx;
+      background-color: #fff;
+      border-top: 1rpx solid #ddd;
+      box-sizing: border-box;
+      .price_wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70rpx;
+        .count {
+          font-size: 28rpx;
+          color: #aaa;
+        }
+        .price {
+          font-size: 32rpx;
+          .sign {
+            font-size: 26rpx;
+            color: #D80202;
+          }
+          .text {
+            color: #D80202;
+          }
+        }
+      }
+      .order {
+        height: 70rpx;
+        padding: 10rpx 20rpx;
+        color: #fff;
+        font-size: 34rpx;
+        background-color: #4885FB;
+        border-radius: 30rpx;
+        box-sizing: border-box;
+      }
+    }
+    .isIphoneX {
+      height: 150rpx;
+    }
+  }
+}

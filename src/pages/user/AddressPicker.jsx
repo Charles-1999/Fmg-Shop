@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, PickerView, PickerViewColumn } from '@tarojs/components'
 import { AtForm, AtInput, AtButton } from 'taro-ui'
 import { get } from 'lodash';
+import Taro, {Current} from '@tarojs/taro'; 
 import './AddressPicker.scss'
 import { connect } from 'react-redux';
 
@@ -14,65 +15,55 @@ class addressPicker extends Component {
   };
   state = {
     city: '',
-    cityCode: '',
+    cityCode: 0,
     cityList: [],
     area: '',
-    areaCode: '',
+    areaCode: 0,
     areaList: [],
     province: '',
-    provinceCode: '',
+    provinceCode: 0,
     provinceList: [],
     getValue: 0,
     getTitle: '',
     getClose: '',
     showPicker: false,
     changeType: false,
-    //addressInfo:[],
+    currentAddress:{}
   }
 
   async componentDidMount() { // 这是一个建立定时器的好地方
-    const{ addressList, currentId} = this.props;
-    const addressInfo = addressList.filter(item => item.id == currentId)[0]
-    this.setState({
-      provinceCode: get(addressInfo,'province_id'),
-      cityCode: get(addressInfo,'city_id'),
-      areaCode: get(addressInfo,'district_id'),
-    })
-    console.log(this.state)
-    await this.props.dispatch({
-      type: 'address/getProvinceList',
+    const userId = Taro.getStorageSync('userId'); //获取当前用户信息
+    const{ currentId } = this.props;
+    await  this.props.dispatch({
+      type: 'address/getAddressInfoUid',
       payload: {
-        country_id: get(addressInfo,'country_id'),
+        uid:userId
       }
     })
-    const {provinceList} = this.props;
+    const{ addressList } = this.props;
+
     this.setState({
-      province:(get(provinceList.filter(item => item.id == get(addressInfo,'province_id'))[0],'name','')).toString(),
-    }) 
-    await this.props.dispatch({
-      type: 'address/getCityList',
-      payload: {
-        province_id: get(addressInfo,'province_id'),
-      }
+      currentAddress:addressList.filter(item => item.id == currentId)[0]
     })
-    const {cityList} = this.props; 
+    console.log(addressList.filter(item => item.id == currentId)[0])
+    console.log(this.state.currentAddress)
+    console.log(get(this.state.currentAddress, 'province_id', ''))
     this.setState({
-      city:(get(cityList.filter(item => item.id == get(addressInfo,'city_id'))[0],'name','')).toString(),
+      provinceCode: get(this.state.currentAddress, 'province_id', ''),
+      cityCode: get(this.state.currentAddress, 'city_id', ''),
+      areaCode: get(this.state.currentAddress, 'district_id', ''),
+      province: get(this.state.currentAddress,'province_name',''),
+      city: get(this.state.currentAddress,'city_name',''),
+      area: get(this.state.currentAddress,'area_name',''),
+
     })
-    await this.props.dispatch({
-      type: 'address/getAreaList',
-      payload: {
-        city_id: get(addressInfo,'city_id'),
-      }
-    })
-    const {areaList} = this.props; 
-      this.setState({
-        area: (get(areaList.filter(item => item.id == get(addressInfo,'district_id'))[0],'name','')).toString(),
-      })
+   
 
   }
   getProvinceList = (code, val) => {  //获取省份接口
-
+    console.log(val)
+    val[0] = val[0]-1;
+    console.log(val)
     this.props.dispatch({
       type: 'address/getProvinceList',
       payload: {
@@ -84,39 +75,32 @@ class addressPicker extends Component {
         provinceList: provinceList,
         getValue: val,
       })
-      console.log(get(provinceList[0],'id'))
-      this.getCity(get(provinceList[0],'id'), '');
+      //this.getCity(get(provinceList[0],'id'), '');
       this.props.dispatch({
         type: 'address/getCityList',
         payload: {
-          province_id: get(provinceList[0],'id')
+          province_id: this.state.provinceCode
         }
       }).then(()=>{
         const {cityList} = this.props;
         this.props.dispatch({
           type: 'address/getAreaList',
           payload: {
-            city_id: get(cityList[0],'id')
+            city_id: this.state.cityCode
           }
         }).then(()=>{
           const {areaList} = this.props;
           this.setState({
-            cityCode: get(cityList[0],'id'),
             cityList:cityList,
             areaList:areaList,
-            areaCode: get(areaList[0],'id'),
-            getValue: [0,0,0],
           })
           console.log(this.state.getValue)
         })
       })
     })
-    
   }
 
   getCity = (code, val) => { // 获取城市接口
-    console.log('code')
-    console.log(code)
     this.props.dispatch({
       type: 'address/getCityList',
       payload: {
@@ -176,7 +160,7 @@ class addressPicker extends Component {
         showPicker: !this.state.showPicker,
     });
     if(this.state.showPicker == true){
-      this.getProvinceList(this.state.provinceCode,[this.state.provinceCode,this.state.cityCode,this.state.areaCode]);
+      this.getProvinceList(0,[this.state.provinceCode,this.state.cityCode,this.state.areaCode]);
     }
   }
   confirm = () => { //关闭
@@ -216,7 +200,7 @@ class addressPicker extends Component {
     // }
     // console.log(text,v);
   }
-    render () {
+  render () {
     const { showPicker, city, province, getTitle, getClose,area} = this.state;
     return (
       <View className='addressBox'>

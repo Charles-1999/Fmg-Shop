@@ -1,0 +1,33 @@
+.my-order{
+  background-color: rgb(243, 243, 243);
+  //position: relative;;
+  height: 100vh;
+  .my-order-list{
+    .my-order-bar{
+      display: inline-flex;
+      width: 100%;
+      padding: 20rpx 0;
+      height: 60rpx;
+      background-color: white;
+      .tab-item{
+        padding-left: 10rpx;
+        padding-right: 10rpx;
+        padding-top: 8rpx;
+        margin-left: 15rpx;
+        font-size: 4.5vw;
+      }
+      .tab-item-active{
+        padding-left: 10rpx;
+        padding-right: 10rpx;
+        background-color: #a8a8a8;
+        border-radius: 30rpx;
+        padding-top: 8rpx;
+        margin-left: 15rpx;
+        font-size: 4.5vw;
+        color: white;
+        
+            
+      }
+    }
+  }
+}

@@ -66,6 +66,14 @@ export default {
         payload:res
       }); 
     },
+     //删除地址
+     * deleteAddressInfo({ payload }, { call, put }) {
+      const res = yield call(deleteAddressInfo, payload);
+      yield put({
+        type: 'save',
+        payload:res
+      }); 
+    },
   },
   reducers: {
     save(state, { payload }) {

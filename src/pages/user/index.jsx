@@ -36,6 +36,12 @@ class UserList extends Component {
       });
     }
   }
+  handleOrder = (status) => {
+    console.log(status);
+    Taro.navigateTo({
+      url: `/pages/user/myOrder?status=${status}`,
+    });
+  }
 
   render () {
     const {statusBarHeight, capsule} = this.state; 
@@ -76,23 +82,23 @@ class UserList extends Component {
         <View className='myorder-list-wrap'>
           <View className='myorder-title'>我的订单</View>
           <View className='myorder-list'>
-            <View className='myorder-list-item'>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,0)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882483000' style='width:90rpx;height:90rpx' />
               <View className='name'>待付款</View>
             </View>
-            <View className='myorder-list-item'>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,1)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882446000' style='width:90rpx;height:90rpx' />
               <View className='name'>待发货</View>
             </View>
-            <View className='myorder-list-item'>
+            <View className='myorder-list-item'onClick={this.handleOrder.bind(this,2)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882531000' style='width:90rpx;height:90rpx' />
               <View className='name'>待收货</View>
             </View>
-            <View className='myorder-list-item'>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,3)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882509000' style='width:90rpx;height:90rpx' />
               <View className='name'>待评价</View>
             </View>
-            <View className='myorder-list-item'>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,4)}>
               <Image src='http://qiniu.daosuan.net/picture-1599033897000' style='width:90rpx;height:90rpx' />
               <View className='name-last'>退款/售后</View>
             </View>

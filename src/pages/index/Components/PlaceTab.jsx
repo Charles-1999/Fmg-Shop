@@ -8,6 +8,7 @@ import '../index.scss'
   ...goods
 }))
 
+//场地滑动选择tab
 class PlaceTab extends Component {
 
   constructor () {
@@ -33,7 +34,7 @@ class PlaceTab extends Component {
       {data.map(item => (
         <View className='place-tab-item' key={item.id} onClick={this.handleTypeTab.bind(this,item.id)}>
             <View className='pic'>
-              <Image src={'http://qiniu.daosuan.net/'+item.picture} style='width:130rpx;height:130rpx' />
+              <Image src={'http://qiniu.daosuan.net/'+item.picture} style='width:130rpx;height:130rpx;border-radius: 30rpx;' />
             </View>
             <View className='title'>
               {item.place}

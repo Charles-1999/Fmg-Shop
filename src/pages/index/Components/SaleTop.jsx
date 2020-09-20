@@ -9,6 +9,8 @@ import '../index.scss'
 @connect(({ goods }) => ({
   ...goods
 }))
+
+//畅销榜
 class SaleTop extends Component {
   // static propTypes = {
   //   placeList: PropTypes.arrayOf({}).isRequired,

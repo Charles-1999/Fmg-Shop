@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import '../index.scss'
 
+//分类滑动选择tab
 class KindTab extends Component {
   constructor () {
     super(...arguments);
