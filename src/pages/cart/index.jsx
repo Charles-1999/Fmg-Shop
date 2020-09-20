@@ -390,7 +390,6 @@ class CartListView extends Component {
     })
   }
 
-
   /* 计算滑动角度
     start 起点坐标
     end 终点坐标

@@ -4,8 +4,9 @@ import Taro from '@tarojs/taro';
 export default function request(url, option) {
   console.log('url', url);
 
+  const token = Taro.getStorageSync('token');
   const options = { ...option };
-  const body = JSON.stringify(options.body);
+  const body = options.body;
   const _host = 'https://api.fmg.net.cn';
   return new Promise((resolve, reject) => {
     Taro.request({
@@ -13,7 +14,8 @@ export default function request(url, option) {
       data: body,
       header: {
         'Content-Type': 'application/json',
-        'api-mode': 'client'
+        'api-mode': 'client',
+        'api-token': token
       },
       method: options.method.toUpperCase(),
       success: res => {
