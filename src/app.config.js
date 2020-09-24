@@ -1,7 +1,6 @@
 export default {
   pages: [
-   
-    
+  
     'pages/login/index',
     'pages/index/index',
     'pages/user/index',
@@ -13,9 +12,9 @@ export default {
     'pages/user/userInfoList',
     'pages/index/placeGoodsList',
     'pages/index/kindGoodsList',
-    'pages/user/addressList',
-    'pages/user/addAddress',
-    'pages/user/editAddress',
+    'pages/user/Address/addressList',
+    'pages/user/Address/addAddress',
+    'pages/user/Address/editAddress',
     'pages/user/myOrder',
     'pages/cart/confirm/index',
   ],

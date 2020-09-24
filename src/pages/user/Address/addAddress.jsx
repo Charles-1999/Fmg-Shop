@@ -4,22 +4,22 @@ import { AtForm, AtInput, AtButton, AtTextarea } from 'taro-ui'
 import { get } from 'lodash';
 import './address.scss'
 import { connect } from 'react-redux';
-import Taro, {Current} from '@tarojs/taro'; 
-import { get as getGlobalData } from '../../global_data'
-import Navbar from '../../components/navbar/navbar'
+import Taro from '@tarojs/taro'; 
+import { get as getGlobalData } from '../../../global_data'
+import Navbar from '../../../components/navbar/navbar'
 import AddressPicker from './AddressPicker'
+
 
 @connect(({ address }) => ({
   ...address,
 }))
-class editAddress extends Component {
+class AddAddressList extends Component {
   static defaultProps = {
     iconList: [],
   };
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
-    currentId: Current.router.params.id,
     addressInfo: [],
     value: '',
     provinceCode: 0,
@@ -27,28 +27,8 @@ class editAddress extends Component {
     province: '',
     city: '',
     name: '',
-    phone: 0,
+    phone: '',
     detail: '',
-  }
-  async componentDidMount () {
-    const userId = Taro.getStorageSync('userId'); //获取当前用户信息
-    this.setState({
-      currentId: Current.router.params.id,
-    })
-    this.props.dispatch({
-      type: 'address/getAddressInfoUid',
-      payload: {
-        uid:userId
-      }
-    })
-    const{ addressList } = this.props;
-    const addressInfo = addressList.filter(item => item.id == this.state.currentId)[0]
-    this.setState({
-      name: get(addressInfo,'name',''),
-      phone: get(addressInfo,'phone'),
-      detail: get(addressInfo,'detail',''),
-    })
-    
   }
 
   onSubmit (event) {
@@ -75,7 +55,7 @@ class editAddress extends Component {
 
   handleOk = () => {
     this.props.dispatch({
-      type: 'address/editAddressInfo',
+      type: 'address/setAddressInfo',
       payload: {
         province_id: this.state.provinceCode,
         city_id: this.state.cityCode,
@@ -83,13 +63,12 @@ class editAddress extends Component {
         district_id: this.state.areaCode,
         detail: this.state.detail,
         name:this.state.name,
-        phone: parseInt(this.state.phone),
-        aid: this.state.currentId,
+        phone: this.state.phone,
+        uid:8,
       }
     }).then(()=>{
-      console.log('add!!!')
       Taro.navigateTo({
-        url: `/pages/user/addressList`,
+        url: `/pages/user/Address/addressList`,
       });
     })
   }
@@ -116,7 +95,7 @@ class editAddress extends Component {
           statusBarHeight={statusBarHeight}
           capsuleHeight={capsuleHeight}
           showTitle
-          title='收货地址编辑'
+          title='收货地址新增'
           showBack
         ></Navbar>
         <View className='add-address-list'>
@@ -140,7 +119,7 @@ class editAddress extends Component {
           </View>
           <View className='address-list-item'>
             <View className='title'>收货人地址</View>
-            <AddressPicker currentId={this.state.currentId} chooseCity={this.callback}></AddressPicker>
+            <AddressPicker province={this.state.province} city={this.state.city} area={this.state.area} chooseCity={this.callback}></AddressPicker>
           </View>
           <View className='address-detail-item'>
             <View className='title'>详细地址（门牌号/街道信息等）</View>
@@ -151,7 +130,7 @@ class editAddress extends Component {
                 onChange={this.handleChange.bind(this, 'detail')} 
               />
           </View>
-          <View className='ok'  onClick={this.handleOk.bind(this)} >保存</View>
+          <View className='ok'  onClick={this.handleOk.bind(this)} >提交</View>
      
         
         </View>
@@ -160,5 +139,5 @@ class editAddress extends Component {
   }
 }
 
-export default editAddress;
+export default AddAddressList;
 

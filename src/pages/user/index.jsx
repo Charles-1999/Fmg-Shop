@@ -32,7 +32,7 @@ class UserList extends Component {
   handlePage(e){
     if(e == 'address'){
       Taro.navigateTo({
-        url: `/pages/user/addressList`,
+        url: `/pages/user/Address/addressList`,
       });
     }
   }

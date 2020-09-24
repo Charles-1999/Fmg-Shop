@@ -209,6 +209,7 @@ class GoodsCard extends Component {
   render () {
     const { goodsList } = this.props;
     const goodsListInfo = Array.from(goodsList);
+    console.log(goodsList)
 
     const {isOpen,showType,showPrice,currChoose,currNum,total,data} = this.state;
 

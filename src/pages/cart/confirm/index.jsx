@@ -107,20 +107,20 @@ export default class Confirm extends Component {
       const res_order = await request('/order', {
         body: {
           goods_total: total_conut, // 商品总数
-          exp_fare: 0.01, // 运费
+          exp_fare: 1, // 运费
           coupon: 0, // 优惠
-          price: goods_price, // 商品总额（不包括运费）
-          total: order_price, // 订单总额（包括运费）
+          goods_amount: goods_price*100, // 商品总额（不包括运费） 单位：分
+          total_fee: order_price*100, // 订单总额（包括运费、优惠） 单位：分
           message: '无', // 留言
           account_id: uid, // uid
           address_id: 1, // 地址id
           delivery: 1, // 发货方式 1：快递 2：同城配送 3：自提
-          order_status: 1 // 订单状态 1：提交订单/未付款 2：待发货 3：已发货/待收货 4：已收货/待评价 5：订单结束
+          order_status: 1, // 订单状态 1：提交订单/未付款 2：待发货 3：已发货/待收货 4：已收货/待评价 5：订单结束
         },
         method: 'POST'
       })
-      const {id,ordernum} = res_order;
-      this.orderDeatil(id,ordernum);
+      const {id,OutTradeNo} = res_order;
+      this.orderDeatil(id,OutTradeNo);
     }
     catch (err) {
       Taro.showToast({
@@ -132,7 +132,7 @@ export default class Confirm extends Component {
   }
 
   /* 创建订单详情 */
-  orderDeatil = async(order_id,order_num) => {
+  orderDeatil = async(order_id,OutTradeNo) => {
     const {checkList} = this.state;
     try {
       checkList.forEach(async(item) => {
@@ -142,7 +142,6 @@ export default class Confirm extends Component {
             goods_specification_id: item.goods_specification_id, // 商品规格id
             price: item.price, // 商品单价
             purchase_qty: item.goods_count, // 购买数量
-            order_num: order_num, // 订单编号
             order_id: order_id // oid
           },
           method: 'POST'
@@ -150,7 +149,7 @@ export default class Confirm extends Component {
         const detail_id = res_order_detail.id;
         console.log('detail_id',detail_id);
       })
-      this.pay();
+      this.pay(OutTradeNo,order_id);
     }
     catch (err) {
       Taro.showToast({
@@ -162,7 +161,7 @@ export default class Confirm extends Component {
   }
 
   /* 统一下单 */
-  pay = async() => {
+  pay = async(OutTradeNo,order_id) => {
     const {order_price} = this.state;
     const sysInfo = Taro.getStorageSync('sysInfo');
     const open_id = Taro.getStorageSync('open_id');
@@ -176,13 +175,14 @@ export default class Confirm extends Component {
           device_info: sysInfo.model, // 
           open_id: open_id, // 
           account_id: userId, // 
-          bank_type: 'ICBC_DEBIT', // 
-          total_fee: Number((order_price*100).toFixed(0)) // 
+          total_fee: order_price*100, // 
+          out_trade_no: OutTradeNo, // 
+          order_id
         },
         method: 'POST'
       })
       console.log(res_pay)
-      this.requestPayment(res_pay);
+      this.requestPayment(res_pay.request);
     }
     catch (err) {
       console.log(err)
@@ -192,13 +192,13 @@ export default class Confirm extends Component {
   /* 发起微信支付 */
   requestPayment = async(data) => {
       Taro.requestPayment({
-        timeStamp: new Date().getTime().toString(), // 时间戳
-        nonceStr: data.wx_rep.nonce_str, // 随机字符串
-        package: 'prepay_id='+data.wx_rep.prepay_id, // 统一下单接口返回的 prepay_id
-        signType: 'MD5', // 签名算法
-        paySign: data.pay_sign, // 签名
+        timeStamp: data.timeStamp, // 时间戳
+        nonceStr: data.nonceStr, // 随机字符串
+        package: data.package, // 统一下单接口返回的 prepay_id
+        signType: data.signType, // 签名算法
+        paySign: data.paySign, // 签名
         success: res => {
-          console.log(res);
+          console.log('发起微信支付：'+res);
         },
         fail: err => {
           console.log(err)

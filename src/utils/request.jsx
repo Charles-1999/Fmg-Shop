@@ -4,12 +4,10 @@ import Taro, { getStorageInfoSync } from '@tarojs/taro';
 export default function request(url, option) {
   console.log('url', url);
 
+  const token = Taro.getStorageSync('token');
   const options = { ...option };
-
-  console.log(option)
   const body = options.body;
   const _host = 'https://api.fmg.net.cn';
-  const token = Taro.getStorageSync("token")
   return new Promise((resolve, reject) => {
     Taro.request({
       url: _host + url,
@@ -17,7 +15,7 @@ export default function request(url, option) {
       header: {
         'Content-Type': 'application/json',
         'api-mode': 'client',
-        'api-token': token,
+        'api-token': token
       },
       method: options.method.toUpperCase(),
       success: res => {

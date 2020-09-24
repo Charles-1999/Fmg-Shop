@@ -11,7 +11,7 @@ export default {
   },
   effects: {
     //获取省渲染名称-------------
-    * getProvinceList({ payload }, { call, put }) {
+    * getProvinceList({ payload}, { call, put }) {
       const res = yield call(getAddressInfoList, payload);
       yield put({
         type: 'save',
@@ -58,14 +58,16 @@ export default {
         payload:res
       }); 
     },
+
      //修改地址
      * editAddressInfo({ payload }, { call, put }) {
       const res = yield call(editAddressInfo, payload);
       yield put({
-        type: 'save',
+        type: 'saveAddressInfo',
         payload:res
       }); 
     },
+    
      //删除地址
      * deleteAddressInfo({ payload }, { call, put }) {
       const res = yield call(deleteAddressInfo, payload);

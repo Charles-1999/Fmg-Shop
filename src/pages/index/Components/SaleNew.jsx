@@ -27,6 +27,7 @@ class SaleNew extends Component {
     }
   }
 
+    
   componentDidMount(){
     this.props.dispatch({
       type: 'goods/getGoodsNewList',
@@ -35,6 +36,7 @@ class SaleNew extends Component {
       }
     });
   }
+  
   onLikeTab = () => {
     let status = this.state.like;
     this.setState({
@@ -68,7 +70,6 @@ class SaleNew extends Component {
         <View className='goods-items-wrap'>
           {/* <GoodsCard sale_tag={1} /> */}
           <View className='goods-card'>
-        <View className='goods-items-wrap'>
           <GoodsCard goodsList={data} sale_tag={1} />
           {/* {data.map((item => (
             <View className='first-item' key={item.id}>
@@ -108,7 +109,6 @@ class SaleNew extends Component {
         </View>
       </View>
         </View>
-      </View>
     )
   }
 }

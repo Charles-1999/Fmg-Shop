@@ -44,10 +44,20 @@ export const getGoodsKind = params =>{
 }
 //批量获取商品信息------------
 export const mgetGoodsList = params =>{ 
-  return request('/goods/_mget', {
-    method: 'POST',
-    body: { ids: params.payload },
-  });
+  console.log(params.payload)
+  if(params.payload.ids){
+    return request('/goods/_mget', {
+      method: 'POST',
+      body: params.payload
+    });
+  }
+  else{
+    return request('/goods/_mget', {
+      method: 'POST',
+      body: { ids: params.payload },
+    });
+  }
+  
 }
 //获取商品列表
 export const getGoodsList = params =>{

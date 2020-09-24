@@ -5,8 +5,8 @@ import { get } from 'lodash';
 import './address.scss'
 import { connect } from 'react-redux';
 import Taro from '@tarojs/taro'; 
-import { get as getGlobalData } from '../../global_data'
-import Navbar from '../../components/navbar/navbar'
+import { get as getGlobalData } from '../../../global_data'
+import Navbar from '../../../components/navbar/navbar'
 
 
 @connect(({ address }) => ({
@@ -21,13 +21,6 @@ class AddressList extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
-    addressList:[],
-    // addressList:[
-    //   // {id:1,country_id:1,province_id:4,city_id:15,area_id:214,detail:'详细地址111222',name:'eva',phone:'13925531258'},
-    //   // {id:2,country_id:1,province_id:14,city_id:125,area_id:36,detail:'详细地址111222',name:'kkk',phone:'13925521258'},
-    //   // {id:3,country_id:1,province_id:12,city_id:99,area_id:1005,detail:'详细地址111222',name:'qqdd',phone:'139251331258'},
-    //   // {id:4,country_id:2,province_id:9,city_id:74,area_id:778,detail:'详细地址111222',name:'sss',phone:'139213211258'},
-    // ],
   }
   async componentDidMount () {
     const userId = Taro.getStorageSync('userId'); //获取当前用户信息
@@ -42,41 +35,6 @@ class AddressList extends Component {
     this.setState({
       addressInfo:addressList
     })
-    // for(var i=0; i < addressList.length; i++){
-    //   const info={id:i,address:'',name:'',phone:''};
-    //   this.props.dispatch({
-    //     type: 'address/getProvinceList',
-    //     payload: {
-    //       country_id: addressList[i].country_id,
-    //     }
-    //   })
-    //   const {provinceList} = this.props; 
-    //   info.address += (get(provinceList.filter(item => item.id == get(addressList[i],'province_id'))[0],'name','')).toString();
-    //   await this.props.dispatch({
-    //     type: 'address/getCityList',
-    //     payload: {
-    //       province_id: get(addressList[i],'province_id'),
-    //     }
-    //   })
-    //   const {cityList} = this.props; 
-    //   info.address += (get(cityList.filter(item => item.id == get(addressList[i],'city_id'))[0],'name','')).toString(); 
-    //   await this.props.dispatch({
-    //     type: 'address/getAreaList',
-    //     payload: {
-    //       city_id: get(addressList[i],'city_id'),
-    //     }
-    //   })
-    //   const {areaList} = this.props; 
-    //   info.address += (get(areaList.filter(item => item.id == get(addressList[i],'district_id'))[0],'name','')).toString();
-    //   info.name = get(addressList[i],'name','');
-    //   info.phone =  get(addressList[i],'phone','');
-    //   info.address +=  get(addressList[i],'detail','');
-    //   info.id = get(addressList[i],'id','');
-    //   this.setState({
-    //     addressInfo:[...this.state.addressInfo,info]
-    //   })
-    // }
-
   }
   async  delAddress(id){
     console.log(id)
@@ -99,27 +57,19 @@ class AddressList extends Component {
       addressInfo:addressList
     })
   }
-  // async delCart(cart_id) {
-  //   const data = await request(`/car/info/delete/${cart_id}`,{
-  //     method: 'DELETE'
-  //   });
-  //   console.log(data)
-  //   this.getData();
-  // }
-
   handlePage(e,id){
     if(e == 'add'){
       Taro.navigateTo({
-        url: `/pages/user/addAddress`,
+        url: `/pages/user/Address/addAddress`,
       });
     }
     if(e == 'edit'){
       Taro.navigateTo({
-        url: `/pages/user/editAddress?id=${id}`,
+        url: `/pages/user/Address/editAddress?id=${id}`,
       });
     }
   }
-
+  
   touchMoveStartHandle = (e) => {
     if (e.touches.length == 1) {
       this.setState({

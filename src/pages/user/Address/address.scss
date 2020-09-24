@@ -1,87 +1,89 @@
-.address-list-wrap{
-  background-color: rgb(243, 243, 243);
-  position: relative;;
-  height: 100%;
-
-  .address-list{
-    padding-top: 10rpx;
-    movable-area {
-      left: -120rpx;
-      width: calc(100% + 120rpx);
-      height: 180rpx;
-      margin: 20rpx 0;
-      movable-view {
-        position: relative;
-        left: 120rpx;
-        width: calc(100% - 120rpx);
-       // height: 100%;
-        z-index: 2;
-      .address-list-item{
-        margin:0 30rpx;
-        padding:30rpx 30rpx;
-        background-color:white;
-        border-radius: 25rpx;
-        height:100rpx;
-        .info{
-          float: left;
-          .name-phone{
-            font-size:40rpx;
-            font-weight: 500;
+page {
+  background-color: #f3f3f3;
+  .address-list-wrap{
+    // background-color: rgb(243, 243, 243);
+    position: relative;;
+    // height: 100%;
+    .address-list{
+      padding-top: 10rpx;
+      movable-area {
+        left: -120rpx;
+        width: calc(100% + 120rpx);
+        height: 180rpx;
+        margin: 20rpx 0;
+        movable-view {
+          position: relative;
+          left: 120rpx;
+          width: calc(100% - 120rpx);
+        // height: 100%;
+          z-index: 2;
+        .address-list-item{
+          margin:0 30rpx;
+          padding:30rpx 30rpx;
+          background-color:white;
+          border-radius: 25rpx;
+          height:100rpx;
+          .info{
+            float: left;
+            .name-phone{
+              font-size:40rpx;
+              font-weight: 500;
+                }
+                .detail{
+                  font-size:30rpx;
+                  color:rgb(119, 118, 118);
+                }
+            }
+            .edit{
+              float: right;
+              .text{
+                font-size:26rpx;
+                color:rgb(143, 143, 143);
+                text-align: center;
               }
-              .detail{
-                font-size:30rpx;
-                color:rgb(119, 118, 118);
-              }
-          }
-          .edit{
-            float: right;
-            .text{
-              font-size:26rpx;
-              color:rgb(143, 143, 143);
-              text-align: center;
             }
           }
         }
-      }
-      .out_view {
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        border-radius: 20rpx;
-        font-size: 32rpx;
-        letter-spacing: 2rpx;
-        color: #fff;
-        overflow: hidden;
-        z-index: 1;
-        view {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 120rpx;
-          height: 60%;
-          background-color: #D53E1D;
-          margin-right: 30rpx;
-          border-radius: 30rpx;
-          margin-top: 35rpx;
+        .out_view {
+          position: absolute;
+          right: 0;
+          top: 0;
+          height: 100%;
+          border-radius: 20rpx;
+          font-size: 32rpx;
+          letter-spacing: 2rpx;
+          color: #fff;
+          overflow: hidden;
+          z-index: 1;
+          view {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120rpx;
+            height: 60%;
+            background-color: #D53E1D;
+            margin-right: 30rpx;
+            border-radius: 30rpx;
+            margin-top: 35rpx;
+          }
         }
       }
     }
-  }
-  .add-address{
-    z-index: 5;
-    width: 200rpx;
-    height: 60rpx;
-    text-align: center;
-    color: white;
-    margin: 0 auto;
-    font-size: 43rpx;
-    background-color: #6372c7;
-    border-radius: 40rpx;
-    padding: 15rpx;
-    position: fixed;
-    bottom: 30rpx;
-    left: 35%;
+    .add-address{
+      z-index: 5;
+      width: 200rpx;
+      height: 60rpx;
+      text-align: center;
+      color: white;
+      margin: 0 auto;
+      font-size: 43rpx;
+      background-color: #6372c7;
+      border-radius: 40rpx;
+      padding: 15rpx;
+      position: fixed;
+      bottom: 30rpx;
+      left: 35%;
+    }
   }
 }
 .add-address-list-wrap{
