@@ -54,23 +54,32 @@ class AddAddressList extends Component {
   }
 
   handleOk = () => {
+    if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
+      Taro.showToast({
+        title: '手机号格式错误，请重新输入',
+        icon: 'none'
+      })
+    }
+    else{
     this.props.dispatch({
-      type: 'address/setAddressInfo',
-      payload: {
-        province_id: this.state.provinceCode,
-        city_id: this.state.cityCode,
-        country_id: 1,
-        district_id: this.state.areaCode,
-        detail: this.state.detail,
-        name:this.state.name,
-        phone: this.state.phone,
-        uid:8,
-      }
-    }).then(()=>{
-      Taro.navigateTo({
-        url: `/pages/user/Address/addressList`,
-      });
-    })
+          type: 'address/setAddressInfo',
+          payload: {
+            province_id: this.state.provinceCode,
+            city_id: this.state.cityCode,
+            country_id: 1,
+            district_id: this.state.areaCode,
+            detail: this.state.detail,
+            name:this.state.name,
+            phone: this.state.phone,
+            uid:8,
+          }
+        }).then(()=>{
+          Taro.navigateTo({
+            url: `/pages/user/Address/addressList`,
+          });
+        })
+    }
+   
   }
   callback =(pName, pCode, cName, cCode, aName, aCode )=> {
     //this.getCityStore(cCode, this.state.longitudeLatitude);

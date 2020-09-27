@@ -1,9 +1,9 @@
 export default {
   pages: [
-  
+    'pages/user/index',
     'pages/login/index',
     'pages/index/index',
-    'pages/user/index',
+    
     'pages/cart/index',
     'pages/category/index',
     'pages/find/index',

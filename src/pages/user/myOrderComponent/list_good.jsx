@@ -28,9 +28,12 @@ class ListGood extends Component {
       method: 'POST' 
     })
     const specification_list = data[0].specification
-    const spe= get(specification_list[0],'specification') //
+    const spe_index = specification_list.findIndex(item => item.id == speId);
+    const spe = get(specification_list[spe_index],'specification') //
+    //const spe = specification_list.findIndex(item => item.id == speId);
     console.log(specification_list)
     console.log(spe)
+    //console.log(specification_list.findIndex(item => item.id == speId))
     if(spe){
       this.setState({
         goodInfo: data[0],

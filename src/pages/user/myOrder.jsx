@@ -21,11 +21,12 @@ class MyOrderList extends Component {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
     tabList:[
-      {id:0, title:'待付款'},
-      {id:1, title:'待发货'},
-      {id:2, title:'待收货'},
-      {id:3, title:'待评价'},
-      {id:4, title:'退款/售后'},
+      {id:0, title:'全部'},
+      {id:1, title:'待付款'},
+      {id:2, title:'待发货'},
+      {id:3, title:'待收货'},
+      {id:4, title:'待评价'},
+      {id:5, title:'退款/售后'},
     ],
     orderList:[],
     currentIndex: Current.router.params.status,
@@ -101,7 +102,27 @@ class MyOrderList extends Component {
           </View>
           
           <View className='list-item-wrap'>
-
+          {this.state.orderList.filter(item => get(item,'detail').length !== 0 && this.state.currentIndex == 0).map(item=>(
+              <View className='list-item' key={item.id}>
+                {get(item,'detail',[]).map((list,list_index)=> (
+                  <View className='good-item' key={list_index}>
+                    <ListGood 
+                      goodId={get(list,'goods_id')} 
+                      speId={get(list,'goods_specification_id')} 
+                      price={get(list,'price')} 
+                      quality={get(list,'purchase_qty')} 
+                    />
+                  </View>
+                 ))}
+                <View className='total_fee'>
+                  共计： ¥{get(get(item,'data'),'total_fee')*0.01}
+                </View>
+                <View className='btn'>
+                  <View className='dilivery'>查看物流</View>
+                </View>
+                <View style='clear:both'></View>
+              </View>
+            ))}
             {this.state.orderList.filter(item => get(item,'detail').length !== 0 && get(get(item,'data',[]),'order_status') == this.state.currentIndex).map(item=>(
               <View className='list-item' key={item.id}>
                 {get(item,'detail',[]).map((list,list_index)=> (
@@ -115,7 +136,7 @@ class MyOrderList extends Component {
                   </View>
                  ))}
                 <View className='total_fee'>
-                  共计： ¥{get(get(item,'data'),'total_fee')}
+                  共计： ¥{get(get(item,'data'),'total_fee')*0.01}
                 </View>
                 <View className='btn'>
                   <View className='dilivery'>查看物流</View>

@@ -10,23 +10,33 @@
       height: 60rpx;
       background-color: white;
       .tab-item{
+        // padding-left: 10rpx;
+        // padding-right: 10rpx;
+        // padding-top: 10rpx;
+        // margin-left: 15rpx;
+        // //font-size: 4.5vw;
+        // font-size: 0.8%;
+        border-radius: 30rpx;
+        padding-top: 10rpx;
+        margin-left: 0.5rem;
         padding-left: 10rpx;
-        padding-right: 10rpx;
-        padding-top: 8rpx;
-        margin-left: 15rpx;
-        font-size: 4.5vw;
+        padding-right:10rpx;
+        font-size: 28rpx;
+        display:inline;
+      
+        
       }
       .tab-item-active{
-        padding-left: 10rpx;
-        padding-right: 10rpx;
         background-color: #a8a8a8;
         border-radius: 30rpx;
-        padding-top: 8rpx;
-        margin-left: 15rpx;
-        font-size: 4.5vw;
-        color: white;
-        
-            
+        padding-top: 10rpx;
+        margin-left: 0.5rem;
+        padding-left: 10rpx;
+        padding-right: 10rpx;
+          display:inline;
+        color:white;
+          font-size: 28rpx;
+
       }
     }
     .list-item-wrap{
@@ -34,18 +44,22 @@
       margin:0 30rpx;
       .list-item{
         display: block;
-        padding: 30rpx 30rpx;
-        margin-bottom:30rpx;
-        padding-bottom: 50rpx;
+        padding: 0rpx 30rpx;
+        margin-bottom: 30rpx;
+        padding-bottom: 30rpx;
+        padding-top: 20rpx;
         background-color: white;
         border-radius: 30rpx;
+        
         .total_fee{
           text-align: right;
         }
         .btn{
           margin-top:10rpx;
           display: inline-flex;
-          margin-left: 77%;
+          width:100%; 
+          display:flex; 
+          justify-content: flex-end;
           .dilivery{
             background-color: #5a5a5a;
             border-radius: 30rpx;
@@ -59,6 +73,7 @@
   }
 }
 .list-good{
+  margin-top: 30rpx;
   image{
     float: left;
   }
