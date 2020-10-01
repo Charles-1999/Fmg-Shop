@@ -18,10 +18,7 @@ class CartListView extends Component {
       cartList: [], // 购物车数据
       goodsList: [], //购物车商品物品数据
       isOpen: false, // 是否打开选择框
-      // currCart: {}, // 当前选择的购物车物品
       currGoods: {}, // 当前选择的商品
-      // currGoodsIndex: -1, // 当前选择的商品在goodsList中的index
-      // spec_index: 0, // 当前商品规格的序号
       temp_spec_index: 0,
       temp_count: 1,
       allCheck: false,
@@ -106,11 +103,6 @@ class CartListView extends Component {
 
   // 获取当前商品规格的序号
   getSpecIndex = (spec_id,currGoods) => {
-    // let spec_index = 0;
-    // currGoods.specification.forEach((item,index) => {
-    //   if(item.id === spec_id) spec_index = index
-    // });
-    // return spec_index;
     return currGoods.specification.findIndex(item => item.id === spec_id)
   }
 
@@ -146,10 +138,22 @@ class CartListView extends Component {
     const total = this.getTotal(cart_id);
     console.log('当前余量：',total);
     if(num === 1) {
-      if(currCart.goods_count >= total) return;
+      if(currCart.goods_count >= total) {
+        Taro.showToast({
+          title: `当前商品剩余库存：${total}件`,
+          icon: 'none'
+        })
+        return;
+      }
       else currCart.goods_count++;
     }else if(num === -1) {
-      if(currCart.goods_count <= 1) return;
+      if(currCart.goods_count <= 1) {
+        Taro.showToast({
+          title: '商品不能再减少啦！',
+          icon: 'none'
+        })
+        return;
+      }
       else currCart.goods_count--;
     }
     this.setData({
@@ -207,10 +211,22 @@ class CartListView extends Component {
     const total = this.getTotal(currCart.id, temp_spec_index);
     console.log('当前余量：',total);
     if(num === 1) {
-      if(temp_count >= total) return;
+      if(temp_count >= total) {
+        Taro.showToast({
+          title: `当前商品剩余库存：${total}件`,
+          icon: 'none'
+        })
+        return;
+      }
       else temp_count++;
     }else if(num === -1) {
-      if(temp_count <= 1) return;
+      if(temp_count <= 1) {
+        Taro.showToast({
+          title: '商品不能再减少啦！',
+          icon: 'none'
+        })
+        return;
+      }
       else temp_count--;
     }
     this.setData({

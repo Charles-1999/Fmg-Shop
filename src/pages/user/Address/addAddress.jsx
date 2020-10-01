@@ -67,9 +67,7 @@ class AddAddressList extends Component {
         uid: Taro.getStorageSync('userId'),
       }
     }).then(()=>{
-      Taro.navigateTo({
-        url: `/pages/user/Address/addressList`,
-      });
+      Taro.navigateBack();
     })
   }
   callback =(pName, pCode, cName, cCode, aName, aCode )=> {

@@ -88,9 +88,7 @@ class editAddress extends Component {
         aid: this.state.currentId,
       },   
     }).then(()=>{
-      Taro.navigateTo({
-        url: `/pages/user/Address/addressList`,
-      })
+      Taro.navigateBack();
     })
   }
 

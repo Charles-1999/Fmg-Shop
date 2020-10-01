@@ -7,7 +7,6 @@ import request from '../../../utils/request'
 
 import './index.less'
 
-
 export default class Confirm extends Component {
   constructor(props) {
     super(props)
@@ -18,6 +17,7 @@ export default class Confirm extends Component {
       order_price: 0, // 订单总额（包括运费）
       total_conut: 0, // 总件数
       goodsList: null,
+      currAddress: Taro.getStorageSync('currAddress'),
     }
   }
 
@@ -25,6 +25,12 @@ export default class Confirm extends Component {
     const goodsList = this.getGoodsList();
     this.getOrderPrice(goodsList);
     this.getTotalCount();
+  }
+
+  componentDidShow() {
+    this.setData({
+      currAddress: Taro.getStorageSync('currAddress')
+    })
   }
 
   /* 获取商品列表 */
@@ -49,6 +55,8 @@ export default class Confirm extends Component {
       return res;
     })
   }
+
+
 
   /* 获取收货方式 */
   getGetWay = (id) => {
@@ -218,7 +226,7 @@ export default class Confirm extends Component {
 
   render() {
     console.log('%c ........render.........','color:green');
-    const { statusBarHeight, capsule, checkList, order_price, total_conut, goodsList } = this.state;
+    const { statusBarHeight, capsule, checkList, order_price, total_conut, goodsList, currAddress } = this.state;
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     return (
@@ -231,14 +239,14 @@ export default class Confirm extends Component {
           title='确认订单'
         >
         </Navbar>
-        <Navigator className='address_wrap'>
+        <Navigator className='address_wrap' url="/pages/cart/address_list/index">
           <Image className='icon_address' src='http://qiniu.daosuan.net/picture-1598883667000' />
           <View className='address_info'>
             <View className='personal_info'>
-              <Text className='name'>陆拾柒</Text>
-              <Text className='phone'>18529482817</Text>
+              <Text className='name'>{currAddress.name}</Text>
+              <Text className='phone'>{currAddress.phone}</Text>
             </View>
-            <Text className='address'>广东省珠海市香洲区唐家湾镇金凤路18号北京师范大学珠海分校海华7栋</Text>
+            <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
           </View>
           <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
         </Navigator>
