@@ -129,11 +129,13 @@ class AddressList extends Component {
     return (
       <View className='address-list-wrap' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
-          statusBarHeight={statusBarHeight}
-          capsuleHeight={capsuleHeight}
+          statusBarHeight = {statusBarHeight}
+          capsuleHeight = {capsuleHeight}
           showTitle
-          title='收货地址'
+          title = '收货地址'
           showBack
+          backType = 'switchTab'
+          url = '/pages/user/index'
         ></Navbar>
         <View className='address-list'>
           {this.state.addressInfo ? this.state.addressInfo.map((item,item_index) => (

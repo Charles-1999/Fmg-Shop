@@ -64,7 +64,7 @@ class AddAddressList extends Component {
         detail: this.state.detail,
         name:this.state.name,
         phone: this.state.phone,
-        uid:8,
+        uid: Taro.getStorageSync('userId'),
       }
     }).then(()=>{
       Taro.navigateTo({
