@@ -38,26 +38,27 @@ class MyOrderList extends Component {
       type: 'order/getOrderList',
       payload: {
         account_id:userId,
-        limit: 30
+        status: this.state.currentIndex,
       }
     })
-    const {orderList} = this.props
-    const Ids = orderList.map((arr) => {return arr.id})
-    Ids.map(item => (
-      this.props.dispatch({
-        type: 'order/getUserOrder',
-        payload: {
-          oid:item
-        }
-      }).then(()=>{
-        const {userOrderInfo} = this.props
-        console.log(userOrderInfo)
-        this.setState({
-          orderList: [...this.state.orderList,userOrderInfo],
-        })
+    // const {orderList} = this.props
+    // console.log(orderList)
+    // const Ids = orderList.map((arr) => {return arr.id})
+    // Ids.map(item => (
+    //   this.props.dispatch({
+    //     type: 'order/getUserOrder',
+    //     payload: {
+    //       oid:item
+    //     }
+    //   }).then(()=>{
+    //     const {userOrderInfo} = this.props
+    //     console.log(userOrderInfo)
+    //     this.setState({
+    //       orderList: [...this.state.orderList,userOrderInfo],
+    //     })
        
-      })
-    ))
+    //   })
+    // ))
 
     // await this.props.dispatch({
     //   type: 'order/getUserOrder',
@@ -77,7 +78,9 @@ class MyOrderList extends Component {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     const userInfo = Taro.getStorageSync('userInfo'); //获取当前用户信息
-  
+    const {orderList} = this.props
+    console.log(orderList)
+
     return (
       <View className='my-order' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -87,7 +90,7 @@ class MyOrderList extends Component {
           showBack
           title='我的订单'
         ></Navbar>
-        <View className='my-order-list'>
+         <View className='my-order-list'>
           <View className='my-order-bar'>
             {this.state.tabList.map(item =>(
               item.id == this.state.currentIndex ? 
@@ -101,7 +104,7 @@ class MyOrderList extends Component {
             ))}
           </View>
           
-          <View className='list-item-wrap'>
+          {/*<View className='list-item-wrap'>
           {this.state.orderList.filter(item => get(item,'detail').length !== 0 && this.state.currentIndex == 0).map(item=>(
               <View className='list-item' key={item.id}>
                 {get(item,'detail',[]).map((list,list_index)=> (
@@ -144,8 +147,8 @@ class MyOrderList extends Component {
                 <View style='clear:both'></View>
               </View>
             ))}
-          </View>
-        </View>
+          </View>*/}
+        </View> 
       </View>
     )
   }

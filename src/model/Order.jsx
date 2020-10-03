@@ -7,27 +7,32 @@ export default {
     orderList:[],
     orderInfoList:[],
     userOrderInfo:[],
-    ids:0,
+    ids:[],
   },
   effects: {
     //获取订单列表-------------
     * getOrderList({ payload }, { call, put }) {
       const res = yield call(getOrderList, payload);
+      console.log(res)
       const info = get(res, 'orders',[]);
+      console.log(info)
+      const ids = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
-        payload:{
-          orderList:info
-        },
+      }); 
+      yield put({
+        type: 'mgetOrderList',
+        payload: ids,
       }); 
     },
     //批量获取订单列表
     * mgetOrderList({ payload }, { call, put }) {
       const res = yield call(mgetOrderList, payload);
+      console.log(res)
       yield put({
         type: 'save',
         payload:{
-          orderInfoList:res
+          orderList:res
         }
       }); 
     },

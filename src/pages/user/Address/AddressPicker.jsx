@@ -58,8 +58,7 @@ class addressPicker extends Component {
     }
     else{
       this.getProvinceList();
-    }
-    
+    }  
   }
 
   getProvinceList = (code, val) => {  //获取省份接口
@@ -136,6 +135,8 @@ class addressPicker extends Component {
             cityCode: get(cityList[val[1]],'id')
         })
       } 
+      console.log(32432423);
+      console.log(get(cityList[0],'id'))
       this.getArea(get(cityList[0],'id'), '');
     })
    
@@ -148,6 +149,7 @@ class addressPicker extends Component {
         city_id: get(code,'id')
       }
     }).then(()=>{
+      console.log(111112222)
       const {areaList} = this.props;
       if (val && val.length > 0 && areaList!=='') {
       this.setState({

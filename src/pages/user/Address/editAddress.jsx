@@ -75,23 +75,31 @@ class editAddress extends Component {
   }
 
   handleOk = () => {
-    this.props.dispatch({
-      type: 'address/editAddressInfo',
-      payload: {
-        province_id: this.state.provinceCode,
-        city_id: this.state.cityCode,
-        country_id: 1,
-        district_id: this.state.areaCode,
-        detail: this.state.detail,
-        name:this.state.name,
-        phone: this.state.phone,
-        aid: this.state.currentId,
-      },   
-    }).then(()=>{
-      Taro.navigateTo({
-        url: `/pages/user/Address/addressList`,
+    if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
+      Taro.showToast({
+        title: '手机号格式错误，请重新输入',
+        icon: 'none'
       })
-    })
+    }
+      else{
+      this.props.dispatch({
+        type: 'address/editAddressInfo',
+        payload: {
+          province_id: this.state.provinceCode,
+          city_id: this.state.cityCode,
+          country_id: 1,
+          district_id: this.state.areaCode,
+          detail: this.state.detail,
+          name:this.state.name,
+          phone: this.state.phone,
+          aid: this.state.currentId,
+        },   
+      }).then(()=>{
+        Taro.navigateTo({
+          url: `/pages/user/Address/addressList`,
+        })
+      })
+    }
   }
 
   callback =(pName, pCode, cName, cCode, aName, aCode )=> {

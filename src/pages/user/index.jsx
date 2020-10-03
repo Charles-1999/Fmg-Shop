@@ -25,10 +25,7 @@ class UserList extends Component {
       { id:4, title:'优惠卷/码', info:'4'},
     ],
   }
-  componentDidMount () {
-    // const user = Taro.getStorageSync('userInfo');
-  
-  }
+
   handlePage(e){
     if(e == 'address'){
       Taro.navigateTo({
@@ -80,25 +77,25 @@ class UserList extends Component {
           ))}
         </View>
         <View className='myorder-list-wrap'>
-          <View className='myorder-title'>我的订单</View>
+          <View className='myorder-title' onClick={this.handleOrder.bind(this,0)}>我的订单</View>
           <View className='myorder-list'>
-            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,0)}>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,1)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882483000' style='width:90rpx;height:90rpx' />
               <View className='name'>待付款</View>
             </View>
-            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,1)}>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,2)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882446000' style='width:90rpx;height:90rpx' />
               <View className='name'>待发货</View>
             </View>
-            <View className='myorder-list-item'onClick={this.handleOrder.bind(this,2)}>
+            <View className='myorder-list-item'onClick={this.handleOrder.bind(this,3)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882531000' style='width:90rpx;height:90rpx' />
               <View className='name'>待收货</View>
             </View>
-            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,3)}>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,4)}>
               <Image src='http://qiniu.daosuan.net/picture-1598882509000' style='width:90rpx;height:90rpx' />
               <View className='name'>待评价</View>
             </View>
-            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,4)}>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,5)}>
               <Image src='http://qiniu.daosuan.net/picture-1599033897000' style='width:90rpx;height:90rpx' />
               <View className='name-last'>退款/售后</View>
             </View>

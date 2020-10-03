@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, Button } from '@tarojs/components';
+import { View, Image, Text, Button, Navigator } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import './toolBar.less'
 
@@ -27,10 +27,10 @@ class ToolBar extends Component {
           <Text>客服</Text>
           <Button openType='contact'></Button>
         </View>
-        <View className='tool_item'>
-          <Image src='http://qiniu.daosuan.net/picture-1598883925000' mode='widthFix' />
-          <Text>收藏</Text>
-        </View>
+        <Navigator className='tool_item' url='/pages/cart/index' openType='switchTab'>
+          <Image src='http://qiniu.daosuan.net/picture-1598883445000' mode='widthFix' />
+          <Text>购物车</Text>
+        </Navigator>
         <View className='tool_item_2 add_cart' onClick={callback.bind(this,1)}>
           加入购物车
         </View>

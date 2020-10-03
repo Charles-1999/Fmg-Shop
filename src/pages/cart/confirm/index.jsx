@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import Taro from '@tarojs/taro'
+import React, { Component, useCallback } from 'react'
+import Taro, {Current} from '@tarojs/taro'
+import { get } from 'lodash'
 import { View,Text,Image,Navigator } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
 import { get as getGlobalData } from '../../../global_data'
@@ -18,14 +19,22 @@ export default class Confirm extends Component {
       order_price: 0, // 订单总额（包括运费）
       total_conut: 0, // 总件数
       goodsList: null,
+      name: '',
+      phone: '',
+      address: '',
+      address_id: 0,
     }
   }
+
+
 
   UNSAFE_componentWillMount() {
     const goodsList = this.getGoodsList();
     this.getOrderPrice(goodsList);
     this.getTotalCount();
+    this.getAddressInfo();
   }
+
 
   /* 获取商品列表 */
   getGoodsList = async() => {
@@ -86,6 +95,32 @@ export default class Confirm extends Component {
       this.setData({
         order_price
       })
+    })
+  }
+
+  /* 获取地址 */
+  getAddressInfo = async() => {
+    const userId = Taro.getStorageSync('userId'); //获取当前用户信息
+    const res_address = await request(`/address/info/${userId}`, {
+      body: {},
+      method: 'GET'
+    })
+    if(Current.router.params.id){
+      this.setState({
+        address_id: Current.router.params.id
+      })
+    }
+    else{
+      this.setState({
+        address_id: get(res_address[0],'id'),
+      })
+    }
+    console.log(res_address)
+    const current_id = res_address.filter(item => item.id == this.state.address_id)[0];
+    this.setState({
+      name: get(current_id,'name',''),
+      phone: get(current_id,'phone',''),
+      address: get(current_id,'province_name','')+get(current_id,'city_name','')+get(current_id,'district_name','')+get(current_id,'detail','')
     })
   }
 
@@ -210,6 +245,17 @@ export default class Confirm extends Component {
       })
   }
 
+  onShow= () =>{
+    console.log(this.data)
+  }
+
+  // /* 跳转到地址选择页面 */
+  // toAddress(){
+  //   Taro.navigateTo({
+  //     url: '/pages/user/Address/addressList',
+  //   });
+  // }
+
   // 自己封装的setState
   setData = (...params) => {
     this.setState(...params)
@@ -221,6 +267,8 @@ export default class Confirm extends Component {
     const { statusBarHeight, capsule, checkList, order_price, total_conut, goodsList } = this.state;
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
+
+   
     return (
       <View className='order_confirm' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -231,14 +279,14 @@ export default class Confirm extends Component {
           title='确认订单'
         >
         </Navbar>
-        <Navigator className='address_wrap'>
+        <Navigator className='address_wrap' url='/pages/user/Address/addressList'>
           <Image className='icon_address' src='http://qiniu.daosuan.net/picture-1598883667000' />
-          <View className='address_info'>
+          <View className='address_info' onClick={this.toAddress}>
             <View className='personal_info'>
-              <Text className='name'>陆拾柒</Text>
-              <Text className='phone'>18529482817</Text>
+              <Text className='name'>{this.state.name}</Text>
+              <Text className='phone'>{this.state.phone}</Text>
             </View>
-            <Text className='address'>广东省珠海市香洲区唐家湾镇金凤路18号北京师范大学珠海分校海华7栋</Text>
+            <Text className='address'>{this.state.address}</Text>
           </View>
           <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
         </Navigator>
