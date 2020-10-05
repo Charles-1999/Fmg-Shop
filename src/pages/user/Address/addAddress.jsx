@@ -62,25 +62,22 @@ class AddAddressList extends Component {
     }
     else{
     this.props.dispatch({
-          type: 'address/setAddressInfo',
-          payload: {
-            province_id: this.state.provinceCode,
-            city_id: this.state.cityCode,
-            country_id: 1,
-            district_id: this.state.areaCode,
-            detail: this.state.detail,
-            name:this.state.name,
-            phone: this.state.phone,
-            uid:8,
-          }
-        }).then(()=>{
-          Taro.navigateTo({
-            url: `/pages/user/Address/addressList`,
-          });
-        })
-    }
-   
+      type: 'address/setAddressInfo',
+      payload: {
+        province_id: this.state.provinceCode,
+        city_id: this.state.cityCode,
+        country_id: 1,
+        district_id: this.state.areaCode,
+        detail: this.state.detail,
+        name:this.state.name,
+        phone: this.state.phone,
+        uid: Taro.getStorageSync('userId'),
+      }
+    }).then(()=>{
+      Taro.navigateBack();
+    })
   }
+}
   callback =(pName, pCode, cName, cCode, aName, aCode )=> {
     //this.getCityStore(cCode, this.state.longitudeLatitude);
     this.setState({ 
@@ -146,7 +143,6 @@ class AddAddressList extends Component {
       </View>
     )
   }
-}
+  }
 
 export default AddAddressList;
-

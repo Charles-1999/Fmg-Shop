@@ -59,21 +59,6 @@ class AddressList extends Component {
     })
   }
   handlePage(e,id){
-    if(e == 'confirm'){
-      let pages = getCurrentPages();//当前页面
-      let prevPage = pages[pages.length-2];//上一页面
-      prevPage.setData({//直接给上移页面赋值
-        aid:id
-      });
-      Taro.navigateBack({//返回
-        delta:1
-      })
-      // console.log(343)
-      // Taro.navigateTo({
-      //   url: `pages/cart/confirm/index?aid=${id}`,
-      // });
-     }
-
     if(e == 'add'){
       Taro.navigateTo({
         url: `/pages/user/Address/addAddress`,
@@ -153,12 +138,14 @@ class AddressList extends Component {
           showTitle
           title='收货地址'
           showBack
+          backType='switchTab'
+          url='/pages/user/index'
         ></Navbar>
         <View className='address-list'>
           {this.state.addressInfo ? this.state.addressInfo.map((item,item_index) => (
             <MovableArea key={item.id}>
               <MovableView direction='horizontal' inertia outOfBounds x={item.x} onTouchStart={this.touchMoveStartHandle} onTouchEnd={this.touchMoveEndHandle.bind(this,item_index)}>
-                <View className='address-list-item' key={item.id}  onClick={this.handlePage.bind(this,'confirm',item.id)}>
+                <View className='address-list-item' key={item.id} >
                   <View className='item' >
                     <View className='info'>
                       <View className='name-phone'>{item.name} | {item.phone}</View>

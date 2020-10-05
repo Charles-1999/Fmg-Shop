@@ -8,7 +8,6 @@ import request from '../../../utils/request'
 
 import './index.less'
 
-
 export default class Confirm extends Component {
   constructor(props) {
     super(props)
@@ -19,10 +18,11 @@ export default class Confirm extends Component {
       order_price: 0, // 订单总额（包括运费）
       total_conut: 0, // 总件数
       goodsList: null,
-      name: '',
-      phone: '',
-      address: '',
-      address_id: 0,
+      // name: '',
+      // phone: '',
+      // address: '',
+      // address_id: 0,
+      currAddress: Taro.getStorageSync('currAddress'),
     }
   }
 
@@ -32,9 +32,13 @@ export default class Confirm extends Component {
     const goodsList = this.getGoodsList();
     this.getOrderPrice(goodsList);
     this.getTotalCount();
-    this.getAddressInfo();
   }
 
+  componentDidShow() {
+    this.setData({
+      currAddress: Taro.getStorageSync('currAddress')
+    })
+  }
 
   /* 获取商品列表 */
   getGoodsList = async() => {
@@ -58,6 +62,8 @@ export default class Confirm extends Component {
       return res;
     })
   }
+
+
 
   /* 获取收货方式 */
   getGetWay = (id) => {
@@ -98,31 +104,31 @@ export default class Confirm extends Component {
     })
   }
 
-  /* 获取地址 */
-  getAddressInfo = async() => {
-    const userId = Taro.getStorageSync('userId'); //获取当前用户信息
-    const res_address = await request(`/address/info/${userId}`, {
-      body: {},
-      method: 'GET'
-    })
-    if(Current.router.params.id){
-      this.setState({
-        address_id: Current.router.params.id
-      })
-    }
-    else{
-      this.setState({
-        address_id: get(res_address[0],'id'),
-      })
-    }
-    console.log(res_address)
-    const current_id = res_address.filter(item => item.id == this.state.address_id)[0];
-    this.setState({
-      name: get(current_id,'name',''),
-      phone: get(current_id,'phone',''),
-      address: get(current_id,'province_name','')+get(current_id,'city_name','')+get(current_id,'district_name','')+get(current_id,'detail','')
-    })
-  }
+  // /* 获取地址 */
+  // getAddressInfo = async() => {
+  //   const userId = Taro.getStorageSync('userId'); //获取当前用户信息
+  //   const res_address = await request(`/address/info/${userId}`, {
+  //     body: {},
+  //     method: 'GET'
+  //   })
+  //   if(Current.router.params.id){
+  //     this.setState({
+  //       address_id: Current.router.params.id
+  //     })
+  //   }
+  //   else{
+  //     this.setState({
+  //       address_id: get(res_address[0],'id'),
+  //     })
+  //   }
+  //   console.log(res_address)
+  //   const current_id = res_address.filter(item => item.id == this.state.address_id)[0];
+  //   this.setState({
+  //     name: get(current_id,'name',''),
+  //     phone: get(current_id,'phone',''),
+  //     address: get(current_id,'province_name','')+get(current_id,'city_name','')+get(current_id,'district_name','')+get(current_id,'detail','')
+  //   })
+  // }
 
   /* 获取总件数 */
   getTotalCount = () => {
@@ -264,7 +270,7 @@ export default class Confirm extends Component {
 
   render() {
     console.log('%c ........render.........','color:green');
-    const { statusBarHeight, capsule, checkList, order_price, total_conut, goodsList } = this.state;
+    const { statusBarHeight, capsule, checkList, order_price, total_conut, goodsList, currAddress } = this.state;
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
 
@@ -279,14 +285,14 @@ export default class Confirm extends Component {
           title='确认订单'
         >
         </Navbar>
-        <Navigator className='address_wrap' url='/pages/user/Address/addressList'>
+        <Navigator className='address_wrap' url='/pages/cart/address_list/index'>
           <Image className='icon_address' src='http://qiniu.daosuan.net/picture-1598883667000' />
           <View className='address_info' onClick={this.toAddress}>
             <View className='personal_info'>
-              <Text className='name'>{this.state.name}</Text>
-              <Text className='phone'>{this.state.phone}</Text>
+              <Text className='name'>{currAddress.name}</Text>
+              <Text className='phone'>{currAddress.phone}</Text>
             </View>
-            <Text className='address'>{this.state.address}</Text>
+            <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
           </View>
           <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
         </Navigator>

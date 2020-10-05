@@ -19,8 +19,6 @@ class PlaceGoodsList extends Component {
   static defaultProps = {
     placeList: [],
     kindList: [],
-  };
-  static defaultProps = {
     goodsList: [],
     current_kind: [],
   };

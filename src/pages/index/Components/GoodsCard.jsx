@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Taro from '@tarojs/taro';
+import Taro, {Current} from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { View, Text, Checkbox, Image, Input, Navigator,} from '@tarojs/components';
@@ -313,4 +313,5 @@ class GoodsCard extends Component {
 }
 
 
-export default GoodsCard;
+//export default GoodsCard;
+export default (props)=><GoodsCard {...props} key={Current.router.params} />

@@ -1,0 +1,196 @@
+page {
+  background-color: #f3f3f3;
+  .address-list-wrap{
+    // background-color: rgb(243, 243, 243);
+    position: relative;;
+    // height: 100%;
+    .address-list{
+      padding-top: 10rpx;
+      movable-area {
+        left: -120rpx;
+        width: calc(100% + 120rpx);
+        height: auto;
+        margin: 20rpx 0;
+        movable-view {
+          position: relative;
+          left: 120rpx;
+          width: calc(100% - 120rpx);
+          height: 100%;
+          z-index: 2;
+          .address-list-item{
+            display: flex;
+            align-items: center;
+            height: auto;
+            margin: 0 30rpx;
+            padding: 20rpx 30rpx;
+            background-color: #fff;
+            border-radius: 25rpx;
+            .info{
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              .name-phone{
+                font-size:40rpx;
+                font-weight: 500;
+              }
+              .detail{
+                font-size:30rpx;
+                color:rgb(119, 118, 118);
+              }
+            }
+            .edit{
+              .text{
+                font-size:26rpx;
+                color:rgb(143, 143, 143);
+                text-align: center;
+              }
+            }
+          }
+        }
+        .out_view {
+          position: absolute;
+          right: 0;
+          top: 0;
+          height: 100%;
+          border-radius: 20rpx;
+          font-size: 32rpx;
+          letter-spacing: 2rpx;
+          color: #fff;
+          overflow: hidden;
+          z-index: 1;
+          view {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120rpx;
+            height: 100%;
+            background-color: #D53E1D;
+            margin-right: 30rpx;
+            border-radius: 30rpx;
+            margin-top: 0;
+          }
+        }
+      }
+    }
+    .add-address{
+      z-index: 5;
+      width: 200rpx;
+      height: 60rpx;
+      text-align: center;
+      color: white;
+      margin: 0 auto;
+      font-size: 43rpx;
+      background-color: #6372c7;
+      border-radius: 40rpx;
+      padding: 15rpx;
+      position: fixed;
+      bottom: 30rpx;
+      left: 35%;
+    }
+  }
+  /*checkbox 选项框大小  */
+  checkbox .wx-checkbox-input {
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
+  /*checkbox选中后样式  */
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+    background: #fff;
+    border: none;
+  }
+  /*checkbox选中后图标样式  */
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+    width: 50rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    text-align: center;
+    font-size: 35rpx;
+    color: #4885FB;
+    border: 1rpx solid #4885FB;
+    border-radius: 50%;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+  }
+}
+.add-address-list-wrap{
+  background-color: rgb(243, 243, 243);
+  position: relative;;
+  //height: 100vh;
+  .add-address-list{
+    padding-top:30rpx;
+    .name-item,.phone-item,.address-list-item{
+      padding: 30rpx 30rpx;
+      border-radius: 30px;
+      margin: 0 20rpx;
+      background-color: white;
+      display: inline-flex;
+      width: 86vw;
+      margin-bottom: 30rpx;
+      .title{
+        font-size:40rpx;
+        font-weight:600;
+        margin: auto;
+      }
+      .at-input {
+        padding: 24rpx 0;
+        color: white;
+        background-color: rgba(206, 206, 206, 0.6);
+        margin-left: 32rpx;
+        margin-bottom: 1PX;
+        position: relative;
+        border-radius: 35px;
+        height: 35rpx;
+        margin: auto;
+        input {
+          color: rgb(0, 0, 0);
+          font-size: 32rpx;
+          height: 44.8rpx;
+          line-height: 1.5;
+          margin-left: 30rpx;
+          margin-bottom: 5rpx;
+          }
+        }
+          
+    }
+    .address-detail-item {
+      padding: 30rpx 30rpx;
+      border-radius: 30px;
+      margin: 0 20rpx;
+      background-color: white;
+      width: 86vw;
+      margin-bottom: 30rpx;
+      .title{
+        font-size:40rpx;
+        font-weight:600;
+        margin: auto;
+        margin-left: 30rpx;
+        margin-bottom: 20rpx;
+      }
+      .at-textarea {
+        padding: 18rpx;
+        width: 95%;
+        font-size: 32rpx;
+        line-height: 1.5;
+        background-color: rgba(206, 206, 206, 0.6);
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border-radius: 35rpx;
+        margin: 0 20rpx;
+        margin-right: 20rpx;
+      }
+    }
+    .ok{
+      background-color: #4885FB;
+      border-radius: 35rpx;
+      font-size: 35rpx;
+      color: white;
+      width: 70rpx;
+      padding: 2rpx 20rpx;
+      margin: 0 auto;
+    }
+  }
+}
+  
