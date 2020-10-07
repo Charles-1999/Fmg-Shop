@@ -28,7 +28,6 @@ class kindGoodsList extends Component {
       current_index: Current.router.params.id,
       kindList: [],
     }
-    //this.setCurrentIndex = this.setCurrentIndex.bind(this)
   }
   componentDidMount(){
     this.props.dispatch({
@@ -48,8 +47,6 @@ class kindGoodsList extends Component {
   render () {
     const capsuleHeight = this.state.capsule.height + (this.state.capsule.top - this.state.statusBarHeight) * 3
   
-
-
     return (
       <View className='kind-goods-list-wrap' style={{ marginTop: this.state.statusBarHeight + capsuleHeight }}>
         <Navbar

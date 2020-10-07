@@ -12,9 +12,6 @@ import '../index.scss'
 
 //畅销榜
 class SaleTop extends Component {
-  // static propTypes = {
-  //   placeList: PropTypes.arrayOf({}).isRequired,
-  // };
   static defaultProps = {
     kindList: [],
   };

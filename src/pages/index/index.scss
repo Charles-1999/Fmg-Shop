@@ -1,13 +1,17 @@
+
+/*首页*/
 .index{
-  //background-color: white;
   background-color: rgb(243, 243, 243);
   padding-top:10rpx;
+  // width:100vx;
+  overflow-x: hidden;
+  height: 100vh;
   .home-top-wrap{
     background-color: white;
     border-radius: 30px;
     margin: 30rpx 30rpx;
     padding: 30rpx 30rpx;
-    .place-tab-row::-webkit-scrollbar {display:none}
+    .place-tab-row::-webkit-scrollbar {display:none}  //是否显示滑动条
     .place-tab-row{
       //padding: 30rpx 30rpx;
      // display: inline-flex;
@@ -37,7 +41,7 @@
         }
       }
     }
-    
+    /*种类滑动tab*/
     .kind-tab-wrap{
       .kind-tab-row::-webkit-scrollbar {display:none}
       .kind-tab-row{
@@ -79,7 +83,7 @@
         }
       }
     }
-  
+  /*畅销榜*/
   .sale-top-wrap{
     background-color: white;
     border-radius: 30px;
@@ -96,7 +100,6 @@
       .name{
         font-size: 36px;
         font-weight: 500;
-        //position: absolute;
         float: left;
       }
       .more{
@@ -106,10 +109,8 @@
         border-radius: 30px;
         padding-top:8rpx;
         padding-left: 15rpx;
-        //float: right;
         float: right;
         left:16.4rem;
-        //position: absolute;
         .checkmore{
           font-size: 24px;
           color: #3d3d3d;
@@ -187,6 +188,8 @@
       }
     }
   }
+
+  /*新品榜*/
   .sale-new-wrap{
     .title-list{
       background-color: white;
@@ -203,7 +206,6 @@
       .name{
         font-size: 36px;
         font-weight: 500;
-        //position: absolute;
         float: left;
       }
       .more{
@@ -213,10 +215,8 @@
         border-radius: 30px;
         padding-top:8rpx;
         padding-left: 15rpx;
-        //float: right;
         float: right;
         left:16.4rem;
-        //position: absolute;
         .checkmore{
           font-size: 24px;
           color: #3d3d3d;
@@ -226,6 +226,7 @@
    
   }
 }
+/*场地-产品页面*/
 .place-goods-list-wrap{
   background-color: rgb(243, 243, 243);
   position:absolute;
@@ -256,12 +257,11 @@
    
   }
 }
+/*商品卡片*/
 .goods-card{
   .goods-items-wrap{
     padding:0rpx 30rpx;
     width:100%; overflow:hidden;
-    //display: block;
-    //background-color: rgb(243, 243, 243);
     .first-item{
       margin-bottom: 30rpx;
       margin-right: 45rpx;
@@ -484,7 +484,6 @@
   background-color: white;
   border-radius: 30px;
   padding: 10rpx 30rpx;
-  //display: block;
   height:50rpx;
   margin: 0rpx 30rpx;
   margin-bottom: 30rpx;
@@ -496,7 +495,6 @@
   .name{
     font-size: 36px;
     font-weight: 500;
-    //position: absolute;
     float: left;
   }
   .more{
@@ -506,10 +504,8 @@
     border-radius: 30px;
     padding-top:8rpx;
     padding-left: 15rpx;
-    //float: right;
     float: right;
     left:16.4rem;
-    //position: absolute;
     .checkmore{
       font-size: 24px;
       color: #3d3d3d;
@@ -529,6 +525,7 @@
    
   }
 }
+/*种类-商品-页面*/
 .kind-goods-list-wrap{
     background-color: rgb(243, 243, 243);
     position:absolute;
@@ -537,7 +534,6 @@
   .top-list::-webkit-scrollbar {display:none}
   .top-list{
     background-color: rgb(255, 255, 255);
-    //display: inline-flex;
     margin-bottom: 30rpx;
     padding:20rpx 30rpx;
     display: flex;
@@ -563,7 +559,6 @@
 
   }
 }
-
 
 
 @import '~taro-ui/dist/style/index.scss';

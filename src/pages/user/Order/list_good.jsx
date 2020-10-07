@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
-import '../myOrder.scss'
+import './myOrder.scss'
 import { connect } from 'react-redux';
 import Taro from '@tarojs/taro'; 
 import request from '../../../utils/request'
@@ -17,23 +16,21 @@ class ListGood extends Component {
   };
   state = {
     goodInfo:{},
-    speInfo:[],
     price:0,
     quality:0,
   }
   async componentDidMount () {
     const {goodId,speId,price,quality} = this.props;
+    console.log(this.props)
     const data = await request('/goods/_mget',{ 
       body: { ids: [Number(goodId)] }, 
       method: 'POST' 
     })
     const specification_list = data[0].specification
     const spe_index = specification_list.findIndex(item => item.id == speId);
-    const spe = get(specification_list[spe_index],'specification') //
-    //const spe = specification_list.findIndex(item => item.id == speId);
+    const spe = get(specification_list[spe_index],'specification') 
     console.log(specification_list)
     console.log(spe)
-    //console.log(specification_list.findIndex(item => item.id == speId))
     if(spe){
       this.setState({
         goodInfo: data[0],
@@ -45,9 +42,6 @@ class ListGood extends Component {
   }
   
   render () {
-    console.log(this.state.goodInfo)
-    console.log(get(this.state.goodInfo,'cover',''))
-    console.log("======")
     return (
       <View className='list-good'>
         {this.state.goodInfo !== {} ? 
@@ -65,7 +59,7 @@ class ListGood extends Component {
         </View>
         <View className='price-info'>
           <View class='one-price'>
-            ¥ {this.state.price*0.01}
+            ¥ {this.state.price}
           </View>
           <View class='quantity'>
             x{this.state.quality}

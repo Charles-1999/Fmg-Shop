@@ -1,6 +1,5 @@
 .my-order{
   background-color: rgb(243, 243, 243);
-  //position: relative;;
   height: 100vh;
   .my-order-list{
     .my-order-bar{
@@ -10,21 +9,13 @@
       height: 60rpx;
       background-color: white;
       .tab-item{
-        // padding-left: 10rpx;
-        // padding-right: 10rpx;
-        // padding-top: 10rpx;
-        // margin-left: 15rpx;
-        // //font-size: 4.5vw;
-        // font-size: 0.8%;
         border-radius: 30rpx;
         padding-top: 10rpx;
         margin-left: 0.5rem;
         padding-left: 10rpx;
         padding-right:10rpx;
         font-size: 28rpx;
-        display:inline;
-      
-        
+        display:inline;   
       }
       .tab-item-active{
         background-color: #a8a8a8;
@@ -50,9 +41,32 @@
         padding-top: 20rpx;
         background-color: white;
         border-radius: 30rpx;
+        .order_status_wrap{
+          display:flex;
+          align-items: center;
+          justify-content: flex-end;
+          .status{
+            font-size: 28rpx;
+            color: #f77438;
+          }
+        }
         
-        .total_fee{
+        .total_fee_wrap{
+          margin-top: 20rpx;
           text-align: right;
+          font-size: 25rpx;
+          display:flex;
+          align-items: center;
+          justify-content: flex-end;
+          .money{
+            font-size: 25rpx;
+          }
+          .all_coupon{
+           
+          }
+          .pay_fee{
+           
+          }
         }
         .btn{
           margin-top:10rpx;
@@ -61,6 +75,20 @@
           display:flex; 
           justify-content: flex-end;
           .dilivery{
+            background-color: #5a5a5a;
+            border-radius: 30rpx;
+            padding: 5rpx 15rpx;
+            color: white;
+            margin-right: 0%;
+          }
+          .pay{
+            background-color: #5a5a5a;
+            border-radius: 30rpx;
+            padding: 5rpx 15rpx;
+            color: white;
+            margin-right: 0%;
+          }
+          .add_cart{
             background-color: #5a5a5a;
             border-radius: 30rpx;
             padding: 5rpx 15rpx;

@@ -10,13 +10,12 @@ page {
         left: -120rpx;
         width: calc(100% + 120rpx);
         height: auto;
-        margin-top: 30rpx;
-        margin-bottom: 60rpx;
+        margin: 20rpx 0;
         movable-view {
           position: relative;
           left: 120rpx;
           width: calc(100% - 120rpx);
-        // height: 100%;
+          height: 100%;
           z-index: 2;
         .address-list-item{
           margin:0 30rpx;
@@ -51,6 +50,7 @@ page {
           position: absolute;
           right: 0;
           top: 0;
+          height: 100%;
           border-radius: 20rpx;
           font-size: 32rpx;
           letter-spacing: 2rpx;
@@ -62,11 +62,11 @@ page {
             align-items: center;
             justify-content: center;
             width: 120rpx;
-            height: 100rpx;
+            height: 100%;
             background-color: #D53E1D;
             margin-right: 30rpx;
             border-radius: 30rpx;
-            margin-top: 35rpx;
+            margin-top: 0;
           }
         }
       }

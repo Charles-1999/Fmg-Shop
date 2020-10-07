@@ -24,7 +24,7 @@ class AddressList extends Component {
 
   }
   async componentDidMount () {
-    const userId = Taro.getStorageSync('userId'); //获取当前用户信息
+    const userId = Taro.getStorageSync('userId');
     await this.props.dispatch({
       type: 'address/getAddressInfoUid',
       payload: {
@@ -123,8 +123,6 @@ class AddressList extends Component {
       _Y = end.Y - start.Y
     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
   }
-
-
 
 
   render () {

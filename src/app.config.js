@@ -1,7 +1,6 @@
 export default {
   pages: [
-   
-    'pages/login/index',
+    'pages/login/index', 
     'pages/index/index',
     'pages/user/index',
     'pages/cart/index',
@@ -10,15 +9,13 @@ export default {
     'pages/category/index',
     'pages/goods_list/index',
     'pages/find/index',
-    'pages/order/orderList',
     'pages/details/index',
-    'pages/user/userInfoList',
     'pages/index/placeGoodsList',
     'pages/index/kindGoodsList',
     'pages/user/Address/addressList',
     'pages/user/Address/addAddress',
     'pages/user/Address/editAddress',
-    'pages/user/myOrder',
+    'pages/user/Order/myOrder',
   ],
   window: {
     backgroundTextStyle: 'light',

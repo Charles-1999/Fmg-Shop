@@ -36,7 +36,7 @@ class UserList extends Component {
   handleOrder = (status) => {
     console.log(status);
     Taro.navigateTo({
-      url: `/pages/user/myOrder?status=${status}`,
+      url: `/pages/user/Order/myOrder?status=${status}`,
     });
   }
 

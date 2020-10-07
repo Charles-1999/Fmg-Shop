@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, Image, PickerView, PickerViewColumn } from '@tarojs/components'
-import { AtForm, AtInput, AtButton } from 'taro-ui'
-import { get } from 'lodash';
-import Taro, {Current} from '@tarojs/taro'; 
-import './AddressPicker.scss'
 import { connect } from 'react-redux';
+import { View, Text, Image, PickerView, PickerViewColumn } from '@tarojs/components'
+import { get } from 'lodash';
+import Taro from '@tarojs/taro'; 
+import './AddressPicker.scss'
+
 
 @connect(({ address }) => ({
   ...address,
@@ -27,7 +27,6 @@ class addressPicker extends Component {
     getTitle: '',
     getClose: true,
     showPicker: false,
-    changeType: false,
     currentAddress:{}
   }
 
@@ -71,7 +70,6 @@ class addressPicker extends Component {
       }).then(()=>{
         const {provinceList} = this.props;
         val[0] = provinceList.findIndex(i => i.id == this.state.provinceCode)
-        //this.getCity(get(provinceList[0],'id'), '');
         this.props.dispatch({
           type: 'address/getCityList',
           payload: {
@@ -96,7 +94,6 @@ class addressPicker extends Component {
               areaList:areaList,
               getValue: val,
             })
-            console.log(this.state.getValue)
           })
         })
       })
@@ -135,8 +132,6 @@ class addressPicker extends Component {
             cityCode: get(cityList[val[1]],'id')
         })
       } 
-      console.log(32432423);
-      console.log(get(cityList[0],'id'))
       this.getArea(get(cityList[0],'id'), '');
     })
    
@@ -171,17 +166,14 @@ class addressPicker extends Component {
     console.log(val)
     this.getCity(this.state.provinceList[val[0]], val);
     this.getArea(this.state.cityList[val[1]], val);
-    this.setState({
-        changeType: true
-    })
   }
   openClose = () => { // 点击状态
     this.setState({
         showPicker: !this.state.showPicker,
     });
-    // if(this.state.showPicker == true){
-    //   this.getProvinceList(0,[this.state.provinceCode,this.state.cityCode,this.state.areaCode]);
-    // }
+    if(this.state.showPicker == true){
+      this.getProvinceList(0,[this.state.provinceCode,this.state.cityCode,this.state.areaCode]);
+    }
   }
   confirm = () => { //关闭
     this.setState({
@@ -201,7 +193,7 @@ class addressPicker extends Component {
     return (
       <View className='addressBox'>
         <View className='addressTitle' onClick={this.openClose}>
-    <View className='addressTitle' >{province}{city}{area}</View>
+        <View className='addressTitle' >{province}{city}{area}</View>
             <View className='rightIcon'></View>
         </View>
         {   showPicker

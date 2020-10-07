@@ -51,7 +51,6 @@ class PlaceGoodsList extends Component {
   render () {
     const capsuleHeight = this.state.capsule.height + (this.state.capsule.top - this.state.statusBarHeight) * 3
  
-
     return (
       <View className='place-goods-list-wrap' style={{ marginTop: this.state.statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -76,9 +75,6 @@ class PlaceGoodsList extends Component {
               <View className='name'>
                 {item.title}
               </View>
-              {/* <View className='icon'>
-                <Image src={newGoods} style='width:140rpx;height:80rpx' />
-              </View> */}
               <View className='more'>
                 <View className='checkmore'>查看更多</View>
                 <Image src={more} style='width:50rpx;height:30rpx' />

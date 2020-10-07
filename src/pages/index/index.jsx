@@ -36,14 +36,6 @@ class Index extends Component {
     this.props.dispatch({
       type: 'goods/getslideshow',
     })
-    // this.props.dispatch({
-    //   type: 'goods/getGoodsList',
-    // });
-  
-    // Taro.login() //获取jscode
-    // .then(response=>{
-    //   console.log(response.code)
-    // })
   }
   
   render () {
@@ -59,10 +51,8 @@ class Index extends Component {
           showLogo
           showSearch
         ></Navbar>
-        {/* <TopSearch /> */}
         <View className='home-top-wrap'>
           <PlaceTab placeList={placeList} />
-          {/* <HomeSwiper /> */}
           <MySwiper slideshowList={slideshowList} />
           <Kindtab kindList={kindList} />
         </View>
@@ -74,6 +64,5 @@ class Index extends Component {
     )
   }
 }
-
 
 export default Index;
