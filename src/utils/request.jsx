@@ -26,7 +26,7 @@ export default function request(url, option) {
           reject(res)
       },
       fail: err => {
-        console.log('err')
+        console.log('err');
         reject(err.data)
       }
     })

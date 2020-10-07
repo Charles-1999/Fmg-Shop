@@ -56,8 +56,6 @@ export default class Confirm extends Component {
     })
   }
 
-
-
   /* 获取收货方式 */
   getGetWay = (id) => {
     let way = '';
@@ -108,27 +106,28 @@ export default class Confirm extends Component {
 
   /* 提交订单 */
   order = async() => {
-    const {total_conut,order_price} = this.state;
-    const goods_price = this.getGoodsPrice();
-    const uid = Taro.getStorageSync('userId');
+    const {currAddress} = this.state;
+    const checkList = Taro.getStorageSync('checkList');
+    let goods_list = [];
+    checkList.forEach(item => {
+      let obj = {
+        goods_id: item.goods_id,
+        goods_specification: item.goods_specification_id,
+        goods_total: item.goods_count,
+        message: ''
+      }
+      goods_list.push(obj);
+    });
     try {
       const res_order = await request('/order', {
         body: {
-          goods_total: total_conut, // 商品总数
-          exp_fare: 1, // 运费
-          coupon: 0, // 优惠
-          goods_amount: goods_price*100, // 商品总额（不包括运费） 单位：分
-          total_fee: order_price*100, // 订单总额（包括运费、优惠） 单位：分
-          message: '无', // 留言
-          account_id: uid, // uid
-          address_id: 1, // 地址id
-          delivery: 1, // 发货方式 1：快递 2：同城配送 3：自提
-          order_status: 1, // 订单状态 1：提交订单/未付款 2：待发货 3：已发货/待收货 4：已收货/待评价 5：订单结束
+          address_id: currAddress.id,
+          goods_list
         },
         method: 'POST'
       })
-      const {id,OutTradeNo} = res_order;
-      this.orderDeatil(id,OutTradeNo);
+      const {id} = res_order;
+      this.pay(id);
     }
     catch (err) {
       Taro.showToast({
@@ -169,23 +168,17 @@ export default class Confirm extends Component {
   }
 
   /* 统一下单 */
-  pay = async(OutTradeNo,order_id) => {
+  pay = async(order_id) => {
     const {order_price} = this.state;
     const sysInfo = Taro.getStorageSync('sysInfo');
     const open_id = Taro.getStorageSync('open_id');
     const userId = Taro.getStorageSync('userId');
     try {
-      const res_pay = await request('/pay', {
+      const res_pay = await request(`/pay/unified/${order_id}`, {
         body: {
           body: '凤鸣谷-商城', // 
           detail: '测试', // 
-          spbill_create_ip: '127.0.0.1', // 
           device_info: sysInfo.model, // 
-          open_id: open_id, // 
-          account_id: userId, // 
-          total_fee: order_price*100, // 
-          out_trade_no: OutTradeNo, // 
-          order_id
         },
         method: 'POST'
       })

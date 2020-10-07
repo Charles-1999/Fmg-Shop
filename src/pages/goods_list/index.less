@@ -1,14 +1,119 @@
 page {
   .cate_list {
+    /* 筛选模块 */
+    .filter_wrap {
+      position: relative;
+      height: 30PX;
+      .filter_bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 30PX;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-bottom: 1rpx solid #eee;
+        background-color: #fff;
+        font-size: 14PX;
+        box-sizing: border-box;
+        z-index: 999;
+        .bar_item {
+          flex: 2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          image {
+            width: 20PX;
+            height: 20PX;
+            transition: transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+          }
+          .isOpen {
+            transform: rotate(180deg);
+          }
+        }
+        .active {
+          color: #4ea4fd;
+        }
+        .view {
+          flex: 0;
+          padding: 0 20rpx;
+          border-right: 1rpx solid #eee;
+        }
+        .filter {
+          flex: 1;
+        }
+      }
+      // 选择排序模块
+      .float_wrap {
+        visibility: hidden;
+        position: absolute;
+        left: 0;
+        top: 60rpx;
+        width: 100%;
+        z-index: 998;
+        transition: visibility 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+        .mask {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0 ,0 ,0 , 0.3);
+        }
+        .container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 10PX;
+          background: #fff;
+          transform: translate3d(0, -100%, 0);
+          transition: transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1), -webkit-transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+          box-sizing: border-box;
+          .sort_item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            line-height: 40PX;
+            font-size: 14PX;
+            font-weight: 300;
+            border-bottom: 1rpx solid #eee;
+            image {
+              width: 15PX;
+              height: 15PX;
+            }
+          }
+          .sort_active {
+            color: #4ea4fd;
+          }
+        }
+        .container_active {
+          transform: translate3d(0, 0, 0);
+        }  
+      }
+      .float_active {
+        visibility: visible;
+      }
+    }
+    /* 商品列表-列表视图 */
     .goods_list {
+      overflow-y: auto;
+      box-sizing: border-box;
       .goods_wrap {
         display: flex;
-        padding: 20rpx 20rpx 0;
+        padding: 10PX 10PX 0;
+        background-color: #fff;
         .cover {
-          width: 200rpx;
-          height: 200rpx;
-          border-radius: 20rpx;
+          width: 100PX;
+          height: 100PX;
+          border-radius: 10PX;
           overflow: hidden;
+          image {
+            width: 100%;
+            height: 100%;
+          }
         }
         .info {
           flex: 1;
@@ -16,25 +121,74 @@ page {
           flex-direction: column;
           justify-content: space-between;
           width: 100%;
-          height: 200rpx;
-          font-size: 28rpx;
-          margin-left: 20rpx;
-          padding-bottom: 20rpx;
+          height: 100PX;
+          font-size: 14PX;
+          margin-left: 10PX;
+          padding-bottom: 10PX;
           border-bottom: 1px solid #eee;
           box-sizing: border-box;
           .price {
             color: #D53E1D;
-            font-size: 28rpx;
+            font-size: 14PX;
             font-weight: 700;
-            margin-top: 10rpx;
+            margin-top: 5PX;
             .sign {
-              font-size: 20rpx;
+              font-size: 10PX;
             }
             .sale {
-              font-size: 20rpx;
+              font-size: 10PX;
               color: #6F6F6F;
-              font-weight: 500;
-              margin-left: 10rpx;
+              font-weight: 300;
+              margin-left: 5PX;
+            }
+          }
+        }
+      }
+    }
+    /* 商品列表-宫格视图 */
+    .wrap {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-evenly;
+      .goods_wrap {
+        width: 47%;
+        padding: 5PX;
+        margin-top: 10PX;
+        background-color: #fff;
+        border-radius: 10PX;
+        font-size: 14PX;
+        overflow: hidden;
+        box-sizing: border-box;
+        .cover {
+          position: relative;
+          width:100%;
+          height:0;
+          padding-top:100%;
+          image {
+            position: absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+          }
+        }
+        .info {
+          display: flex;
+          flex-direction: column;
+          padding: 5PX;
+          .price {
+            color: #D53E1D;
+            font-size: 14PX;
+            font-weight: 700;
+            margin-top: 5PX;
+            .sign {
+              font-size: 10PX;
+            }
+            .sale {
+              display: block;
+              font-size: 10PX;
+              color: #6F6F6F;
+              font-weight: 300;
             }
           }
         }

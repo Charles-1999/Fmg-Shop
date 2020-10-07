@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { Provider } from 'react-redux'
 import './app.scss'
+import request from './utils/request'
+import login, {appLogin} from './utils/login'
 import dva from './utils/dva'
 import models from './model'
 
@@ -17,13 +19,33 @@ const dvaApp = dva.createApp({
 });
 const store = dvaApp.getStore();
 
-
 class App extends Component {
-  // 先看看有没有用 //网上搬过来的
+  async onLaunch() {
+    const userInfo = Taro.getStorageSync("userInfo");
+    if(!userInfo) {
+      Taro.redirectTo({ url:"/pages/login/index" });
+    }
+    else {
+      try {
+        const js_code = await appLogin();
+        const res = await login(js_code);
+        console.log(res)
+      }catch(err) {
+        console.log(err)
+        Taro.showToast({
+          title: '小程序登录失败，请重新进入小程序。',
+          icon: 'none',
+          duration: 2500
+        })
+      }
+    }
+  }
+
   componentWillMount(){
     this.getSysInfo();
   }
-  
+
+  /* 获取设备信息 */
   getSysInfo() {
     // 先缓存获取
     let isIphoneX = Taro.getStorageSync('isIphoneX') || false;
@@ -52,7 +74,7 @@ class App extends Component {
     setGlobalData('capsule', capsule);
     setGlobalData('windowWidth', windowWidth);
   }
-
+  
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render () {
