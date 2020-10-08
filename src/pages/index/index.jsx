@@ -10,7 +10,6 @@ import SaleTop from './Components/SaleTop'
 import SaleNew from './Components/SaleNew'
 import MySwiper from './components/MySwiper'
 import PlaceKindTab from './Components/PlaceKindTab'
-//import HomeSwiper from './Components/HomeSwiper'
 import Navbar from '../../components/navbar/navbar'
 import { get as getGlobalData } from '../../global_data'
 

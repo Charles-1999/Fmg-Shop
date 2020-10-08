@@ -14,7 +14,7 @@ export default {
     * getOrderList({ payload }, { call, put }) {
       const res = yield call(getOrderList, payload);
       const info = get(res, 'orders',[]);
-      const ids = info.map((arr) => {return arr.id})
+      //const ids = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
         payload:{

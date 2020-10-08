@@ -93,7 +93,6 @@ class editAddress extends Component {
   }
 
   callback =(pName, pCode, cName, cCode, aName, aCode )=> {
-    //this.getCityStore(cCode, this.state.longitudeLatitude);
     this.setState({ 
     provinceCode: pCode,
     cityCode: cCode,

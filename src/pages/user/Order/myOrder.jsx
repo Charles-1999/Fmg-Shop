@@ -125,11 +125,11 @@ class MyOrderList extends Component {
                     <View className='list-item' key={child.id}>
                       <View className='order_status_wrap'>
                           <View className='status'>
-                            {child.order_status == 1 ? <View>待付款</View> : ''}
-                            {child.order_status == 2 ? <View>买家已付款</View> : ''}
-                            {child.order_status == 3 ? <View>卖家已发货</View> : ''}
-                            {child.order_status == 4 ? <View>交易成功</View> : ''}
-                            {child.order_status == 5 ? <View>退款</View> : ''}
+                            {item.order_status == 1 ? <View>待付款</View> : ''}
+                            {item.order_status == 2 ? <View>买家已付款</View> : ''}
+                            {item.order_status == 3 ? <View>卖家已发货</View> : ''}
+                            {item.order_status == 4 ? <View>交易成功</View> : ''}
+                            {item.order_status == 5 ? <View>退款</View> : ''}
                           </View>
                       </View>
                       <View key={child.id}>
@@ -145,19 +145,19 @@ class MyOrderList extends Component {
                         ))}
                       </View>
                       <View className='total_fee_wrap'>
-                          <View className='all_fee'>商品总额：</View>
+                          <View className='all_fee'>总价</View>
                           <View className='money'>¥{get(item,'total_goods_amount')},&ensp;</View>
-                          <View className='all_coupon'> 共优惠：</View>
+                          <View className='all_coupon'> 优惠：</View>
                           <View className='money'> ¥{get(item,'total_coupon')},&ensp;</View>
-                          <View className='pay_fee'> 实付金额：</View>
+                          <View className='pay_fee'> 实付款：</View>
                           <View className='money'> ¥{get(item,'total_order_amount')}</View>
                         </View>
                       <View className='btn'>
-                          {child.order_status == 1  ? <View><View className='pay'>付款</View></View> : ''}
-                          {child.order_status == 2  ? <View>买家已付款</View> : ''}
-                          {child.order_status == 3  ? <View><View className='dilivery'>查看物流</View></View> : ''}
-                          {child.order_status == 4  ? <View><View className='add_cart'>加入购物车</View></View> : ''}
-                          {child.order_status == 5  ? <View>退款</View> : ''}
+                          {item.order_status == 1  ? <View><View className='pay'>付款</View></View> : ''}
+                          {item.order_status == 2  ? <View>买家已付款</View> : ''}
+                          {item.order_status == 3  ? <View><View className='dilivery'>查看物流</View></View> : ''}
+                          {item.order_status == 4  ? <View><View className='add_cart'>加入购物车</View></View> : ''}
+                          {item.order_status == 5  ? <View>退款</View> : ''}
                         </View>
                       <View style='clear:both'></View>
                     </View>

@@ -1,7 +1,13 @@
+/* 
+  页面：登录
+  作者：Charles_十七
+*/
+
 import React, { Component } from 'react'
 import { View, Button, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro';
 import request from '../../utils/request'
+import login,{ appLogin, register } from '../../utils/login'
 import './index.scss'
 import headerjpg from '../../assets/img/fmgLoginLogo.png'
 
@@ -10,13 +16,12 @@ class LoginView extends Component {
     super(...arguments)
     this.state = {
       userId: Taro.getStorageSync('userId'),
+      js_code: null
     }
   }
 
-  componentDidMount(){
-    if(this.state.userId) {
-      Taro.switchTab({ url: '/pages/index/index' })
-    }
+  componentWillMount(){
+
   }
 
   login(){
@@ -47,6 +52,29 @@ class LoginView extends Component {
     })
   }
 
+  /* 尝试登录 */
+  tryLogin() {
+    const {js_code} = this.state;
+    request("/account/login/wx_login", {
+      body: {
+        js_code
+      },
+      method: "POST"
+    }).then( data => {
+      console.log('wx_login',data);
+      if(data.key){
+        // 登录失败，走注册
+        this.register(data.key);
+      }
+      // 登录成功，跳转
+      Taro.setStorageSync('userId',data.id);
+      Taro.setStorageSync('token',data.token);
+      Taro.setStorageSync('open_id',data.open_id);
+      Taro.switchTab({ url: '/pages/index/index' });
+    })
+  }
+
+  /* 注册功能 */
   async register(key){
     const userInfo = Taro.getStorageSync('userInfo');
     const data = await request('/account/login/register', {
@@ -62,13 +90,31 @@ class LoginView extends Component {
     console.log('register',data);
     Taro.setStorageSync('userId',data.id);
     Taro.setStorageSync('token',data.token);
-    Taro.setStorageSync('open_id',data.open_id);
+    Taro.setStorageSync('open_id',data.openid);
+    Taro.switchTab({ url: '/pages/index/index' });
   }
 
-  getUserInfo = (e) => {
+  /* 获取用户信息 */
+  getUserInfo = async(e) => {
     if(e.detail.userInfo){
-      Taro.setStorageSync('userInfo', e.detail.userInfo);
-      this.login();
+      const userInfo = e.detail.userInfo;
+      Taro.setStorageSync('userInfo', userInfo);
+      try {
+        const js_code = await appLogin();
+        const res = await login(js_code);
+        // res中存在key，即账号没注册
+        if(res.key) {
+          await register(res.key, userInfo);
+        }
+        console.log(res)
+      }catch(err) {
+        console.log(err)
+        Taro.showToast({
+          title: '小程序登录失败，请重新进入小程序。',
+          icon: 'none',
+          duration: 2500
+        })
+      }
     }
   }
 
@@ -88,4 +134,3 @@ class LoginView extends Component {
 }
 
 export default LoginView;
-

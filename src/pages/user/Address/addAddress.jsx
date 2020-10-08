@@ -31,9 +31,6 @@ class AddAddressList extends Component {
     detail: '',
   }
 
-  onSubmit (event) {
-    // console.log(this.state.value)
-  }
   handleChange (e,value) {
     if(e === 'name') {
       this.setState({
@@ -136,13 +133,12 @@ class AddAddressList extends Component {
                 onChange={this.handleChange.bind(this, 'detail')} 
               />
           </View>
-          <View className='ok'  onClick={this.handleOk.bind(this)} >提交</View>
-     
+          <View className='ok'  onClick={this.handleOk.bind(this)} >提交</View>   
         
         </View>
       </View>
     )
   }
-  }
+}
 
 export default AddAddressList;
