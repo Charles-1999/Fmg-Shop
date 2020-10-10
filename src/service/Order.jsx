@@ -2,7 +2,7 @@ import request from '../utils/request';
 
 //订单列表
 export const getOrderList = params =>{
-  return request('/order/list', {
+  return request('/_order/list', {
     method: 'GET',
     body: params,
   });
@@ -11,7 +11,7 @@ export const getOrderList = params =>{
 //批量获取订单信息
 export const mgetOrderList = params =>{
   console.log(params)
-  return request('/order/_mget', {
+  return request('/_order/_mget', {
     method: 'POST',
     body: params,
   });
@@ -19,7 +19,7 @@ export const mgetOrderList = params =>{
 
 //修改订单信息
 export const editOrderInfo = params =>{
-  return request(`/order/${params.oid}`, {
+  return request(`/_order/${params.oid}`, {
     method: 'PUT',
     body: params,
   });

@@ -18,14 +18,9 @@ export default class Confirm extends Component {
       order_price: 0, // 订单总额（包括运费）
       total_conut: 0, // 总件数
       goodsList: null,
-      // name: '',
-      // phone: '',
-      // address: '',
-      // address_id: 0,
       currAddress: Taro.getStorageSync('currAddress'),
     }
   }
-
 
 
   UNSAFE_componentWillMount() {
@@ -102,31 +97,6 @@ export default class Confirm extends Component {
     })
   }
 
-  // /* 获取地址 */
-  // getAddressInfo = async() => {
-  //   const userId = Taro.getStorageSync('userId'); //获取当前用户信息
-  //   const res_address = await request(`/address/info/${userId}`, {
-  //     body: {},
-  //     method: 'GET'
-  //   })
-  //   if(Current.router.params.id){
-  //     this.setState({
-  //       address_id: Current.router.params.id
-  //     })
-  //   }
-  //   else{
-  //     this.setState({
-  //       address_id: get(res_address[0],'id'),
-  //     })
-  //   }
-  //   console.log(res_address)
-  //   const current_id = res_address.filter(item => item.id == this.state.address_id)[0];
-  //   this.setState({
-  //     name: get(current_id,'name',''),
-  //     phone: get(current_id,'phone',''),
-  //     address: get(current_id,'province_name','')+get(current_id,'city_name','')+get(current_id,'district_name','')+get(current_id,'detail','')
-  //   })
-  // }
 
   /* 获取总件数 */
   getTotalCount = () => {
@@ -248,12 +218,6 @@ export default class Confirm extends Component {
     console.log(this.data)
   }
 
-  // /* 跳转到地址选择页面 */
-  // toAddress(){
-  //   Taro.navigateTo({
-  //     url: '/pages/user/Address/addressList',
-  //   });
-  // }
 
   // 自己封装的setState
   setData = (...params) => {

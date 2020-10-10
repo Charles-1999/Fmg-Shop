@@ -15,11 +15,6 @@ import ListGood from './list_good'
   ...order,
 }))
 class MyOrderList extends Component {
-
-
-  static defaultProps = {
-    iconList: [],
-  };
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
@@ -63,8 +58,6 @@ class MyOrderList extends Component {
       }
     })
     const {orderInfoList} = this.props;
-    console.log(222);
-    console.log(orderInfoList)
     this.setState({
       orderList: orderInfoList,
     })
@@ -76,6 +69,13 @@ class MyOrderList extends Component {
       currentIndex: status,
     })
     this.getOrderList()
+  }
+
+  //跳转到详情页面
+  toDetail = (id) => {
+    Taro.navigateTo({
+      url: `/pages/user/Order/orderDetail?id=${id}`,
+    });
   }
 
   // onPullDownRefresh() {
@@ -121,48 +121,54 @@ class MyOrderList extends Component {
             <View className='list-item-wrap' key={this.state.currentIndex}>
               {this.state.orderList.map(item=>(
                 <View key={item.id}>
-                  {get(item,'child_order',[]).map(child=>(
-                    <View className='list-item' key={child.id}>
-                      <View className='order_status_wrap'>
-                          <View className='status'>
-                            {item.order_status == 1 ? <View>待付款</View> : ''}
-                            {item.order_status == 2 ? <View>买家已付款</View> : ''}
-                            {item.order_status == 3 ? <View>卖家已发货</View> : ''}
-                            {item.order_status == 4 ? <View>交易成功</View> : ''}
-                            {item.order_status == 5 ? <View>退款</View> : ''}
-                          </View>
+                  <View className='list-item' key={item.id} onClick={this.toDetail.bind(this,item.id)}>
+                    <View className='order-code'>
+                      <View className='name'>
+                        订单编号：
                       </View>
-                      <View key={child.id}>
-                        {get(child,'order_detail',[]).map(goods_item=>(
-                          <View className='good-item' key={goods_item.id}>
-                            <ListGood 
-                              goodId={get(goods_item,'goods_id','')} 
-                              speId={get(goods_item,'goods_specification_id','')} 
-                              price={get(goods_item,'order_amount','')} 
-                              quality={get(goods_item,'purchase_qty','')} 
-                            />                      
-                          </View>
-                        ))}
+                      <View className='code'>
+                        {get(item,'order_num')}
                       </View>
-                      <View className='total_fee_wrap'>
-                          <View className='all_fee'>总价</View>
-                          <View className='money'>¥{get(item,'total_goods_amount')},&ensp;</View>
-                          <View className='all_coupon'> 优惠：</View>
-                          <View className='money'> ¥{get(item,'total_coupon')},&ensp;</View>
-                          <View className='pay_fee'> 实付款：</View>
-                          <View className='money'> ¥{get(item,'total_order_amount')}</View>
-                        </View>
-                      <View className='btn'>
-                          {item.order_status == 1  ? <View><View className='pay'>付款</View></View> : ''}
-                          {item.order_status == 2  ? <View>买家已付款</View> : ''}
-                          {item.order_status == 3  ? <View><View className='dilivery'>查看物流</View></View> : ''}
-                          {item.order_status == 4  ? <View><View className='add_cart'>加入购物车</View></View> : ''}
-                          {item.order_status == 5  ? <View>退款</View> : ''}
-                        </View>
-                      <View style='clear:both'></View>
                     </View>
-                  ))}
-               </View>
+                    {/* <View className='order_status_wrap'>
+                      <View className='status'>
+                        {item.order_status == 1 ? <View>待付款</View> : ''}
+                        {item.order_status == 2 ? <View>买家已付款</View> : ''}
+                        {item.order_status == 3 ? <View>卖家已发货</View> : ''}
+                        {item.order_status == 4 ? <View>交易成功</View> : ''}
+                        {item.order_status == 5 ? <View>退款</View> : ''}
+                      </View>
+                    </View> */}
+                    <View key={item.id}>
+                      {get(item,'order_detail',[]).map(goods_item=>(
+                        <View className='good-item' key={goods_item.id}>
+                          <ListGood 
+                            goodId={get(goods_item,'goods_id','')} 
+                            speId={get(goods_item,'goods_specification_id','')} 
+                            price={get(goods_item,'order_amount','')} 
+                            quality={get(goods_item,'purchase_qty','')} 
+                          />                      
+                        </View>
+                      ))}
+                    </View>
+                    <View className='total_fee_wrap'>
+                      <View className='all_fee'>总价</View>
+                      <View className='money'>¥{get(item,'child_goods_amount')},&ensp;</View>
+                      <View className='all_coupon'> 优惠：</View>
+                      <View className='money'> ¥{get(item,'child_total_coupon')},&ensp;</View>
+                      <View className='pay_fee'> 实付款：</View>
+                      <View className='money'> ¥{get(item,'child_goods_amount')-get(item,'child_total_coupon')}</View>
+                    </View>
+                    <View className='btn'>
+                      {item.order_status == 1  ? <View><View className='pay'>付款</View></View> : ''}
+                      {item.order_status == 2  ? <View>买家已付款</View> : ''}
+                      {item.order_status == 3  ? <View><View className='dilivery'>查看物流</View></View> : ''}
+                      {item.order_status == 4  ? <View><View className='add_cart'>加入购物车</View></View> : ''}
+                      {item.order_status == 5  ? <View>退款</View> : ''}
+                    </View>
+                    <View style='clear:both'></View>
+                  </View>             
+               </View>  
               ))}
             </View>
           : ''}          

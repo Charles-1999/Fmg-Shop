@@ -24,9 +24,9 @@
         margin-left: 0.5rem;
         padding-left: 10rpx;
         padding-right: 10rpx;
-          display:inline;
+        display:inline;
         color:white;
-          font-size: 28rpx;
+        font-size: 28rpx;
 
       }
     }
@@ -41,6 +41,17 @@
         padding-top: 20rpx;
         background-color: white;
         border-radius: 30rpx;
+        .order-code{
+          display:flex;
+          align-items: center;
+          .name{
+            font-size: 28px;
+          }
+          .code{
+            font-size: 26px;
+            color: #474747;
+          }
+        }
         .order_status_wrap{
           display:flex;
           align-items: center;
@@ -114,6 +125,9 @@
     }
     .spe{
       display: inline-flex;
+      background-color: #9999;
+      border-radius: 5px;
+      padding: 5rpx 5px;
       .item{
         margin-right: 10rpx;
         font-size: 28rpx;

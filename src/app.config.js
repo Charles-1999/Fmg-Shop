@@ -1,5 +1,6 @@
 export default {
   pages: [
+   
     'pages/login/index', 
     'pages/index/index',
     'pages/user/index',
@@ -15,6 +16,7 @@ export default {
     'pages/user/Address/addressList',
     'pages/user/Address/addAddress',
     'pages/user/Address/editAddress',
+    'pages/user/Order/orderDetail',
     'pages/user/Order/myOrder',
   ],
   window: {

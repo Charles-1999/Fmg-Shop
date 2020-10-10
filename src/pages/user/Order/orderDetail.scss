@@ -1,0 +1,50 @@
+.order-detail-wrap{
+  background-color: rgb(243, 243, 243);
+  height: 100vh;
+  .order-detail{
+    padding: 0 30rpx;
+    margin-top: 30rpx;
+    padding-top: 30rpx;
+    .address-wrap{
+      padding: 30rpx 30rpx;
+      background-color: white;
+      border-radius: 20PX;
+      .name-phone{
+        display: flex;
+        text-align: center;
+        .phone{
+          margin-left: 30rpx;
+          display:flex;
+          justify-content: flex-end;
+          align-items: center;
+        }
+      }
+      .address-detail{
+        margin-top: 30rpx;
+      }
+    }
+    .goods-wrap{
+      margin-top: 30rpx;
+      padding: 30rpx 30rpx;
+      background-color: white;
+      border-radius: 20PX;
+      .total_fee_wrap{
+        margin-top: 20rpx;
+        text-align: right;
+        font-size: 25rpx;
+        display:flex;
+        align-items: center;
+        justify-content: flex-end;
+        .money{
+          font-size: 27rpx;
+        }
+        .all_coupon{
+         
+        }
+        .pay_fee{
+          font-size: 30rpx;
+        }
+      }
+    }
+  }
+}
