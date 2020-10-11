@@ -28,22 +28,52 @@
       padding: 30rpx 30rpx;
       background-color: white;
       border-radius: 20PX;
-      .total_fee_wrap{
+      .total-fee-wrap{
         margin-top: 20rpx;
-        text-align: right;
-        font-size: 25rpx;
-        display:flex;
-        align-items: center;
-        justify-content: flex-end;
-        .money{
-          font-size: 27rpx;
+        .list{
+          display:flex;
+          .all-fee,.all-coupon,.dil-fee{
+            flex:1;
+            font-size:27rpx;
+            color:rgb(119, 119, 119);
+          }
+          .money{
+            align-items: center;
+            justify-content: flex-end;
+            font-size:27rpx;
+            color:rgb(119, 119, 119);
+          }
+          .pay-fee{
+            flex:1;
+            font-size:30rpx;
+          }
+          .pay-money{
+            align-items: center;
+            justify-content: flex-end;
+            font-size:30rpx;
+          }
         }
-        .all_coupon{
-         
+      }
+    }
+    .order-detail{
+      margin-top:30rpx;
+      padding: 30rpx 30rpx;
+      background-color: white;
+      border-radius: 20PX;
+      .info-wrap{
+        .list{
+          display:flex;
+          .name{
+            flex:1;
+            font-size:27rpx;
+          }
+          .info{
+            align-items: center;
+            justify-content: flex-end;
+            font-size:27rpx;
+          }
         }
-        .pay_fee{
-          font-size: 30rpx;
-        }
+
       }
     }
   }

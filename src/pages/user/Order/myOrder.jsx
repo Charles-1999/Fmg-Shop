@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
-import './myOrder.scss'
 import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import Loading from '../../../components/Loading'
+import './myOrder.scss'
 
 import ListGood from './list_good'
 
@@ -145,19 +145,19 @@ class MyOrderList extends Component {
                           <ListGood 
                             goodId={get(goods_item,'goods_id','')} 
                             speId={get(goods_item,'goods_specification_id','')} 
-                            price={get(goods_item,'order_amount','')} 
+                            price={get(goods_item,'goods_amount','')} 
                             quality={get(goods_item,'purchase_qty','')} 
                           />                      
                         </View>
                       ))}
                     </View>
-                    <View className='total_fee_wrap'>
-                      <View className='all_fee'>总价</View>
-                      <View className='money'>¥{get(item,'child_goods_amount')},&ensp;</View>
-                      <View className='all_coupon'> 优惠：</View>
+                    <View className='total-fee-wrap'>
+                      <View className='all-fee'>总价：</View>
+                      <View className='money'>¥{get(item,'child-_goods_amount')},&ensp;</View>
+                      <View className='all-coupon'> 优惠：</View>
                       <View className='money'> ¥{get(item,'child_total_coupon')},&ensp;</View>
-                      <View className='pay_fee'> 实付款：</View>
-                      <View className='money'> ¥{get(item,'child_goods_amount')-get(item,'child_total_coupon')}</View>
+                      <View className='pay-fee'> 实付款：</View>
+                      <View className='money'> ¥{get(item,'child_order_amount')}</View>
                     </View>
                     <View className='btn'>
                       {item.order_status == 1  ? <View><View className='pay'>付款</View></View> : ''}

@@ -62,7 +62,7 @@
           }
         }
         
-        .total_fee_wrap{
+        .total-fee-wrap{
           margin-top: 20rpx;
           text-align: right;
           font-size: 25rpx;
@@ -72,11 +72,11 @@
           .money{
             font-size: 25rpx;
           }
-          .all_coupon{
+          .all-coupon{
            
           }
-          .pay_fee{
-           
+          .pay-fee{
+            font-size: 30rpx;
           }
         }
         .btn{
@@ -125,9 +125,6 @@
     }
     .spe{
       display: inline-flex;
-      background-color: #9999;
-      border-radius: 5px;
-      padding: 5rpx 5px;
       .item{
         margin-right: 10rpx;
         font-size: 28rpx;

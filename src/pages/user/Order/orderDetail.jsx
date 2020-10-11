@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
-import './orderDetail.scss'
 import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import request from '../../../utils/request'
 import ListGood from './list_good'
+import './orderDetail.scss'
 
 
 
@@ -86,23 +86,47 @@ class orderDetail extends Component {
                 <ListGood 
                   goodId={get(item,'goods_id','')} 
                   speId={get(item,'goods_specification_id','')} 
-                  price={get(item,'order_amount','')} 
+                  price={get(item,'goods_amount','')} 
                   quality={get(item,'purchase_qty','')} 
-                />   
+                /> 
+                  
               </View>
             ))}
-            <View className='total_fee_wrap'>
-              <View className='all_fee'>总价：</View>
-              <View className='money'>¥{get(this.state.order_info,'child_goods_amount')},&ensp;</View>
-              <View className='all_coupon'> 优惠：</View>
-              <View className='money'> ¥{get(this.state.order_info,'child_total_coupon')},&ensp;</View>
-              <View className='pay_fee'> 实付款：</View>
-              <View className='money'> ¥{get(this.state.order_info,'child_order_amount')}</View>
+            <View className='total-fee-wrap'>
+              <View className='list'>
+                <View className='all-fee'>总价：</View>
+                <View className='money'>¥{get(this.state.order_info,'child_goods_amount')}</View>
+              </View>
+              <View className='list'>
+                <View className='dil-fee'>运费：</View>
+                <View className='money'>¥{get(this.state.order_info,'child_exp_fare')}</View>
+              </View>
+              <View className='list'>
+                <View className='all_coupon'> 优惠：</View>
+                <View className='money'> -¥{get(this.state.order_info,'child_total_coupon')}</View>
+              </View>
+              <View className='list'>
+                <View className='pay-fee'> 实付款：</View>
+                <View className='pay-money'> ¥{get(this.state.order_info,'child_order_amount')}</View>
+              </View>
             </View>
           </View>
-              
+          <View className='order-detail'>
+            订单详情
+            <View className='info-wrap'>
+              <View className='list'>
+                <View className='name'>订单编号：</View>
+                <View className='info'>{get(this.state.order_info,'order_num','')}</View>
+              </View>
+              <View className='list'>
+                <View className='name'>下单时间：</View>
+                <View className='info'>{get(this.state.order_info,'create_time','')}</View>
+              </View>
+            
+            </View>  
+          </View>
         </View>
-      </View>
+        </View>
     )
   }
 }
