@@ -78,17 +78,32 @@ class MyOrderList extends Component {
     });
   }
 
-  // onPullDownRefresh() {
-  //   console.log('下拉刷新')
-  //   setTimeout(() => {
-  //       // 停止下拉刷新
-  //       Taro.stopPullDownRefresh()
-  //   }, 1000)
-  // }
-
-  // onReachBottom() {
-  //     console.log('触底事件，做上拉加载')
-  // }
+  onReachBottom() {
+    console.log("addddd")
+    // this.setState({ isLoading: true });
+    // const userId = Taro.getStorageSync('userId'); //获取当前用户信息
+    // await this.props.dispatch({
+    //   type: 'order/getOrderList',
+    //   payload: {
+    //     account_id:userId,
+    //     status: this.state.currentIndex,
+    //     page: 2,
+    //   }
+    // })
+    // const {orderList} = this.props
+    // const Ids = orderList.map((arr) => {return arr.id})
+    // console.log(Ids)
+    // await this.props.dispatch({
+    //   type: 'order/mgetOrderList',
+    //   payload: {
+    //     ids:Ids
+    //   }
+    // })
+    // const {orderInfoList} = this.props;
+    // this.setState({
+    //   orderList: [...orderInfoList],
+    // })
+  }
 
 
   render () {
@@ -153,7 +168,7 @@ class MyOrderList extends Component {
                     </View>
                     <View className='total-fee-wrap'>
                       <View className='all-fee'>总价：</View>
-                      <View className='money'>¥{get(item,'child-_goods_amount')},&ensp;</View>
+                      <View className='money'>¥{get(item,'child_goods_amount')},&ensp;</View>
                       <View className='all-coupon'> 优惠：</View>
                       <View className='money'> ¥{get(item,'child_total_coupon')},&ensp;</View>
                       <View className='pay-fee'> 实付款：</View>

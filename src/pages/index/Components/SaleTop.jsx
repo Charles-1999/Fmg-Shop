@@ -32,6 +32,13 @@ class SaleTop extends Component {
     });
   }
 
+  //商品详情
+  toDetail = (id) => {
+    Taro.navigateTo({
+      url: `/pages/details/index?gid=${id}`,
+    });
+  }
+
   render () {
     const { goodsSaleTopList } = this.props;
     const data = Array.from(goodsSaleTopList)
@@ -53,12 +60,22 @@ class SaleTop extends Component {
           <View className='left-item'>
             <View className='number'>1</View>
             <Image src='http://qiniu.daosuan.net/picture-1599455855000' style='width:110rpx;height:130rpx' className='range-1' />
-            <Image src={'http://qiniu.daosuan.net/'+get(data[0],'cover','')} style='width:280rpx;height: 250rpx;border-radius: 15px;' className='first-img' />
+            <Image 
+              src={'http://qiniu.daosuan.net/'+get(data[0],'cover','')} 
+              style='width:280rpx;height: 250rpx;border-radius: 15px;' 
+              className='first-img'
+              onClick={this.toDetail.bind(this,get(data[0],'id',''))} 
+            />
           </View>
           <View className='mid-item'>
           <View className='number'>2</View>
             <Image src='http://qiniu.daosuan.net/picture-1599455855000' style='width:80rpx;height:100rpx' className='range-2' />
-            <Image src={'http://qiniu.daosuan.net/'+get(data[1],'cover','')} style='width:150rpx;height: 250rpx;border-radius: 15px;' className='first-img' />
+            <Image 
+              src={'http://qiniu.daosuan.net/'+get(data[1],'cover','')} 
+              style='width:150rpx;height: 250rpx;border-radius: 15px;' 
+              className='first-img' 
+              onClick={this.toDetail.bind(this,get(data[1],'id',''))} 
+            />
           </View>
           <View className='right-item'>
             <View className='intro'>
@@ -67,7 +84,12 @@ class SaleTop extends Component {
             </View>
             <View className='number'>3</View>
             <Image src='http://qiniu.daosuan.net/picture-1599455855000' style='width:80rpx;height:100rpx' className='range-3' />
-            <Image src={'http://qiniu.daosuan.net/'+get(data[2],'cover','')} style='width:150rpx;height: 150rpx;border-radius: 15px;' className='first-img' />
+            <Image 
+              src={'http://qiniu.daosuan.net/'+get(data[2],'cover','')} 
+              style='width:150rpx;height: 150rpx;border-radius: 15px;' 
+              className='first-img' 
+              onClick={this.toDetail.bind(this,get(data[3],'id',''))} 
+            />
           </View>  
         </View>
       </View>

@@ -9,7 +9,7 @@ import Navbar from '../../../components/navbar/navbar'
 import request from '../../../utils/request'
 import ListGood from './list_good'
 import './orderDetail.scss'
-
+import formatTime from '../../.../../../utils/time'
 
 
 @connect(({ order, goods }) => ({
@@ -102,7 +102,7 @@ class orderDetail extends Component {
                 <View className='money'>¥{get(this.state.order_info,'child_exp_fare')}</View>
               </View>
               <View className='list'>
-                <View className='all_coupon'> 优惠：</View>
+                <View className='all-coupon'> 优惠：</View>
                 <View className='money'> -¥{get(this.state.order_info,'child_total_coupon')}</View>
               </View>
               <View className='list'>
@@ -119,10 +119,39 @@ class orderDetail extends Component {
                 <View className='info'>{get(this.state.order_info,'order_num','')}</View>
               </View>
               <View className='list'>
-                <View className='name'>下单时间：</View>
-                <View className='info'>{get(this.state.order_info,'create_time','')}</View>
+                <View className='name'>发货方式</View>
+                {get(this.state.order_info,'delivery','') == 1 ?
+                  <View className='info'>快递 </View>
+                :''}
+                {get(this.state.order_info,'delivery','') == 2 ?
+                  <View className='info'>同城配送 </View>
+                :''}
+                {get(this.state.order_info,'delivery','') == 3 ?
+                  <View className='info'>自提 </View>
+                :''}
               </View>
-            
+              <View className='list'>
+                <View className='name'>下单时间：</View>
+                <View className='info'>{formatTime(get(this.state.order_info,'create_time',''),'Y/M/D h:m:s') }</View>
+              </View>
+              <View className='list'>
+                <View className='name'>更新时间：</View>
+                <View className='info'>{formatTime(get(this.state.order_info,'update_time',''),'Y/M/D h:m:s') }</View>
+              </View>
+              {get(this.state.order_info,'delivery_time','') ? 
+                <View className='list'>
+                  <View className='name'>发货时间：</View>
+                  <View className='info'>{formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s') }</View>
+                </View>
+              :''
+              }
+              {get(this.state.order_info,'get_time','') ? 
+                <View className='list'>
+                  <View className='name'>收货时间：</View>
+                  <View className='info'>{formatTime(get(this.state.order_info,'get_time',''),'Y/M/D h:m:s') }</View>
+                </View>
+              :''
+              }
             </View>  
           </View>
         </View>
