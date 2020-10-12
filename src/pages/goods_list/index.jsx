@@ -20,7 +20,7 @@ class CategoryListView extends Component {
         { id: 3, text: '价格升序' },
         { id: 4, text: '销量' },
       ],
-      sort_id: 2, // 当前排序方式id
+      sort_id: 1, // 当前排序方式id
       isOpen: false, // 排序方式选择框是否显示
     }
   }
@@ -31,12 +31,13 @@ class CategoryListView extends Component {
   }
 
   /* 获取商品id列表 */
-  getGoodsIdList = async(kind_tag) => {
+  getGoodsIdList = async(kind_tag,sort_id = 1) => {
     const goodsIdList = await request('/goods/list', {
       body: {
         limit: 99,
         page: 1,
-        kind_tag
+        kind_tag,
+        sort_way: sort_id
       },
       method: 'GET'
     })
@@ -54,7 +55,7 @@ class CategoryListView extends Component {
     goodsList.forEach(goods => {
       // 封面前缀处理
       goods.cover = 'http://qiniu.daosuan.net/' + goods.cover;
-      // 显示价格处理
+      // 显示价格处理(显示原价的最低价)
       goods.showPrice = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2);
     });
     this.setData({
@@ -64,7 +65,7 @@ class CategoryListView extends Component {
 
   /* 点击排序 */
   handleSortTypeClick = () => {
-    let {isOpen,goodsList} = this.state;
+    let {isOpen} = this.state;
     this.setData({
       isOpen: !isOpen
     })
@@ -72,6 +73,9 @@ class CategoryListView extends Component {
 
   /* 改变排序方式 */
   changeSortType(sort_id) {
+    let {goodsList} = this.state;
+    const {kind_tag} = getCurrentInstance().router.params;
+    this.getGoodsIdList(kind_tag,sort_id);
     this.setData({
       sort_id,
       isOpen: false
@@ -151,11 +155,11 @@ class CategoryListView extends Component {
               {sort_type.map(item => (
                 item.id < 4
                 ? item.id === sort_id
-                  ? <View className='sort_item sort_active' onClick={this.changeSortType.bind(this, item.id)}>
+                  ? <View className='sort_item sort_active' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>
                       {item.text}
                       <Image src='http://qiniu.daosuan.net/picture-1598883365000' />
                     </View>
-                  : <View className='sort_item' onClick={this.changeSortType.bind(this, item.id)}>{item.text}</View>
+                  : <View className='sort_item' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>{item.text}</View>
                 : ''
               ))}
             </View>

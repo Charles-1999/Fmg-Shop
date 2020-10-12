@@ -9,7 +9,7 @@ class BaseInfo extends Component {
   }
 
   render() {
-    const { details, showPrice } = this.props
+    const { details, showPrice, unSalePrice } = this.props
     return (
       <View className='base_info' >
         <View className='top'>
@@ -28,10 +28,12 @@ class BaseInfo extends Component {
           </View>
         </View>
         <View className='bottom'>
-          <View className='price'>
-            <Text style='font-size: 30rpx'>￥</Text>
-            {showPrice}
-          </View>
+          <Text className='price'>
+            <Text className='sign'>￥</Text><Text className='text'>{showPrice}</Text>
+            {details.sale
+            ? <Text className='unSalePrice'><Text className='sign'>￥</Text>{unSalePrice}</Text>
+            : ''}
+          </Text>
         </View>
       </View>
     )
