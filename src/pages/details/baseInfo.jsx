@@ -29,7 +29,7 @@ class BaseInfo extends Component {
         </View>
         <View className='bottom'>
           <Text className='price'>
-            <Text className='sign'>￥</Text><Text className='text'>{showPrice}</Text>
+            <Text className='sign'>￥</Text><Text className='text'>{Number(showPrice).toFixed(2)}</Text>
             {details.sale
             ? <Text className='unSalePrice'><Text className='sign'>￥</Text>{unSalePrice}</Text>
             : ''}

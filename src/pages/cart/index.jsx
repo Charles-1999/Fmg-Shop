@@ -44,9 +44,10 @@ class CartListView extends Component {
   async getData() {
     const {userId} = this.state;
     let goodsId = [];
-    let cartList = await request(`/car/info/_mget/${userId}`, {
+    const res_mget = await request(`/car/info/_mget/${userId}`, {
       method: 'POST'
-    })
+    });
+    let cartList = res_mget.data;
     cartList.forEach((cart) => {
       goodsId.push(cart.goods_id)
     })
@@ -60,7 +61,6 @@ class CartListView extends Component {
     // 数据处理
     cartList.forEach((cart,index)=>{
       // 找出规格id对应的规格序号
-      console.log(goodsList[index])
       const spec_index = goodsList[index].specification.findIndex((spec) => spec.id === cart.goods_specification_id);
       cart.spec_index = spec_index;
       cart.goods_specification = '';

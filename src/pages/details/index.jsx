@@ -36,14 +36,11 @@ class Details extends Component {
     const { gid } = getCurrentInstance().router.params;
     console.log('gid', gid)
     const data = await request('/goods/_mget', {
-      // body: { ids: [50] }, 
       body: { ids: [Number(gid)] },
       method: 'POST'
     })
     this.setState({
       data: data[0]
-    }, () => {
-      console.log(this.state.data)
     })
     this.setTotal();
     this.getShowPrice();
@@ -94,8 +91,8 @@ class Details extends Component {
       var min = 999999999999999;
       var max = 0;
       data.specification.forEach((item) => {
-        if (item.price <= min) min = item.price.toFixed(2);
-        if (item.price >= max) max = item.price.toFixed(2);
+        if (item.price <= min) min = item.price;
+        if (item.price >= max) max = item.price;
       })
       if (min == max)
         this.setState({ unSalePrice: min });
@@ -138,7 +135,12 @@ class Details extends Component {
   chooseType = (spec_index) => {
     const { data } = this.state;
     let { currNum } = this.state;
-    const showPrice = data.specification[spec_index].reduced_price.toFixed(2);
+    let showPrice;
+    if(data.specification[spec_index].sale) {
+      showPrice = data.specification[spec_index].reduced_price.toFixed(2);
+    }else {
+      showPrice = data.specification[spec_index].price.toFixed(2);
+    }
     const unSalePrice = data.specification[spec_index].price.toFixed(2);
     this.setState({
       showPrice,
@@ -279,7 +281,7 @@ class Details extends Component {
               <Image src={data.cover ? (typeof currChoose == 'number' ? 'http://qiniu.daosuan.net/' + data.specification[currChoose].picture : 'http://qiniu.daosuan.net/' + data.cover) : ''} />
               <Text className='name'>{data.name}</Text>
               <Text className='price'>
-                <Text className='sign'>￥</Text><Text className='text'>{showPrice}</Text>
+                <Text className='sign'>￥</Text><Text className='text'>{Number(showPrice).toFixed(2)}</Text>
                 {data.sale
                 ? <Text className='unSalePrice'><Text className='sign'>￥</Text>{unSalePrice}</Text>
                 : ''}
