@@ -36,17 +36,15 @@ class Details extends Component {
     const { gid } = getCurrentInstance().router.params;
     console.log('gid', gid)
     const data = await request('/goods/_mget', {
-      // body: { ids: [50] }, 
       body: { ids: [Number(gid)] },
       method: 'POST'
     })
     this.setState({
       data: data[0]
-    }, () => {
-      console.log(this.state.data)
     })
     this.setTotal();
     this.getShowPrice();
+    this.getUnSalePrice();
   }
 
   // 显示选择框
@@ -64,18 +62,42 @@ class Details extends Component {
 
   // 获取显示的价格
   getShowPrice = () => {
-    const { data } = this.state
+    const { data } = this.state;
+    if (data.specification) {
+      var min = 999999999999999;
+      var max = 0;
+      if(data.sale) {
+        data.specification.forEach((item) => {
+          if (item.price <= min) min = item.reduced_price.toFixed(2);
+          if (item.price >= max) max = item.reduced_price.toFixed(2);
+        })
+      }else {
+        data.specification.forEach((item) => {
+          if (item.price <= min) min = item.price.toFixed(2);
+          if (item.price >= max) max = item.price.toFixed(2);
+        })
+      }
+      if (min == max)
+        this.setState({ showPrice: min });
+      else
+        this.setState({ showPrice: `${min}-${max}` });
+    }
+  }
+
+  // 获取未优惠的价格
+  getUnSalePrice = () => {
+    const { data } = this.state;
     if (data.specification) {
       var min = 999999999999999;
       var max = 0;
       data.specification.forEach((item) => {
-        if (item.price <= min) min = item.price.toFixed(2);
-        if (item.price >= max) max = item.price.toFixed(2);
+        if (item.price <= min) min = item.price;
+        if (item.price >= max) max = item.price;
       })
       if (min == max)
-        this.setState({ showPrice: min });
+        this.setState({ unSalePrice: min });
       else
-        this.setState({ showPrice: `${min} - ${max}` })
+        this.setState({ unSalePrice: `${min}-${max}` });
     }
   }
 
@@ -113,12 +135,18 @@ class Details extends Component {
   chooseType = (spec_index) => {
     const { data } = this.state;
     let { currNum } = this.state;
-    const showPrice = data.specification[spec_index].price
+    let showPrice;
+    if(data.specification[spec_index].sale) {
+      showPrice = data.specification[spec_index].reduced_price.toFixed(2);
+    }else {
+      showPrice = data.specification[spec_index].price.toFixed(2);
+    }
+    const unSalePrice = data.specification[spec_index].price.toFixed(2);
     this.setState({
       showPrice,
+      unSalePrice,
       currChoose: spec_index
     })
-    console.log('currChoose', this.state.currChoose)
     const total = this.setTotal(data.specification[spec_index].total);
     // 检查余量
     if (currNum < 1 || currNum > total) {
@@ -142,6 +170,22 @@ class Details extends Component {
         total: data.total
       })
       return data.total;
+    }
+  }
+
+  /* 设置发货方式
+    只有一种发货方式时，返回其自身；
+    多种发货方式时，默认第一种方式
+  */
+  setGetWay = () => {
+    let {get_way} = this.state.data;
+    switch (get_way) {
+      case 1:case 2:case 4:
+        return get_way;
+      case 3:case 5:case 7:
+        return 1;
+      case 6:
+        return 2;
     }
   }
 
@@ -181,7 +225,8 @@ class Details extends Component {
             goods_name: data.name,
             goods_price: data.specification[currChoose].price,
             goods_pictures: data.specification[currChoose].picture,
-            goods_specification_id: data.specification[currChoose].id
+            goods_specification_id: data.specification[currChoose].id,
+            delivery_kind: this.setGetWay()
           }
         });
         console.log('addCart_res', res)
@@ -210,8 +255,7 @@ class Details extends Component {
 
   render() {
     console.log('%c ........render.........', 'color:green');
-    const { statusBarHeight, capsule, data, isOpen, showPrice, currNum, showType, currChoose, total } = this.state;
-    // console.log('data', data)
+    const { statusBarHeight, capsule, data, isOpen, showPrice, unSalePrice, currNum, showType, currChoose, total } = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     return (
       <View className='detail-page' style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -224,11 +268,12 @@ class Details extends Component {
         >
         </Navbar>
         <MySwiper pictures={data.pictures} />
-        <BaseInfo details={data} showPrice={showPrice} />
+        <BaseInfo details={data} showPrice={showPrice} unSalePrice={unSalePrice}/>
         <OthersInfo info={data} />
         <Select data={data.specification} callback={this.showFloat} template={data.template} />
         <Comment />
         <DetailInfo data={data.detail} />
+        {/* 选择浮窗 */}
         <View className={isOpen ? 'active float_wrap' : 'float_wrap'}>
           <View className='mask' onClick={this.hiddenFloat}></View>
           <View className={isOpen ? 'container active' : 'container'}>
@@ -236,7 +281,10 @@ class Details extends Component {
               <Image src={data.cover ? (typeof currChoose == 'number' ? 'http://qiniu.daosuan.net/' + data.specification[currChoose].picture : 'http://qiniu.daosuan.net/' + data.cover) : ''} />
               <Text className='name'>{data.name}</Text>
               <Text className='price'>
-                <Text className='sign'>￥</Text>{showPrice}
+                <Text className='sign'>￥</Text><Text className='text'>{Number(showPrice).toFixed(2)}</Text>
+                {data.sale
+                ? <Text className='unSalePrice'><Text className='sign'>￥</Text>{unSalePrice}</Text>
+                : ''}
               </Text>
             </View>
             <View className='select_wrap'>

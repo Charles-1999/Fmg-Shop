@@ -1,6 +1,6 @@
 import React, { Component, useCallback } from 'react'
 import Taro, { Current } from '@tarojs/taro'
-import { View, Text, Image, Navigator, Checkbox } from '@tarojs/components'
+import { View, Text, Image, Navigator, Checkbox, CheckboxGroup, Input } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
 import { get as getGlobalData } from '../../../global_data'
 import request from '../../../utils/request'
@@ -74,6 +74,88 @@ export default class Confirm extends Component {
     return way;
   }
 
+  /* 
+    获取配送方式列表
+    @params: index 商品在list中的索引
+  */
+  getGetWayList(index) {
+    const {goodsList,checkList} = this.state;
+    const goodsGetWay = goodsList[index].get_way; // 商品可选的方式
+    const get_way = checkList[index].delivery_kind; // 用户选择的方式
+    let getWayList = [];
+    switch (goodsGetWay) {
+      case 1:
+        // getWayList.push('快递');
+        getWayList.push({id: 1, checked: true});
+        break;
+      case 2:
+        // getWayList.push('同城配送');
+        getWayList.push({id: 2, checked: true});
+        break;
+      case 3:
+        // getWayList.push('快递','同城配送');
+        getWayList.push({id: 1, checked: true},{id: 2, checked: false});
+        break;
+      case 4:
+        // getWayList.push('自取');
+        getWayList.push({id: 4, checked: true});
+        break;
+      case 5:
+        // getWayList.push('快递','自取');
+        getWayList.push({id: 1, checked: true},{id: 4, checked: false});
+        break;
+      case 6:
+        // getWayList.push('同城配送','自取');
+        getWayList.push({id: 2, checked: false},{id: 4, checked: false});
+        break;
+      case 7:
+        // getWayList.push('快递','同城配送','自取');
+        getWayList.push({id: 1, checked: true},{id: 2, checked: false},{id: 4, checked: false});
+        break;
+    }
+    const indexInGetWayList = getWayList.findIndex(item => item.id === get_way);
+    getWayList.forEach((item,index) => {
+      item.checked = index === indexInGetWayList;
+    })
+    this.setData({
+      getWayList,
+      isOpen: true,
+      currGoodsIndex: index
+    })
+  }
+
+  /* 修改收货方式 */
+  selectGetWay(index) {
+    let {getWayList} = this.state;
+    let get_way;
+    getWayList.forEach((item,i) => {
+      if(index === i) {
+        get_way = item.id;
+        if(item.checked) return;
+        else {
+          item.checked = true;
+        }
+      }else {
+        item.checked = false;
+      }
+    })
+    this.setData({
+      getWayList,
+      get_way
+    });
+  }
+
+  /* 确认修改收货方式 */
+  changeGetWay() {
+    const {get_way,currGoodsIndex,checkList} = this.state;
+    checkList[currGoodsIndex].delivery_kind = get_way;
+    this.setData({
+      checkList,
+      isOpen: false
+    });
+    Taro.setStorageSync("checkList", checkList);
+  }
+
   /* 获取商品总额（不包括运费） */
   getGoodsPrice = () => {
     const { checkList } = this.state;
@@ -96,7 +178,6 @@ export default class Confirm extends Component {
     })
   }
 
-
   /* 获取总件数 */
   getTotalCount = () => {
     const { checkList } = this.state;
@@ -106,18 +187,26 @@ export default class Confirm extends Component {
     })
   }
 
+  /* 添加留言 */
+  addMessage(index,e) {
+    console.log(index,e);
+    let {checkList} = this.state;
+    checkList[index].message = e.detail.value;
+    this.setData({ checkList });
+  }
+
   /* 提交订单 */
   order = async () => {
-    const { currAddress } = this.state;
-    const checkList = Taro.getStorageSync('checkList');
+    const { currAddress,checkList } = this.state;
+    // const checkList = Taro.getStorageSync('checkList');
     let goods_list = [];
-    checkList.forEach(item => {
+    checkList.forEach((item) => {
       let obj = {
         goods_id: item.goods_id,
         goods_specification: item.goods_specification_id,
         goods_total: item.goods_count,
-        delivery: 1,
-        message: ''
+        delivery: item.delivery_kind,
+        message: item.message
       }
       goods_list.push(obj);
     });
@@ -202,7 +291,7 @@ export default class Confirm extends Component {
       signType: data.signType, // 签名算法
       paySign: data.paySign, // 签名
       success: res => {
-        console.log('发起微信支付：' + res);
+        console.log('发起微信支付：' , res);
       },
       fail: err => {
         console.log(err)
@@ -232,7 +321,6 @@ export default class Confirm extends Component {
     console.log(this.data)
   }
 
-
   // 自己封装的setState
   setData = (...params) => {
     this.setState(...params)
@@ -241,7 +329,7 @@ export default class Confirm extends Component {
 
   render() {
     console.log('%c ........render.........', 'color:green');
-    const { statusBarHeight, capsule, checkList, order_price, total_conut, goodsList, currAddress, isOpen } = this.state;
+    const { statusBarHeight, capsule, checkList, order_price, total_conut, goodsList, currAddress, isOpen, getWayList } = this.state;
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
 
@@ -289,22 +377,29 @@ export default class Confirm extends Component {
                   <Text className='title'>运费</Text>
                   <Text className='content'>￥{goodsList ? goodsList[index].carriage.toFixed(2) : ''}</Text>
                 </View>
-                <View className='info_wrap' onClick={this.showFloat}>
+                <View className='info_wrap' onClick={this.getGetWayList.bind(this,index)}>
                   <Text className='title'>配送方式</Text>
-                  <Text className='content'>{goodsList ? this.getGetWay(goodsList[index].get_way) : ''}</Text>
+                  <Text className='content'>{checkList ? this.getGetWay(checkList[index].delivery_kind) : ''}</Text>
                   <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
+                </View>
+                <View className='info_wrap'>
+                  <Text className='title'>订单备注</Text>
+                  <Input type='text' className='content' placeholder='选填，请先和商家协商一致' placeholderStyle='color: #aaa' onBlur={this.addMessage.bind(this,index)} />
                 </View>
                 {/* 选择模块 */}
                 <View className={isOpen ? 'active float_wrap' : 'float_wrap'}>
                   <View className='mask' onClick={this.hiddenFloat}></View>
                   <View className={isOpen ? 'container active' : 'container'}>
                     <View className='title'>配送方式</View>
-                    <View className='item'>
-                      <Text className='item_text'>快递</Text>
-                      <View className='checkBox'>
-                        <Checkbox></Checkbox>
+                    {(getWayList??[]).map((item,index) => (
+                      <View className='item' key={index} onClick={this.selectGetWay.bind(this,index)}>
+                        <Text className='item_text'>{this.getGetWay(item.id)}</Text>
+                        <CheckboxGroup className='checkBox'>
+                          <Checkbox checked={item.checked}></Checkbox>
+                        </CheckboxGroup>
                       </View>
-                    </View>
+                    ))}
+                    <View className='btn_ok' onClick={this.changeGetWay.bind(this)}>完成</View>
                   </View>
                 </View>
               </View>

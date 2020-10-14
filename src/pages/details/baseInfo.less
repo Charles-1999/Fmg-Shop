@@ -41,11 +41,25 @@
     }
   }
   .bottom {
+    margin-top: 10PX;
     .price {
-      margin-top: 20rpx;
-      font-size: 50rpx;
-      font-weight: 700;
+      font-size: 20PX;
       color: #d5401f;
+      vertical-align: baseline;
+      .sign {
+        font-size: 16PX;
+        vertical-align: baseline;
+      }
+      .unSalePrice {
+        margin-left: 10PX;
+        font-size: 16PX;
+        color: #aaa;
+        text-decoration: line-through;
+        .sign {
+          font-size: 10PX;
+          text-decoration: none;
+        }
+      }
     }
   }
 }
