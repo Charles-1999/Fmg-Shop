@@ -1,6 +1,7 @@
-.my-order{
+page{
   background-color: rgb(243, 243, 243);
-  height: 100vh;
+}
+.my-order{
   .my-order-list{
     .my-order-bar{
       display: inline-flex;
@@ -63,22 +64,36 @@
         }
         
         .total-fee-wrap{
-          margin-top: 20rpx;
-          text-align: right;
-          font-size: 25rpx;
-          display:flex;
-          align-items: center;
-          justify-content: flex-end;
-          .money{
-            font-size: 25rpx;
+          .detail-fee{
+            margin-top: 20rpx;
+            display:flex;
+            align-items: center;
+            justify-content: flex-end;
+            .fee-wrap{
+              text-align: right;
+              font-size: 25rpx;
+              display:flex;
+              align-items: center;
+              .money{
+                font-size: 25rpx;
+              }
+            }
+
           }
-          .all-coupon{
-           
-          }
-          .pay-fee{
+          .fee-wrap{
+            text-align: right;
             font-size: 30rpx;
+            align-items: center;
+            display:flex;
+            justify-content: flex-end;
+            .pay-fee-money{
+              font-size: 33rpx;
+            }
           }
+         
+         
         }
+
         .btn{
           margin-top:10rpx;
           display: inline-flex;
@@ -94,18 +109,20 @@
           }
           .pay{
             background-color: #5a5a5a;
-            border-radius: 30rpx;
+            border-radius: 30rpx; 
             padding: 5rpx 15rpx;
             color: white;
             margin-right: 0%;
           }
-          .add_cart{
+          .add_cart,.drawback,.commit{
             background-color: #5a5a5a;
             border-radius: 30rpx;
             padding: 5rpx 15rpx;
             color: white;
-            margin-right: 0%;
+            margin-left: 10rpx;
+            
           }
+
         }
       }
     }

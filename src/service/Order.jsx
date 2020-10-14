@@ -17,26 +17,20 @@ export const mgetOrderList = params =>{
   });
 }
 
-//修改订单信息
+//修改子订单状态
 export const editOrderInfo = params =>{
-  return request(`/_order/${params.oid}`, {
+  return request(`/_order/status/${params.ooid}/child_order/${params.oid}`, {
     method: 'PUT',
-    body: params,
+    body: {
+      status:params.status,
+    },
   });
 }
 
-// //获取用户订单
-// export const getUserOrder= params =>{
-//   return request(`/order/${params.oid}`, {
-//     method: 'GET',
-//     body: params,
-//   });
-// }
-
-// //
-// export const updateOrderStatus= params =>{
-//   return request('/order/status/:oid', {
-//     method: 'PUT',
-//     body: params,
-//   });
-// }
+//删除子订单
+export const delOrderInfo = params =>{
+  return request(`/_order/:ooid/child_order/${params.oid}`, {
+    method: 'DEL',
+    body: params,
+  });
+}

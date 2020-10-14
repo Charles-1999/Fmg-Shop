@@ -52,8 +52,6 @@ class orderDetail extends Component {
     })
   }
 
- 
-
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
@@ -126,7 +124,7 @@ class orderDetail extends Component {
                 {get(this.state.order_info,'delivery','') == 2 ?
                   <View className='info'>同城配送 </View>
                 :''}
-                {get(this.state.order_info,'delivery','') == 3 ?
+                {get(this.state.order_info,'delivery','') == 4 ?
                   <View className='info'>自提 </View>
                 :''}
               </View>

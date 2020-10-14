@@ -36,7 +36,9 @@ class Index extends Component {
       type: 'goods/getslideshow',
     })
   }
-  
+  onReachBottom() {
+    console.log("addddd")
+  }
   render () {
     const { placeList, kindList, slideshowList } = this.props;
     const {statusBarHeight, capsule} = this.state; 

@@ -1,6 +1,5 @@
 export default {
   pages: [
-   
     'pages/login/index', 
     'pages/index/index',
     'pages/user/index',
@@ -18,6 +17,7 @@ export default {
     'pages/user/Address/editAddress',
     'pages/user/Order/orderDetail',
     'pages/user/Order/myOrder',
+    'pages/user/Order/deliveryDetail',
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -70,5 +70,6 @@ export default {
   //   uploadFile: 4000,
   //   downloadFile: 5000
   // },
+  
 
 }

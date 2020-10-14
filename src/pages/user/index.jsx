@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
+import Taro  from '@tarojs/taro'; 
 import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
+import { connect } from 'react-redux';
 import { get } from 'lodash';
 import './index.scss'
-import { connect } from 'react-redux';
-import Taro from '@tarojs/taro'; 
+
 import { get as getGlobalData } from '../../global_data'
 
-import headerjpg from '../../assets/img/TouXiang.jpg'
 import Navbar from '../../components/navbar/navbar'
-
 
 class UserList extends Component {
   static defaultProps = {
@@ -25,7 +24,7 @@ class UserList extends Component {
       { id:4, title:'优惠卷/码', info:'4'},
     ],
   }
-
+  
   handlePage(e){
     if(e == 'address'){
       Taro.navigateTo({

@@ -124,7 +124,6 @@ class AddressList extends Component {
     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
   }
 
-
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;

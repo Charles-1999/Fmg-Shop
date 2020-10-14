@@ -44,9 +44,10 @@ class CartListView extends Component {
   async getData() {
     const {userId} = this.state;
     let goodsId = [];
-    let cartList = await request(`/car/info/_mget/${userId}`, {
+    let res_mget = await request(`/car/info/_mget/${userId}`, {
       method: 'POST'
-    })
+    });
+    let cartList = res_mget.data;
     cartList.forEach((cart) => {
       goodsId.push(cart.goods_id)
     })

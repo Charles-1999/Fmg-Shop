@@ -52,8 +52,8 @@ class GoodsCard extends Component {
     });
   }
 
-   // 加入购物车
-   async addCart() {
+  // 加入购物车
+  async addCart() {
     const {currChoose,currNum,data,userId} = this.state;
     if(currChoose === null) {
       Taro.showToast({

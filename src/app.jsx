@@ -20,26 +20,26 @@ const dvaApp = dva.createApp({
 const store = dvaApp.getStore();
 
 class App extends Component {
-  async onLaunch() {
-    const userInfo = Taro.getStorageSync("userInfo");
-    if(!userInfo) {
-      Taro.redirectTo({ url:"/pages/login/index" });
-    }
-    else {
-      try {
-        const js_code = await appLogin();
-        const res = await login(js_code);
-        console.log(res)
-      }catch(err) {
-        console.log(err)
-        Taro.showToast({
-          title: '小程序登录失败，请重新进入小程序。',
-          icon: 'none',
-          duration: 2500
-        })
-      }
-    }
-  }
+  // async onLaunch() {
+  //   const userInfo = Taro.getStorageSync("userInfo");
+  //   if(!userInfo) {
+  //     Taro.redirectTo({ url:"/pages/login/index" });
+  //   }
+  //   else {
+  //     try {
+  //       const js_code = await appLogin();
+  //       const res = await login(js_code);
+  //       console.log(res)
+  //     }catch(err) {
+  //       console.log(err)
+  //       Taro.showToast({
+  //         title: '小程序登录失败，请重新进入小程序。',
+  //         icon: 'none',
+  //         duration: 2500
+  //       })
+  //     }
+  //   }
+  // }
 
   componentWillMount(){
     this.getSysInfo();

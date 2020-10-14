@@ -20,10 +20,6 @@ class LoginView extends Component {
     }
   }
 
-  componentWillMount(){
-
-  }
-
   login(){
     Taro.login({
       success: res => {
