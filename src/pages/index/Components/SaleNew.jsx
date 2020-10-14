@@ -57,100 +57,124 @@ class SaleNew extends Component {
       url: `/pages/details/index?gid=${id}`,
     });
   }
-  
-     // 加入购物车
-     async addCart() {
-      const {currChoose,currNum,data,userId} = this.state;
-      if(currChoose === null) {
+
+  /* 设置发货方式
+    只有一种发货方式时，返回其自身；
+    多种发货方式时，默认第一种方式
+  */
+  setGetWay = () => {
+    let {get_way} = this.state.data;
+    switch (get_way) {
+      case 1:case 2:case 4:
+        return get_way;
+      case 3:case 5:case 7:
+        return 1;
+      case 6:
+        return 2;
+    }
+  }
+  // 加入购物车
+  async addCart() {
+    const {currChoose,currNum,data,userId,total} = this.state;
+    if(currChoose === null) {
+      Taro.showToast({
+        title: `请选择规格'${data.template.join('、')}'`,
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    if (typeof currChoose == 'number') {
+      if(currNum > total) {
         Taro.showToast({
-          title: `请选择规格'${data.template.join('、')}'`,
+          title: `余量不足，请重试尝试！`,
           icon: 'none',
           duration: 2000
         })
+        return;
       }
-      if(typeof currChoose == 'number') {
-        let goods_specification = '';
-        data.template.forEach((item,index) => {
-          if(index == 0) {
-            goods_specification += data.specification[currChoose].specification[item]
-          }else {
-            goods_specification += ' ' + data.specification[currChoose].specification[item]
-          }
-        })
-        try {
-          const res = await request(`/car/info/${userId}/${data.id}`,{
-            method: 'POST',
-            body: {
-              goods_count: currNum,
-              goods_specification: goods_specification,
-              goods_name: data.name,
-              goods_price: data.specification[currChoose].price,
-              goods_pictures: data.specification[currChoose].picture,
-              goods_specification_id: data.specification[currChoose].id
-            }
-          });
-          console.log('addCart_res',res)
-          Taro.showToast({
-            title: '加入购物车成功',
-            icon: 'success'
-          })
-          this.hiddenFloat();
-        }catch (error) {
-          console.log('addCart_error',error)
-          console.error(error.data.message);
-          Taro.showToast({
-            title: '加入购物车失败',
-            icon: 'none'
-          })
+      let goods_specification = '';
+      data.template.forEach((item, index) => {
+        if (index == 0) {
+          goods_specification += data.specification[currChoose].specification[item]
+        } else {
+          goods_specification += ' ' + data.specification[currChoose].specification[item]
         }
-      }
-      else return;
-    }
-    // 商品数量加减
-    handleClickNum = (e) => {
-      const {total} = this.state;
-      const {num} = e.target.dataset;
-      let {currNum} = this.state;
-      if(num == -1) {
-        if(currNum == 1) return;
-        else currNum--;
-        this.setState({currNum})
-      }
-      if(num == 1) {
-        if(currNum >= total) return;
-        else currNum++;
-        this.setState({currNum})
-      }
-    }
-  
-    // 输入商品数量
-    handleInputNum = (e) => {
-      const {total} = this.state;
-      let {currNum} = this.state;
-      const {value} = e.detail;
-      if(value >= 1 && value <= total){
-        currNum = Number(value)
-      }
-      this.setState({
-        currNum
       })
+      try {
+        const res = await request(`/car/info/${userId}/${data.id}`, {
+          method: 'POST',
+          body: {
+            goods_count: currNum,
+            goods_specification: goods_specification,
+            goods_name: data.name,
+            goods_price: data.specification[currChoose].price,
+            goods_pictures: data.specification[currChoose].picture,
+            goods_specification_id: data.specification[currChoose].id,
+            delivery_kind: this.setGetWay()
+          }
+        });
+        console.log('addCart_res', res)
+        Taro.showToast({
+          title: '加入购物车成功',
+          icon: 'success'
+        })
+        this.hiddenFloat();
+      } catch (error) {
+        console.log('addCart_error', error)
+        console.error(error.data.message);
+        Taro.showToast({
+          title: '加入购物车失败',
+          icon: 'none'
+        })
+      }
     }
-      // 获取显示的价格
-      getShowPrice = () => {
-        const {data} = this.state
-        if(data.specification) {
-          var min = 999999999999999;
-          var max = 0;
-          data.specification.forEach((item) => {
-            if(item.price <= min) min = item.price.toFixed(2);
-            if(item.price >= max) max = item.price.toFixed(2);
-          })
-          if(min == max) 
-            this.setState({showPrice: min});
+    else return;
+  }
+  // 商品数量加减
+  handleClickNum = (e) => {
+    const {total} = this.state;
+    const {num} = e.target.dataset;
+    let {currNum} = this.state;
+    if(num == -1) {
+      if(currNum == 1) return;
+      else currNum--;
+      this.setState({currNum})
+    }
+    if(num == 1) {
+      if(currNum >= total) return;
+      else currNum++;
+      this.setState({currNum})
+    }
+  }
+  
+  // 输入商品数量
+  handleInputNum = (e) => {
+    const {total} = this.state;
+    let {currNum} = this.state;
+    const {value} = e.detail;
+    if(value >= 1 && value <= total){
+      currNum = Number(value)
+    }
+    this.setState({
+      currNum
+    })
+  }
+  // 获取显示的价格
+    getShowPrice = () => {
+      const {data} = this.state
+      if(data.specification) {
+        var min = 999999999999999;
+        var max = 0;
+        data.specification.forEach((item) => {
+          if(item.price <= min) min = item.price.toFixed(2);
+          if(item.price >= max) max = item.price.toFixed(2);
+        })
+        if(min == max) 
+          this.setState({showPrice: min});
           else 
             this.setState({showPrice: `${min} - ${max}`})
-        }
       }
+    }
     // 设置商品余量显示
     setTotal = (val) => {
       const {data} = this.state;

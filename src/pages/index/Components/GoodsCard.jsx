@@ -52,9 +52,25 @@ class GoodsCard extends Component {
     });
   }
 
-  // 加入购物车
-  async addCart() {
-    const {currChoose,currNum,data,userId} = this.state;
+  /* 设置发货方式
+    只有一种发货方式时，返回其自身；
+    多种发货方式时，默认第一种方式
+  */
+ setGetWay = () => {
+  let {get_way} = this.state.data;
+  switch (get_way) {
+    case 1:case 2:case 4:
+      return get_way;
+    case 3:case 5:case 7:
+      return 1;
+    case 6:
+      return 2;
+  }
+}
+
+// 加入购物车
+async addCart() {
+    const {currChoose,currNum,data,userId,total} = this.state;
     if(currChoose === null) {
       Taro.showToast({
         title: `请选择规格'${data.template.join('、')}'`,
@@ -62,17 +78,25 @@ class GoodsCard extends Component {
         duration: 2000
       })
     }
-    if(typeof currChoose == 'number') {
+    if (typeof currChoose == 'number') {
+      if(currNum > total) {
+        Taro.showToast({
+          title: `余量不足，请重试尝试！`,
+          icon: 'none',
+          duration: 2000
+        })
+        return;
+      }
       let goods_specification = '';
-      data.template.forEach((item,index) => {
-        if(index == 0) {
+      data.template.forEach((item, index) => {
+        if (index == 0) {
           goods_specification += data.specification[currChoose].specification[item]
-        }else {
+        } else {
           goods_specification += ' ' + data.specification[currChoose].specification[item]
         }
       })
       try {
-        const res = await request(`/car/info/${userId}/${data.id}`,{
+        const res = await request(`/car/info/${userId}/${data.id}`, {
           method: 'POST',
           body: {
             goods_count: currNum,
@@ -80,17 +104,18 @@ class GoodsCard extends Component {
             goods_name: data.name,
             goods_price: data.specification[currChoose].price,
             goods_pictures: data.specification[currChoose].picture,
-            goods_specification_id: data.specification[currChoose].id
+            goods_specification_id: data.specification[currChoose].id,
+            delivery_kind: this.setGetWay()
           }
         });
-        console.log('addCart_res',res)
+        console.log('addCart_res', res)
         Taro.showToast({
           title: '加入购物车成功',
           icon: 'success'
         })
         this.hiddenFloat();
-      }catch (error) {
-        console.log('addCart_error',error)
+      } catch (error) {
+        console.log('addCart_error', error)
         console.error(error.data.message);
         Taro.showToast({
           title: '加入购物车失败',
@@ -129,22 +154,22 @@ class GoodsCard extends Component {
       currNum
     })
   }
-    // 获取显示的价格
-    getShowPrice = () => {
-      const {data} = this.state
+  // 获取显示的价格
+  getShowPrice = () => {
+    const {data} = this.state
       if(data.specification) {
-        var min = 999999999999999;
-        var max = 0;
-        data.specification.forEach((item) => {
-          if(item.price <= min) min = item.price.toFixed(2);
-          if(item.price >= max) max = item.price.toFixed(2);
-        })
-        if(min == max) 
-          this.setState({showPrice: min});
-        else 
-          this.setState({showPrice: `${min} - ${max}`})
-      }
+      var min = 999999999999999;
+      var max = 0;
+      data.specification.forEach((item) => {
+        if(item.price <= min) min = item.price.toFixed(2);
+        if(item.price >= max) max = item.price.toFixed(2);
+      })
+      if(min == max) 
+        this.setState({showPrice: min});
+      else 
+        this.setState({showPrice: `${min} - ${max}`})
     }
+  }
   // 设置商品余量显示
   setTotal = (val) => {
     const {data} = this.state;

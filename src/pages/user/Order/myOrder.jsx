@@ -13,9 +13,9 @@ import './myOrder.scss'
 import ListGood from './list_good'
 
 //要想下拉加载就不能用connect dva
-@connect(({ order }) => ({
-  ...order,
-}))
+// @connect(({ order }) => ({
+//   ...order,
+// }))
 class MyOrderList extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
@@ -67,6 +67,7 @@ class MyOrderList extends Component {
     })
     this.setState({ isLoading: false });
   }
+  
   //上拉加载
   onReachBottom() {
     this.setState({ isLoading: true });
@@ -225,7 +226,7 @@ class MyOrderList extends Component {
                       :''}
                       {get(item,'child_exp_fare') ? 
                         <View className='fee-wrap'>
-                          <View className='all-coupon'> 运费</View>
+                          <View className='all-coupon'> 运费：</View>
                           <View className='money'> ¥{get(item,'child_exp_fare')}</View>
                         </View>
                       :''}
@@ -237,7 +238,10 @@ class MyOrderList extends Component {
                     </View>
                   
                     <View className='btn'>
-                      {item.order_status == 1  ? <View><View className='pay' onClick={this.changeStatus.bind(this,item.id,get(item,'order_id'))}>付款</View></View> : ''}
+                      {item.order_status == 1  ? <View style='display:inline-flex'>
+                        <View className='cancel'>取消订单</View>
+                        <View className='pay' onClick={this.changeStatus.bind(this,item.id,get(item,'order_id'))}>付款</View>
+                        </View> : ''}
                       {item.order_status == 2  ? '' : ''}
                       {item.order_status == 3  ? <View><View className='dilivery' onClick={this.toDeliveryDetail.bind(this,item.id)}>查看物流</View></View> : ''}
                       {item.order_status == 4  ? <View style='display:inline-flex'><View className='commit' onclick={this.addCart.bind(this,item)}>加入购物车</View><View className='commit'>我要评价</View></View> : ''}
