@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import Taro,{getCurrentInstance} from '@tarojs/taro'
+import React, { Component } from 'react';
+import Taro, { getCurrentInstance } from '@tarojs/taro'
 import { View, Text, Image, Navigator } from '@tarojs/components';
 import Navbar from '@components/navbar/navbar'
 import { get as getGlobalData } from '../../global_data'
@@ -26,12 +26,12 @@ class CategoryListView extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const {kind_tag,keyword} = getCurrentInstance().router.params;
-    this.getGoodsIdList(kind_tag,keyword,1);
+    const { kind_tag, keyword } = getCurrentInstance().router.params;
+    this.getGoodsIdList(kind_tag, keyword, 1);
   }
 
   /* 获取商品id列表 */
-  getGoodsIdList = async(kind_tag,keyword='',sort_id = 1) => {
+  getGoodsIdList = async (kind_tag, keyword = '', sort_id = 1) => {
     const goodsIdList = await request('/goods/list', {
       body: {
         limit: 99,
@@ -46,7 +46,7 @@ class CategoryListView extends Component {
   }
 
   /* 获取商品详情列表 */
-  getGoodsList = async(goodsIdList) => {
+  getGoodsList = async (goodsIdList) => {
     let goodsList = await request('/goods/_mget', {
       body: {
         ids: goodsIdList
@@ -56,8 +56,20 @@ class CategoryListView extends Component {
     goodsList.forEach(goods => {
       // 封面前缀处理
       goods.cover = 'http://qiniu.daosuan.net/' + goods.cover;
+      // 处理价格单位（分-》元）
+      const isSale = goods.sale;
+      goods.carriage /= 100;
+      goods.carriage = Number(goods.carriage).toFixed(2);
+      goods.specification.forEach(item => {
+        item.price /= 100;
+        item.price = Number(item.price).toFixed(2);
+        if (isSale) {
+          item.reduced_price /= 100;
+          item.reduced_price = Number(item.reduced_price).toFixed(2);
+        }
+      })
       // 显示价格处理(显示原价的最低价)
-      goods.showPrice = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2);
+      goods.showPrice = Math.min(...goods.specification.map(spec => spec.price));
     });
     this.setData({
       goodsList
@@ -66,7 +78,7 @@ class CategoryListView extends Component {
 
   /* 点击排序 */
   handleSortTypeClick = () => {
-    let {isOpen} = this.state;
+    let { isOpen } = this.state;
     this.setData({
       isOpen: !isOpen
     })
@@ -74,9 +86,9 @@ class CategoryListView extends Component {
 
   /* 改变排序方式 */
   changeSortType(sort_id) {
-    let {goodsList} = this.state;
-    const {kind_tag} = getCurrentInstance().router.params;
-    this.getGoodsIdList(kind_tag,'',sort_id);
+    let { goodsList } = this.state;
+    const { kind_tag } = getCurrentInstance().router.params;
+    this.getGoodsIdList(kind_tag, '', sort_id);
     this.setData({
       sort_id,
       isOpen: false
@@ -85,7 +97,7 @@ class CategoryListView extends Component {
 
   /* 改变排布方式 */
   changeListStyle = () => {
-    let {list_style} = this.state;
+    let { list_style } = this.state;
     this.setData({
       list_style: !list_style
     })
@@ -101,7 +113,7 @@ class CategoryListView extends Component {
   /* 隐藏排序方式选择框 */
   hiddenFloat = () => {
     this.setState({
-      isOpen:false
+      isOpen: false
     })
   }
 
@@ -118,8 +130,8 @@ class CategoryListView extends Component {
     console.log(...params)
   }
 
-  render(){
-    console.log('%c ........render.........','color:green');
+  render() {
+    console.log('%c ........render.........', 'color:green');
     const { statusBarHeight, capsule, goodsList, list_style, sort_type, sort_id, isOpen } = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     return (
@@ -150,18 +162,18 @@ class CategoryListView extends Component {
             </View>
           </View>
           {/* 选择排序模块 */}
-          <View className={isOpen ? 'float_active float_wrap' : 'float_wrap'} style={{height: 'calc(100vh - 60rpx - '+ (statusBarHeight + capsuleHeight)+'px)'}}>
+          <View className={isOpen ? 'float_active float_wrap' : 'float_wrap'} style={{ height: 'calc(100vh - 60rpx - ' + (statusBarHeight + capsuleHeight) + 'px)' }}>
             <View className='mask' onClick={this.hiddenFloat}></View>
             <View className={isOpen ? 'container container_active' : 'container'}>
               {sort_type.map(item => (
                 item.id < 4
-                ? item.id === sort_id
-                  ? <View className='sort_item sort_active' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>
+                  ? item.id === sort_id
+                    ? <View className='sort_item sort_active' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>
                       {item.text}
                       <Image src='http://qiniu.daosuan.net/picture-1598883365000' />
                     </View>
-                  : <View className='sort_item' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>{item.text}</View>
-                : ''
+                    : <View className='sort_item' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>{item.text}</View>
+                  : ''
               ))}
             </View>
           </View>
@@ -169,7 +181,7 @@ class CategoryListView extends Component {
         {/* 商品列表 */}
         <View className={list_style ? 'goods_list' : 'wrap'}>
           {(goodsList ?? []).map(goods => (
-            <Navigator url={'/pages/details/index?gid='+goods.id} className='goods_wrap' key={goods.id}>
+            <Navigator url={'/pages/details/index?gid=' + goods.id} className='goods_wrap' key={goods.id}>
               <View className='cover'>
                 <Image src={goods.cover} />
               </View>
