@@ -9,9 +9,20 @@
       padding: 30rpx 30rpx;
       background-color: white;
       border-radius: 20PX;
+      display: flex;
+      .icon-address{
+        height:70rpx;
+        width:70rpx;
+        display: flex;
+        margin-top: 10rpx;
+      }
+      .info{
+        margin-left: 20rpx;
+      }
       .name-phone{
         display: flex;
         text-align: center;
+        font-size: 26rpx;
         .phone{
           margin-left: 30rpx;
           display:flex;
@@ -20,7 +31,9 @@
         }
       }
       .address-detail{
-        margin-top: 30rpx;
+        margin-top:10rpx;
+        font-size: 26rpx;
+        
       }
     }
     .goods-wrap{
@@ -51,6 +64,7 @@
             align-items: center;
             justify-content: flex-end;
             font-size:30rpx;
+            color:#D53E1D;
           }
         }
       }
@@ -60,6 +74,7 @@
       padding: 30rpx 30rpx;
       background-color: white;
       border-radius: 20PX;
+      margin-bottom: 20rpx;
       .info-wrap{
         .list{
           display:flex;

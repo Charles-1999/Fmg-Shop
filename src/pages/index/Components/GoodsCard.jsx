@@ -256,7 +256,7 @@ async addCart() {
               </View>:  <View className='count-null'>
               </View>}
               <View className='price'>
-                <View style='font-size:40rpx;font-weoght:900;color:red;float:left;'>¥</View>
+                <View style='font-size:30rpx;font-weoght:900;color:#D53E1D;float:left;'>¥</View>
                 <View className='number'>
                   {get(item,'specification','').map(function(spe,index) {
                     const currentPrice = get(get(item,'specification','')[0],'price');
@@ -264,7 +264,7 @@ async addCart() {
                       currentPrice === get(spe,'price');
                     }
                     if(index == get(item,'specification',[]).length-1)
-                      return <View key={item.id}>{currentPrice}</View>
+                      return <View key={item.id}>{currentPrice*0.01}</View>
                   })}
                 </View>
               </View>

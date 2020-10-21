@@ -42,16 +42,22 @@ page{
         padding-top: 20rpx;
         background-color: white;
         border-radius: 30rpx;
-        .order-code{
+        .top-wrap{
           display:flex;
           align-items: center;
-          .name{
-            font-size: 28px;
+          .order-code{
+            display:flex;
+            align-items: center;
+            flex:1;
+            .name{
+              font-size: 28px;
+            }
+            .code{
+              font-size: 26px;
+              color: #474747;
+            }
           }
-          .code{
-            font-size: 26px;
-            color: #474747;
-          }
+        
         }
         .order_status_wrap{
           display:flex;
@@ -62,7 +68,7 @@ page{
             color: #f77438;
           }
         }
-        
+     
         .total-fee-wrap{
           .detail-fee{
             margin-top: 20rpx;
@@ -88,6 +94,7 @@ page{
             justify-content: flex-end;
             .pay-fee-money{
               font-size: 33rpx;
+              color:#D53E1D;
             }
           }
          
@@ -100,30 +107,36 @@ page{
           width:100%; 
           display:flex; 
           justify-content: flex-end;
-          .dilivery{
-            background-color: #5a5a5a;
+          .add_cart,.cancel,.drawback,.commit,.delivery{
             border-radius: 30rpx;
             padding: 5rpx 15rpx;
             color: white;
-            margin-right: 0%;
+            margin-left: 10rpx;
+            background-color: #4885FB;
+            color: white;
+      
           }
           .pay{
-            background-color: #5a5a5a;
-            border-radius: 30rpx; 
-            padding: 5rpx 15rpx;
-            color: white;
-            margin-right: 0%;
-            margin-left: 10rpx;
-            
-          }
-          .add_cart,.cancel,.drawback,.commit{
-            background-color: #5a5a5a;
+            background-color: #E26D6D;
             border-radius: 30rpx;
             padding: 5rpx 15rpx;
             color: white;
             margin-left: 10rpx;
-            
+            color: white;
           }
+          .del{
+            width: 50rpx;
+            height: 50rpx;
+            margin-left: 10rpx;
+            // background-color: #E26D6D;
+            // border-radius: 99PX;
+
+            image{
+              width: 50rpx;
+              height: 50rpx;
+            }
+          }
+        
 
         }
       }
@@ -139,14 +152,14 @@ page{
     float: left;
     margin-left: 20rpx;
     .name{
-      font-size: 38rpx;
+      font-size: 33rpx;
       font-weight: 500;
     }
     .spe{
       display: inline-flex;
       .item{
         margin-right: 10rpx;
-        font-size: 28rpx;
+        font-size: 24rpx;
         color:rgb(102, 102, 102);
       }
     }

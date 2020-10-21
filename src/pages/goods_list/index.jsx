@@ -26,18 +26,19 @@ class CategoryListView extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const {kind_tag} = getCurrentInstance().router.params;
-    this.getGoodsIdList(kind_tag);
+    const {kind_tag,keyword} = getCurrentInstance().router.params;
+    this.getGoodsIdList(kind_tag,keyword,1);
   }
 
   /* 获取商品id列表 */
-  getGoodsIdList = async(kind_tag,sort_id = 1) => {
+  getGoodsIdList = async(kind_tag,keyword='',sort_id = 1) => {
     const goodsIdList = await request('/goods/list', {
       body: {
         limit: 99,
         page: 1,
         kind_tag,
-        sort_way: sort_id
+        sort_way: sort_id,
+        keyword
       },
       method: 'GET'
     })
@@ -75,7 +76,7 @@ class CategoryListView extends Component {
   changeSortType(sort_id) {
     let {goodsList} = this.state;
     const {kind_tag} = getCurrentInstance().router.params;
-    this.getGoodsIdList(kind_tag,sort_id);
+    this.getGoodsIdList(kind_tag,'',sort_id);
     this.setData({
       sort_id,
       isOpen: false

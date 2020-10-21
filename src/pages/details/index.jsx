@@ -136,7 +136,7 @@ class Details extends Component {
     const { data } = this.state;
     let { currNum } = this.state;
     let showPrice;
-    if(data.specification[spec_index].sale) {
+    if(data.sale) {
       showPrice = data.specification[spec_index].reduced_price.toFixed(2);
     }else {
       showPrice = data.specification[spec_index].price.toFixed(2);

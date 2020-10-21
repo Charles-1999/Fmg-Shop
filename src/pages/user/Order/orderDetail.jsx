@@ -67,15 +67,18 @@ class orderDetail extends Component {
         ></Navbar>
         <View className='order-detail'>
           <View className='address-wrap'>
-            <View className='name-phone'>
-              <View className='name'>收货人：{get(this.state.address_info,'name')}</View>
-              <View className='phone'>电话：{get(this.state.address_info,'phone')}</View>
-            </View>
-            <View className='address-detail'>
-              地址：{get(this.state.address_info,'province_name')}
-              {get(this.state.address_info,'city_name')}
-              {get(this.state.address_info,'district_name')}
-              {get(this.state.address_info,'detail')}
+            <Image className='icon-address' src='http://qiniu.daosuan.net/picture-1598883667000' ></Image>
+            <View className='info'>
+              <View className='name-phone'>
+                <View className='name'>{get(this.state.address_info,'name')}</View>
+                <View className='phone'>{get(this.state.address_info,'phone')}</View>
+              </View>
+              <View className='address-detail'>
+                {get(this.state.address_info,'province_name')}
+                {get(this.state.address_info,'city_name')}
+                {get(this.state.address_info,'district_name')}
+                {get(this.state.address_info,'detail')}
+              </View>
             </View>
           </View>
           <View className='goods-wrap'>
@@ -93,19 +96,19 @@ class orderDetail extends Component {
             <View className='total-fee-wrap'>
               <View className='list'>
                 <View className='all-fee'>总价：</View>
-                <View className='money'>¥{get(this.state.order_info,'child_goods_amount')}</View>
+                <View className='money'>¥{get(this.state.order_info,'child_goods_amount')*0.01}</View>
               </View>
               <View className='list'>
                 <View className='dil-fee'>运费：</View>
-                <View className='money'>¥{get(this.state.order_info,'child_exp_fare')}</View>
+                <View className='money'>¥{get(this.state.order_info,'child_exp_fare')*0.01}</View>
               </View>
               <View className='list'>
                 <View className='all-coupon'> 优惠：</View>
-                <View className='money'> -¥{get(this.state.order_info,'child_total_coupon')}</View>
+                <View className='money'> -¥{get(this.state.order_info,'child_total_coupon')*0.01}</View>
               </View>
               <View className='list'>
                 <View className='pay-fee'> 实付款：</View>
-                <View className='pay-money'> ¥{get(this.state.order_info,'child_order_amount')}</View>
+                <View className='pay-money'> ¥{get(this.state.order_info,'child_order_amount')*0.01}</View>
               </View>
             </View>
           </View>

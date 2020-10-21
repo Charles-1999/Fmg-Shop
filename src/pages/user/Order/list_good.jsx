@@ -20,8 +20,9 @@ class ListGood extends Component {
     quality:0,
   }
   async componentDidMount () {
-    const {goodId,speId,price,quality} = this.props;
-    console.log(this.props)
+    const {goodId,speId,price,quality,goodsList} = this.props;
+
+    
     const data = await request('/goods/_mget',{ 
       body: { ids: [Number(goodId)] }, 
       method: 'POST' 
@@ -42,6 +43,7 @@ class ListGood extends Component {
   }
   
   render () {
+    console.log(this.props)
     return (
       <View className='list-good'>
         {this.state.goodInfo !== {} ? 
@@ -59,7 +61,7 @@ class ListGood extends Component {
         </View>
         <View className='price-info'>
           <View class='one-price'>
-            ¥ {this.state.price}
+            ¥ {this.state.price*0.01}
           </View>
           <View class='quantity'>
             x{this.state.quality}

@@ -273,7 +273,7 @@ class SaleNew extends Component {
               </View>:  <View className='count-null'>
               </View>}
               <View className='price'>
-                <View style='font-size:40rpx;font-weoght:900;color:red;float:left;'>¥</View>
+                <View className='yuan'>¥</View>
                 <View className='number'>
                   {get(item,'specification','').map(function(spe,index) {
                     const currentPrice = get(get(item,'specification','')[0],'price');
@@ -281,7 +281,7 @@ class SaleNew extends Component {
                       currentPrice === get(spe,'price');
                     }
                     if(index == get(item,'specification',[]).length-1)
-                      return <View key={item.id}>{currentPrice}</View>
+                      return <View key={item.id}>{currentPrice*0.01}</View>
                   })}
                 </View>
               </View>
