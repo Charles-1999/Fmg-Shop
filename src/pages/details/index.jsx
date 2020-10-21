@@ -39,6 +39,18 @@ class Details extends Component {
       body: { ids: [Number(gid)] },
       method: 'POST'
     })
+    const isSale = data[0].sale;
+    // 处理价格单位（分-》元）
+    data[0].carriage /= 100;
+    data[0].carriage = Number(data[0].carriage).toFixed(2);
+    data[0].specification.forEach(item => {
+      item.price /= 100;
+      item.price = Number(item.price).toFixed(2);
+      if(isSale) {
+        item.reduced_price /= 100;
+        item.reduced_price = Number(item.reduced_price).toFixed(2);
+      }
+    })
     this.setState({
       data: data[0]
     })
@@ -68,13 +80,13 @@ class Details extends Component {
       var max = 0;
       if(data.sale) {
         data.specification.forEach((item) => {
-          if (item.price <= min) min = item.reduced_price.toFixed(2);
-          if (item.price >= max) max = item.reduced_price.toFixed(2);
+          if (item.price <= min) min = item.reduced_price;
+          if (item.price >= max) max = item.reduced_price;
         })
       }else {
         data.specification.forEach((item) => {
-          if (item.price <= min) min = item.price.toFixed(2);
-          if (item.price >= max) max = item.price.toFixed(2);
+          if (item.price <= min) min = item.price;
+          if (item.price >= max) max = item.price;
         })
       }
       if (min == max)
@@ -137,11 +149,11 @@ class Details extends Component {
     let { currNum } = this.state;
     let showPrice;
     if(data.sale) {
-      showPrice = data.specification[spec_index].reduced_price.toFixed(2);
+      showPrice = data.specification[spec_index].reduced_price;
     }else {
-      showPrice = data.specification[spec_index].price.toFixed(2);
+      showPrice = data.specification[spec_index].price;
     }
-    const unSalePrice = data.specification[spec_index].price.toFixed(2);
+    const unSalePrice = data.specification[spec_index].price;
     this.setState({
       showPrice,
       unSalePrice,
@@ -281,7 +293,7 @@ class Details extends Component {
               <Image src={data.cover ? (typeof currChoose == 'number' ? 'http://qiniu.daosuan.net/' + data.specification[currChoose].picture : 'http://qiniu.daosuan.net/' + data.cover) : ''} />
               <Text className='name'>{data.name}</Text>
               <Text className='price'>
-                <Text className='sign'>￥</Text><Text className='text'>{Number(showPrice).toFixed(2)}</Text>
+                <Text className='sign'>￥</Text><Text className='text'>{showPrice}</Text>
                 {data.sale
                 ? <Text className='unSalePrice'><Text className='sign'>￥</Text>{unSalePrice}</Text>
                 : ''}
