@@ -4,12 +4,12 @@ import  { getGoodsPlace, mgetGoodsPlace, getGoodsList, mgetGoodsList, getGoodsKi
 export default {
   namespace: 'goods',
   state: {
-    placeList: {},
-    kindList: {},
-    goodsList: {},
-    slideshowList:{},
-    goodsSaleTopList: {},
-    goodsSaleNewList: {},
+    placeList: [],
+    kindList: [],
+    goodsList: [],
+    slideshowList:[],
+    goodsSaleTopList: [],
+    goodsSaleNewList: [],
     placeListIds: [],
     kindListIds: [],
     goodsListIds: [],

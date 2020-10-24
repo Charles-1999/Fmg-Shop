@@ -11,7 +11,7 @@ import ListGood from './list_good'
 import './deliveryDetail.scss'
 import formatTime from '../../.../../../utils/time'
 
-@connect(({ order, goods }) => ({
+@connect(({ order }) => ({
   ...order,
 }))
 class deliveryDetail extends Component {
@@ -43,7 +43,7 @@ class deliveryDetail extends Component {
     const info = await request('/delivery/info/post', {
       body: {
         "delivry_corp_name":"zhongtong",
-        "delivry_sheet_code":"75385251848035"    
+        "delivry_sheet_code":get(this.state.orderInfo,'tracking_id','')   
       },
       method: 'POST'
     })
@@ -185,7 +185,32 @@ class deliveryDetail extends Component {
               }
 
               </View>
-            ))}      
+            ))}   
+
+            <view class='expressRecord-single-close'>
+              <view class='expressRecord-single-noReach-online-top-close'>
+                <view class='online-top-close'></view>
+                <view class='dot-close'></view>
+                {/* <!-- 起始位置，下半个时间轴线不用 --> */}
+                <view class='online-bottom-start'></view>
+              </view>
+
+              <view class='expressRecord-text'>
+                <view class='expressRecord-status'>已发货</view>
+                <view class='expressRecord-status-address'>卖家发货</view>
+              </view>
+
+              <view class='expressRecord-date'>
+                <view class='expressRecord-date-text'>
+                  {formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s').substring(5,10)}
+                </view>
+                <view class='expressRecord-date-time'>
+                {formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s').substring(10,16)}
+                </view>
+              </view>
+            </view> 
+            
+              
 
           </view>
           </view>

@@ -18,9 +18,10 @@ class ListGood extends Component {
     goodInfo:{},
     price:0,
     quality:0,
+    message:'',
   }
   async componentDidMount () {
-    const {goodId,speId,price,quality,goodsList} = this.props;
+    const {goodId,speId,price,quality,message} = this.props;
 
     
     const data = await request('/goods/_mget',{ 
@@ -38,6 +39,7 @@ class ListGood extends Component {
         spe_info:spe,
         price:price,
         quality:quality,
+        message:message,
       })
     }  
   }
@@ -47,17 +49,18 @@ class ListGood extends Component {
     return (
       <View className='list-good'>
         {this.state.goodInfo !== {} ? 
-        <Image src={'http://qiniu.daosuan.net/'+get(this.state.goodInfo,'cover','')} style='width:160rpx;height:160rpx' />
+        <Image src={'http://qiniu.daosuan.net/'+get(this.state.goodInfo,'cover','')} />
         :''}
         <View className='title'>
-          <View className='name'>{get(this.state.goodInfo,'name')}</View>
+          <View className='name'>{get(this.state.goodInfo,'name','')}</View>
           <View className='spe'>
             {this.state.spe_info? Object.keys(this.state.spe_info).map(item =>(
               <View className='item' key={item}>
                 {item}:{this.state.spe_info[item]} 
               </View>
             )):''}
-            </View>
+          </View>
+          <View className='message'>备注：{this.state.message}</View>
         </View>
         <View className='price-info'>
           <View class='one-price'>
@@ -67,7 +70,8 @@ class ListGood extends Component {
             x{this.state.quality}
           </View>
         </View>
-        <View style='clear:both'></View>
+       
+       
       </View>
     )
   }

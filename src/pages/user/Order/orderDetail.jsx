@@ -15,16 +15,28 @@ import formatTime from '../../.../../../utils/time'
 @connect(({ order, goods }) => ({
   ...order,
 }))
-class orderDetail extends Component {
+class OrderDetail extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
     order_id:Current.router.params.id,  //当前订单id
     order_info:{},
     address_info:{},
+    deliveryInfo: [], //物流信息
+    deliveryNameList:[  //物流公司编码
+      {code:'zhongtong',title:'中通'},
+      {code:'yuantong',title:'圆通'},
+      {code:'shentong',title:'申通'},
+      {code:'yunda',title:'韵达'},
+      {code:'tiantian',title:'天天'},
+      {code:'huitongkuaidi',title:'百世（汇通）'},
+      {code:'zhaijisong',title:'宅急送'},
+      {code:'jexpress',title:'极兔'},
+    ]
   }
   async componentDidMount () {
     this.getOrderInfo();
+    this.getDeliveryInfo();
     
   }
   //获取订单信息
@@ -51,6 +63,20 @@ class orderDetail extends Component {
       address_info: info 
     })
   }
+  /**获取快递信息 */
+  async getDeliveryInfo(){
+    const info = await request('/delivery/info/post', {
+      body: {
+        "delivry_corp_name":"zhongtong",
+        "delivry_sheet_code":get(this.state.order_info,'tracking_id','') 
+      },
+      method: 'POST'
+    })
+    this.setState({
+      deliveryInfo:get(info,'info'),
+    })
+    console.log(this.state.deliveryInfo)
+  }
 
   render () {
     const {statusBarHeight, capsule} = this.state; 
@@ -66,6 +92,14 @@ class orderDetail extends Component {
           title='订单详情'
         ></Navbar>
         <View className='order-detail'>
+          <View className='delivery-wrap'>
+            <View className='top'>
+              <View className='delivery-info'>最新物流信息</View>
+              <View className='delivery-name'>快递公司：{get(this.state.deliveryNameList.filter(item => item.code == get(this.state.deliveryInfo,'com'))[0],'title')}</View>
+            </View>
+
+           
+          </View>
           <View className='address-wrap'>
             <Image className='icon-address' src='http://qiniu.daosuan.net/picture-1598883667000' ></Image>
             <View className='info'>
@@ -89,8 +123,8 @@ class orderDetail extends Component {
                   speId={get(item,'goods_specification_id','')} 
                   price={get(item,'goods_amount','')} 
                   quality={get(item,'purchase_qty','')} 
+                  message={get(item,'message','')}
                 /> 
-                  
               </View>
             ))}
             <View className='total-fee-wrap'>
@@ -113,7 +147,7 @@ class orderDetail extends Component {
             </View>
           </View>
           <View className='order-detail'>
-            订单详情
+
             <View className='info-wrap'>
               <View className='list'>
                 <View className='name'>订单编号：</View>
@@ -161,4 +195,4 @@ class orderDetail extends Component {
   }
 }
 
-export default orderDetail;
+export default OrderDetail;
