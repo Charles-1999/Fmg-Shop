@@ -242,37 +242,42 @@ async addCart() {
       <View className='goods-card'>
         <View className='goods-items-wrap'>
           {goodsListInfo.map((item => (
-            <View className='first-item' key={item.id}>
-            <View className='cover' onclick={this.toDetail.bind(this,item.id)}>
-              <Image src={'http://qiniu.daosuan.net/'+get(item,'cover','')} className='first-img' />
-            </View>
-            <View className='goods-name'>
-              {get(item,'name','')}
-            </View>
-            <View className='info'>
-              {get(item,'sale','') ? 
-              <View className='count'>
-                满减优惠
-              </View>:  <View className='count-null'>
-              </View>}
-              <View className='price'>
-                <View style='font-size:30rpx;font-weoght:900;color:#D53E1D;float:left;'>¥</View>
-                <View className='number'>
-                  {get(item,'specification','').map(function(spe,index) {
-                    const currentPrice = get(get(item,'specification','')[0],'price');
-                    if( get(spe,'price') >= currentPrice){
-                      currentPrice === get(spe,'price');
-                    }
-                    if(index == get(item,'specification',[]).length-1)
-                      return <View key={item.id}>{currentPrice*0.01}</View>
-                  })}
-                </View>
+            <View className='item' key={item.id}>
+              <View className='cover' onclick={this.toDetail.bind(this,item.id)}>
+                <Image src={'http://qiniu.daosuan.net/'+get(item,'cover','')} className='first-img' />
               </View>
-            </View>
-              <View className='like' onClick={this.onLikeTab}>
-              {/* <Image src={cart} className='like-img' /> */}
-              <View className='join-cart' onClick={this.showFloat.bind(this,item.id)}> 加入购物车 </View>
-            </View>
+              {get(item,'name','').length >= 20 ?
+                <View className='goods-name'>
+                {get(item,'name','').substring(0,20)}...
+              </View>:
+              <View className='goods-name'>
+              {get(item,'name','')}
+              </View>
+              }
+              {get(item,'sale','') ? 
+                <View className='count'>
+                  满减优惠
+                </View>:  <View className='count-null'>
+                </View>
+              }
+              <View className='info'>
+               
+                <View className='price'>
+                  <View className='yuan'>¥</View>
+                  <View className='number'>
+                    {get(item,'specification','').map(function(spe,index) {
+                      const currentPrice = get(get(item,'specification','')[0],'price');
+                      if( get(spe,'price') >= currentPrice){
+                        currentPrice === get(spe,'price');
+                      }
+                      if(index == get(item,'specification',[]).length-1)
+                        return <View key={item.id}>{currentPrice*0.01}</View>
+                    })}
+                  </View>
+                </View>
+                <View className='join-cart' onClick={this.showFloat.bind(this,item.id)}> 加入购物车 </View>
+              </View>
+              
           </View>
           )))}        
         </View>
@@ -284,7 +289,7 @@ async addCart() {
                 <Image src={data.cover ? (typeof currChoose == 'number' ? 'http://qiniu.daosuan.net/' + data.specification[currChoose].picture : 'http://qiniu.daosuan.net/' + data.cover) : ''} />
                 <Text className='name'>{data.name}</Text>
                 <Text className='price'>
-                  <Text className='sign'>￥</Text>{showPrice}
+                  <Text className='sign'>￥</Text>{showPrice*0.01}
                 </Text>
               </View>
               <View className='select_wrap'>

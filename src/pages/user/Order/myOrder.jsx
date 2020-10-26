@@ -23,12 +23,12 @@ class MyOrderList extends Component {
     capsule: getGlobalData('capsule'),
     userId: Taro.getStorageSync('userId'),
     tabList:[
-      {id:0, title:'全部'},
+      {id:0, title:' 全 部 '},
       {id:1, title:'待付款'},
       {id:2, title:'待发货'},
       {id:3, title:'待收货'},
       {id:4, title:'待评价'},
-      {id:6, title:'已取消/售后'},
+      {id:6, title:'售后/退款'},
     ],
     orderList:[],
     currentIndex: Current.router.params.status,
@@ -269,6 +269,12 @@ class MyOrderList extends Component {
       url: `/pages/user/Order/deliveryDetail?id=${id}`,
     });
   } 
+  //跳转到评论页面
+  toComment= (id) => {
+    Taro.navigateTo({
+      url: `/pages/user/Order/comment?id=${id}`,
+    });
+  } 
 
   render () {
     const {statusBarHeight, capsule} = this.state; 
@@ -333,6 +339,7 @@ class MyOrderList extends Component {
                             price={get(goods_item,'goods_amount','')} 
                             quality={get(goods_item,'purchase_qty','')} 
                             goodsList={goodsList}
+                            message={get(goods_item,'message','')}
                           />                      
                         </View>
                       ))}
@@ -368,7 +375,10 @@ class MyOrderList extends Component {
                         </View> : ''}
                       {item.order_status == 2  ? '' : ''}
                       {item.order_status == 3  ? <View><View className='delivery' onClick={this.toDeliveryDetail.bind(this,item.id)}>查看物流</View></View> : ''}
-                      {item.order_status == 4  ? <View style='display:inline-flex'><View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View><View className='commit'>我要评价</View></View> : ''}
+                      {item.order_status == 4  ? <View style='display:inline-flex'>
+                        <View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View>
+                        <View className='commit' onClick={this.toComment.bind(this,item.id)}>我要评价</View>
+                      </View> : ''}
                       {item.order_status == 5  ? <View style='display:inline-flex'> <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
                         <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> </View> : ''}
                       {item.order_status == 6  ? <View style='display:inline-flex'> <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>

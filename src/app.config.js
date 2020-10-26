@@ -18,6 +18,7 @@ export default {
     'pages/user/Order/orderDetail',
     'pages/user/Order/myOrder',
     'pages/user/Order/deliveryDetail',
+    'pages/user/Order/comment',
     'pages/studies/index',
     'pages/studies/course/index',
     'pages/studies/news/index',
