@@ -1,0 +1,136 @@
+page {
+  .studies {
+    padding-bottom: 70PX;
+    .container {
+      .big_title {
+        display: flex;
+        align-items: center;
+        padding: 20rpx 30rpx 10rpx;
+        font-size: 18PX;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        image {
+          height: 80rpx;
+        }
+        text {
+          padding-right: 20rpx;
+          border-right: 6rpx solid #5e83ff;
+        }
+      }
+      .waterFall {
+        display: flex;
+        font-size: 14PX;
+        .left, .right {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .item {
+          margin: 15rpx 20rpx;
+          background-color: #fff;
+          border-radius: 20rpx;
+          box-shadow: 5rpx 5rpx 13rpx 1rpx #ccc;
+          overflow: hidden;
+          image {
+            width: 100%;
+          }
+          .title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            margin: 0 10rpx;
+            font-weight: 700;
+          }
+          .nums {
+            margin: 10rpx;
+            font-size: 12PX;
+            color: #5e83ff;
+            text {
+              color: #000;
+            }
+          }
+          .content {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            font-size: 12PX;
+            margin: 10rpx;
+            color: #3e3e3e;
+          }
+        }
+      }
+      .news_list {
+        padding: 20rpx;
+        .news {
+          display: flex;
+          align-items: flex-start;
+          padding: 20rpx;
+          margin-bottom: 20rpx;
+          border-radius: 20rpx;
+          box-shadow: 5rpx 5rpx 13rpx 1rpx #ccc;
+          font-size: 14PX;
+          .left {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 200rpx;
+            .title {
+              flex: 1;
+              font-size: 16PX;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+            }
+            .abstract {
+              margin: 20rpx 0;
+              color: #3e3e3e;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+            }
+            .time {
+              color: #3e3e3e;
+              font-size: 12PX;
+            }
+          }
+          .right {
+            image {
+              width: 200rpx;
+              height: 200rpx;
+              border-radius: 10rpx;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+    .tab_bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 55PX;
+      display: flex;
+      font-size: 26px;
+      border-top: 1px solid #ccc;
+      background-color: #fff;
+      .tab_item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 55PX;
+      }
+      .active {
+        color: #5e83ff;
+      }
+    }
+    .isIphoneX {
+      height: 70PX;
+    }
+  }
+}
