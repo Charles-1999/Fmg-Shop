@@ -220,23 +220,23 @@ class Details extends Component {
         })
         return;
       }
-      let goods_specification = '';
-      data.template.forEach((item, index) => {
-        if (index == 0) {
-          goods_specification += data.specification[currChoose].specification[item]
-        } else {
-          goods_specification += ' ' + data.specification[currChoose].specification[item]
-        }
-      })
+      // let goods_specification = '';
+      // data.template.forEach((item, index) => {
+      //   if (index == 0) {
+      //     goods_specification += data.specification[currChoose].specification[item]
+      //   } else {
+      //     goods_specification += ' ' + data.specification[currChoose].specification[item]
+      //   }
+      // })
       try {
         const res = await request(`/car/info/${userId}/${data.id}`, {
           method: 'POST',
           body: {
             goods_count: currNum,
-            goods_specification: goods_specification,
+            // goods_specification: goods_specification,
             goods_name: data.name,
             goods_price: data.specification[currChoose].price,
-            goods_pictures: data.specification[currChoose].picture,
+            // goods_pictures: data.specification[currChoose].picture,
             goods_specification_id: data.specification[currChoose].id,
             delivery_kind: this.setGetWay()
           }
@@ -318,7 +318,9 @@ class Details extends Component {
               </View>
               <View className='right'>
                 <View className='btn' onClick={this.handleClickNum} data-num={-1}>-</View>
-                <Input value={currNum} type='number' onBlur={this.handleInputNum} />
+                {isOpen
+                  ? <Input value={currNum} type='number' onBlur={this.handleInputNum} />
+                  : ''}
                 <View className='btn' onClick={this.handleClickNum} data-num={1}>+</View>
               </View>
             </View>
