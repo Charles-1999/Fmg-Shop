@@ -69,8 +69,10 @@ class CategoryListView extends Component {
         }
       })
       // 显示价格处理(显示原价的最低价)
-      goods.showPrice = Math.min(...goods.specification.map(spec => spec.price));
+      goods.showPrice = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2);
     });
+    // 筛选 只保留上架的商品
+    goodsList = goodsList.filter(item => item.on_sale)
     this.setData({
       goodsList
     })

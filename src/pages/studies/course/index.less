@@ -1,0 +1,99 @@
+page {
+  .course {
+    padding-bottom: 180rpx;
+    .baseInfo {
+      padding: 20rpx;
+      font-size: 14PX;
+      background: #fff;
+      box-shadow: 5rpx 5rpx 13rpx 1rpx #ccc;
+      .title {
+        font-weight: 700;
+        font-size: 16PX;
+      }
+      .sub_title {
+        // color: #5e83ff;
+        margin: 20rpx 0;
+      }
+      .content {
+        margin-bottom: 10rpx;
+        color: #3e3e3e;
+      }
+      .tags {
+        display: flex;
+        .tag {
+          padding: 5rpx;
+          margin-right: 10rpx;
+          font-size: 12PX;
+          color: #5e83ff;
+          border: 1px solid #5e83ff;
+          border-radius: 8rpx;
+        }
+      }
+    }
+    .container {
+      padding: 20rpx;
+      margin-top: 40rpx;
+      background: #fff;
+      font-size: 14PX;
+      box-shadow: 5rpx 5rpx 13rpx 1rpx #ccc;
+      .tab_bar {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20rpx;
+        font-size: 16PX;
+        .active {
+          color: #5e83ff;
+        }
+      }
+    }
+    .tool_bar {
+      display: flex;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 120rpx;
+      padding: 0 20rpx 10rpx;
+      border-top: 1px solid #f3f3f3;
+      background-color: #fff;
+      box-sizing: border-box;
+      .tool_item {
+        position: relative;
+        width: 80rpx;
+        height: 100rpx;
+        margin-right: 25rpx;
+        font-size: 24rpx;
+        text-align: center;
+        line-height: 20rpx;
+        image {
+          width: 100%;
+          height: 80rpx;
+        }
+        button {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+        }
+      }
+      .tool_item_2 {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 90rpx;
+        margin-top: 10rpx;
+        font-size: 32rpx;
+        color: #fff;
+        border-radius: 50rpx;
+        background-color: #5e83ff;
+        box-sizing: border-box;
+      }
+    }
+    .isIphoneX {
+      height: 180rpx;
+    }
+  }
+}
