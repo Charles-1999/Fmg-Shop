@@ -4,7 +4,7 @@ import request from '../utils/request';
 export const mgetslideshow = params =>{ 
   return request('/goods/slideshow/_mget', {
     method: 'POST',
-    body: { ids: params.payload },
+    body: params.payload ,
   });
 }
 //获取轮播图列表
@@ -37,9 +37,10 @@ export const mgetGoodsKind = params =>{
 }
 //获取种类标签列表
 export const getGoodsKind = params =>{
+  console.log(params)
   return request('/goods/kind_tag/list', {
     method: 'GET',
-    body: params,
+    body: params.payload,
   });
 }
 //批量获取商品信息------------

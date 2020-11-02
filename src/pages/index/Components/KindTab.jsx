@@ -26,7 +26,7 @@ class KindTab extends Component {
     return (
       <View className='kind-tab-wrap'>
         <View className='kind-tab-row'>
-        {data.map(item => (
+        {data.filter(item=>item.parent_id == 0).map(item => (
           <View className='kind-tab-item' key={item.id} onclick={this.enterGoodsKind.bind(this,item.id)}>
               <View className='pic' >
                 <Image src={'http://qiniu.daosuan.net/'+item.picture} style='width:95rpx;height:95rpx' />

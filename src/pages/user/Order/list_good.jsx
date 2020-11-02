@@ -11,28 +11,18 @@ import request from '../../../utils/request'
   ...goods,
 }))
 class ListGood extends Component {
-  static defaultProps = {
-   
-  };
   state = {
     goodInfo:{},
     price:0,
     quality:0,
     message:'',
   }
-  async componentDidMount () {
-    const {goodId,speId,price,quality,message} = this.props;
-
-    
-    const data = await request('/goods/_mget',{ 
-      body: { ids: [Number(goodId)] }, 
-      method: 'POST' 
-    })
-    const specification_list = data[0].specification
+  componentDidMount () {
+    const {goodId,speId,price,quality,message,goodsInfo} = this.props;
+    const data = goodsInfo.filter(item => item.id == goodId)
+    const specification_list = get(data[0],'specification',[])
     const spe_index = specification_list.findIndex(item => item.id == speId);
     const spe = get(specification_list[spe_index],'specification') 
-    console.log(specification_list)
-    console.log(spe)
     if(spe){
       this.setState({
         goodInfo: data[0],
@@ -41,11 +31,10 @@ class ListGood extends Component {
         quality:quality,
         message:message,
       })
-    }  
+    }
   }
   
   render () {
-    console.log(this.props)
     return (
       <View className='list-good'>
         {this.state.goodInfo !== {} ? 

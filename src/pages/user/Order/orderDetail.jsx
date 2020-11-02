@@ -20,8 +20,10 @@ class OrderDetail extends Component {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
     order_id:Current.router.params.id,  //当前订单id
-    order_info:{},
+    order_info:[],
+    goods_info:[],
     address_info:{},
+    ids:[],  //商品ids
     deliveryInfo: [], //物流信息
     deliveryNameList:[  //物流公司编码
       {code:'zhongtong',title:'中通'},
@@ -51,7 +53,31 @@ class OrderDetail extends Component {
     this.setState({
       order_info : orderInfoList[0]
     })
+    console.log(this.state.order_info)
+    this.getgoodsInfo();
     this.getAddressInfo();
+
+  }
+  //去重
+  unique(arr) {
+    const res = new Map();
+    return arr.filter((a) => !res.has(a) && res.set(a,1))
+  }
+  //获取商品信息
+  async getgoodsInfo(){
+    get(this.state.order_info,'order_detail').map(good => {
+      this.setState({
+        ids:[...this.state.ids,get(good,'goods_id')]
+      })
+      return this.state.ids
+    })
+    const goodsInfo = await request('/goods/_mget',{ 
+      body: {ids:this.state.ids}, 
+      method: 'POST' 
+    })
+    this.setState({
+      goods_info:goodsInfo
+    })
   }
   //获取地址信息
   async getAddressInfo(){
@@ -92,14 +118,14 @@ class OrderDetail extends Component {
           title='订单详情'
         ></Navbar>
         <View className='order-detail'>
-          <View className='delivery-wrap'>
+          {/* <View className='delivery-wrap'>
             <View className='top'>
               <View className='delivery-info'>最新物流信息</View>
               <View className='delivery-name'>快递公司：{get(this.state.deliveryNameList.filter(item => item.code == get(this.state.deliveryInfo,'com'))[0],'title')}</View>
             </View>
 
            
-          </View>
+          </View> */}
           <View className='address-wrap'>
             <Image className='icon-address' src='http://qiniu.daosuan.net/picture-1598883667000' ></Image>
             <View className='info'>
@@ -119,11 +145,13 @@ class OrderDetail extends Component {
             {get(this.state.order_info,'order_detail',[]).map(item => (
               <View key={item.id}>
                 <ListGood 
+                  key={this.state.goods_info}
                   goodId={get(item,'goods_id','')} 
                   speId={get(item,'goods_specification_id','')} 
                   price={get(item,'goods_amount','')} 
                   quality={get(item,'purchase_qty','')} 
                   message={get(item,'message','')}
+                  goodsInfo={this.state.goods_info}
                 /> 
               </View>
             ))}

@@ -32,7 +32,7 @@ class MySwiper extends Component {
           <SwiperItem key={item.id}>
             <View className='demo-text-1'>
               <View className='photo-1'>
-                <Image src={'http://qiniu.daosuan.net/'+ get(item,'picture','')} className='first-img' style='height:138px;width:355.5px' />
+                <Image src={'http://qiniu.daosuan.net/'+ get(item,'picture','')} className='first-img' />
               </View>
             </View>
           </SwiperItem>

@@ -57,7 +57,7 @@ class kindGoodsList extends Component {
         >
         </Navbar>
         <View className='top-list'>
-        {this.state.kindList.map(item =>(
+        {this.state.kindList.filter(item=>item.parent_id == 0).map(item =>(
         item.id == this.state.current_index ? 
           <View key={item.id}>
             <View className='kind-item-active' key={item.id} onClick={this.setCurrentIndex.bind(this,item.id)} >

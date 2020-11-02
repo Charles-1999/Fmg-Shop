@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
-import { View } from '@tarojs/components'
-import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
+import { View, Swiper, SwiperItem, Image} from '@tarojs/components'
+// import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
+import { get } from 'lodash'
 import './index.scss'
 import PlaceTab from './Components/PlaceTab'
 import Kindtab from './Components/KindTab'
 import SaleTop from './Components/SaleTop'
 import SaleNew from './Components/SaleNew'
-import MySwiper from './components/MySwiper'
+// import MySwiper from './Components/MySwiper'
 import PlaceKindTab from './Components/PlaceKindTab'
 import Navbar from '../../components/navbar/navbar'
 import { get as getGlobalData } from '../../global_data'
+
 
 @connect(({ goods }) => ({
    ...goods
@@ -23,27 +25,47 @@ class Index extends Component {
     this.state={
       statusBarHeight: getGlobalData('statusBarHeight'),
       capsule: getGlobalData('capsule'),
+      placeList:[],
+      kindList:[],
+      slideshowList:[],
     }
   }
-  componentDidMount(){
-    this.props.dispatch({
+  async componentDidMount(){
+    await this.props.dispatch({
       type: 'goods/getGoodsPlace',
     });
-    this.props.dispatch({
+    await this.props.dispatch({
       type: 'goods/getGoodsKind',
+      payload:{
+        limit:30
+      }
     });
-    this.props.dispatch({
+    await this.props.dispatch({
       type: 'goods/getslideshow',
+    });
+    const{ slideshowListIds } = this.props;
+    await this.props.dispatch({
+      type:'goods/getslideshowEntity',
+      payload: {
+        ids:slideshowListIds
+      }
     })
-  }
-  onReachBottom() {
-    console.log("addddd")
+    const { placeList, kindList, slideshowList } = this.props;
+    console.log(slideshowList)
+    // slideshowList.forEach(item => {
+    //   item.picture = 'http://qiniu.daosuan.net/' + item.picture;
+    // })
+    this.setState({
+      placeList:placeList,
+      kindList:kindList,
+      slideshowList:slideshowList,
+    })
+    console.log(this.state.slideshowList)
+
   }
   render () {
-    const { placeList, kindList, slideshowList } = this.props;
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
-    
     return (
       <View className='index' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -53,13 +75,30 @@ class Index extends Component {
           showSearch
         ></Navbar>
         <View className='home-top-wrap'>
-          <PlaceTab placeList={placeList} />
-          <MySwiper slideshowList={slideshowList} />
-          <Kindtab kindList={kindList} />
+          <PlaceTab placeList={this.state.placeList} />
+          <Swiper
+            className='swiper'
+            circular
+            indicatorDots
+            indicatorColor='#999'
+            indicatorActiveColor='#bf708f'
+            autoplay
+          >
+            {this.state.slideshowList.map(item => (
+              <SwiperItem key={item.id}>
+                <View className='demo-text'>
+                  <View className='photo'>
+                    <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
+                  </View>
+                </View>
+          </SwiperItem>
+        ))}
+      </Swiper>
+          <Kindtab kindList={this.state.kindList} />
         </View>
         <SaleTop />
         <SaleNew />
-        <PlaceKindTab placeList={placeList} kindList={kindList} />
+        <PlaceKindTab placeList={this.state.placeList} kindList={this.state.kindList} />
       </View>
         
     )

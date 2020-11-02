@@ -31,11 +31,12 @@ class MyOrderList extends Component {
       {id:6, title:'售后/退款'},
     ],
     orderList:[],
+    goodsInfo:[],
     currentIndex: Current.router.params.status,
     isLoading:false,
     page:1, //总页面数量
   }
-  async componentDidMount () {
+  componentDidMount() {
     this.getOrderList();   
   }
   // config = {
@@ -68,20 +69,19 @@ class MyOrderList extends Component {
     })
     orderInfoList.map(item => {
       get(item,'order_detail').map(good => {
-        console.log(item);
-        console.log(good);
-        console.log(get(good,'goods_id'))
         this.setState({
-          goodsList: [...this.state.goodsList,get(good,'goods_id')]
+          goodsList:this.unique([...this.state.goodsList,get(good,'goods_id')])
         })
         return get(good,'goods_id')
       })
     })
-    this.setState({
-      goodsList:this.unique(this.state.goodsList)
+    const goodsInfo = await request('/goods/_mget',{ 
+      body: { ids: this.state.goodsList }, 
+      method: 'POST' 
     })
-    
-    console.log(this.state.goodsList)
+    this.setState({
+      goodsInfo:goodsInfo
+    })
     this.setState({ isLoading: false });
   }
 
@@ -276,12 +276,10 @@ class MyOrderList extends Component {
     });
   } 
 
+
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
-    const {goodsList} = this.state.goodsList
-    console.log(this.state.goodsList)
-
     return (
       <View className='my-order' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -333,14 +331,18 @@ class MyOrderList extends Component {
                     <View key={item.id}>
                       {get(item,'order_detail',[]).map(goods_item=>(
                         <View className='good-item' key={goods_item.id} onClick={this.toDetail.bind(this,item.id)}>
+                          {this.state.goodsInfo !== null?
                           <ListGood 
+                            key={this.state.goodsInfo}
                             goodId={get(goods_item,'goods_id','')} 
                             speId={get(goods_item,'goods_specification_id','')} 
                             price={get(goods_item,'goods_amount','')} 
                             quality={get(goods_item,'purchase_qty','')} 
-                            goodsList={goodsList}
+                            goodsInfo={this.state.goodsInfo}
                             message={get(goods_item,'message','')}
-                          />                      
+                          />  :''
+                          }
+                                             
                         </View>
                       ))}
                     </View>

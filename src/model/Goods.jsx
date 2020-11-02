@@ -21,16 +21,13 @@ export default {
     * getslideshow({ payload }, { call, put }) {
       const res = yield call(getslideshow, payload);
       const info = get(res, 'slideshow',[]);
+      console.log(info)
       const slideshowListIds = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
         payload: {
-          slideshowList:info
-        },
-      }); 
-      yield put({
-        type: 'getslideshowEntity',
-        payload: slideshowListIds,
+          slideshowListIds: slideshowListIds
+        }
       }); 
     },
     * getslideshowEntity({ payload }, { call, put }) {
