@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Image, Text, Input } from '@tarojs/components';
 import Taro, { getCurrentInstance } from '@tarojs/taro';
 import Navbar from '@components/navbar/navbar'
-import request from '../../utils/request'
+import request, {getGoodsList} from '@utils/request'
+import {getGoodsComments} from '@service/Comment'
 
 import MySwiper from './swiper'
 import BaseInfo from './baseInfo'
@@ -33,26 +34,12 @@ class Details extends Component {
   }
 
   async UNSAFE_componentWillMount() {
-    const { gid } = getCurrentInstance().router.params;
-    console.log('gid', gid)
-    const data = await request('/goods/_mget', {
-      body: { ids: [Number(gid)] },
-      method: 'POST'
-    })
-    const isSale = data[0].sale;
-    // 处理价格单位（分-》元）
-    data[0].carriage /= 100;
-    data[0].carriage = Number(data[0].carriage).toFixed(2);
-    data[0].specification.forEach(item => {
-      item.price /= 100;
-      item.price = Number(item.price).toFixed(2);
-      if(isSale) {
-        item.reduced_price /= 100;
-        item.reduced_price = Number(item.reduced_price).toFixed(2);
-      }
-    })
+    const { gid } = getCurrentInstance().router.params
+    const res_comments = await getGoodsComments(gid)
+    let goodsList = await getGoodsList([Number(gid)])
     this.setState({
-      data: data[0]
+      data: goodsList[0],
+      comments: res_comments
     })
     this.setTotal();
     this.getShowPrice();
@@ -290,7 +277,7 @@ class Details extends Component {
           <View className='mask' onClick={this.hiddenFloat}></View>
           <View className={isOpen ? 'container active' : 'container'}>
             <View className='info_wrap'>
-              <Image src={data.cover ? (typeof currChoose == 'number' ? 'http://qiniu.daosuan.net/' + data.specification[currChoose].picture : 'http://qiniu.daosuan.net/' + data.cover) : ''} />
+              <Image src={data.cover ? (typeof currChoose == 'number' ? 'http://qiniu.daosuan.net/' + data.specification[currChoose].picture : data.cover) : ''} />
               <Text className='name'>{data.name}</Text>
               <Text className='price'>
                 <Text className='sign'>￥</Text><Text className='text'>{showPrice}</Text>
