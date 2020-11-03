@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Image, Text, Input } from '@tarojs/components';
 import Taro, { getCurrentInstance } from '@tarojs/taro';
+import { connect } from 'react-redux';
 import Navbar from '@components/navbar/navbar'
 import request, {getGoodsList} from '@utils/request'
-import {getGoodsComments} from '@service/Comment'
 
 import MySwiper from './swiper'
 import BaseInfo from './baseInfo'
@@ -16,6 +16,10 @@ import './index.scss'
 
 import { get as getGlobalData } from '../../global_data'
 
+
+@connect(({ comment }) => ({
+  ...comment
+}))
 class Details extends Component {
   constructor() {
     super(...arguments)
@@ -34,12 +38,20 @@ class Details extends Component {
   }
 
   async UNSAFE_componentWillMount() {
+    /* 获取路由中的gid */
     const { gid } = getCurrentInstance().router.params
-    const res_comments = await getGoodsComments(gid)
+
+    /* 获取commentList */
+    await this.props.dispatch({
+      type: 'comment/getGoodsComments',
+      payload: gid
+    });
+    console.log('detail',this.props)
+
+    /* 获取goodsList */
     let goodsList = await getGoodsList([Number(gid)])
     this.setState({
       data: goodsList[0],
-      comments: res_comments
     })
     this.setTotal();
     this.getShowPrice();
