@@ -4,29 +4,44 @@ import { getGoodsComments } from '../service/Comment'
 export default {
   namespace: 'comment',
   state: {
-    commentList: []
+    commentList: [],
+    pictureList: []
   },
   effects: {
     /* 获取商品评价 */
     * getGoodsComments({ payload }, { call, put }) {
-      const commentList = yield call(getGoodsComments, payload)
+      let commentList = yield call(getGoodsComments, payload)
 
       /* 图片封面前缀处理 */
-      const finalCommentList = yield commentList.map((info)=>{
-        const pictures = info.pictures.map((arr)=>{
-          return 'http://qiniu.daosuan.net/'+arr
-        })
-        return {...info,pictures };
+      // commentList = yield commentList.map(comment => {
+      //   const pictures = comment.pictures.map(pic => {
+      //     return 'http://qiniu.daosuan.net/' + pic
+      //   })
+      //   return {...comment, pictures };
+      // })
+
+      let pictureList = []
+
+      commentList = commentList.map(comment => {
+        let pictures = []
+        let pic_count = 0;
+        if(comment.pictures && pic_count < 4) {
+          pictures = comment.pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+          // 评论图片列表，只插入每条评论的第一张图片
+          pictureList.push(pictures[0])
+          pic_count++
+        }
+        return {...comment, pictures}
       })
-      console.log(1111,finalCommentList);
+      console.log(pictureList)
 
       yield put({
         type: 'save',
         payload: {
-          commentList
+          commentList,
+          pictureList
         }
       })
-      console.log('model', commentList)
     }
   },
   reducers: {

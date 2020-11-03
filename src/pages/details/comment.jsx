@@ -11,20 +11,16 @@ class Comment extends Component {
 
   render() {
     console.log('%c ........comment render.........', 'color:green');
-    const {commentList} = this.props
+    const {commentList, pictureList} = this.props
 
     return (
       <View className='comment' >
         <View className='title'>买家评论（{commentList.length}）</View>
         <Image className='more' src='http://qiniu.daosuan.net/picture-1598883365000' />
         <View className='comment_list'>
-          {commentList.map(comment => (
-            <Image src={comment.pictures[0]} />
+          {pictureList.map(pic => (
+            <Image src={pic} />
           ))}
-            {/* <Image src='http://qiniu.daosuan.net/goods/82321-file10' />
-            <Image src='http://qiniu.daosuan.net/goods/82321-file10' />
-            <Image src='http://qiniu.daosuan.net/goods/82321-file10' />
-            <Image src='http://qiniu.daosuan.net/goods/82321-file10' /> */}
         </View>
       </View>
     )

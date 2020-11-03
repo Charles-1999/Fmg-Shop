@@ -46,7 +46,6 @@ class Details extends Component {
       type: 'comment/getGoodsComments',
       payload: gid
     });
-    console.log('detail',this.props)
 
     /* 获取goodsList */
     let goodsList = await getGoodsList([Number(gid)])
