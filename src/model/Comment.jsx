@@ -12,14 +12,13 @@ export default {
       const commentList = yield call(getGoodsComments, payload)
 
       /* 图片封面前缀处理 */
-      commentList.forEach(comment => {
-        console.log(comment)
-        comment.pictures.forEach(pic => {
-          console.log(pic)
-          pic = 'http://qiniu.daosuan.net/' + pic
-          console.log(pic)
+      const finalCommentList = yield commentList.map((info)=>{
+        const pictures = info.pictures.map((arr)=>{
+          return 'http://qiniu.daosuan.net/'+arr
         })
+        return {...info,pictures };
       })
+      console.log(1111,finalCommentList);
 
       yield put({
         type: 'save',
