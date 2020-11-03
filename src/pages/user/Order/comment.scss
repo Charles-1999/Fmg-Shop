@@ -9,7 +9,21 @@ page{
     margin: 0 30rpx;
     padding:30rpx 30rpx;
     border-radius: 25PX;
-
+    margin-bottom: 30rpx;
+    .goods-wrap{
+      display: flex;
+      margin-bottom: 30rpx;
+      image{
+        width:90rpx;
+        height:90rpx;
+      }
+      .name{
+        font-size: 29rpx;
+        margin-top:auto;
+        margin-left: 30rpx;
+        font-weight: 400;
+      }
+    }
     .tag-wrap{
       display: inline-flex;
       .tag-active{

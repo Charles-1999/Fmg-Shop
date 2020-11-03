@@ -47,7 +47,7 @@ class CartListView extends Component {
     const res_mget = await request(`/car/info/_mget/${userId}`, {
       method: 'POST'
     });
-    let cartList = res_mget;
+    let cartList = res_mget.data;
     cartList.forEach((cart) => {
       goodsId.push(cart.goods_id)
     })

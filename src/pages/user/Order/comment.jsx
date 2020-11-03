@@ -28,6 +28,8 @@ class Comment extends Component {
       {id:2,title:'中评'},
       {id:3,title:'差评'}
     ],
+    goods_list:[],
+    goods_info:[],
     files: [],
     showUploadBtn:true,
     upLoadImg:[], 
@@ -38,6 +40,10 @@ class Comment extends Component {
      // 获取七牛Token
    
   }
+  unique(arr) {
+    const res = new Map();
+    return arr.filter((a) => !res.has(a) && res.set(a,1))
+  }
   //获取订单信息
   async getOrderInfo(){
     await this.props.dispatch({
@@ -47,10 +53,32 @@ class Comment extends Component {
       }
     })
     const {orderInfoList} = this.props;
+    console.log(orderInfoList)
+    this.setState({
+      order_info:orderInfoList[0]
+    })
+    get(this.state.order_info,'order_detail').map(item => {
+      this.setState({
+        goods_list:this.unique([...this.state.goods_list,get(item,'goods_id')])
+      })
+      return get(item,'goods_id')
+    })
+    const goodsInfo = await request('/goods/_mget',{ 
+      body: { ids: this.state.goods_list }, 
+      method: 'POST' 
+    })
+    console.log(goodsInfo)
+    this.setState({
+      goods_info:goodsInfo
+    })
+    console.log(this.state.goods_info)
+  }
+  //获取商品信息
+  async getgoodsInfo(){
 
   }
   //为用户创建评论
-  async setComment(){
+  async setComment(id){
     if(this.state.tag == 0){
       Taro.showToast({
         title: '请选择一个标签',
@@ -58,10 +86,10 @@ class Comment extends Component {
       })
     }
     else {
-      await request(`/comment/info/${this.state.userId}`, {
+      await request(`/comment/info/${id}`, {
         method: 'POST',
         body:{
-          order_id:parseInt(this.state.order_id),
+          //good_id:parseInt(this.state.order_id),
           content:this.state.content,
           tag:this.state.tag,
           pictures:this.state.pictures,
@@ -195,14 +223,14 @@ class Comment extends Component {
       })
     }
   }
-  async toUpload () {
+  async toUpload (id) {
     const { files } = this.state
-   
+    console.log(id)
     if(files.length>0){
       //this.props.onFilesValue(files)
       const rootUrl = get('http://upload-z2.qiniup.com') // 服务器地址
       //const cookieData = Taro.getStorageSync('token')  // 图片上传需要单独写入token
-      await this.uploadLoader({rootUrl,path:files})
+      await this.uploadLoader({rootUrl,path:files},id)
     }else{
       Taro.showToast({
         title: '请先点击+号选择图片',
@@ -211,7 +239,7 @@ class Comment extends Component {
       })
     }
   }
-  async uploadLoader(data){
+  async uploadLoader(data,id){
     let that = this
     let i = data.i ? data.i : 0 // 当前所上传的图片位置
     let success=data.success?data.success:0//上传成功的个数
@@ -280,7 +308,7 @@ class Comment extends Component {
               duration: 2000
             })
             console.log('成功：'+success+" 失败："+fail);
-            this.setComment()
+            this.setComment(id)
          
           }else{//若图片还没有传完，则继续调用函数
               data.i=i;
@@ -297,8 +325,6 @@ class Comment extends Component {
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
-    console.log(this.state.files)
-
     return (
       <View className='comment' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -308,7 +334,15 @@ class Comment extends Component {
           showBack
           title='评价'
         ></Navbar>
-        <View className='comment-wrap'>
+        {this.state.goods_info.map((good,index) => (
+          <View className='comment-wrap' key={index}>
+          <View className='goods-wrap'>
+
+            <Image src={'http://qiniu.daosuan.net/'+get(good,'cover','')} />
+ 
+            <View className='name'>{get(good,'name','')}</View>
+   
+          </View>
           <View className='tag-wrap'>
             {this.state.tagInfo.map(item => (
               <View key={item.id}>
@@ -344,11 +378,13 @@ class Comment extends Component {
             showAddBtn={this.state.showUploadBtn} //是否显示添加图片按钮
           />
           {/* <ChooseImage chooseImg={this.state.chooseImg} onFilesValue={this.getOnFilesValue.bind(this)} /> */}
-          <View className='submit' onClick={this.toUpload.bind(this)}>
+          <View className='submit' onClick={this.toUpload.bind(this,get(good,'id'))}>
             提交
           </View>
-        
-        </View>
+
+          </View>
+        ))}
+       
         </View>
     )
   }

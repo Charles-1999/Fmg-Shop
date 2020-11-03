@@ -34,12 +34,16 @@ class deliveryDetail extends Component {
     ]
   }
   async componentDidMount(){
-    this.getDeliveryInfo();
     this.getOrderInfo();
+   // this.getDeliveryInfo();
+   
 
   }
   /**获取快递信息 */
   async getDeliveryInfo(){
+    console.log(33);
+    console.log(this.state.orderInfo)
+    console.log(get(this.state.orderInfo,'tracking_id',''))
     const info = await request('/delivery/info/post', {
       body: {
         "delivry_corp_name":"zhongtong",
@@ -64,6 +68,7 @@ class deliveryDetail extends Component {
       orderInfo: orderInfoList[0],
     })
     console.log(this.state.orderInfo)
+    this.getDeliveryInfo();
     this.getAddressInfo();
   }
   //获取地址信息
