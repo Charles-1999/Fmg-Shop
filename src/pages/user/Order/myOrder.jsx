@@ -13,9 +13,9 @@ import './myOrder.scss'
 import ListGood from './list_good'
 
 //要想下拉加载就不能用connect dva
-@connect(({ order }) => ({
-  ...order,
-}))
+// @connect(({ order }) => ({
+//   ...order,
+// }))
 class MyOrderList extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
