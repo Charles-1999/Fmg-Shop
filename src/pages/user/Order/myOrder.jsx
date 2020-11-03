@@ -269,12 +269,12 @@ class MyOrderList extends Component {
       url: `/pages/user/Order/deliveryDetail?id=${id}`,
     });
   } 
-  //跳转到评论页面
-  toComment= (id) => {
-    Taro.navigateTo({
-      url: `/pages/user/Order/comment?id=${id}`,
-    });
-  } 
+  // //跳转到评论页面
+  // toComment= (id) => {
+  //   Taro.navigateTo({
+  //     url: `/pages/user/Order/comment?id=${id}`,
+  //   });
+  // } 
 
 
   render () {
@@ -340,6 +340,8 @@ class MyOrderList extends Component {
                             quality={get(goods_item,'purchase_qty','')} 
                             goodsInfo={this.state.goodsInfo}
                             message={get(goods_item,'message','')}
+                            isShowComment
+                            status={item.order_status}
                           />  :''
                           }
                                              
@@ -379,13 +381,13 @@ class MyOrderList extends Component {
                       {item.order_status == 3  ? <View><View className='delivery' onClick={this.toDeliveryDetail.bind(this,item.id)}>查看物流</View></View> : ''}
                       {item.order_status == 4  ? <View style='display:inline-flex'>
                         <View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View>
-                        <View className='commit' onClick={this.toComment.bind(this,item.id)}>我要评价</View>
+                        {/* <View className='commit' onClick={this.toComment.bind(this,item.id)}>我要评价</View> */}
                       </View> : ''}
                       {item.order_status == 5  ? <View style='display:inline-flex'> <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
                         <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> </View> : ''}
                       {item.order_status == 6  ? <View style='display:inline-flex'> <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
                         <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
-                        <View className='pay' onClick={this.changeStatus.bind(this,item.id,get(item,'order_id'))}>修改订单状态</View>
+                        {/* <View className='pay' onClick={this.changeStatus.bind(this,item.id,get(item,'order_id'))}>修改订单状态</View> */}
                         </View> : ''}
                     </View>
                     <View style='clear:both'></View>

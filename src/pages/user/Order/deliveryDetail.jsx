@@ -7,7 +7,6 @@ import Taro, {Current} from '@tarojs/taro';
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import request from '../../../utils/request'
-import ListGood from './list_good'
 import './deliveryDetail.scss'
 import formatTime from '../../.../../../utils/time'
 

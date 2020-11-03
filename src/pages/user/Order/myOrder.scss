@@ -184,11 +184,23 @@ page{
     .one-price{
       font-size: 35rpx;
       font-weight: 400;
+      .quantity{
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 25rpx;
+        color:rgb(102, 102, 102);
+        margin-left: 70rpx;
+      }
     }
-    .quantity{
-      float: right;
-      font-size: 25rpx;
-      color:rgb(102, 102, 102);
+  
+    .commit{
+      border-radius: 10rpx;
+      padding: 5rpx 15rpx;
+      color: white;
+      background-color: rgb(238, 153, 55);
+      color: white;
+      font-size: 20rpx;
+      margin-top: 10rpx;
     }
   }
 }

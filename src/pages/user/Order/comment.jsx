@@ -19,8 +19,7 @@ class Comment extends Component {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
     userId: Taro.getStorageSync('userId'),
-    order_id:Current.router.params.id,  //当前订单id
-    order_info:{},
+    good_id:Current.router.params.id,  //当前订单id
     content:'',
     tag:0,
     tagInfo:[
@@ -28,8 +27,7 @@ class Comment extends Component {
       {id:2,title:'中评'},
       {id:3,title:'差评'}
     ],
-    goods_list:[],
-    goods_info:[],
+    goods_info:{},
     files: [],
     showUploadBtn:true,
     upLoadImg:[], 
@@ -44,41 +42,21 @@ class Comment extends Component {
     const res = new Map();
     return arr.filter((a) => !res.has(a) && res.set(a,1))
   }
-  //获取订单信息
+ //获取商品信息
   async getOrderInfo(){
-    await this.props.dispatch({
-      type: 'order/mgetOrderList',
-      payload: {
-        ids:[ parseInt(this.state.order_id)]
-      }
-    })
-    const {orderInfoList} = this.props;
-    console.log(orderInfoList)
-    this.setState({
-      order_info:orderInfoList[0]
-    })
-    get(this.state.order_info,'order_detail').map(item => {
-      this.setState({
-        goods_list:this.unique([...this.state.goods_list,get(item,'goods_id')])
-      })
-      return get(item,'goods_id')
-    })
     const goodsInfo = await request('/goods/_mget',{ 
-      body: { ids: this.state.goods_list }, 
+      body: { ids: [parseInt(this.state.good_id)] }, 
       method: 'POST' 
     })
     console.log(goodsInfo)
     this.setState({
-      goods_info:goodsInfo
+      goods_info:goodsInfo[0]
     })
     console.log(this.state.goods_info)
   }
-  //获取商品信息
-  async getgoodsInfo(){
-
-  }
+ 
   //为用户创建评论
-  async setComment(id){
+  async setComment(){
     if(this.state.tag == 0){
       Taro.showToast({
         title: '请选择一个标签',
@@ -86,7 +64,7 @@ class Comment extends Component {
       })
     }
     else {
-      await request(`/comment/info/${id}`, {
+      await request(`/comment/info/${this.state.good_id}`, {
         method: 'POST',
         body:{
           //good_id:parseInt(this.state.order_id),
@@ -120,7 +98,6 @@ class Comment extends Component {
   }
   //评论
   handleChange =(value) =>{
-    console.log(value)
     this.setState({
       content:value,
     })
@@ -128,7 +105,6 @@ class Comment extends Component {
 
    // 拿到子组件上传图片的路径数组
    getOnFilesValue = (value) => {
-    console.log(value);
     this.setState({
       files: value
     },() => {
@@ -175,9 +151,6 @@ class Comment extends Component {
         })
       },()=>{
         const {files} = this.state
-        console.log(222)
-        console.log(files)
-        console.log(files.length)
         if(files.length >= 9){  // 最多三张图片 隐藏添加图片按钮
           this.setState({
             files:this.state.files.splice(0,9),
@@ -223,23 +196,18 @@ class Comment extends Component {
       })
     }
   }
-  async toUpload (id) {
+  async toUpload () {
     const { files } = this.state
-    console.log(id)
     if(files.length>0){
       //this.props.onFilesValue(files)
       const rootUrl = get('http://upload-z2.qiniup.com') // 服务器地址
       //const cookieData = Taro.getStorageSync('token')  // 图片上传需要单独写入token
-      await this.uploadLoader({rootUrl,path:files},id)
+      await this.uploadLoader({rootUrl,path:files})
     }else{
-      Taro.showToast({
-        title: '请先点击+号选择图片',
-        icon: 'none',
-        duration: 2000
-      })
+      this.setComment()
     }
   }
-  async uploadLoader(data,id){
+  async uploadLoader(data){
     let that = this
     let i = data.i ? data.i : 0 // 当前所上传的图片位置
     let success=data.success?data.success:0//上传成功的个数
@@ -308,7 +276,7 @@ class Comment extends Component {
               duration: 2000
             })
             console.log('成功：'+success+" 失败："+fail);
-            this.setComment(id)
+            this.setComment()
          
           }else{//若图片还没有传完，则继续调用函数
               data.i=i;
@@ -334,58 +302,53 @@ class Comment extends Component {
           showBack
           title='评价'
         ></Navbar>
-        {this.state.goods_info.map((good,index) => (
-          <View className='comment-wrap' key={index}>
+        <View className='comment-wrap'>
           <View className='goods-wrap'>
-
-            <Image src={'http://qiniu.daosuan.net/'+get(good,'cover','')} />
- 
-            <View className='name'>{get(good,'name','')}</View>
-   
+            <Image src={'http://qiniu.daosuan.net/'+get(this.state.goods_info,'cover','')} />
+            <View className='name'>{get(this.state.goods_info,'name','')}</View>
           </View>
           <View className='tag-wrap'>
-            {this.state.tagInfo.map(item => (
-              <View key={item.id}>
-                {item.id == this.state.tag ?  
+          {this.state.tagInfo.map(item => (
+            <View key={item.id}>
+              {item.id == this.state.tag ?  
                 <View className='tag-active' key={item.id} onClick={this.changeTag.bind(this,item.id)}>
-                  {item.title}
+                {item.title}
                 </View>          
                 :
                 <View className='tag' onClick={this.changeTag.bind(this,item.id)}>
                   {item.title}
                 </View> 
-                }
-              </View>
-            ))}
-          </View>
-          <View className='content-wrap'>
-            <AtTextarea 
-              name='content'
-              placeholder='请写下您的评价吧' 
-              type='text' 
-              value={this.state.content} 
-              onChange={this.handleChange.bind(this)} 
-            />
-          </View>
-          {/* <View className='addimg' onClick={this.handleOperaClick.bind(this,'portrait')}>点击选择图片</View> */}
-          <AtImagePicker
-            multiple={false}
-            length={3}  //单行的图片数量
-            files={this.state.files}
-            onChange={this.onChange.bind(this)}
-            onFail={this.onFail.bind(this)}
-            onImageClick={this.onImageClick.bind(this)}
-            showAddBtn={this.state.showUploadBtn} //是否显示添加图片按钮
-          />
-          {/* <ChooseImage chooseImg={this.state.chooseImg} onFilesValue={this.getOnFilesValue.bind(this)} /> */}
-          <View className='submit' onClick={this.toUpload.bind(this,get(good,'id'))}>
-            提交
-          </View>
-
-          </View>
-        ))}
-       
+              }
+            </View>
+          ))}
         </View>
+        <View className='content-wrap'>
+          <AtTextarea 
+            name='content'
+            placeholder='请写下您的评价吧' 
+            type='text' 
+            value={this.state.content} 
+            onChange={this.handleChange.bind(this)} 
+          />
+        </View>
+        {/* <View className='addimg' onClick={this.handleOperaClick.bind(this,'portrait')}>点击选择图片</View> */}
+        <AtImagePicker
+          multiple={false}
+          length={3}  //单行的图片数量
+          files={this.state.files}
+          onChange={this.onChange.bind(this)}
+          onFail={this.onFail.bind(this)}
+          onImageClick={this.onImageClick.bind(this)}
+          showAddBtn={this.state.showUploadBtn} //是否显示添加图片按钮
+        />
+        {/* <ChooseImage chooseImg={this.state.chooseImg} onFilesValue={this.getOnFilesValue.bind(this)} /> */}
+        <View className='submit' onClick={this.toUpload.bind(this)}>
+          提交
+        </View>
+
+        </View>
+       
+      </View>
     )
   }
 }

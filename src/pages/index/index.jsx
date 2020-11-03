@@ -98,7 +98,7 @@ class Index extends Component {
         </View>
         <SaleTop />
         <SaleNew />
-        <PlaceKindTab placeList={this.state.placeList} kindList={this.state.kindList} />
+        {/* <PlaceKindTab placeList={this.state.placeList} kindList={this.state.kindList} /> */}
       </View>
         
     )

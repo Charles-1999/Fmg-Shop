@@ -16,9 +16,11 @@ class ListGood extends Component {
     price:0,
     quality:0,
     message:'',
+    isShowComment:false,
   }
   componentDidMount () {
     const {goodId,speId,price,quality,message,goodsInfo} = this.props;
+    console.log(this.props)
     const data = goodsInfo.filter(item => item.id == goodId)
     const specification_list = get(data[0],'specification',[])
     const spe_index = specification_list.findIndex(item => item.id == speId);
@@ -32,7 +34,18 @@ class ListGood extends Component {
         message:message,
       })
     }
+    if(this.props.isShowComment && this.props.status == 4){
+      this.setState({
+        isShowComment: true,
+      })
+    }
   }
+  //跳转到评论页面
+  toComment= () => {
+    Taro.navigateTo({
+      url: `/pages/user/Order/comment?id=${this.props.goodId}`,
+    });
+  } 
   
   render () {
     return (
@@ -54,10 +67,15 @@ class ListGood extends Component {
         <View className='price-info'>
           <View class='one-price'>
             ¥ {this.state.price*0.01}
+            <View class='quantity'>
+              x{this.state.quality}
+            </View>
           </View>
-          <View class='quantity'>
-            x{this.state.quality}
-          </View>
+         
+          {this.state.isShowComment ?
+            <View className='commit' onClick={this.toComment.bind(this)}>我要评价</View>: ''
+          }
+        
         </View>
        
        

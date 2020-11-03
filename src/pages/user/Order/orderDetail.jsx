@@ -152,6 +152,7 @@ class OrderDetail extends Component {
                   quality={get(item,'purchase_qty','')} 
                   message={get(item,'message','')}
                   goodsInfo={this.state.goods_info}
+                  status={item.order_status}
                 /> 
               </View>
             ))}
