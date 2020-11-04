@@ -20,7 +20,6 @@ class ListGood extends Component {
   }
   componentDidMount () {
     const {goodId,speId,price,quality,message,goodsInfo} = this.props;
-    console.log(this.props)
     const data = goodsInfo.filter(item => item.id == goodId)
     const specification_list = get(data[0],'specification',[])
     const spe_index = specification_list.findIndex(item => item.id == speId);

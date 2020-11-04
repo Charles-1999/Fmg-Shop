@@ -10,7 +10,7 @@ page{
       height: 60rpx;
       background-color: white;
       .tab-item{
-        border-radius: 30rpx;
+        border-radius: 10PX;
         padding-top: 10rpx;
         margin-left: 0.5rem;
         padding-left: 10rpx;
@@ -19,8 +19,8 @@ page{
         display:inline;   
       }
       .tab-item-active{
-        background-color: #a8a8a8;
-        border-radius: 30rpx;
+        background-color: #92b8fd;
+        border-radius: 10PX;
         padding-top: 10rpx;
         margin-left: 0.5rem;
         padding-left: 10rpx;
@@ -41,7 +41,7 @@ page{
         padding-bottom: 30rpx;
         padding-top: 20rpx;
         background-color: white;
-        border-radius: 30rpx;
+        border-radius: 10PX;
         .top-wrap{
           display:flex;
           align-items: center;
@@ -112,18 +112,18 @@ page{
           justify-content: flex-end;
           font-size: 28rpx;
           .add_cart,.cancel,.drawback,.commit,.delivery{
-            border-radius: 30rpx;
+            border-radius: 10px;
             padding: 5rpx 15rpx;
             color: white;
             margin-left: 10rpx;
-            background-color: #4885FB;
+            background-color: #6d9dfd;
             color: white;
       
           }
           
           .pay{
             background-color: #E26D6D;
-            border-radius: 30rpx;
+            border-radius: 10PX;
             padding: 5rpx 15rpx;
             color: white;
             margin-left: 10rpx;
@@ -194,10 +194,10 @@ page{
     }
   
     .commit{
-      border-radius: 10rpx;
+      border-radius: 5PX;
       padding: 5rpx 15rpx;
       color: white;
-      background-color: rgb(238, 153, 55);
+      background-color: #fdb289;
       color: white;
       font-size: 20rpx;
       margin-top: 10rpx;

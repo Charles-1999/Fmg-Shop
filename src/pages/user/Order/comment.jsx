@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
-import request from '../../../utils/request'
+import request, { getGoodsList } from '../../../utils/request'
 import ListGood from './list_good'
 import './comment.scss'
 
@@ -44,6 +44,7 @@ class Comment extends Component {
   }
  //获取商品信息
   async getOrderInfo(){
+    //const goodsInfo = getGoodsList([parseInt(this.state.good_id)])
     const goodsInfo = await request('/goods/_mget',{ 
       body: { ids: [parseInt(this.state.good_id)] }, 
       method: 'POST' 
