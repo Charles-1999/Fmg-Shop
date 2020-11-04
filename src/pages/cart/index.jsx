@@ -33,11 +33,11 @@ class CartListView extends Component {
 
   UNSAFE_componentWillMount() {
     this.init();
-    console.log('2345678',this.props.goodsList)
   }
 
   componentDidShow() {
-    this.init();
+    console.log('show')
+    this.init()
   }
 
   /* 初始化 */

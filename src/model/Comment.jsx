@@ -1,6 +1,8 @@
+import {get2Today} from '@utils/time'
 import { compose } from 'redux'
 import { getGoodsComments } from '../service/Comment'
 import { mgetAccountInfo } from '../service/Account'
+import { getToNow } from '../utils/time'
 
 export default {
   namespace: 'comment',
@@ -16,7 +18,6 @@ export default {
 
       /* 请求 批量获取商品评论 接口 */
       let commentList = yield call(getGoodsComments, payload)
-      console.log('commentList', commentList)
 
       commentList = commentList.map(comment => {
         let pictures = []
@@ -25,14 +26,20 @@ export default {
         /* 存储每条评论的用户id */
         userIdList.push(comment.author_id)
 
-        if(comment.pictures && pic_count < 4) {
+        if(comment.pictures) {
           /* 图片前缀处理 */
           pictures = comment.pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+
           /* 评论图片列表，只插入每条评论的第一张图片 */
-          pictureList.push(pictures[0])
-          pic_count++
+          if(pic_count < 4){
+            pictureList.push(pictures[0])
+            pic_count++
+          }
         }
 
+        /* 处理评论时间 */
+        comment.toNow = getToNow(comment.create_time)
+        console.log(pictures)
         return {...comment, pictures}
       })
 
@@ -41,9 +48,12 @@ export default {
 
       commentList.forEach(comment => {
         const account = accountList.find(acc => acc.id === comment.author_id)
+        /* 获取用户信息 */
         comment.nickname = account.nickname
         comment.avator = account.avator
       })
+
+      console.log('commentList', commentList)
 
       yield put({
         type: 'save',

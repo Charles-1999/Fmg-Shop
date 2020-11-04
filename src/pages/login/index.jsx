@@ -71,25 +71,25 @@ class LoginView extends Component {
   }
 
   /* 注册功能 */
-  async register(key){
-    const userInfo = Taro.getStorageSync('userInfo');
-    const data = await request('/account/login/register', {
-      body: {
-        city: userInfo.city,
-        country: userInfo.country,
-        province: userInfo.province,
-        nickName: userInfo.nickName,
-        avator: userInfo.avatarUrl,
-        key
-      },
-      method: 'POST'
-    })
-    console.log('register',data);
-    Taro.setStorageSync('userId',data.id);
-    Taro.setStorageSync('token',data.token);
-    Taro.setStorageSync('open_id',data.openid);
-    Taro.switchTab({ url: '/pages/index/index' });
-  }
+  // async register(key){
+  //   const userInfo = Taro.getStorageSync('userInfo');
+  //   const data = await request('/account/login/register', {
+  //     body: {
+  //       city: userInfo.city,
+  //       country: userInfo.country,
+  //       province: userInfo.province,
+  //       nickName: userInfo.nickName,
+  //       avator: userInfo.avatarUrl,
+  //       key
+  //     },
+  //     method: 'POST'
+  //   })
+  //   console.log('register',data);
+  //   Taro.setStorageSync('userId',data.id);
+  //   Taro.setStorageSync('token',data.token);
+  //   Taro.setStorageSync('open_id',data.openid);
+  //   Taro.switchTab({ url: '/pages/index/index' });
+  // }
 
   /* 获取用户信息 */
   getUserInfo = async(e) => {
