@@ -79,6 +79,7 @@ class LoginView extends Component {
         country: userInfo.country,
         province: userInfo.province,
         nickName: userInfo.nickName,
+        avator: userInfo.avatarUrl,
         key
       },
       method: 'POST'

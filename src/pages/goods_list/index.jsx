@@ -7,7 +7,11 @@ import request, {getGoodsList} from '../../utils/request'
 import {_mgetGoodsList} from '@service/Goods'
 
 import './index.less'
+import { connect } from 'react-redux';
 
+@connect(({ goods }) => ({
+  ...goods
+}))
 class CategoryListView extends Component {
   constructor() {
     super(...arguments)
@@ -48,32 +52,7 @@ class CategoryListView extends Component {
 
   /* 获取商品详情列表 */
   getGoodsList = async (goodsIdList) => {
-    // let goodsList = await request('/goods/_mget', {
-    //   body: {
-    //     ids: goodsIdList
-    //   },
-    //   method: 'POST'
-    // })
-    // goodsList.forEach(goods => {
-    //   // 封面前缀处理
-    //   goods.cover = 'http://qiniu.daosuan.net/' + goods.cover;
-    //   // 处理价格单位（分-》元）
-    //   const isSale = goods.sale;
-    //   goods.carriage /= 100;
-    //   goods.carriage = Number(goods.carriage).toFixed(2);
-    //   goods.specification.forEach(item => {
-    //     item.price /= 100;
-    //     item.price = Number(item.price).toFixed(2);
-    //     if (isSale) {
-    //       item.reduced_price /= 100;
-    //       item.reduced_price = Number(item.reduced_price).toFixed(2);
-    //     }
-    //   })
-    //   // 显示价格处理(显示原价的最低价)
-    //   goods.showPrice = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2);
-    // });
-    // let goodsList = await getGoodsList(goodsIdList)
-    let goodsList = await _mgetGoodsList(goodsIdList)
+    let goodsList = await getGoodsList(goodsIdList)
     
     // 筛选 只保留上架的商品
     goodsList = goodsList.filter(item => item.on_sale)

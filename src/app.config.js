@@ -10,6 +10,7 @@ export default {
     'pages/goods_list/index',
     'pages/find/index',
     'pages/details/index',
+    'pages/details/comments/index',
     'pages/index/placeGoodsList',
     'pages/index/kindGoodsList',
     'pages/user/Address/addressList',

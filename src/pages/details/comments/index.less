@@ -1,0 +1,64 @@
+page {
+  .comments {
+    .tab_bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 80rpx;
+      padding: 0 20rpx;
+      background-color: #fff;
+      .tab_item {
+        padding: 10rpx 20rpx;
+        margin-right: 20rpx;
+        border-radius: 30rpx;
+        border: 1rpx solid #e5e5e5;
+        background-color: #e5e5e5;
+        font-size: 13PX;
+      }
+      .active {
+        color: #2e63bf;
+        border: 1rpx solid #2e63bf;
+      }
+    }
+    .comment_list {
+      margin-top: 100rpx;
+      padding: 20rpx;
+      font-size: 16PX;
+      background-color: #fff;
+      .comment {
+        padding: 10rpx;
+        margin-bottom: 20rpx;
+        .info_wrap {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          .avator {
+            width: 70rpx;
+            height: 70rpx;
+            border-radius: 50%;
+            margin-right: 20rpx;
+            overflow: hidden;
+            image {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .info {
+            .time {
+              font-size: 14PX;
+              color: #666;
+            }
+          }
+        }
+        .content {
+          margin-top: 10rpx;
+          margin-left: 10rpx;
+          color: #333;
+        }
+      }
+    }
+  }
+}

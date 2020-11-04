@@ -1,4 +1,4 @@
-import  { getAccountInfo } from '../service/Account';
+import  { getAccountInfo, mgetAccountInfo } from '../service/Account';
  
 export default {
   namespace: 'account',
@@ -14,6 +14,14 @@ export default {
         payload: response,
       });
     },
+    /* 批量获取用户 */
+    * mgetAccountInfo({ payload }, { call, put }) {
+      let accountList = yield call(mgetAccountInfo, payload)
+      yield put({
+        type: 'save',
+        payload: accountList
+      })
+    }
   },
 
   reducers: {

@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, Checkbox, Image, Input, Navigator, MovableArea, MovableView } from '@tarojs/components';
 import Navbar from '@components/navbar/navbar'
 import Taro from '@tarojs/taro'
+import { connect } from 'react-redux'
 import request, {getGoodsList} from '../../utils/request'
 
 import { get as getGlobalData } from '../../global_data'
 
 import './index.scss'
 
+@connect(({ goods }) => ({
+  ...goods
+}))
 class CartListView extends Component {
   constructor() {
     super(...arguments)
@@ -29,6 +33,7 @@ class CartListView extends Component {
 
   UNSAFE_componentWillMount() {
     this.init();
+    console.log('2345678',this.props.goodsList)
   }
 
   componentDidShow() {

@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import  { getGoodsPlace, mgetGoodsPlace, getGoodsList, mgetGoodsList, getGoodsKind, mgetGoodsKind, mgetslideshow, getslideshow} from '../service/Goods';
+import  { getGoodsPlace, mgetGoodsPlace, getGoodsList, mgetGoodsList, getGoodsKind, mgetGoodsKind, mgetslideshow, getslideshow, _mgetGoodsList} from '../service/Goods';
 
 export default {
   namespace: 'goods',
@@ -13,8 +13,7 @@ export default {
     placeListIds: [],
     kindListIds: [],
     goodsListIds: [],
-    slideshowListIds: [],
-
+    slideshowListIds: []
   },
   effects: {
     //获取轮播图列表-------------
@@ -125,11 +124,11 @@ export default {
       }); 
     },
     * getGoodsTopListEntity({ payload }, { call, put }) {
-      const res = yield call(mgetGoodsList,{ payload});
+      const res = yield call(mgetGoodsList,{ payload });
       yield put({
         type: 'save',
         payload: {  
-          goodsSaleTopList:res
+          goodsSaleTopList: res
         }
       }); 
     }, 
@@ -173,7 +172,46 @@ export default {
         }
       }); 
     }, 
-   
+    /* 批量获取商品信息 */
+    * mgetGoodsListEntity({ payload }, { call, put }) {
+      let goodsList = yield call(_mgetGoodsList, { payload })
+
+      goodsList.forEach(goods => {
+        // 封面前缀处理
+        goods.cover = 'http://qiniu.daosuan.net/' + goods.cover
+    
+        // 运费单位处理
+        goods.carriage = Number(goods.carriage / 100).toFixed(2)
+    
+        // 商品是否使用促销
+        const isSale = goods.sale
+    
+        // 每个规格的价格处理
+        goods.specification.forEach(spec => {
+          spec.price = Number(spec.price / 100).toFixed(2)
+          // 规格显示的价格(显示该规格的最低价)
+          spec.showPrice = spec.price
+          if(isSale) {
+            spec.reduced_price = Number(spec.reduced_price / 100).toFixed(2)
+            spec.showPrice = spec.reduced_price
+          }
+        })
+  
+        // 商品显示的价格（显示最低价）
+        if(isSale) {
+          goods.showPrice = Math.min(...goods.specification.map(spec => spec.reduced_price)).toFixed(2)
+        } else {
+          goods.showPrice = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2)
+        }
+      })
+
+      yield put({
+        type: 'save',
+        payload: {
+          goodsList
+        }
+      })
+    }
   },
   reducers: {
     save(state, { payload }) {
