@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
@@ -34,12 +33,12 @@ class OrderDetail extends Component {
       {code:'huitongkuaidi',title:'百世（汇通）'},
       {code:'zhaijisong',title:'宅急送'},
       {code:'jexpress',title:'极兔'},
-    ]
+    ],
+    status:'', //改订单目前状态
+    delivery_time: '',  //发货时间
   }
   async componentDidMount () {
     this.getOrderInfo();
-    this.getDeliveryInfo();
-    
   }
   //获取订单信息
   async getOrderInfo(){
@@ -53,15 +52,9 @@ class OrderDetail extends Component {
     this.setState({
       order_info : orderInfoList[0]
     })
-    console.log(this.state.order_info)
     this.getgoodsInfo();
+    this.getDeliveryInfo();
     this.getAddressInfo();
-
-  }
-  //去重
-  unique(arr) {
-    const res = new Map();
-    return arr.filter((a) => !res.has(a) && res.set(a,1))
   }
   //获取商品信息
   async getgoodsInfo(){
@@ -101,7 +94,47 @@ class OrderDetail extends Component {
     this.setState({
       deliveryInfo:get(info,'info'),
     })
-    console.log(this.state.deliveryInfo)
+    console.log(get(this.state.order_info,'tracking_id','' ))
+    if(get(this.state.order_info,'tracking_id','' ) !== '0' && get(this.state.deliveryInfo,'data')!== null){
+      this.setState({
+        delivery_time:get(get(this.state.deliveryInfo,'data',[])[0],'ftime',''),
+      })
+      const delivery_status = get(this.state.deliveryInfo,'status');
+      console.log(delivery_status)
+      switch(delivery_status){
+        case '99':
+          this.setState({
+            status:'订单已取消'
+          })
+        case '200':
+          this.setState({
+            status:'运输中'
+          }) 
+        
+      }
+    }
+    else if(get(this.state.order_info,'delivery') == 2){
+      this.setState({
+        status:'同城配送'
+      })
+    }
+    else if(get(this.state.order_info,'delivery') == 4){
+      this.setState({
+        status:'自取'
+      })
+    }
+    else{
+      this.setState({
+        status:'暂无发货信息'
+      })
+    }
+  }
+
+  //跳转物流详情页面
+  toDeliveryDetail(){
+    Taro.navigateTo({
+      url: `/pages/user/Order/deliveryDetail?id=${this.state.order_id}`,
+    });
   }
 
   render () {
@@ -118,14 +151,34 @@ class OrderDetail extends Component {
           title='订单详情'
         ></Navbar>
         <View className='order-detail'>
-          {/* <View className='delivery-wrap'>
-            <View className='top'>
-              <View className='delivery-info'>最新物流信息</View>
-              <View className='delivery-name'>快递公司：{get(this.state.deliveryNameList.filter(item => item.code == get(this.state.deliveryInfo,'com'))[0],'title')}</View>
+          <View className='status-wrap'>
+            <View className='status'>
+              {get(this.state.order_info,'order_status') == 1 ? <View>·待付款</View> : ''}
+              {get(this.state.order_info,'order_status') == 2 ? <View>·买家已付款</View> : ''}
+              {get(this.state.order_info,'order_status')  == 3 ? <View>·卖家已发货</View> : ''}
+              {get(this.state.order_info,'order_status')  == 4 ? <View>·待评价</View> : ''}
+              {get(this.state.order_info,'order_status')  == 5 ? <View>·订单已完成</View> : ''}
+              {get(this.state.order_info,'order_status')  == 6 ? <View>·订单已取消</View> : ''}
             </View>
-
-           
-          </View> */}
+          </View>
+          {get(this.state.deliveryInfo,'data') == null? 
+          <View className='delivery-wrap'>
+            <Image className='none-img' src='http://qiniu.daosuan.net/picture-1598882531000' />
+            <View className='info'>
+              <View className='none-status'>{this.state.status}</View>
+            </View>
+          </View>:
+          <View className='delivery-wrap' onClick={this.toDeliveryDetail.bind(this)}>
+            <Image className='img' src='http://qiniu.daosuan.net/picture-1598882531000' />
+            <View className='info'>
+              <View className='delivery-status'>{this.state.status}</View>
+              <View className='newest-status'>{get(get(this.state.deliveryInfo,'data',[])[0],'context','')}</View>
+              <View className='newest-time'>{this.state.delivery_time}</View>
+            </View>
+          </View>
+        }
+         
+       
           <View className='address-wrap'>
             <Image className='icon-address' src='http://qiniu.daosuan.net/picture-1598883667000' ></Image>
             <View className='info'>

@@ -23,7 +23,23 @@ class AddressList extends Component {
     capsule: getGlobalData('capsule'),
 
   }
+
   async componentDidMount () {
+    const userId = Taro.getStorageSync('userId');
+    await this.props.dispatch({
+      type: 'address/getAddressInfoUid',
+      payload: {
+        uid:userId
+      }
+    })
+    const{ addressList } = this.props;
+    console.log(addressList)
+    this.setState({
+      addressInfo:addressList
+    })
+  }
+
+  async componentDidShow(){
     const userId = Taro.getStorageSync('userId');
     await this.props.dispatch({
       type: 'address/getAddressInfoUid',
