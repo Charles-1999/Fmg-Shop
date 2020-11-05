@@ -50,6 +50,7 @@ export function register(key, userInfo) {
           country: userInfo.country,
           province: userInfo.province,
           nickName: userInfo.nickName,
+          avator: userInfo.avatarUrl,
           key
         },
         method: 'POST'

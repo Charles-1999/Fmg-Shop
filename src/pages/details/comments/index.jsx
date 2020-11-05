@@ -24,7 +24,22 @@ class Comments extends Component {
     })
   }
 
-  // 自己封装的setState
+  /** 
+   * 预览图片
+   * @param {Stirng} url    当前图片的url
+   * @param {Number} index  当前评论的索引
+   * @return {void} 
+  */
+  prevImg(url, index) {
+    let urls = []
+    urls.push(...this.props.commentList[index].pictures)
+    Taro.previewImage({
+      urls,
+      current: url
+    })
+  }
+
+  /* 自己封装的setState */
   setData = (...params) => {
     this.setState(...params)
     console.log(...params)
@@ -33,7 +48,6 @@ class Comments extends Component {
   render() {
     console.log('%c ........details/comments render.........', 'color:green');
     const { commentList } = this.props
-    console.log(commentList)
     const {statusBarHeight, capsule, curr_tab} = this.state
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
 
@@ -53,18 +67,23 @@ class Comments extends Component {
           <View className={curr_tab==3?'tab_item active':'tab_item'} data-index={3}>差评</View>
         </View>
         <View className='comment_list'>
-          {commentList.map(comment => (
-            <View className='comment'>
+          {commentList.map((comment, comment_index) => (
+            <View className='comment' key={comment.id}>
               <View className='info_wrap'>
                 <View className='avator'>
-                  <Image src={'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIpzkM6832jewPzq7Ob6wUianML0UMLWZxruV4fVgiaCnJOp2iaXGcmJT9C8hEOZnpfETy7p7q97iaFfQ/132'} />
+                  <Image src={comment.avator} />
                 </View>
                 <View className='info'>
                   <View className='name'>{comment.nickname}</View>
-                  <View className='time'>{comment.create_time}</View>
+                  <View className='time'>{comment.toNow}</View>
                 </View>
               </View>
               <View className='content'>{comment.content}</View>
+                <View className='picture_list'>
+                  {comment.pictures.map((pic, pic_index) => (
+                    <View className='picture' key={pic_index}><Image src={pic} onClick={this.prevImg.bind(this, pic, comment_index)} mode='aspectFill'></Image></View>
+                  ))}
+                </View>
             </View>
           ))}
         </View>
