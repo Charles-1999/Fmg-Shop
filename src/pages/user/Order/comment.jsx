@@ -44,11 +44,11 @@ class Comment extends Component {
   }
  //获取商品信息
   async getOrderInfo(){
-    //const goodsInfo = getGoodsList([parseInt(this.state.good_id)])
-    const goodsInfo = await request('/goods/_mget',{ 
-      body: { ids: [parseInt(this.state.good_id)] }, 
-      method: 'POST' 
-    })
+    const goodsInfo = await getGoodsList([parseInt(this.state.good_id)])
+    // const goodsInfo = await request('/goods/_mget',{ 
+    //   body: { ids: [parseInt(this.state.good_id)] }, 
+    //   method: 'POST' 
+    // })
     console.log(goodsInfo)
     this.setState({
       goods_info:goodsInfo[0]
@@ -68,15 +68,15 @@ class Comment extends Component {
       await request(`/comment/info/${this.state.good_id}`, {
         method: 'POST',
         body:{
-          //good_id:parseInt(this.state.order_id),
           content:this.state.content,
           tag:this.state.tag,
           pictures:this.state.pictures,
         }
       }).then(()=>{
         Taro.showToast({
-          title: '评价成功',
-          icon: 'success'
+          title: '谢谢您的评价',
+          icon: 'success',
+          duration: 3000,
         })
         
       })
@@ -305,8 +305,12 @@ class Comment extends Component {
         ></Navbar>
         <View className='comment-wrap'>
           <View className='goods-wrap'>
-            <Image src={'http://qiniu.daosuan.net/'+get(this.state.goods_info,'cover','')} />
+            <Image src={get(this.state.goods_info,'cover','')} />
+            <View className='info'>
             <View className='name'>{get(this.state.goods_info,'name','')}</View>
+              <View className='sale_point'>{get(this.state.goods_info,'sale_point','')}</View>
+            </View>
+            
           </View>
           <View className='tag-wrap'>
           {this.state.tagInfo.map(item => (

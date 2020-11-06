@@ -209,7 +209,7 @@ class deliveryDetail extends Component {
                   {formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s').substring(5,10)}
                 </view>
                 <view class='expressRecord-date-time'>
-                {formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s').substring(10,16)}
+                  {formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s').substring(10,16)}
                 </view>
               </view>
             </view> 
