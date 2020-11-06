@@ -47,7 +47,7 @@
     "dva-loading": "^3.0.20",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
-    "react-redux": "^7.2.0",
+    "react-redux": "7.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
