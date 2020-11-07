@@ -5,7 +5,11 @@ import Taro from '@tarojs/taro';
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import request from '@utils/request'
+import { connect } from 'react-redux';
 
+@connect(({ address }) => ({
+  ...address
+}))
 class AddressList extends Component {
 
   state = {
@@ -24,22 +28,15 @@ class AddressList extends Component {
   /* 获取收货地址 */
   getAddressList = async() => {
     const uid = Taro.getStorageSync("userId");
+    await this.props.dispatch({
+      type: 'address/getAddressInfoUid',
+      payload: {
+        uid
+      }
+    })
     let currAddress = Taro.getStorageSync("currAddress");
-    let addressList = await request(`/address/info/${uid}`, {
-      method: 'GET'
-    });
-    const index = addressList.findIndex(item => item.id === currAddress.id);
-    addressList.forEach(item => item.checked = false);
-    // 若找不到（被删除），则在收货地址列表中的第一个作为当前选中
-    if(index === -1) {
-      currAddress = addressList[0];
-      addressList[0].checked = true;
-      Taro.setStorageSync('currAddress', currAddress);
-    }else {
-      addressList[index].checked = true;
-    }
     this.setData({ 
-      addressList,
+      addressList: this.props.addressList,
       currAddress
      });
   }

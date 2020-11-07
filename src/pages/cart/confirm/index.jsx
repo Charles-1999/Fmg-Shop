@@ -6,7 +6,11 @@ import { get as getGlobalData } from '../../../global_data'
 import request, {getGoodsList} from '../../../utils/request'
 
 import './index.less'
+import { connect } from 'react-redux'
 
+@connect(({ address }) => ({
+  ...address
+}))
 export default class Confirm extends Component {
   constructor(props) {
     super(props)
@@ -27,6 +31,11 @@ export default class Confirm extends Component {
   }
 
   componentDidShow() {
+    this.getCurrAddress()
+  }
+
+  /* 获取当前选择的地址 */
+  getCurrAddress() {
     this.setData({
       currAddress: Taro.getStorageSync('currAddress')
     })
@@ -181,6 +190,13 @@ export default class Confirm extends Component {
   /* 提交订单 */
   order = async () => {
     const { currAddress,checkList } = this.state;
+    if(!currAddress) {
+      Taro.showToast({
+        title: '请选择收货地址',
+        icon: 'none'
+      })
+      return
+    }
     // const checkList = Taro.getStorageSync('checkList');
     let goods_list = [];
     checkList.forEach((item) => {
@@ -308,13 +324,18 @@ export default class Confirm extends Component {
         </Navbar>
         <Navigator className='address_wrap' url='/pages/cart/address_list/index'>
           <Image className='icon_address' src='http://qiniu.daosuan.net/picture-1598883667000' />
-          <View className='address_info' onClick={this.toAddress}>
-            <View className='personal_info'>
-              <Text className='name'>{currAddress.name}</Text>
-              <Text className='phone'>{currAddress.phone}</Text>
-            </View>
-            <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
-          </View>
+          { currAddress
+            ? <View className='address_info' onClick={this.toAddress}>
+                <View className='personal_info'>
+                  <Text className='name'>{currAddress.name}</Text>
+                  <Text className='phone'>{currAddress.phone}</Text>
+                </View>
+                <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
+              </View>
+            : <View className='no'>
+                请选择收货地址
+              </View>
+          }
           <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
         </Navigator>
         <View className='goods_list'>
