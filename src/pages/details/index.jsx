@@ -17,8 +17,8 @@ import './index.scss'
 import { get as getGlobalData } from '../../global_data'
 
 
-@connect(({ comment }) => ({
-  ...comment
+@connect(({ comment, cart }) => ({
+  ...comment, ...cart
 }))
 class Details extends Component {
   constructor() {
@@ -202,6 +202,13 @@ class Details extends Component {
   // 加入购物车
   async addCart() {
     const { currChoose, currNum, total, data, userId } = this.state;
+    this.props.dispatch({
+      type: 'cart/addCart',
+      payload: {
+        goods: {currChoose, currNum},
+        curr: data
+      }
+    })
     if (currChoose === null) {
       Taro.showToast({
         title: `请选择规格'${data.template.join('、')}'`,
@@ -218,23 +225,13 @@ class Details extends Component {
         })
         return;
       }
-      // let goods_specification = '';
-      // data.template.forEach((item, index) => {
-      //   if (index == 0) {
-      //     goods_specification += data.specification[currChoose].specification[item]
-      //   } else {
-      //     goods_specification += ' ' + data.specification[currChoose].specification[item]
-      //   }
-      // })
       try {
         const res = await request(`/car/info/${userId}/${data.id}`, {
           method: 'POST',
           body: {
             goods_count: currNum,
-            // goods_specification: goods_specification,
             goods_name: data.name,
             goods_price: data.specification[currChoose].price,
-            // goods_pictures: data.specification[currChoose].picture,
             goods_specification_id: data.specification[currChoose].id,
             delivery_kind: this.setGetWay()
           }
@@ -288,7 +285,7 @@ class Details extends Component {
           <View className='mask' onClick={this.hiddenFloat}></View>
           <View className={isOpen ? 'container active' : 'container'}>
             <View className='info_wrap'>
-              <Image src={data.cover ? (typeof currChoose == 'number' ? 'http://qiniu.daosuan.net/' + data.specification[currChoose].picture : data.cover) : ''} />
+              <Image src={data.cover ? (typeof currChoose == 'number' ? data.specification[currChoose].picture : data.cover) : ''} />
               <Text className='name'>{data.name}</Text>
               <Text className='price'>
                 <Text className='sign'>￥</Text><Text className='text'>{showPrice}</Text>

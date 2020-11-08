@@ -76,7 +76,8 @@ export default class Confirm extends Component {
     })
     const goodsList = await getGoodsList(goodsId)
     this.setData({
-      goodsList
+      goodsList,
+      goodsId
     })
   }
 
@@ -218,6 +219,7 @@ export default class Confirm extends Component {
         method: 'POST'
       })
       const { id } = res_order;
+      this.delCart()
       this.pay(id);
     }
     catch (err) {
@@ -245,7 +247,7 @@ export default class Confirm extends Component {
         method: 'POST'
       })
       console.log(res_pay)
-      this.requestPayment(res_pay.request);
+      this.requestPayment(res_pay.request, order_id);
     }
     catch (err) {
       console.log(err)
@@ -253,7 +255,7 @@ export default class Confirm extends Component {
   }
 
   /* 发起微信支付 */
-  requestPayment = async (data) => {
+  requestPayment = async (data, order_id) => {
     Taro.requestPayment({
       timeStamp: data.timeStamp, // 时间戳
       nonceStr: data.nonceStr, // 随机字符串
@@ -264,7 +266,7 @@ export default class Confirm extends Component {
         console.log('发起微信支付：' , res);
         Taro.showToast({
           title: '支付成功',
-          icon: 'success'
+          icon: 'success',
         })
       },
       fail: err => {
@@ -273,13 +275,31 @@ export default class Confirm extends Component {
           title: '发起微信支付失败，请重新尝试！',
           icon: 'none'
         })
+      },
+      complete: () => {
+        setTimeout(() => {
+          Taro.switchTab({
+            url: '/pages/cart/index',
+            complete: () => {
+              Taro.navigateTo({
+                url: '/pages/user/Order/myOrder?status=0'
+              })
+            }
+          })
+        }, 2000)
       }
     })
   }
 
   // 删除购物车
   delCart = async() => {
-    // const res = await request(`/`)
+    const res = await request(`/car/info/delete`, {
+      body: {
+        ids: this.state.goodsId
+      },
+      method: 'DELETE'
+    })
+    console.log('delete', res)
   }
 
   // 显示选择框

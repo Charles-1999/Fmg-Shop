@@ -59,7 +59,7 @@ export function getGoodsList(ids) {
       // 商品是否使用促销
       const isSale = goods.sale
   
-      // 每个规格的价格处理
+      // 每个规格的价格处理和图片前缀处理
       goods.specification.forEach(spec => {
         spec.price = Number(spec.price / 100).toFixed(2)
         // 规格显示的价格(显示该规格的最低价)
@@ -68,6 +68,8 @@ export function getGoodsList(ids) {
           spec.reduced_price = Number(spec.reduced_price / 100).toFixed(2)
           spec.showPrice = spec.reduced_price
         }
+
+        spec.picture = 'http://qiniu.daosuan.net/' + spec.picture
       })
 
       // 商品显示的价格（显示最低价）
