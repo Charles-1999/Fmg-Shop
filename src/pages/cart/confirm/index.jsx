@@ -233,10 +233,7 @@ export default class Confirm extends Component {
 
   /* 统一下单 */
   pay = async (order_id) => {
-    const { goods_price } = this.state;
     const sysInfo = Taro.getStorageSync('sysInfo');
-    const open_id = Taro.getStorageSync('open_id');
-    const userId = Taro.getStorageSync('userId');
     try {
       const res_pay = await request(`/pay/unified/${order_id}`, {
         body: {
@@ -293,9 +290,14 @@ export default class Confirm extends Component {
 
   // 删除购物车
   delCart = async() => {
+    const {checkList} = this.state
+    let cartIds = []
+    checkList.forEach(item => {
+      cartIds.push(item.id)
+    })
     const res = await request(`/car/info/delete`, {
       body: {
-        ids: this.state.goodsId
+        ids: cartIds
       },
       method: 'DELETE'
     })
