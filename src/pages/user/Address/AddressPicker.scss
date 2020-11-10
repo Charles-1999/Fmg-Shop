@@ -1,9 +1,9 @@
 .addressBox {
     width: 360rpx;
-    background-color: rgba(206, 206, 206, 0.6);
-    border-radius: 30rpx;
-    margin: auto auto;
-    padding-left: 10rpx;
+    //background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10PX;
+    margin: auto 10rpx;
+    padding: 0 10rpx;
     padding-bottom: 20rpx;
   .addressTitle{
       display: flex;
@@ -12,6 +12,7 @@
       margin-top: 10rpx;
       margin-left: 10rpx;
       color:black;
+      font-size: 32rpx;
       .address {
           position: relative;
       }

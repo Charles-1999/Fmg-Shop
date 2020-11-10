@@ -23,9 +23,10 @@
       border-radius: 10PX;
       display: flex;
       .img{
-        width:70rpx;
-        height:70rpx;
-        margin-top: 5%;
+        width: 100PX;
+        height: 30PX;
+        /* flex: 1; */
+        align-self: center;
       }
       .none-img{
         width:70rpx;

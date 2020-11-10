@@ -35,7 +35,6 @@ class Comment extends Component {
   }
   async componentDidMount () {
     this.getOrderInfo();
-     // 获取七牛Token
    
   }
   unique(arr) {
@@ -49,7 +48,6 @@ class Comment extends Component {
     //   body: { ids: [parseInt(this.state.good_id)] }, 
     //   method: 'POST' 
     // })
-    console.log(goodsInfo)
     this.setState({
       goods_info:goodsInfo[0]
     })
@@ -223,7 +221,6 @@ class Comment extends Component {
     const timeCode = new Date().getTime();
     console.log(timeCode)
     //发起上传
-    //const token = getGlobalData('qiniuTokenData');  //从缓存中获取的token
     await Taro.uploadFile({
       url:'http://upload-z2.qiniup.com',
       header:{
@@ -235,7 +232,7 @@ class Comment extends Component {
         action:'z2',
         token:token.token,
         file:data.path[i].url,
-        key:'comment-pic'+timeCode,
+        key:'comment-pic-'+this.state.good_id+timeCode,
       },
       success: (resp) => {
          //图片上传成功，图片上传成功的变量+1

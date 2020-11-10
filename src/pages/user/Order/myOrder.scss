@@ -111,7 +111,7 @@ page{
           display:flex; 
           justify-content: flex-end;
           font-size: 28rpx;
-          .add_cart,.cancel,.drawback,.commit,.delivery{
+          .add_cart,.cancel,.drawback,.commit,.delivery,.getDelivery{
             border-radius: 10px;
             padding: 5rpx 15rpx;
             color: white;
@@ -195,11 +195,11 @@ page{
   
     .commit{
       border-radius: 5PX;
-      padding: 5rpx 15rpx;
+      padding: 5rpx 10rpx;
       color: white;
       background-color: #fdb289;
       color: white;
-      font-size: 20rpx;
+      font-size: 26rpx;
       margin-top: 10rpx;
     }
   }

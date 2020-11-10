@@ -62,8 +62,10 @@ class UserList extends Component {
               {userInfo.nickName}
             </View>
             <View className='edit-info'>
-              个人信息
-              <image src='http://qiniu.daosuan.net/picture-1598883556000' style='width:30rpx;height:30rpx' />
+              <View className='info'>
+                个人信息
+              </View>
+              <image src='http://qiniu.daosuan.net/picture-1598883556000' />
             </View>
           </View>
         </View>

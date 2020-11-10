@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
+//import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
@@ -8,6 +8,7 @@ import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import Loading from '../../../components/Loading'
 import request from '../../../utils/request'
+import getGoodsList from '../../../utils/request'
 import './myOrder.scss'
 
 import ListGood from './list_good'
@@ -75,6 +76,7 @@ class MyOrderList extends Component {
         return get(good,'goods_id')
       })
     })
+    // const goodsInfo = await getGoodsList(this.state.goodsList);
     const goodsInfo = await request('/goods/_mget',{ 
       body: { ids: this.state.goodsList }, 
       method: 'POST' 
@@ -209,15 +211,26 @@ class MyOrderList extends Component {
   //取消订单
   async cancelOrder(id){
     console.log(id)
-    try{        
-      await request(`/_order/${id}/cancel`,{
-          method: 'POST',
-      }).then(()=>{
-        Taro.showToast({
-          title: '订单取消成功',
-          icon: 'success'
-        })
-        this.getOrderList()
+    try{
+      Taro.showModal({
+        title: '取消订单',
+        //icon: 'success',
+        content: '请确认要取消订单？',
+        confirmText: '确认',
+        cancelText:'取消',
+        async success(res) {
+          if(res.confirm){
+            await request(`/_order/${id}/cancel`,{
+              method: 'POST',
+            }).then(()=>{
+              Taro.showToast({
+                title: '订单取消成功',
+                icon: 'success'
+              })
+              this.getOrderList()
+            })
+          }
+          }  
       })
     }catch(error){
       Taro.showToast({
@@ -225,6 +238,22 @@ class MyOrderList extends Component {
         icon: 'none'
       })
     }
+    // try{        
+    //   await request(`/_order/${id}/cancel`,{
+    //       method: 'POST',
+    //   }).then(()=>{
+    //     Taro.showToast({
+    //       title: '订单取消成功',
+    //       icon: 'success'
+    //     })
+    //     this.getOrderList()
+    //   })
+    // }catch(error){
+    //   Taro.showToast({
+    //     title: '订单取消失败',
+    //     icon: 'none'
+    //   })
+    // }
   }
 
   //删除订单
@@ -255,6 +284,18 @@ class MyOrderList extends Component {
         icon: 'none'
       })
     }
+  }
+  //确认收货
+  async handleCheckDelivery(oid,ooid){
+    await this.props.dispatch({
+      type: 'order/editOrderInfo',
+      payload:{
+        status:4,
+        oid:oid,
+        ooid:ooid,
+      }
+    })
+    await this.getOrderList(); //重新加载列表
   }
 
   //跳转到详情页面
@@ -378,15 +419,25 @@ class MyOrderList extends Component {
                         <View className='pay' onClick={this.pay.bind(this,get(item,'order_id'))}>付款</View>
                         </View> : ''}
                       {item.order_status == 2  ? '' : ''}
-                      {item.order_status == 3  ? <View><View className='delivery' onClick={this.toDeliveryDetail.bind(this,item.id)}>查看物流</View></View> : ''}
-                      {item.order_status == 4  ? <View style='display:inline-flex'>
-                        <View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View>
+                      {item.order_status == 3  ? 
+                        <View style='display:inline-flex'>
+                          <View className='delivery' onClick={this.toDeliveryDetail.bind(this,item.id)}>查看物流</View>
+                          <View className='getDelivery' onClick={this.handleCheckDelivery.bind(this,item.id,get(item,'order_id'))}>确认收货</View>
+                        </View> : ''}
+                      {item.order_status == 4  ? 
+                        <View style='display:inline-flex'>
+                          <View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View>
                         {/* <View className='commit' onClick={this.toComment.bind(this,item.id)}>我要评价</View> */}
-                      </View> : ''}
-                      {item.order_status == 5  ? <View style='display:inline-flex'> <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
-                        <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> </View> : ''}
-                      {item.order_status == 6  ? <View style='display:inline-flex'> <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
-                        <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
+                        </View> : ''}
+                      {item.order_status == 5  ? 
+                        <View style='display:inline-flex'> 
+                          <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
+                          <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
+                        </View> : ''}
+                      {item.order_status == 6  ? 
+                        <View style='display:inline-flex'> 
+                          <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
+                          <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
                         {/* <View className='pay' onClick={this.changeStatus.bind(this,item.id,get(item,'order_id'))}>修改订单状态</View> */}
                         </View> : ''}
                     </View>
