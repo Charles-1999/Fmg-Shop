@@ -6,12 +6,12 @@ export default {
   state: {
     placeList: [],
     kindList: [],
+    kindInfoList: [],
     goodsList: [],
     slideshowList:[],
     goodsSaleTopList: [],
     goodsSaleNewList: [],
     placeListIds: [],
-    kindListIds: [],
     goodsListIds: [],
     slideshowListIds: []
   },
@@ -20,7 +20,6 @@ export default {
     * getslideshow({ payload }, { call, put }) {
       const res = yield call(getslideshow, payload);
       const info = get(res, 'slideshow',[]);
-      console.log(info)
       const slideshowListIds = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
@@ -41,14 +40,10 @@ export default {
     //获取商品属地标签-----------------
     * getGoodsPlace({ payload }, { call, put }) {
       const res = yield call(getGoodsPlace, payload);
-      console.log(res)
       const info = get(res, 'tags',[]);
       const placeListIds = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
-        payload: {
-          placeList:info
-        },
       }); 
       yield put({
         type: 'getGoodsPlaceEntity',
@@ -58,6 +53,12 @@ export default {
     //批量获取属地标签  
     * getGoodsPlaceEntity({ payload }, { call, put }) {
       const res = yield call(mgetGoodsPlace,{ payload});
+      res.map(item => {
+        if(item.picture!==""){
+          item.picture = 'http://qiniu.daosuan.net/' + item.picture;
+        }
+        return item.picture;
+      })
       yield put({
         type: 'save',
         payload: {
@@ -69,25 +70,28 @@ export default {
     * getGoodsKind({ payload }, { call, put }) {
       const res = yield call(getGoodsKind, {payload});
       const info = get(res, 'tags',[]);
-      const kindListIds = info.map((arr) => {return arr.id})
+      // const kindListIds = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
         payload: {
           kindList:info
         }
       });
-      yield put({
-        type: 'getGoodsKindEntity',
-        payload: kindListIds,
-      }); 
+
     },
     //批量获取种类标签
     * getGoodsKindEntity({ payload }, { call, put }) {
       const res = yield call(mgetGoodsKind,{ payload});
+      res.map(item => {
+        if(item.picture!==""){
+          item.picture = 'http://qiniu.daosuan.net/' + item.picture;
+        }
+        return item.picture;
+      })
       yield put({
         type: 'save',
-        payload: {
-          kindList: res
+        payload:{
+          kindInfoList:res
         }
       }); 
     }, 
@@ -114,9 +118,6 @@ export default {
       const goodsListIds = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
-        payload: {
-          goodsSaleTopList:info
-        },
       });
       yield put({
         type: 'getGoodsTopListEntity',
@@ -125,6 +126,12 @@ export default {
     },
     * getGoodsTopListEntity({ payload }, { call, put }) {
       const res = yield call(mgetGoodsList,{ payload });
+      res.map(item => {
+        if(item.cover!==""){
+          item.cover = 'http://qiniu.daosuan.net/' + item.cover;
+        }
+        return item;
+      })
       yield put({
         type: 'save',
         payload: {  
@@ -147,6 +154,12 @@ export default {
     },
     * getGoodsNewListEntity({ payload }, { call, put }) {
       const res = yield call(mgetGoodsList,{ payload});
+      res.map(item => {
+        if(item.cover!==""){
+          item.cover = 'http://qiniu.daosuan.net/' + item.cover;
+        }
+        return item.cover;
+      })
       yield put({
         type: 'save',
         payload: {  
@@ -154,15 +167,7 @@ export default {
         }
       }); 
     }, 
-    * getGoodsTopListEntity({ payload }, { call, put }) {
-      const res = yield call(mgetGoodsList,{ payload});
-      yield put({
-        type: 'save',
-        payload: {  
-          goodsSaleTopList:res
-        }
-      }); 
-    }, 
+
     * getGoodsListEntity({ payload }, { call, put }) {
       const res = yield call(mgetGoodsList,{ payload});
       yield put({

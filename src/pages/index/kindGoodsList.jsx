@@ -29,13 +29,26 @@ class kindGoodsList extends Component {
       kindList: [],
     }
   }
-  componentDidMount(){
-    this.props.dispatch({
+  async componentDidMount(){ 
+    
+    await this.props.dispatch({
       type: 'goods/getGoodsKind',
+      payload:{
+        limit:30
+      }
     });
-    const { kindList } = this.props;
+    const {kindList} = this.props;
+    console.log(kindList);
+    const kindListIds = kindList.map((arr) => {return arr.id})
+    await this.props.dispatch({
+      type: 'goods/getGoodsKindEntity',
+      payload:{
+        ids:kindListIds
+      }
+    });
+    const {kindInfoList} = this.props;
     this.setState({
-      kindList: kindList,
+      kindList: kindInfoList,
     })
   }
   setCurrentIndex(event){
@@ -73,7 +86,7 @@ class kindGoodsList extends Component {
         ))}
         
         </View>
-        <GoodsCard kind_tag={this.state.current_index} key={this.state.current_index} />
+        {/* <GoodsCard kind_tag={this.state.current_index} key={this.state.current_index} /> */}
       </View>
     )
   }

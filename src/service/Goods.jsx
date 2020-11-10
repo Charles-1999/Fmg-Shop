@@ -32,12 +32,11 @@ export const getGoodsPlace = params =>{
 export const mgetGoodsKind = params =>{
   return request('/goods/kind_tag/_mget', {
     method: 'POST',
-    body: { ids: params.payload },
+    body: params.payload,
   });
 }
 //获取种类标签列表
 export const getGoodsKind = params =>{
-  console.log(params)
   return request('/goods/kind_tag/list', {
     method: 'GET',
     body: params.payload,
@@ -45,7 +44,6 @@ export const getGoodsKind = params =>{
 }
 //批量获取商品信息------------
 export const mgetGoodsList = params =>{ 
-  console.log(params.payload)
   if(params.payload.ids){
     return request('/goods/_mget', {
       method: 'POST',

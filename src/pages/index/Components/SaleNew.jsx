@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { View, Image, Text ,Input} from '@tarojs/components'
 import PropTypes from 'prop-types';
+import { AtTag } from 'taro-ui'
 import '../index.scss'
 import request from '../../../utils/request'
 import GoodsCard from './GoodsCard'
@@ -258,20 +259,18 @@ class SaleNew extends Component {
           {list.map((item => (
             <View className='item' key={item.id}>
             <View className='cover' onclick={this.toDetail.bind(this,item.id)}>
-              <Image src={'http://qiniu.daosuan.net/'+get(item,'cover','')} className='img' />
+              <Image src={get(item,'cover','')} className='img' />
             </View>
-            {get(item,'name','').length >= 20 ?
+            {get(item,'name','').length >= 17 ?
               <View className='goods-name'>
-              {get(item,'name','').substring(0,15)}...
+              {get(item,'name','').substring(0,17)}...
             </View>:
             <View className='goods-name'>
               {get(item,'name','')}
             </View>
             }
              {get(item,'sale','') ? 
-                <View className='count'>
-                  满减优惠
-                </View>:  <View className='count-null'> </View>
+                <AtTag className='count-tag' size='small' type='primary' >满减优惠</AtTag>:  <View className='count-null'> </View>
               }
             <View className='info'>
              

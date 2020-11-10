@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Swiper, SwiperItem, Image, View } from '@tarojs/components';
+import { Swiper, SwiperItem, Image, View, Navigator} from '@tarojs/components';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import './index.scss';
@@ -30,9 +30,11 @@ class MySwiper extends Component {
         {data.map(item => (
           <SwiperItem key={item.id}>
             <View className='demo-text'>
-              <View className='photo'>
-                <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
-              </View>
+              <Navigator url={'/pages/details/index?gid=' + get(item,'goods_id')}>
+                <View className='photo'>
+                  <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
+                </View>
+              </Navigator>
             </View>
           </SwiperItem>
         ))}

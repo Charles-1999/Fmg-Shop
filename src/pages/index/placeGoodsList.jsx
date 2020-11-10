@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import Taro, {Current} from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { View, Image } from '@tarojs/components'
-import { AtSearchBar, AtIcon } from 'taro-ui'
-import PropTypes from 'prop-types';
+import { AtIcon } from 'taro-ui'
 import { get } from 'lodash';
 import './index.scss'
 import Navbar from '../../components/navbar/navbar'
@@ -31,16 +30,37 @@ class PlaceGoodsList extends Component {
       kindList: [],
     }
   }
-  componentDidMount(){
-    this.props.dispatch({
-      type: 'goods/getGoodsPlace',
+  async componentDidMount(){
+    //场地
+    await this.props.dispatch({
+      type: 'goods/getGoodsPlaceEntity',///goods/place_tag/_mget
+      payload:
+        [parseInt(Current.router.params.id)]
     });
-    this.props.dispatch({
+    //种类
+    await this.props.dispatch({
       type: 'goods/getGoodsKind',
     });
-    const { placeList, kindList} = this.props
+    const Ids = this.props.kindList.map((arr) => {return arr.id})
+    await this.props.dispatch({
+      type: 'goods/getGoodsKindEntity',
+      payload:{
+        ids:Ids
+      }
+    });
+    // //商品
+    // await this.props.dispatch({
+    //   type: 'goods/getGoodsList',
+    //   payload: {
+    //     place_tag:place_tag,
+    //     kind_tag:kind_tag,
+    //     sale_tag:sale_tag,
+    //   }
+    // });
+    const { placeList, kindInfoList} = this.props
+    //数据过滤
     const current_place = placeList.filter(item => item.id == Current.router.params.id)[0];
-    const current_kind = kindList.filter(item => get(item, 'parent_id', '') == Current.router.params.id);
+    const current_kind = kindInfoList.filter(item => get(item, 'parent_id', '') == Current.router.params.id);
     this.setState({
       placeList: current_place,
       kindList: current_kind,
@@ -62,7 +82,7 @@ class PlaceGoodsList extends Component {
         </Navbar>
         <View className='title-wrap'>
           <View className='pic'>
-            <Image src={'http://qiniu.daosuan.net/'+this.state.placeList.picture} style='width:170rpx;height:170rpx' />
+            <Image src={this.state.placeList.picture} style='width:170rpx;height:170rpx' />
           </View>
           <View className='info'>
             <View className='name'>{this.state.placeList.place}</View>
@@ -80,7 +100,7 @@ class PlaceGoodsList extends Component {
                 <Image src={more} style='width:50rpx;height:30rpx' />
               </View>
             </View>
-            <GoodsCard place_tag={Current.router.params.id} kind_tag={item.id} />
+            {/* <GoodsCard place_tag={Current.router.params.id} kind_tag={item.id} /> */}
           </View>
           ))}
       </View>

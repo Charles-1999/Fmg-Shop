@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
-import { View, Swiper, SwiperItem, Image} from '@tarojs/components'
+import { View, Swiper, SwiperItem, Image, Navigator} from '@tarojs/components'
 // import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import { get } from 'lodash'
 import './index.scss'
@@ -28,6 +28,8 @@ class Index extends Component {
       placeList:[],
       kindList:[],
       slideshowList:[],
+      goodsSaleTopList:[],
+      
     }
   }
   async componentDidMount(){
@@ -40,6 +42,16 @@ class Index extends Component {
         limit:30
       }
     });
+    const {kindList} = this.props;
+    const kindListIds = kindList.map((arr) => {return arr.id})
+    await this.props.dispatch({
+      type: 'goods/getGoodsKindEntity',
+      payload:{
+        ids:kindListIds
+      }
+    });
+    const {kindInfoList} = this.props;
+  
     await this.props.dispatch({
       type: 'goods/getslideshow',
     });
@@ -50,17 +62,21 @@ class Index extends Component {
         ids:slideshowListIds
       }
     })
-    const { placeList, kindList, slideshowList } = this.props;
-    console.log(slideshowList)
-    // slideshowList.forEach(item => {
-    //   item.picture = 'http://qiniu.daosuan.net/' + item.picture;
-    // })
+
+    await this.props.dispatch({
+      type: 'goods/getGoodsTopList',
+      payload: {
+        sale_tag: 3,
+      },    
+    });
+    const { placeList, slideshowList, goodsSaleTopList } = this.props;
+
     this.setState({
       placeList:placeList,
-      kindList:kindList,
+      kindList:kindInfoList,
       slideshowList:slideshowList,
+      goodsSaleTopList:goodsSaleTopList,
     })
-    console.log(this.state.slideshowList)
 
   }
   render () {
@@ -75,7 +91,7 @@ class Index extends Component {
           showSearch
         ></Navbar>
         <View className='home-top-wrap'>
-          <PlaceTab placeList={this.state.placeList} />
+          <PlaceTab placeList={this.state.placeList} key={this.state.placeList} />
           <Swiper
             className='swiper'
             circular
@@ -87,16 +103,18 @@ class Index extends Component {
             {this.state.slideshowList.map(item => (
               <SwiperItem key={item.id}>
                 <View className='demo-text'>
-                  <View className='photo'>
-                    <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
-                  </View>
+                  <Navigator url={'/pages/details/index?gid=' + get(item,'goods_id')}>
+                    <View className='photo'>
+                      <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
+                    </View>
+                  </Navigator>
                 </View>
           </SwiperItem>
         ))}
       </Swiper>
-          <Kindtab kindList={this.state.kindList} />
+        <Kindtab kindList={this.state.kindList} />
         </View>
-        <SaleTop />
+        <SaleTop goodsSaleTopList={this.state.goodsSaleTopList}  key={this.state.goodsSaleTopList} />
         <SaleNew />
         {/* <PlaceKindTab placeList={this.state.placeList} kindList={this.state.kindList} /> */}
       </View>

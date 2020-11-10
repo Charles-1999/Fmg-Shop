@@ -13,10 +13,6 @@ import '../index.scss'
   
 }))
 class GoodsCard extends Component {
-  static defaultProps = {
-    list: [],
-    goodsList:[],
-  };
 
   constructor () {
     super(...arguments);
@@ -29,13 +25,14 @@ class GoodsCard extends Component {
       currChoose: null, // 当前选则的规格
       currNum: 1, // 当前选择的数量 ,
       total: 0, // 商品余量
+      goodsList:[],
     }
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     const {place_tag, kind_tag, sale_tag } = this.props;
     console.log(place_tag, kind_tag, sale_tag)
-    this.props.dispatch({
+    await this.props.dispatch({
       type: 'goods/getGoodsList',
       payload: {
         place_tag:place_tag,
@@ -43,6 +40,19 @@ class GoodsCard extends Component {
         sale_tag:sale_tag,
       }
     });
+    const ids = this.props.goodsList.map((arr) => {return arr.id})
+    if (ids !== []){
+      await this.props.dispatch({
+        type: 'goods/mgetGoodsListEntity',
+        payload: {
+          ids: ids
+        }
+      })
+      console.log(this.props.goodsList)
+    }
+    this.setState({
+      goodsList:this.props.goodsList,
+    })
   }
 
   //商品详情
@@ -207,7 +217,7 @@ async addCart() {
 
   showFloat = (type) => {
     console.log(type)
-    const { goodsList } = this.props;
+    const { goodsList } = this.state;
     this.setState({
       isOpen: true,
       // showType: type,
@@ -232,19 +242,18 @@ async addCart() {
 
 
   render () {
-    const { goodsList } = this.props;
-    const goodsListInfo = Array.from(goodsList);
-    console.log(goodsList)
+  
+    console.log(this.state.goodsList)
 
     const {isOpen,showType,showPrice,currChoose,currNum,total,data} = this.state;
 
     return (
       <View className='goods-card'>
         <View className='goods-items-wrap'>
-          {goodsListInfo.map((item => (
+          {this.state.goodsList.map((item => (
             <View className='item' key={item.id}>
               <View className='cover' onclick={this.toDetail.bind(this,item.id)}>
-                <Image src={'http://qiniu.daosuan.net/'+get(item,'cover','')} className='first-img' />
+                <Image src={get(item,'cover','')} className='first-img' />
               </View>
               {get(item,'name','').length >= 20 ?
                 <View className='goods-name'>
@@ -343,5 +352,5 @@ async addCart() {
 }
 
 
-//export default GoodsCard;
-export default (props)=><GoodsCard {...props} key={Current.router.params} />
+export default GoodsCard;
+// export default (props)=><GoodsCard {...props} key={Current.router.params} />

@@ -8,7 +8,7 @@
   height: 100vh;
   .home-top-wrap{
     background-color: white;
-    border-radius: 30px;
+    border-radius: 10PX;
     margin: 30rpx 30rpx;
     padding: 30rpx 30rpx;
     .place-tab-row::-webkit-scrollbar {display:none}  //是否显示滑动条
@@ -25,11 +25,12 @@
         .pic{
           height: 130rpx;
           width: 130rpx;
-          border-radius: 30px;
+          border-radius: 10PX;
           background-color: #DCE9FF;
           img{
             height: 150rpx;
             width: 150rpx;
+            border-radius: 9PX;
           }
         }
         .title{
@@ -83,38 +84,9 @@
   /*畅销榜*/
   .sale-top-wrap{
     background-color: white;
-    border-radius: 30px;
+    border-radius: 10PX;
     margin: 30rpx 30rpx;
-    padding: 10rpx 30rpx;
-    .title-list-top{
-      display: block;
-      height:80rpx;
-      .icon{
-        margin-top: -10rpx;
-        left:100rpx;
-        float: left;
-      }
-      .name{
-        font-size: 36px;
-        font-weight: 500;
-        float: left;
-      }
-      .more{
-        display: inline-flex;
-        background-color: #D8D8D8;
-        height:40rpx;
-        border-radius: 30px;
-        padding-top:8rpx;
-        padding-left: 15rpx;
-        float: right;
-        left:16.4rem;
-        .checkmore{
-          font-size: 24px;
-          color: #3d3d3d;
-        }
-      }
-      
-    }
+    padding: 30rpx 30rpx;
     .goodsList{
       display: inline-flex;
       .left-item{ 
@@ -137,60 +109,84 @@
           z-index:2;
         }
       }
-      .mid-item{
-        position: relative;
-        margin-right: 28rpx;
-        .range-2{
+      .mid-right-icon-wrap{
+        .icon-info-wrap{
           display: flex;
-          position:absolute;
-          left:-25rpx;
-          top:-17rpx;
-         
+          image{
+            width:100rpx;
+            height:70rpx;
+          }
+          .info{
+            font-size: 24rpx;
+            align-self: center;
+          }
         }
-        .number{
-          position:absolute;
-          font-size: 40rpx;
-          color: rgb(255, 255, 255);
-          font-weight: 700;
-          left: 4rpx;
-          top: -10rpx;
-          z-index:2;
-        }
-      }
-      .right-item{
-        position: relative;
-        .range-3{
+
+        .mid-right-wrap{
           display: flex;
-          position:absolute;
-          left:-22rpx;
-          top:85rpx;
-         
+          .mid-item{
+            position: relative;
+            margin-right: 28rpx;
+            .range-2{
+              display: flex;
+              position:absolute;
+              left:-25rpx;
+              top:5rpx;
+              width:80rpx;
+              height:100rpx;
+            }
+            .number{
+              position:absolute;
+              font-size: 40rpx;
+              color: rgb(255, 255, 255);
+              font-weight: 700;
+              left: 4rpx;
+              top:12rpx;
+              z-index:2;
+            }
+            .pic-2{
+              width:160rpx;
+              height: 160rpx;
+              border-radius: 10PX;
+              margin-top:20rpx;
+            }
+          }
+          .right-item{
+            position: relative;
+            .range-3{
+              display: flex;
+              position:absolute;
+              left:-22rpx;
+              top:5rpx;
+              width:80rpx;
+              height:100rpx;
+             
+            }
+            .number{
+              position:absolute;
+              font-size: 40rpx;
+              color: rgb(255, 255, 255);
+              font-weight: 700;
+              left: 6rpx;
+              top:12rpx;
+              z-index:2;
+            }
+            .pic-3{
+              width:160rpx;
+              height: 160rpx;
+              margin-top:20rpx;
+              border-radius: 10PX;
+            }
+          }
         }
-        .number{
-          position:absolute;
-          font-size: 40rpx;
-          color: rgb(255, 255, 255);
-          font-weight: 700;
-          left: 6rpx;
-          top:91rpx;
-          z-index:2;
-        }
-        .intro{
-          height:100rpx;
-          width:160rpx;
-          font-size: 18rpx;
-          color: rgb(48, 48, 48);
-        }
-       
       }
     }
   }
-
   /*新品榜*/
   .sale-new-wrap{
     .title-list{
       background-color: white;
-      border-radius: 30px;
+      border-radius: 10PX;
       padding: 10rpx 20rpx;
       //display: block;
       height:50rpx;
@@ -264,30 +260,25 @@
       height:430rpx;
       width:280rpx;
       background-color: white;
-      border-radius: 30px;
+      border-radius: 10PX;
       padding: 20rpx 20rpx;
       float: left;
       .cover{
         width:280rpx;
-        border-radius: 30px;
+        border-radius: 10PX;
         image{
           width:280rpx;
           height: 250rpx;
-          border-radius: 30px;
+          border-radius: 10PX;
           clear: both;
         }
       }
       .goods-name{
-        font-size: 29rpx;
-        height: 90rpx;
+        font-size: 28rpx;
+        height: 80rpx;
       }
-      .count{
-        font-size: 15rpx;
-        color: #c00000;
-        border: 1rpx solid #c00000;
-        border-radius: 30rpx;
-        padding: 2rpx 10rpx;  
-        width:60rpx;
+      .count-tag{
+
       }
       .count-null{
         font-size: 14rpx;
@@ -323,7 +314,7 @@
         background-color:#D53E1D;
         color: white;
         font-size: 27rpx;
-        border-radius: 20px;
+        border-radius: 7PX;
         padding: 7rpx 10rpx;
    
       }
@@ -480,7 +471,7 @@
 }
 .title-list{
   background-color: white;
-  border-radius: 30px;
+  border-radius: 10PX;
   padding: 10rpx 30rpx;
   height:50rpx;
   margin: 0rpx 30rpx;
@@ -499,7 +490,7 @@
     display: inline-flex;
     background-color: #D8D8D8;
     height:40rpx;
-    border-radius: 30px;
+    border-radius: 10PX;
     padding-top:8rpx;
     padding-left: 15rpx;
     float: right;

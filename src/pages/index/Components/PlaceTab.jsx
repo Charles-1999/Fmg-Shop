@@ -15,7 +15,16 @@ class PlaceTab extends Component {
     super(...arguments);
     this.state={
       currentId: 0,
+      placeList: [],
+     
     }
+  }
+  componentDidMount(){
+    const { placeList } = this.props
+
+    this.setState({
+      placeList:placeList
+    })
   }
   handleTypeTab = (e,id) => {
     this.setState({
@@ -25,16 +34,16 @@ class PlaceTab extends Component {
       url: `/pages/index/placeGoodsList?id=${this.state.currentId}`,
     });
   }
+
   render () {
-    const { placeList } = this.props
-    const data = Array.from(placeList)
+   
  
     return (
       <View className='place-tab-row'>
-      {data.map(item => (
+      {this.state.placeList.map(item => (
         <View className='place-tab-item' key={item.id} onClick={this.handleTypeTab.bind(this,item.id)}>
             <View className='pic'>
-              <Image src={'http://qiniu.daosuan.net/'+item.picture} style='width:130rpx;height:130rpx;border-radius: 30rpx;' />
+              <Image src={item.picture} style='width:130rpx;height:130rpx;border-radius: 9px;' />
             </View>
             <View className='title'>
               {item.place}
