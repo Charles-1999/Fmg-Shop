@@ -1,5 +1,5 @@
 page {
-  background-color: #fff;
+  background-color: #f3f3f3;
   .cate_list {
     /* 筛选模块 */
     .filter_wrap {
@@ -123,18 +123,39 @@ page {
           justify-content: space-between;
           width: 100%;
           height: 100PX;
-          font-size: 14PX;
+          font-size: 15PX;
           margin-left: 10PX;
           padding-bottom: 10PX;
           border-bottom: 1px solid #eee;
           box-sizing: border-box;
+          .name {
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 40PX;
+            .sub {
+              display: block;
+              font-size: 13PX;
+              color: #aaa;
+              font-weight: 300;
+              margin-top: 1PX;
+            }
+          }
           .price {
             color: #D53E1D;
-            font-size: 14PX;
+            font-size: 16PX;
             font-weight: 700;
             margin-top: 5PX;
             .sign {
               font-size: 10PX;
+            }
+            .sale_text {
+              margin-left: 5PX;
+              font-size: 11PX;
+              font-weight: 300;
+              color: #f77438;
             }
             .sale {
               font-size: 10PX;
@@ -150,11 +171,10 @@ page {
     .wrap {
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-evenly;
+      // justify-content: space-evenly;
       .goods_wrap {
         width: 47%;
-        padding: 5PX;
-        margin-top: 10PX;
+        margin: 10PX 5PX 0;
         background-color: #fff;
         border-radius: 10PX;
         font-size: 14PX;
@@ -176,14 +196,35 @@ page {
         .info {
           display: flex;
           flex-direction: column;
-          padding: 5PX;
+          padding: 10PX;
+          .name {
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 40PX;
+            .sub {
+              display: block;
+              font-size: 13PX;
+              color: #aaa;
+              font-weight: 300;
+              margin-top: 1PX;
+            }
+          }
           .price {
             color: #D53E1D;
-            font-size: 14PX;
+            font-size: 16PX;
             font-weight: 700;
             margin-top: 5PX;
             .sign {
               font-size: 10PX;
+            }
+            .sale_text {
+              margin-left: 5PX;
+              font-size: 11PX;
+              font-weight: 300;
+              color: #f77438;
             }
             .sale {
               display: block;
