@@ -293,7 +293,7 @@ export default class Confirm extends Component {
   delCart = async() => {
     const {checkList} = this.state
     // 如果checkList中没有id（购物车id），则是立即购买渠道，无需删除购物车
-    if (!('id' in checkList)) return
+    if (!('id' in checkList[0])) return
     let cartIds = []
     checkList.forEach(item => {
       cartIds.push(item.id)
