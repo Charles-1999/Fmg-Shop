@@ -198,7 +198,7 @@ export default class Confirm extends Component {
       })
       return
     }
-    // const checkList = Taro.getStorageSync('checkList');
+
     let goods_list = [];
     checkList.forEach((item) => {
       let obj = {
@@ -209,7 +209,8 @@ export default class Confirm extends Component {
         message: item.message
       }
       goods_list.push(obj);
-    });
+    })
+
     try {
       const res_order = await request('/_order', {
         body: {
@@ -291,6 +292,8 @@ export default class Confirm extends Component {
   // 删除购物车
   delCart = async() => {
     const {checkList} = this.state
+    // 如果checkList中没有id（购物车id），则是立即购买渠道，无需删除购物车
+    if (!('id' in checkList)) return
     let cartIds = []
     checkList.forEach(item => {
       cartIds.push(item.id)

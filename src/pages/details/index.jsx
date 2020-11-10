@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import { View, Image, Text, Input } from '@tarojs/components';
 import Taro, { getCurrentInstance } from '@tarojs/taro';
 import { connect } from 'react-redux';
 import Navbar from '@components/navbar/navbar'
+import SelectFloat from '@components/SelectFloat/index'
 import request, {getGoodsList} from '@utils/request'
 
 import MySwiper from './swiper'
@@ -17,8 +18,8 @@ import './index.scss'
 import { get as getGlobalData } from '../../global_data'
 
 
-@connect(({ comment, cart }) => ({
-  ...comment, ...cart
+@connect(({ goods, comment, cart }) => ({
+  ...goods, ...comment, ...cart
 }))
 class Details extends Component {
   constructor() {
@@ -48,10 +49,16 @@ class Details extends Component {
     });
 
     /* 获取goodsList */
-    let goodsList = await getGoodsList([Number(gid)])
-    this.setState({
-      data: goodsList[0],
+    // let goodsList = await getGoodsList([Number(gid)])
+    await this.props.dispatch({
+      type: 'goods/mgetGoodsListEntity',
+      payload: [Number(gid)]
     })
+
+    this.setState({
+      data: this.props.goodsList[0],
+    })
+
     this.setTotal();
     this.getShowPrice();
     this.getUnSalePrice();
@@ -144,7 +151,7 @@ class Details extends Component {
   // 选择框选择规格
   chooseType = (spec_index) => {
     const { data } = this.state;
-    let { currNum } = this.state;
+    // let { currNum } = this.state;
     let showPrice;
     if(data.sale) {
       showPrice = data.specification[spec_index].reduced_price;
@@ -155,15 +162,15 @@ class Details extends Component {
     this.setState({
       showPrice,
       unSalePrice,
-      currChoose: spec_index
+      // currChoose: spec_index
     })
-    const total = this.setTotal(data.specification[spec_index].total);
-    // 检查余量
-    if (currNum < 1 || currNum > total) {
-      this.setState({
-        currNum: 1
-      })
-    }
+    // const total = this.setTotal(data.specification[spec_index].total);
+    // // 检查余量
+    // if (currNum < 1 || currNum > total) {
+    //   this.setState({
+    //     currNum: 1
+    //   })
+    // }
   }
 
   // 设置商品余量显示
@@ -203,7 +210,7 @@ class Details extends Component {
   async addCart() {
     const { currChoose, currNum, total, data, userId } = this.state;
     this.props.dispatch({
-      type: 'cart/addCart',
+      type: 'cart/createCart',
       payload: {
         goods: {currChoose, currNum},
         curr: data
@@ -226,7 +233,7 @@ class Details extends Component {
         return;
       }
       try {
-        const res = await request(`/car/info/${userId}/${data.id}`, {
+        const res = await request(`/car/info/${data.id}`, {
           method: 'POST',
           body: {
             goods_count: currNum,
@@ -281,7 +288,7 @@ class Details extends Component {
         <Comment />
         <DetailInfo data={data.detail} />
         {/* 选择浮窗 */}
-        <View className={isOpen ? 'active float_wrap' : 'float_wrap'}>
+        {/* <View className={isOpen ? 'active float_wrap' : 'float_wrap'}>
           <View className='mask' onClick={this.hiddenFloat}></View>
           <View className={isOpen ? 'container active' : 'container'}>
             <View className='info_wrap'>
@@ -339,7 +346,13 @@ class Details extends Component {
               : ''
             }
           </View>
-        </View>
+        </View> */}
+        <SelectFloat 
+          currGoods={data}
+          isOpen={isOpen}
+          showType={showType}
+          hiddenFloat={this.hiddenFloat}
+          chooseType={this.chooseType} />
         <ToolBar callback={this.showFloat} />
       </View>
     )

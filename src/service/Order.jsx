@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import request from '../utils/request';
 
 //订单列表
@@ -33,4 +34,15 @@ export const delOrderInfo = params =>{
     method: 'DEL',
     body: params,
   });
+}
+
+/* 创建订单 */
+export const createOrder = params => {
+  return request(`/_order`, {
+    body: {
+      address_id: params.address_id,
+      goods_list: params.goods_list
+    },
+    method: 'POST'
+  })
 }

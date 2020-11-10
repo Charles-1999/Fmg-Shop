@@ -164,7 +164,7 @@ export default {
       }); 
     }, 
     * getGoodsListEntity({ payload }, { call, put }) {
-      const res = yield call(mgetGoodsList,{ payload});
+      const res = yield call(mgetGoodsList,{ payload });
       yield put({
         type: 'save',
         payload: {  
@@ -186,8 +186,9 @@ export default {
         // 商品是否使用促销
         const isSale = goods.sale
     
-        // 每个规格的价格处理
+        /* 规格数据处理 */
         goods.specification.forEach(spec => {
+          // 规格价格单位处理
           spec.price = Number(spec.price / 100).toFixed(2)
           // 规格显示的价格(显示该规格的最低价)
           spec.showPrice = spec.price
@@ -195,13 +196,33 @@ export default {
             spec.reduced_price = Number(spec.reduced_price / 100).toFixed(2)
             spec.showPrice = spec.reduced_price
           }
+
+          // 规格图片前缀处理
+          spec.picture = 'http://qiniu.daosuan.net/' + spec.picture
         })
   
-        // 商品显示的价格（显示最低价）
-        if(isSale) {
-          goods.showPrice = Math.min(...goods.specification.map(spec => spec.reduced_price)).toFixed(2)
+        /* 商品列表显示的价格（显示全部规格中最低价）*/
+        let min, max
+        min = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2)
+        max = Math.max(...goods.specification.map(spec => spec.price)).toFixed(2)
+        goods.showPrice = min
+        // 商品原价范围处理
+        if(min == max) {
+          goods.unSalePriceRange = min
         } else {
-          goods.showPrice = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2)
+          goods.unSalePriceRange = `${min}-${max}`
+        }
+        if(isSale) {
+          min = Math.min(...goods.specification.map(spec => spec.reduced_price)).toFixed(2)
+          max = Math.max(...goods.specification.map(spec => spec.reduced_price)).toFixed(2)
+          goods.showPrice = min
+        }
+
+        // 商品价格范围处理
+        if(min == max) {
+          goods.priceRange = min
+        } else {
+          goods.priceRange = `${min}-${max}`
         }
       })
 
