@@ -171,9 +171,12 @@ class CategoryListView extends Component {
                 <Image src={goods.cover} />
               </View>
               <View className='info'>
-                <Text className='name'>{goods.name}</Text>
+                <Text className='name'>{goods.name}<Text className='sub'>{goods.sale_point}</Text></Text>
                 <Text className='price'>
                   <Text className='sign'>￥</Text>{goods.showPrice}
+                  {goods.sale
+                  ? <Text className='sale_text'>优惠价</Text>
+                  : ''}
                   <Text className='sale'>月售{goods.month_sale}件</Text>
                 </Text>
               </View>

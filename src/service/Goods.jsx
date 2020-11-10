@@ -66,10 +66,10 @@ export const getGoodsList = params =>{
   });
 }
 
-/* 
+/** 
   * 批量获取商品信息
-  * @params ids 商品id数组 Array
-  * @return [Promise]
+  * @param  {Array} ids 商品id数组
+  * @return {Promise}
 */
 export const _mgetGoodsList = params => {
   return request(`/goods/_mget`, {

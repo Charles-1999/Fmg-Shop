@@ -6,7 +6,11 @@ import { get as getGlobalData } from '../../../global_data'
 import request, {getGoodsList} from '../../../utils/request'
 
 import './index.less'
+import { connect } from 'react-redux'
 
+@connect(({ address }) => ({
+  ...address
+}))
 export default class Confirm extends Component {
   constructor(props) {
     super(props)
@@ -27,6 +31,11 @@ export default class Confirm extends Component {
   }
 
   componentDidShow() {
+    this.getCurrAddress()
+  }
+
+  /* 获取当前选择的地址 */
+  getCurrAddress() {
     this.setData({
       currAddress: Taro.getStorageSync('currAddress')
     })
@@ -67,7 +76,8 @@ export default class Confirm extends Component {
     })
     const goodsList = await getGoodsList(goodsId)
     this.setData({
-      goodsList
+      goodsList,
+      goodsId
     })
   }
 
@@ -181,7 +191,14 @@ export default class Confirm extends Component {
   /* 提交订单 */
   order = async () => {
     const { currAddress,checkList } = this.state;
-    // const checkList = Taro.getStorageSync('checkList');
+    if(!currAddress) {
+      Taro.showToast({
+        title: '请选择收货地址',
+        icon: 'none'
+      })
+      return
+    }
+
     let goods_list = [];
     checkList.forEach((item) => {
       let obj = {
@@ -192,7 +209,8 @@ export default class Confirm extends Component {
         message: item.message
       }
       goods_list.push(obj);
-    });
+    })
+
     try {
       const res_order = await request('/_order', {
         body: {
@@ -202,6 +220,7 @@ export default class Confirm extends Component {
         method: 'POST'
       })
       const { id } = res_order;
+      this.delCart()
       this.pay(id);
     }
     catch (err) {
@@ -215,10 +234,7 @@ export default class Confirm extends Component {
 
   /* 统一下单 */
   pay = async (order_id) => {
-    const { goods_price } = this.state;
     const sysInfo = Taro.getStorageSync('sysInfo');
-    const open_id = Taro.getStorageSync('open_id');
-    const userId = Taro.getStorageSync('userId');
     try {
       const res_pay = await request(`/pay/unified/${order_id}`, {
         body: {
@@ -229,7 +245,7 @@ export default class Confirm extends Component {
         method: 'POST'
       })
       console.log(res_pay)
-      this.requestPayment(res_pay.request);
+      this.requestPayment(res_pay.request, order_id);
     }
     catch (err) {
       console.log(err)
@@ -237,7 +253,7 @@ export default class Confirm extends Component {
   }
 
   /* 发起微信支付 */
-  requestPayment = async (data) => {
+  requestPayment = async (data, order_id) => {
     Taro.requestPayment({
       timeStamp: data.timeStamp, // 时间戳
       nonceStr: data.nonceStr, // 随机字符串
@@ -248,7 +264,7 @@ export default class Confirm extends Component {
         console.log('发起微信支付：' , res);
         Taro.showToast({
           title: '支付成功',
-          icon: 'success'
+          icon: 'success',
         })
       },
       fail: err => {
@@ -257,13 +273,38 @@ export default class Confirm extends Component {
           title: '发起微信支付失败，请重新尝试！',
           icon: 'none'
         })
+      },
+      complete: () => {
+        setTimeout(() => {
+          Taro.switchTab({
+            url: '/pages/cart/index',
+            complete: () => {
+              Taro.navigateTo({
+                url: '/pages/user/Order/myOrder?status=0'
+              })
+            }
+          })
+        }, 2000)
       }
     })
   }
 
   // 删除购物车
   delCart = async() => {
-    // const res = await request(`/`)
+    const {checkList} = this.state
+    // 如果checkList中没有id（购物车id），则是立即购买渠道，无需删除购物车
+    if (!('id' in checkList[0])) return
+    let cartIds = []
+    checkList.forEach(item => {
+      cartIds.push(item.id)
+    })
+    const res = await request(`/car/info/delete`, {
+      body: {
+        ids: cartIds
+      },
+      method: 'DELETE'
+    })
+    console.log('delete', res)
   }
 
   // 显示选择框
@@ -308,13 +349,18 @@ export default class Confirm extends Component {
         </Navbar>
         <Navigator className='address_wrap' url='/pages/cart/address_list/index'>
           <Image className='icon_address' src='http://qiniu.daosuan.net/picture-1598883667000' />
-          <View className='address_info' onClick={this.toAddress}>
-            <View className='personal_info'>
-              <Text className='name'>{currAddress.name}</Text>
-              <Text className='phone'>{currAddress.phone}</Text>
-            </View>
-            <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
-          </View>
+          { currAddress
+            ? <View className='address_info' onClick={this.toAddress}>
+                <View className='personal_info'>
+                  <Text className='name'>{currAddress.name}</Text>
+                  <Text className='phone'>{currAddress.phone}</Text>
+                </View>
+                <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
+              </View>
+            : <View className='no'>
+                请选择收货地址
+              </View>
+          }
           <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
         </Navigator>
         <View className='goods_list'>

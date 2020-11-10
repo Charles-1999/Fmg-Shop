@@ -23,7 +23,7 @@ class Select extends Component {
           <View className='type_list'>
             {data.map((item,index) => 
               index <= 4 ?
-              <Image key={index} src={'http://qiniu.daosuan.net/'+item.picture} />
+              <Image key={index} src={item.picture} />
               : ''
             )}
             <Text>共{data.length}种{template}可选</Text>

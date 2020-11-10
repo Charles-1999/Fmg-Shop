@@ -36,7 +36,6 @@ class CartListView extends Component {
   }
 
   componentDidShow() {
-    console.log('show')
     this.init()
   }
 

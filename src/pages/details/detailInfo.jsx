@@ -27,9 +27,9 @@ class DetailInfo extends Component {
       <View className='detail_info' >
         <View className='tabs'>
           <View className='tabs_title'>
-            <View className={currentTab==0?'tabs_title_item current':'tabs_title_item'} onClick={this.switchTab}>商品详情</View>
-            <Text>|</Text>
-            <View className={currentTab==1?'tabs_title_item current':'tabs_title_item'} onClick={this.switchTab}>交易明细</View>
+            <View className={currentTab==1?'tabs_title_item current':'tabs_title_item'} onClick={this.switchTab}>商品详情</View>
+            {/* <Text>|</Text>
+            <View className={currentTab==1?'tabs_title_item current':'tabs_title_item'} onClick={this.switchTab}>交易明细</View> */}
           </View>
           <View className='tabs_wrap'>
             { currentTab == 0 ? 
