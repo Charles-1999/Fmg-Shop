@@ -13,14 +13,29 @@ class Comments extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
-    curr_tab: 0
+    curr_tab: 0,
+    commentList: this.props.commentList,
+    goodComments: this.props.goodComments,
+    mediumComments: this.props.mediumComments,
+    badComments: this.props.badComments
   }
 
   /* 切换tabBar */
   switchTab(e) {
     const curr_tab = e.target.dataset.index
+    let { commentList, goodComments, mediumComments, badComments } = this.state
+
+    if (curr_tab == 1) {
+      commentList = goodComments
+    } else if (curr_tab == 2) {
+      commentList = mediumComments
+    } else if (curr_tab == 3) {
+      commentList = badComments
+    }
+
     this.setData({
-      curr_tab
+      curr_tab,
+      commentList
     })
   }
 
@@ -47,8 +62,8 @@ class Comments extends Component {
 
   render() {
     console.log('%c ........details/comments render.........', 'color:green');
-    const { commentList } = this.props
-    const {statusBarHeight, capsule, curr_tab} = this.state
+    const { goodComments, mediumComments, badComments } = this.props
+    const {statusBarHeight, capsule, curr_tab, commentList} = this.state
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
 
     return (
@@ -61,10 +76,10 @@ class Comments extends Component {
           title='买家评论'
         />
         <View className='tab_bar' style={{ top: statusBarHeight + capsuleHeight }} onClick={this.switchTab.bind(this)}>
-          <View className={curr_tab==0?'tab_item active':'tab_item'} data-index={0}>全部</View>
-          <View className={curr_tab==1?'tab_item active':'tab_item'} data-index={1}>好评</View>
-          <View className={curr_tab==2?'tab_item active':'tab_item'} data-index={2}>中评</View>
-          <View className={curr_tab==3?'tab_item active':'tab_item'} data-index={3}>差评</View>
+          <View className={curr_tab==0?'tab_item active':'tab_item'} data-index={0}>全部({commentList.length})</View>
+          <View className={curr_tab==1?'tab_item active':'tab_item'} data-index={1}>好评({goodComments.length})</View>
+          <View className={curr_tab==2?'tab_item active':'tab_item'} data-index={2}>中评({mediumComments.length})</View>
+          <View className={curr_tab==3?'tab_item active':'tab_item'} data-index={3}>差评({badComments.length})</View>
         </View>
         <View className='comment_list'>
           {commentList.map((comment, comment_index) => (

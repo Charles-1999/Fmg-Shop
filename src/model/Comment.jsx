@@ -8,7 +8,10 @@ export default {
   namespace: 'comment',
   state: {
     commentList: [],
-    pictureList: []
+    pictureList: [],
+    goodComments: [],
+    mediumComments: [],
+    badComments: []
   },
   effects: {
     /* 获取商品评价 */
@@ -39,7 +42,6 @@ export default {
 
         /* 处理评论时间 */
         comment.toNow = getToNow(comment.create_time)
-        console.log(pictures)
         return {...comment, pictures}
       })
 
@@ -53,13 +55,18 @@ export default {
         comment.avator = account.avator
       })
 
-      console.log('commentList', commentList)
+      const goodComments = commentList.filter(comment => comment.comment_tag === 1)
+      const mediumComments = commentList.filter(comment => comment.comment_tag === 2)
+      const badComments = commentList.filter(comment => comment.comment_tag === 3)
 
       yield put({
         type: 'save',
         payload: {
           commentList,
-          pictureList
+          pictureList,
+          goodComments,
+          mediumComments,
+          badComments
         }
       })
     }
@@ -70,3 +77,8 @@ export default {
     },
   }
 } 
+
+// payload: {
+//  commentList: [],
+//  pictureList: []
+// }
