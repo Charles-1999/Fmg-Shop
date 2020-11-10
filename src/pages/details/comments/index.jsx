@@ -23,7 +23,8 @@ class Comments extends Component {
   /* 切换tabBar */
   switchTab(e) {
     const curr_tab = e.target.dataset.index
-    let { commentList, goodComments, mediumComments, badComments } = this.state
+    let { commentList } = this.props
+    let { goodComments, mediumComments, badComments } = this.state
 
     if (curr_tab == 1) {
       commentList = goodComments
@@ -76,7 +77,7 @@ class Comments extends Component {
           title='买家评论'
         />
         <View className='tab_bar' style={{ top: statusBarHeight + capsuleHeight }} onClick={this.switchTab.bind(this)}>
-          <View className={curr_tab==0?'tab_item active':'tab_item'} data-index={0}>全部({commentList.length})</View>
+          <View className={curr_tab==0?'tab_item active':'tab_item'} data-index={0}>全部({this.props.commentList.length})</View>
           <View className={curr_tab==1?'tab_item active':'tab_item'} data-index={1}>好评({goodComments.length})</View>
           <View className={curr_tab==2?'tab_item active':'tab_item'} data-index={2}>中评({mediumComments.length})</View>
           <View className={curr_tab==3?'tab_item active':'tab_item'} data-index={3}>差评({badComments.length})</View>
