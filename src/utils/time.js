@@ -67,7 +67,7 @@ export function getToNow(targetDate) {
   } else if(hourDiff >= 1) {
     return parseInt(hourDiff) + '小时前'
   } else if(minDiff >= 1) {
-    return parseInt(dayDiff) + '分钟前'
+    return parseInt(minDiff) + '分钟前'
   } else {
     return '刚刚'
   }

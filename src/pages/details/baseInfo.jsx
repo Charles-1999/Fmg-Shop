@@ -17,15 +17,6 @@ class BaseInfo extends Component {
             <View className='name'>{details.name}</View>
             <View className='sale_point'>{details.sale_point}</View>
           </View>
-          <View className='right'>
-            <View className='btn'>
-              <Image src='http://qiniu.daosuan.net/picture-1598882867000' />
-              <Button openType='share'></Button>
-            </View>
-            <View className='btn'>
-              <Image src='http://qiniu.daosuan.net/picture-1598883925000' />
-            </View>
-          </View>
         </View>
         <View className='bottom'>
           <Text className='price'>

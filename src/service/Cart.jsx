@@ -7,7 +7,7 @@ export const createCart = params => {
   return request(`/car/info/${params.currGoods.id}`, {
     body: {
       goods_count: params.count,
-      goods_specification_id: params.spec_index,
+      goods_specification_id: params.currGoods.specification[params.spec_index].id,
       delivery_kind: params.delivery_kind
     },
     method: 'POST'

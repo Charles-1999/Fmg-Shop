@@ -261,12 +261,6 @@ class Details extends Component {
     else return;
   }
 
-  // 立即购买
-  buyNow = () => {
-    const { currChoose } = this.state;
-    console.log(currChoose)
-  }
-
   render() {
     console.log('%c ........render.........', 'color:green');
     const { statusBarHeight, capsule, data, isOpen, showPrice, unSalePrice, currNum, showType, currChoose, total } = this.state;
