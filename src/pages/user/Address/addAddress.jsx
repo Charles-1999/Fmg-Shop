@@ -29,6 +29,7 @@ class AddAddressList extends Component {
     name: '',
     phone: '',
     detail: '',
+    phoneIsRight: 1,
   }
 
   handleChange (e,value) {
@@ -49,6 +50,22 @@ class AddAddressList extends Component {
     }
   
   }
+
+  // inputOnBlur(){
+  //   if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
+  //     this.setState({
+  //       phoneIsRight: 1,
+  //     })
+  //   }
+  // }
+
+  // inputOnFocus(){
+  //   if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
+  //     this.setState({
+  //       phoneIsRight: 0,
+  //     })
+  //   }
+  // }
 
   handleOk = () => {
     if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
@@ -117,8 +134,14 @@ class AddAddressList extends Component {
               name='phone' 
               type='text' 
               value={this.state.phone} 
+              // onBlur={this.inputOnBlur()}
+              // onFocus={this.inputOnFocus()}
               onChange={this.handleChange.bind(this, 'phone')} 
             />
+            {!this.state.phoneIsRight?
+             <View className='warn'>手机号格式错误</View>:''
+            }
+           
           </View>
           <View className='address-list-item'>
             <View className='title'>收货人地址</View>
