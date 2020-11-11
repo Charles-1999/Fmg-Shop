@@ -71,11 +71,14 @@ class Comment extends Component {
           pictures:this.state.pictures,
         }
       }).then(()=>{
-        Taro.showToast({
+          Taro.showToast({
           title: '谢谢您的评价',
           icon: 'success',
           duration: 3000,
         })
+        Taro.navigateTo({
+          url: `/pages/details/index?gid=${this.state.good_id}`,
+        });
         
       })
     }

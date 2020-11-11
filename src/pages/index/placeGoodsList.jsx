@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import Taro, {Current} from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { View, Image } from '@tarojs/components'
-import { AtIcon } from 'taro-ui'
 import { get } from 'lodash';
 import './index.scss'
 import Navbar from '../../components/navbar/navbar'
-import more from '../../assets/icon/下拉.png'
 import GoodsCard from './Components/GoodsCard'
 import { get as getGlobalData } from '../../global_data'
 
@@ -66,7 +64,12 @@ class PlaceGoodsList extends Component {
       kindList: current_kind,
     })
   }
-
+  toKindList(id){
+    Taro.navigateTo({
+      url: `/pages/goods_list/index?kind_tag=${id}`
+    })
+  }
+ 
 
   render () {
     const capsuleHeight = this.state.capsule.height + (this.state.capsule.top - this.state.statusBarHeight) * 3
@@ -95,12 +98,12 @@ class PlaceGoodsList extends Component {
               <View className='name'>
                 {item.title}
               </View>
-              <View className='more'>
+              <View className='more' onClick={this.toKindList.bind(this,item.id)}>
                 <View className='checkmore'>查看更多</View>
-                <Image src={more} style='width:50rpx;height:30rpx' />
+                <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
               </View>
             </View>
-            {/* <GoodsCard place_tag={Current.router.params.id} kind_tag={item.id} /> */}
+            <GoodsCard place_tag={Current.router.params.id} kind_tag={item.id} />
           </View>
           ))}
       </View>

@@ -3,7 +3,6 @@ import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { View, Image } from '@tarojs/components'
-import PropTypes from 'prop-types';
 import '../index.scss'
 
 @connect(({ goods }) => ({

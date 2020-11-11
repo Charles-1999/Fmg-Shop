@@ -40,13 +40,14 @@ class GoodsCard extends Component {
         sale_tag:sale_tag,
       }
     });
-    const ids = this.props.goodsList.map((arr) => {return arr.id})
-    if (ids !== []){
+    console.log(this.props.goodsListIds)
+    //const ids = this.props.goodsListIds.map((arr) => {return arr.id})
+    if (this.props.goodsListIds !== []){
       await this.props.dispatch({
         type: 'goods/mgetGoodsListEntity',
-        payload: {
-          ids: ids
-        }
+        payload: 
+          this.props.goodsListIds
+        
       })
       console.log(this.props.goodsList)
     }

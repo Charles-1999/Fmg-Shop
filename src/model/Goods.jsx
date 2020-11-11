@@ -102,14 +102,14 @@ export default {
       const goodsListIds = info.map((arr) => {return arr.id})
       yield put({
         type: 'save',
-        // payload: {
-        //   goodsList:info
-        // },
+        payload: {
+          goodsListIds:goodsListIds
+        },
       });
-      yield put({
-        type: 'getGoodsListEntity',
-        payload: goodsListIds,
-      }); 
+      // yield put({
+      //   type: 'getGoodsListEntity',
+      //   payload: goodsListIds,
+      // }); 
     },
     //畅销榜
     * getGoodsTopList({ payload }, { call, put }) {

@@ -3,11 +3,11 @@ import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { View, Image, Text ,Input} from '@tarojs/components'
-import PropTypes from 'prop-types';
 import { AtTag } from 'taro-ui'
 import '../index.scss'
 import request from '../../../utils/request'
 import GoodsCard from './GoodsCard'
+import SelectFloat from '@components/SelectFloat/index'
 
 @connect(({ goods }) => ({
   ...goods
@@ -247,10 +247,10 @@ class SaleNew extends Component {
           <View className='icon'>
             <Image src='http://qiniu.daosuan.net/picture-1598883875000' style='width:140rpx;height:80rpx' />
           </View>
-          <View className='more'>
+          {/* <View className='more'>
             <View className='checkmore'>进入专题</View>
             <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
-          </View>
+          </View> */}
         </View>
         <View className='goods-items-wrap'>
           {/* <GoodsCard sale_tag={1} /> */}
@@ -293,7 +293,12 @@ class SaleNew extends Component {
           </View>
           )))}        
         </View>
-
+        {/* <SelectFloat 
+          currGoods={data}
+          isOpen={isOpen}
+          showType={showType}
+          hiddenFloat={this.hiddenFloat}
+          chooseType={this.chooseType} /> */}
         <View className={isOpen?'active float_wrap':'float_wrap'}>
             <View className='mask' onClick={this.hiddenFloat}></View>
             <View className={isOpen?'container active':'container'}>

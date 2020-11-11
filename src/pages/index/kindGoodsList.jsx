@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import Taro, {Current} from '@tarojs/taro';
 import { connect } from 'react-redux';
 import { View, Image } from '@tarojs/components'
-import { AtSearchBar, AtIcon, AtTag} from 'taro-ui'
-import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import './index.scss'
 import Navbar from '../../components/navbar/navbar'
@@ -86,7 +84,7 @@ class kindGoodsList extends Component {
         ))}
         
         </View>
-        {/* <GoodsCard kind_tag={this.state.current_index} key={this.state.current_index} /> */}
+        <GoodsCard kind_tag={this.state.current_index} key={this.state.current_index} />
       </View>
     )
   }

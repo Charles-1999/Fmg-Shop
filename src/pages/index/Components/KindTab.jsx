@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
 import { View, Image } from '@tarojs/components'
-import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import '../index.scss'
 
