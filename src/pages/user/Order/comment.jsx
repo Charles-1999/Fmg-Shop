@@ -235,7 +235,7 @@ class Comment extends Component {
         action:'z2',
         token:token.token,
         file:data.path[i].url,
-        key:'comment-pic-'+this.state.good_id+timeCode,
+        key:'comment-pic-'+timeCode,
       },
       success: (resp) => {
          //图片上传成功，图片上传成功的变量+1

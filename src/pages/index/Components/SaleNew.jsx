@@ -235,6 +235,7 @@ class SaleNew extends Component {
 
   render () {
     const { goodsSaleNewList } = this.props;
+    console.log(goodsSaleNewList)
     const list = Array.from(goodsSaleNewList)
     const {isOpen,showType,showPrice,currChoose,currNum,total,data} = this.state;
   //  console.log(get(get(data[0],'specification','')[0],'price'))
@@ -277,8 +278,8 @@ class SaleNew extends Component {
               <View className='price'>
                 <View className='yuan'>¥</View>
                 <View className='number'>
-                  {get(item,'specification','').map(function(spe,index) {
-                    const currentPrice = get(get(item,'specification','')[0],'price');
+                  {get(item,'specification',[]).map(function(spe,index) {
+                    const currentPrice = get(get(item,'specification',[])[0],'price');
                     if( get(spe,'price') >= currentPrice){
                       currentPrice === get(spe,'price');
                     }
