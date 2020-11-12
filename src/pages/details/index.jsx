@@ -55,6 +55,12 @@ class Details extends Component {
       payload: [Number(gid)]
     })
 
+    /* 获取购物车 */
+    this.props.dispatch({
+      type: 'cart/getCart',
+      payload: {}
+    })
+
     this.setState({
       data: this.props.goodsList[0],
     })
@@ -261,6 +267,14 @@ class Details extends Component {
     else return;
   }
 
+  /* 加入购物车的回调 */
+  addCallBack = () => {
+    this.props.dispatch({
+      type: 'cart/getCart',
+      payload: {}
+    })
+  }
+
   render() {
     console.log('%c ........render.........', 'color:green');
     const { statusBarHeight, capsule, data, isOpen, showPrice, unSalePrice, currNum, showType, currChoose, total } = this.state;
@@ -346,7 +360,8 @@ class Details extends Component {
           isOpen={isOpen}
           showType={showType}
           hiddenFloat={this.hiddenFloat}
-          chooseType={this.chooseType} />
+          chooseType={this.chooseType}
+          addCallBack={this.addCallBack} />
         <ToolBar callback={this.showFloat} />
       </View>
     )
