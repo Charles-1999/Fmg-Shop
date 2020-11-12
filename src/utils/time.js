@@ -28,11 +28,12 @@ function formatNumber(n) {
  */
 export function getToNow(targetDate) {
   /* 补全为13位 */
-  let arrTimestamp = (targetDate + '').split('') // 拆分成每一个数字
-  for(let i = 0; i < 13; i++) {
-    if(!arrTimestamp[i])  arrTimestamp[i] = '0'
-  }
-  targetDate = Number(arrTimestamp.join(''))
+  targetDate = formatTimeStamp(targetDate)
+  // let arrTimestamp = (targetDate + '').split('') // 拆分成每一个数字
+  // for(let i = 0; i < 13; i++) {
+  //   if(!arrTimestamp[i])  arrTimestamp[i] = '0'
+  // }
+  // targetDate = Number(arrTimestamp.join(''))
 
   let minute = 1000 * 60 // 1000毫秒 * 60
   let hour = minute * 60
@@ -71,4 +72,16 @@ export function getToNow(targetDate) {
   } else {
     return '刚刚'
   }
+}
+
+/** 格式化时间戳，转为13位
+ * @param {Number} timeStamp
+ * @param {Number} 13位的时间戳 
+ */
+export function formatTimeStamp(timeStamp) {
+  let arrTimestamp = (timeStamp + '').split('') // 拆分成每一个数字
+  for(let i = 0; i < 13; i++) {
+    if(!arrTimestamp[i])  arrTimestamp[i] = '0'
+  }
+  return Number(arrTimestamp.join(''))
 }
