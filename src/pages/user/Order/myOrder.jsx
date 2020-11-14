@@ -14,8 +14,8 @@ import './myOrder.scss'
 import ListGood from './list_good'
 
 //要想下拉加载就不能用connect dva
-// @connect(({ order }) => ({
-//   ...order,
+// @connect(({ order, goods }) => ({
+//   ...order,...goods,
 // }))
 class MyOrderList extends Component {
   state = {
@@ -40,10 +40,6 @@ class MyOrderList extends Component {
   componentDidMount() {
     this.getOrderList();   
   }
-  // config = {
-  //   "enablePullDownRefresh": true, 
-  //   onReachBottomDistance:50
-  // }  
 
   /**获取订单列表信息 */
   async getOrderList(){
@@ -68,7 +64,8 @@ class MyOrderList extends Component {
     this.setState({
       orderList: orderInfoList,
     })
-    orderInfoList.map(item => {
+    //获取订单商品
+    await orderInfoList.map(item => {
       get(item,'order_detail').map(good => {
         this.setState({
           goodsList:this.unique([...this.state.goodsList,get(good,'goods_id')])
@@ -76,10 +73,15 @@ class MyOrderList extends Component {
         return get(good,'goods_id')
       })
     })
-    // const goodsInfo = await getGoodsList(this.state.goodsList);
     const goodsInfo = await request('/goods/_mget',{ 
       body: { ids: this.state.goodsList }, 
       method: 'POST' 
+    })
+    goodsInfo.map(item => {
+      if(item.cover!==""){
+        item.cover = 'http://qiniu.daosuan.net/' + item.cover;
+      }
+      return item.cover;
     })
     this.setState({
       goodsInfo:goodsInfo
@@ -121,49 +123,49 @@ class MyOrderList extends Component {
       }
     })
   }
-  // 加入购物车
-  async addCart(item){
-    const {userId} = this.state;
-    const order_detail = get(item,'order_detail');
-    order_detail.map(good => {
-      const data = request(`/good/_mget`,{
-        method: 'POST',
-        body: {
-          ids: [get(good,'goods_id')]
-        }
-      }).then(()=> {
-      const specification_list = data.specification
-      const spe_index = specification_list.findIndex(i => i.id == get(good,'goods_specification_id'));
-      const spe = get(specification_list[spe_index],'specification') 
-      try{
-        //const currChoose = get(good,'goods_specification_id')
-        const res =  request(`/car/info/${userId}/${data.id}`,{
-          method: 'POST',
-          body: {
-            goods_count: get(good,'purchase_qty'),
-            goods_specification: spe,
-            deliveryKind: get(item,'delivery'),
-            goods_specification_id: get(good,'specification_id'),
-          }
-        });
-        console.log(res)
-        console.log('addCart_res',res)
-        Taro.showToast({
-          title: '加入购物车成功',
-          icon: 'success'
-        })
-        this.hiddenFloat();
-      }catch (error) {
-        console.log('addCart_error',error)
-        console.error(error.data.message);
-        Taro.showToast({
-          title: '加入购物车失败',
-          icon: 'none'
-        })
-      }
-      })   
-    })
-  }
+  // // 加入购物车
+  // async addCart(item){
+  //   const {userId} = this.state;
+  //   const order_detail = get(item,'order_detail');
+  //   order_detail.map(good => {
+  //     const data = request(`/good/_mget`,{
+  //       method: 'POST',
+  //       body: {
+  //         ids: [get(good,'goods_id')]
+  //       }
+  //     }).then(()=> {
+  //     const specification_list = data.specification
+  //     const spe_index = specification_list.findIndex(i => i.id == get(good,'goods_specification_id'));
+  //     const spe = get(specification_list[spe_index],'specification') 
+  //     try{
+  //       //const currChoose = get(good,'goods_specification_id')
+  //       const res =  request(`/car/info/${userId}/${data.id}`,{
+  //         method: 'POST',
+  //         body: {
+  //           goods_count: get(good,'purchase_qty'),
+  //           goods_specification: spe,
+  //           deliveryKind: get(item,'delivery'),
+  //           goods_specification_id: get(good,'specification_id'),
+  //         }
+  //       });
+  //       console.log(res)
+  //       console.log('addCart_res',res)
+  //       Taro.showToast({
+  //         title: '加入购物车成功',
+  //         icon: 'success'
+  //       })
+  //       this.hiddenFloat();
+  //     }catch (error) {
+  //       console.log('addCart_error',error)
+  //       console.error(error.data.message);
+  //       Taro.showToast({
+  //         title: '加入购物车失败',
+  //         icon: 'none'
+  //       })
+  //     }
+  //     })   
+  //   })
+  // }
   /* 统一下单 */
   pay = async (order_id) => {
     const { order_price } = this.state;
@@ -210,6 +212,7 @@ class MyOrderList extends Component {
 
   //取消订单
   async cancelOrder(id){
+    const getOrderList = () => this.getOrderList();
     console.log(id)
     try{
       Taro.showModal({
@@ -227,7 +230,7 @@ class MyOrderList extends Component {
                 title: '订单取消成功',
                 icon: 'success'
               })
-              this.getOrderList()
+              getOrderList()
             })
           }
           }  
@@ -238,22 +241,6 @@ class MyOrderList extends Component {
         icon: 'none'
       })
     }
-    // try{        
-    //   await request(`/_order/${id}/cancel`,{
-    //       method: 'POST',
-    //   }).then(()=>{
-    //     Taro.showToast({
-    //       title: '订单取消成功',
-    //       icon: 'success'
-    //     })
-    //     this.getOrderList()
-    //   })
-    // }catch(error){
-    //   Taro.showToast({
-    //     title: '订单取消失败',
-    //     icon: 'none'
-    //   })
-    // }
   }
 
   //删除订单
@@ -372,7 +359,7 @@ class MyOrderList extends Component {
                     <View key={item.id}>
                       {get(item,'order_detail',[]).map(goods_item=>(
                         <View className='good-item' key={goods_item.id} onClick={this.toDetail.bind(this,item.id)}>
-                          {this.state.goodsInfo !== null?
+                          {this.state.goodsInfo.length !== 0 ?
                           <ListGood 
                             key={this.state.goodsInfo}
                             goodId={get(goods_item,'goods_id','')} 
@@ -426,7 +413,7 @@ class MyOrderList extends Component {
                         </View> : ''}
                       {item.order_status == 4  ? 
                         <View style='display:inline-flex'>
-                          <View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View>
+                          {/* <View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View> */}
                         {/* <View className='commit' onClick={this.toComment.bind(this,item.id)}>我要评价</View> */}
                         </View> : ''}
                       {item.order_status == 5  ? 

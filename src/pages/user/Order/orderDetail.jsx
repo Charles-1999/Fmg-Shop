@@ -12,7 +12,7 @@ import formatTime from '../../.../../../utils/time'
 
 
 @connect(({ order, goods }) => ({
-  ...order,
+  ...order,...goods,
 }))
 class OrderDetail extends Component {
   state = {
@@ -64,12 +64,17 @@ class OrderDetail extends Component {
       })
       return this.state.ids
     })
-    const goodsInfo = await request('/goods/_mget',{ 
-      body: {ids:this.state.ids}, 
-      method: 'POST' 
+    await this.props.dispatch({
+      type: 'goods/mgetGoodsListEntity',
+      payload: 
+        this.state.ids
     })
+    // const goodsInfo = await request('/goods/_mget',{ 
+    //   body: {ids:this.state.ids}, 
+    //   method: 'POST' 
+    // })
     this.setState({
-      goods_info:goodsInfo
+      goods_info:this.props.goodsList
     })
   }
   //获取地址信息
@@ -176,9 +181,7 @@ class OrderDetail extends Component {
               <View className='newest-time'>{this.state.delivery_time}</View>
             </View>
           </View>
-        }
-         
-       
+          }
           <View className='address-wrap'>
             <Image className='icon-address' src='http://qiniu.daosuan.net/picture-1598883667000' ></Image>
             <View className='info'>
@@ -212,19 +215,21 @@ class OrderDetail extends Component {
             <View className='total-fee-wrap'>
               <View className='list'>
                 <View className='all-fee'>总价：</View>
-                <View className='money'>¥{get(this.state.order_info,'child_goods_amount')*0.01}</View>
+                <View className='money'>¥{Number(get(this.state.order_info,'child_goods_amount')/ 100).toFixed(2)*0.01}</View>
               </View>
               <View className='list'>
-                <View className='dil-fee'>运费：</View>
-                <View className='money'>¥{get(this.state.order_info,'child_exp_fare')*0.01}</View>
+                <View className='dil-fee'>运费：</View> 
+                <View className='money'>¥{Number(get(this.state.order_info,'child_exp_fare') / 100).toFixed(2)*0.01}</View>
               </View>
+              {get(this.state.order_info,'sale','') ? 
               <View className='list'>
                 <View className='all-coupon'> 优惠：</View>
-                <View className='money'> -¥{get(this.state.order_info,'child_total_coupon')*0.01}</View>
+                <View className='money'> -¥{Number(get(this.state.order_info,'child_total_coupon')/ 100).toFixed(2)*0.01}</View>
               </View>
+              :''}
               <View className='list'>
                 <View className='pay-fee'> 实付款：</View>
-                <View className='pay-money'> ¥{get(this.state.order_info,'child_order_amount')*0.01}</View>
+                <View className='pay-money'> ¥{Number(get(this.state.order_info,'child_order_amount')/ 100).toFixed(2)*0.01}</View>
               </View>
             </View>
           </View>

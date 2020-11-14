@@ -223,6 +223,7 @@
 .place-goods-list-wrap{
   background-color: rgb(243, 243, 243);
   position: relative;
+  overflow-x: hidden;
   height: 100vh;
   padding-top:10rpx;
   .title-wrap{
@@ -277,12 +278,18 @@
         font-size: 28rpx;
         height: 80rpx;
       }
-      .count-tag{
-
+      .name-detail{
+        font-size: 28rpx;
+        height: 80rpx;
+        .detail{
+          font-size: 26rpx;
+          color: #3d3d3d;
+        }
       }
+
       .count-null{
         font-size: 14rpx;
-        height: 18rpx;
+        height: 24rpx;
         width: 55rpx;
         padding: 4rpx 8rpx;  
         width:60rpx; 

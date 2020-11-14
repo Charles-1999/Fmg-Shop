@@ -45,6 +45,7 @@ class kindGoodsList extends Component {
       }
     });
     const {kindInfoList} = this.props;
+    console.log(kindInfoList)
     this.setState({
       kindList: kindInfoList,
     })

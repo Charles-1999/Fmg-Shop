@@ -47,14 +47,26 @@ class PlaceGoodsList extends Component {
       }
     });
     // //商品
-    // await this.props.dispatch({
-    //   type: 'goods/getGoodsList',
-    //   payload: {
-    //     place_tag:place_tag,
-    //     kind_tag:kind_tag,
-    //     sale_tag:sale_tag,
-    //   }
-    // });
+    await this.props.dispatch({
+      type: 'goods/getGoodsList',
+      payload: {
+        place_tag:Current.router.params.id,
+      }
+    });
+    console.log(this.props.goodsListIds)
+    //const ids = this.props.goodsListIds.map((arr) => {return arr.id})
+    if (this.props.goodsListIds !== []){
+      await this.props.dispatch({
+        type: 'goods/mgetGoodsListEntity',
+        payload: 
+          this.props.goodsListIds
+        
+      })
+      console.log(this.props.goodsList)
+    }
+    this.setState({
+      goodsList:this.props.goodsList,
+    })
     const { placeList, kindInfoList} = this.props
     //数据过滤
     const current_place = placeList.filter(item => item.id == Current.router.params.id)[0];
@@ -103,7 +115,7 @@ class PlaceGoodsList extends Component {
                 <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
               </View>
             </View>
-            <GoodsCard place_tag={Current.router.params.id} kind_tag={item.id} />
+            <GoodsCard place_tag={parseInt(Current.router.params.id)} kind_tag={item.id} />
           </View>
           ))}
       </View>

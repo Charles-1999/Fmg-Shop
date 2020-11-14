@@ -1,4 +1,5 @@
 import Taro, { getStorageInfoSync } from '@tarojs/taro';
+import { get } from 'lodash';
 // import { baseUrl, noConsole } from '../config';
 
 export default function request(url, option) {
@@ -60,7 +61,7 @@ export function getGoodsList(ids) {
       const isSale = goods.sale
   
       // 每个规格的价格处理和图片前缀处理
-      goods.specification.forEach(spec => {
+      get(goods,'specification',[]).forEach(spec => {
         spec.price = Number(spec.price / 100).toFixed(2)
         // 规格显示的价格(显示该规格的最低价)
         spec.showPrice = spec.price
@@ -74,9 +75,9 @@ export function getGoodsList(ids) {
 
       // 商品显示的价格（显示最低价）
       if(isSale) {
-        goods.showPrice = Math.min(...goods.specification.map(spec => spec.reduced_price)).toFixed(2)
+        goods.showPrice = Math.min(... get(goods,'specification',[]).map(spec => spec.reduced_price)).toFixed(2)
       } else {
-        goods.showPrice = Math.min(...goods.specification.map(spec => spec.price)).toFixed(2)
+        goods.showPrice = Math.min(... get(goods,'specification',[]).map(spec => spec.price)).toFixed(2)
       }
     })
     

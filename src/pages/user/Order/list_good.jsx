@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import Taro from '@tarojs/taro'; 
 import request from '../../../utils/request'
 
-
 @connect(({  goods }) => ({
   ...goods,
 }))
@@ -18,17 +17,17 @@ class ListGood extends Component {
     message:'',
     isShowComment:false,
   }
-  componentDidMount () {
+  componentDidMount(){
     const {goodId,speId,price,quality,message,goodsInfo} = this.props;
-    const data = goodsInfo.filter(item => item.id == goodId)
-    const specification_list = get(data[0],'specification',[])
-    const spe_index = specification_list.findIndex(item => item.id == speId);
-    const spe = get(specification_list[spe_index],'specification') 
-    if(spe){
+    if(goodsInfo.length !== 0){
+      const data = goodsInfo.filter(item => item.id == goodId)[0]
+      const specification_list = get(data,'specification',[])
+      const spe_index = specification_list.findIndex(item => item.id == speId);
+      const spe = get(specification_list[spe_index],'specification') 
       this.setState({
-        goodInfo: data[0],
-        spe_info:spe,
+        goodInfo: data,
         price:price,
+        spe_info:spe,
         quality:quality,
         message:message,
       })
@@ -50,10 +49,10 @@ class ListGood extends Component {
     return (
       <View className='list-good'>
         {this.state.goodInfo !== {} ? 
-        <Image src={'http://qiniu.daosuan.net/'+get(this.state.goodInfo,'cover','')} />
+        <Image src={get(this.state.goodInfo,'cover','')} />
         :''}
         <View className='title'>
-          <View className='name'>{get(this.state.goodInfo,'name','')}</View>
+          <View className='name'>{get(this.state.goodInfo,'name','').substring(0,18)}</View>
           <View className='spe'>
             {this.state.spe_info? Object.keys(this.state.spe_info).map(item =>(
               <View className='item' key={item}>
@@ -65,7 +64,7 @@ class ListGood extends Component {
         </View>
         <View className='price-info'>
           <View class='one-price'>
-            ¥ {this.state.price*0.01}
+              ¥ { Number(this.state.price / 100).toFixed(2)}
             <View class='quantity'>
               x{this.state.quality}
             </View>
