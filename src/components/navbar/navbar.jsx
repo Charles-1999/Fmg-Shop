@@ -4,9 +4,6 @@ import { View, Text, Image } from '@tarojs/components'
 import { get as getGlobalData } from '../../global_data'
 import SearchBar from './searchbar'
 import './navbar.less'
-import './searchbar.less'
-
-import back_img from '../../assets/icon/返回.png'
 
 export default class Navbar extends Component {
   constructor(props) {

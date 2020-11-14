@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { View, Image, Text, Button, Navigator } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import './toolBar.less'
+import { connect } from 'react-redux';
 
+@connect(({ cart }) => ({
+  ...cart
+}))
 class ToolBar extends Component {
   state = {
     isIphoneX: false
@@ -15,21 +19,26 @@ class ToolBar extends Component {
 
   render() {
     const {isIphoneX} = this.state;
-    const {callback} = this.props;
+    const {callback, cart} = this.props;
     return (
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'} >
         <View className='tool_item'>
-          <Image src='http://qiniu.daosuan.net/picture-1598882649000' mode='widthFix' />
-          <Text>店铺</Text>
+          <Image src='http://qiniu.daosuan.net/picture-1598882867000' mode='heightFix' />
+          <Text>转发</Text>
+          <Button openType='share'></Button>
         </View>
         <View className='tool_item'>
-          <Image src='http://qiniu.daosuan.net/picture-1598883519000' mode='widthFix' />
-          <Text>客服</Text>
-          <Button openType='contact'></Button>
+          <Image src='http://qiniu.daosuan.net/picture-1598883925000' mode='heightFix' />
+          <Text>收藏</Text>
         </View>
-        <Navigator className='tool_item' url='/pages/cart/index' openType='switchTab'>
-          <Image src='http://qiniu.daosuan.net/picture-1598883445000' mode='widthFix' />
+        <Navigator className='tool_item cart' url='/pages/cart/index' openType='switchTab'>
+          <Image src='http://qiniu.daosuan.net/picture-1598883445000' mode='heightFix' />
           <Text>购物车</Text>
+          {
+            (cart.data ?? []).length != 0
+            ? <Text className='count'>{(cart.data ?? []).length}</Text>
+            : ''
+          }
         </Navigator>
         <View className='tool_item_2 add_cart' onClick={callback.bind(this,1)}>
           加入购物车

@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, Input} from '@tarojs/components'
 import { connect } from 'react-redux'
+import './index.less'
 
 /**
  * 公共组件-SelectFloat
@@ -10,6 +11,7 @@ import { connect } from 'react-redux'
  * @param {Function}  hiddenFloat 关闭当前浮窗的回调（必填）
  * @param {Number}    showType    显示类型： 0、加入购物车+立即购买 1、加入购物车 2、立即购买
  * @param {Function}  chooseType  选择规格的回调
+ * @param {Function}  addCallBack 加入购物车的回调
  */
 function SelectFloat(props) {
   const [currGoods, setCurrGoods] = useState(props.currGoods)
@@ -129,6 +131,7 @@ function SelectFloat(props) {
           title: '加入购物车成功',
           icon: 'success'
         })
+        props.addCallBack()
         hiddenFloat()
       }, err => {
         console.error('error', err.data.message)

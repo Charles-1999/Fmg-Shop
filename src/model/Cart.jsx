@@ -1,8 +1,10 @@
-import { createCart } from '../service/Cart'
+import { createCart, getCart } from '../service/Cart'
 
 export default {
   namespace: 'cart',
-  state: {},
+  state: {
+    cart: {},
+  },
   effects: {
     /**
      * 创建购物车
@@ -11,6 +13,19 @@ export default {
      */
     * createCart({ payload }, { call, put }) {
       const res = yield call(createCart, payload)
+    },
+    /**
+     * 获取购物车
+     * @param
+     */
+    * getCart({ payload }, { call, put }) {
+      const cart = yield call(getCart, payload)
+      yield put({
+        type: 'save',
+        payload: {
+          cart
+        }
+      })
     }
   },
   reducers: {

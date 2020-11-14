@@ -55,6 +55,12 @@ class Details extends Component {
       payload: [Number(gid)]
     })
 
+    /* 获取购物车 */
+    this.props.dispatch({
+      type: 'cart/getCart',
+      payload: {}
+    })
+
     this.setState({
       data: this.props.goodsList[0],
     })
@@ -261,10 +267,12 @@ class Details extends Component {
     else return;
   }
 
-  // 立即购买
-  buyNow = () => {
-    const { currChoose } = this.state;
-    console.log(currChoose)
+  /* 加入购物车的回调 */
+  addCallBack = () => {
+    this.props.dispatch({
+      type: 'cart/getCart',
+      payload: {}
+    })
   }
 
   render() {
@@ -352,7 +360,8 @@ class Details extends Component {
           isOpen={isOpen}
           showType={showType}
           hiddenFloat={this.hiddenFloat}
-          chooseType={this.chooseType} />
+          chooseType={this.chooseType}
+          addCallBack={this.addCallBack} />
         <ToolBar callback={this.showFloat} />
       </View>
     )
