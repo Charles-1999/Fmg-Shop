@@ -9,8 +9,8 @@ import SelectFloat from '@components/SelectFloat/index'
 import '../index.scss'
 
 //商品卡片
-@connect(({ goods }) => ({
-  ...goods
+@connect(({ goods,cart }) => ({
+  ...goods,...cart
   
 }))
 class GoodsCard extends Component {
@@ -22,14 +22,7 @@ class GoodsCard extends Component {
       goodsList:[],
     }
   }
-
   async componentDidMount(){
-    // const { list } = this.props;
-    // if(list){
-    //   this.setState({
-    //     goodsList:list,
-    //   })
-    // }
     const {place_tag, kind_tag, sale_tag} = this.props;
     console.log(place_tag, kind_tag, sale_tag)
     await this.props.dispatch({
@@ -79,15 +72,20 @@ setGetWay = () => {
   }
 }
 
+/* 加入购物车的回调 */
+addCallBack = () => {
+  this.props.dispatch({
+    type: 'cart/getCart',
+    payload: {}
+  })
+}
+
 // 加入购物车
 async addCart(good_id) {
-  const { goodsSaleNewList } = this.props;
-  if(goodsSaleNewList){
-    this.setState({
-      data: goodsSaleNewList.filter(item => item.id == good_id)[0],
-      isOpen: true,
-    })
-  }
+  this.setState({
+    data: this.state.goodsList.filter(item => item.id == good_id)[0],
+    isOpen: true,
+  })
 }
 
 render () {
@@ -144,6 +142,7 @@ render () {
           currGoods={data}
           isOpen={isOpen}
           showType={1}
+          addCallBack={this.addCallBack} 
           hiddenFloat={() => {this.setState({isOpen: false})}}
         /> 
       </View>
