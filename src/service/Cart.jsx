@@ -20,3 +20,16 @@ export const getCart = params => {
     method: 'POST'
   })
 }
+
+/* 更新购物车 */
+export const updateCart = params => {
+  return request(`/car/info/put/${params.id}`, {
+    body: {
+      goods_count: params.goods_count,
+      goods_id: params.goods_id,
+      goods_specification_id: params.goods_specification_id,
+      check: params.is_check
+    },
+    method: 'PUT'
+  })
+}

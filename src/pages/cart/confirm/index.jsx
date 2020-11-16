@@ -8,8 +8,8 @@ import request, {getGoodsList} from '../../../utils/request'
 import './index.less'
 import { connect } from 'react-redux'
 
-@connect(({ address }) => ({
-  ...address
+@connect(({ address, cart }) => ({
+  ...address, ...cart
 }))
 export default class Confirm extends Component {
   constructor(props) {
@@ -40,7 +40,7 @@ export default class Confirm extends Component {
       currAddress: Taro.getStorageSync('currAddress')
     })
   }
-  
+
   /* 获取价格信息 */
   getPrice = async() => {
     const {checkList} = this.state
@@ -61,7 +61,7 @@ export default class Confirm extends Component {
     })
 
     const {total_coupon, total_exp_fare, total_goods_amount, total_order_amount} = res
-    
+
     this.setData({
       total_coupon, total_exp_fare, total_goods_amount, total_order_amount
     })
@@ -98,7 +98,7 @@ export default class Confirm extends Component {
     return way;
   }
 
-  /* 
+  /*
     * 获取配送方式列表
     * @params: index 商品在list中的索引
   */
@@ -177,6 +177,7 @@ export default class Confirm extends Component {
       checkList,
       isOpen: false
     });
+    this.getPrice()
     Taro.setStorageSync("checkList", checkList);
   }
 
@@ -238,9 +239,9 @@ export default class Confirm extends Component {
     try {
       const res_pay = await request(`/pay/unified/${order_id}`, {
         body: {
-          body: '凤鸣谷-商城', // 
-          detail: '测试', // 
-          device_info: sysInfo.model, // 
+          body: '凤鸣谷-商城', //
+          detail: '测试', //
+          device_info: sysInfo.model, //
         },
         method: 'POST'
       })
@@ -414,7 +415,7 @@ export default class Confirm extends Component {
               </View>
               <View className='price_info'>
                 <Text className='count'>共<Text className='text'> {item.goods_count} </Text>件，</Text>
-                <Text className='price'>小计：<Text className='sign'>￥</Text><Text className='text'>{goodsList ? (Number(item.goods_count * goodsList[index].specification[item.spec_index].showPrice) + Number(goodsList[index].carriage)).toFixed(2) : ''}</Text></Text>
+                <Text className='price'>小计：<Text className='sign'>￥</Text><Text className='text'>{goodsList ? (Number(item.goods_count * goodsList[index].specification[item.spec_index].showPrice)).toFixed(2) : ''}</Text></Text>
               </View>
             </View>
           ))}
