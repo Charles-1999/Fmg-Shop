@@ -37,6 +37,7 @@ page {
               align-items: flex-start;
               justify-content: center;
               .pic {
+                position: relative;
                 width: 80PX;
                 height: 80PX;
                 margin: 0 20rpx;
@@ -118,13 +119,51 @@ page {
                     }
                     input {
                       width: 60rpx;
-                      height: 30rpx; 
+                      height: 30rpx;
                       text-align: center;
                       color: #686868;
                       border-radius: 10rpx;
                       background-color: #f7f8fa;
                     }
                   }
+                }
+              }
+            }
+          }
+          .cart_item.sold_out {
+            .info_wrap {
+              .pic {
+                .sold_out {
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 100%;
+                  height: 100%;
+                  font-size: 12PX;
+                  background-color: rgba(255, 255, 255, .7);
+                  .text {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 70%;
+                    height: 70%;
+                    border-radius: 50%;
+                    color: #fff;
+                    background-color: rgba(0, 0, 0, .7);
+                  }
+                }
+              }
+              .info {
+                .name {
+                  color: rgba(54, 54, 54, .3);
+                }
+              }
+              .price_wrap {
+                .price {
+                  color: rgba(0, 0, 0, .6);
                 }
               }
             }
@@ -222,7 +261,7 @@ page {
           -webkit-overflow-scrolling: touch;
           .options_list {
             display: flex;
-            flex-flow: row wrap;         
+            flex-flow: row wrap;
             .option {
               margin-top: 20rpx;
               margin-right: 20rpx;
@@ -290,7 +329,7 @@ page {
       }
       .active {
         transform: translate3d(0, 0, 0);
-      }  
+      }
     }
     .active {
       visibility: visible;

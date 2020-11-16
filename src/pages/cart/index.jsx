@@ -104,6 +104,10 @@ class CartListView extends Component {
     cartList.forEach((cart, index) => {
       /* 找出规格id对应的规格序号 */
       const spec_index = goodsList[index].specification.findIndex((spec) => spec.id === cart.goods_specification_id);
+
+      /* 检验是否无货 */
+      if (goodsList[index].specification[spec_index].total === 0) cart.soldOut = true
+
       cart.spec_index = spec_index;
       cart.goods_specification = '';
       /* 渲染规格名称 */
@@ -431,6 +435,16 @@ class CartListView extends Component {
   /* 结算 */
   checkOut() {
     const { checkList, total_count } = this.state;
+
+    if (checkList.some(item => item.soldOut)) {
+      Taro.showToast({
+        title: '有商品已经售光噢，请重新选择',
+        icon: 'none',
+        duration: 2500
+      })
+      return;
+    }
+
     if (checkList.length === 0) {
       Taro.showToast({
         title: '您还没选择商品哦',
@@ -513,13 +527,17 @@ class CartListView extends Component {
           {cartList ? cartList.map((cart, cart_index) => (
             <MovableArea key={cart.id}>
               <MovableView direction='horizontal' inertia outOfBounds x={cart.x} onTouchStart={this.touchMoveStartHandle} onTouchEnd={this.touchMoveEndHandle.bind(this, cart_index)}>
-                <View className='cart_item'>
+                <View className={cart.soldOut ? 'cart_item sold_out' : 'cart_item'}>
                   <View className='checkBox'>
                     <Checkbox checked={cart.is_check} onClick={this.handleCheck.bind(this, cart.id)}></Checkbox>
                   </View>
                   <View className='info_wrap'>
                     <Navigator className='pic' url={'/pages/details/index?gid=' + cart.goods_id}>
                       <Image src={goodsList[cart_index].cover} />
+                      {cart.soldOut
+                        ? <View className='sold_out'><View className='text'>无货</View></View>
+                        : ''
+                      }
                     </Navigator>
                     <View className='info'>
                       <Navigator className='name' url={'/pages/details/index?gid=' + cart.goods_id}>
@@ -535,11 +553,14 @@ class CartListView extends Component {
                       <View className='price_wrap'>
                         {/* <Text className='price'><Text className='sign'>￥</Text>{goodsList[cart_index].sale ? goodsList[cart_index].specification[cart.spec_index].reduced_price : goodsList[cart_index].specification[cart.spec_index].price}</Text> */}
                         <Text className='price'><Text className='sign'>￥</Text>{cart.price}</Text>
-                        <View className='num_wrap'>
-                          <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={-1}>-</View>
-                          <Input value={cart.goods_count} type='number' onBlur={this.handleInputNum.bind(this, cart.id)} />
-                          <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={1}>+</View>
-                        </View>
+                        {cart.soldOut
+                          ? ''
+                          : <View className='num_wrap'>
+                              <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={-1}>-</View>
+                              <Input value={cart.goods_count} type='number' onBlur={this.handleInputNum.bind(this, cart.id)} />
+                              <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={1}>+</View>
+                            </View>
+                        }
                       </View>
                     </View>
                   </View>

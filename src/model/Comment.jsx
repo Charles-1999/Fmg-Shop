@@ -37,9 +37,7 @@ export default {
           if(pic_count < 5){
             pictureList.push(pictures[0])
             pic_count++
-            console.log(pic_count)
           }
-          console.log(pictureList)
         }
 
         /* 处理评论时间 */
