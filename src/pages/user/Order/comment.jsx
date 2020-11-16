@@ -308,7 +308,7 @@ class Comment extends Component {
             <Image src={get(this.state.goods_info,'cover','')} />
             <View className='info'>
             <View className='name'>{get(this.state.goods_info,'name','')}</View>
-              <View className='sale_point'>{get(this.state.goods_info,'sale_point','')}</View>
+              {/* <View className='sale_point'>{get(this.state.goods_info,'sale_point','').substring(0,16)}</View> */}
             </View>
             
           </View>

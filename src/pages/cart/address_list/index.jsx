@@ -43,13 +43,37 @@ class AddressList extends Component {
 
   /* 删除收货地址 */
   async delAddress(id) {
-    try {
-      await request(`/address/info/delete/${id}`, {
-        method: 'DELETE'
+    const props = this.props;
+    const getAddressList = () => this.getAddressList();
+    try{
+      Taro.showModal({
+        title: '删除地址',
+        content: '请确认要删除地址？',
+        confirmText: '确认',
+        cancelText:'取消',
+        async success(res) {
+          if(res.confirm){
+            await props.dispatch({
+              type: 'address/editAddressInfo',
+              payload: {
+                is_deleted:true,
+                aid: id,
+              }
+            }).then(()=>{
+              Taro.showToast({
+                title: '删除地址成功',
+                icon: 'success'
+              })
+              getAddressList()
+            })
+          }
+          }  
       })
-      this.getAddressList();
-    }catch (err) {
-      console.log(err)
+    }catch(error){
+      Taro.showToast({
+        title: '删除地址失败',
+        icon: 'none'
+      })
     }
   }
 

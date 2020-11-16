@@ -8,23 +8,19 @@ import Taro from '@tarojs/taro';
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 
-
 @connect(({ address }) => ({
   ...address,
 }))
 class AddressList extends Component {
-  static defaultProps = {
-    provinceList: [],
-    cityList: [],
-    areaList: [],
-  };
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
-
   }
-
   async componentDidMount () {
+    this.getAddressInfo();
+  }
+  //获取地址信息
+  async getAddressInfo(){
     const userId = Taro.getStorageSync('userId');
     await this.props.dispatch({
       type: 'address/getAddressInfoUid',
@@ -40,39 +36,42 @@ class AddressList extends Component {
   }
 
   async componentDidShow(){
-    const userId = Taro.getStorageSync('userId');
-    await this.props.dispatch({
-      type: 'address/getAddressInfoUid',
-      payload: {
-        uid:userId
-      }
-    })
-    const{ addressList } = this.props;
-    console.log(addressList)
-    this.setState({
-      addressInfo:addressList
-    })
+    this.getAddressInfo();
   }
+  //删除地址
   async  delAddress(id){
-    console.log(id)
-    await this.props.dispatch({
-      type: 'address/deleteAddressInfo',
-      payload: {
-        aid: id,
-      }
-    })
-    const userId = Taro.getStorageSync('userId'); //获取当前用户信息
-    console.log(userId)
-    await this.props.dispatch({
-      type: 'address/getAddressInfoUid',
-      payload: {
-        uid:userId
-      }
-    })
-    const{ addressList } = this.props;
-    this.setState({
-      addressInfo:addressList
-    })
+    const props = this.props;
+    const getAddressInfo = () => this.getAddressInfo();
+    try{
+      Taro.showModal({
+        title: '删除地址',
+        content: '请确认要删除地址？',
+        confirmText: '确认',
+        cancelText:'取消',
+        async success(res) {
+          if(res.confirm){
+            await props.dispatch({
+              type: 'address/editAddressInfo',
+              payload: {
+                is_deleted:true,
+                aid: id,
+              }
+            }).then(()=>{
+              Taro.showToast({
+                title: '删除地址成功',
+                icon: 'success'
+              })
+              getAddressInfo()
+            })
+          }
+          }  
+      })
+    }catch(error){
+      Taro.showToast({
+        title: '删除地址失败',
+        icon: 'none'
+      })
+    }
   }
   handlePage(e,id){
     if(e == 'add'){
@@ -87,7 +86,6 @@ class AddressList extends Component {
     }
   }
 
-  
   touchMoveStartHandle = (e) => {
     if (e.touches.length == 1) {
       this.setState({

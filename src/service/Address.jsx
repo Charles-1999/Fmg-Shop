@@ -42,6 +42,7 @@ export const editAddressInfo = params => {
       name: params.name,
       phone: params.phone,
       province_id: params.province_id,
+      is_deleted: params.is_deleted
     }
   });
 }

@@ -51,21 +51,19 @@ class AddAddressList extends Component {
   
   }
 
-  // inputOnBlur(){
-  //   if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
-  //     this.setState({
-  //       phoneIsRight: 1,
-  //     })
-  //   }
-  // }
-
-  // inputOnFocus(){
-  //   if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
-  //     this.setState({
-  //       phoneIsRight: 0,
-  //     })
-  //   }
-  // }
+  checkphone(value){
+    console.log(value)
+    if(!(/^1[34578]\d{9}$/.test(value))){
+      this.setState({
+        phoneIsRight:false
+      })
+    }
+    else if((/^1[34578]\d{9}$/.test(value))){
+      this.setState({
+        phoneIsRight:true
+      })
+    }
+  }
 
   handleOk = () => {
     if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
@@ -134,8 +132,7 @@ class AddAddressList extends Component {
               name='phone' 
               type='text' 
               value={this.state.phone} 
-              // onBlur={this.inputOnBlur()}
-              // onFocus={this.inputOnFocus()}
+              onBlur={this.checkphone.bind(this)}
               onChange={this.handleChange.bind(this, 'phone')} 
             />
             {!this.state.phoneIsRight?

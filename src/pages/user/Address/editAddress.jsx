@@ -30,6 +30,7 @@ class editAddress extends Component {
     name: '',
     phone: 0,
     detail: '',
+    phoneIsRight:true,
   }
   async componentDidMount () {
     const userId = Taro.getStorageSync('userId'); //获取当前用户信息
@@ -55,6 +56,20 @@ class editAddress extends Component {
     
   }
 
+  checkphone(value){
+    console.log(value)
+    if(!(/^1[34578]\d{9}$/.test(value))){
+      this.setState({
+        phoneIsRight:false
+      })
+    }
+    else if((/^1[34578]\d{9}$/.test(value))){
+      this.setState({
+        phoneIsRight:true
+      })
+    }
+  }
+
   handleChange (e,value) {
     if(e === 'name') {
       this.setState({
@@ -73,7 +88,6 @@ class editAddress extends Component {
     }
   
   }
-
   handleOk = () => {
     this.props.dispatch({
       type: 'address/editAddressInfo',
@@ -134,7 +148,11 @@ class editAddress extends Component {
               type='text' 
               value={this.state.phone} 
               onChange={this.handleChange.bind(this, 'phone')} 
+              onBlur={this.checkphone.bind(this)}
             />
+            {!this.state.phoneIsRight?
+             <View className='warn'>手机号格式错误</View>:''
+            }
           </View>
           <View className='address-list-item'>
             <View className='title'>收货人地址</View>

@@ -5,10 +5,9 @@
   .top-wrap{
     background-color: #e5e5e5;
     height:500rpx;
-    //display: inline-flex;
+    display: flex;
     width: 100%;
     .touxiang{
-      float: left;
       margin-top: 120rpx;
       margin-left: 100rpx;
       image{
@@ -20,7 +19,7 @@
     .info{
       margin-top: 150rpx;
       margin-left: 40rpx;
-      float: left;
+      
       .name{
         font-size: 38rpx;
         font-weight: 600;
@@ -29,15 +28,18 @@
       .edit-info{
         border-radius: 6PX;
         border: 1rpx solid black;
-        padding: 1rpx 10rpx;  
+        padding: 0rpx 10rpx;  
+        display: flex;
+        padding-bottom: 10rpx;
         .info{
           font-size: 22rpx;
-          margin-top: 4rpx;
+          margin-top: 10rpx;
           margin-left: 0rpx;
         } 
         image{
           width:30rpx;
           height:30rpx;
+          margin-top: auto;
           margin-left: 7rpx;
         } 
       }

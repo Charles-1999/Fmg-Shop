@@ -52,7 +52,7 @@ class ListGood extends Component {
         <Image src={get(this.state.goodInfo,'cover','')} />
         :''}
         <View className='title'>
-          <View className='name'>{get(this.state.goodInfo,'name','').substring(0,16)}</View>
+          <View className='name'>{get(this.state.goodInfo,'name','')}</View>
           <View className='spe'>
             {this.state.spe_info? Object.keys(this.state.spe_info).map(item =>(
               <View className='item' key={item}>

@@ -152,7 +152,7 @@ page{
   margin-top: 30rpx;
   display: flex;
   image{
-
+    border-radius: 5PX;
     width: 160rpx;
     height: 160rpx;
   }
@@ -162,7 +162,7 @@ page{
     .name{
       font-size: 28rpx;
       font-weight: 500;
-      width:85%;
+      width:95%;
     }
     .spe{
       display: inline-flex;
