@@ -1,3 +1,40 @@
+/*
+ *                        _oo0oo_
+ *                       o8888888o
+ *                       88" . "88
+ *                       (| -_- |)
+ *                       0\  =  /0
+ *                     ___/`---'\___
+ *                   .' \\|     |// '.
+ *                  / \\|||  :  |||// \
+ *                 / _||||| -:- |||||- \
+ *                |   | \\\  - /// |   |
+ *                | \_|  ''\---/''  |_/ |
+ *                \  .-\__  '-'  ___/-. /
+ *              ___'. .'  /--.--\  `. .'___
+ *           ."" '<  `.___\_<|>_/___.' >' "".
+ *          | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+ *          \  \ `_.   \_ __\ /__ _/   .-` /  /
+ *      =====`-.____`.___ \_____/___.-`___.-'=====
+ *                        `=---='
+ *
+ *
+ *      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *
+ *            佛祖保佑       永不宕机     永无BUG
+ *
+ *        佛曰:
+ *                写字楼里写字间，写字间里程序员；
+ *                程序人员写程序，又拿程序换酒钱。
+ *                酒醒只在网上坐，酒醉还来网下眠；
+ *                酒醉酒醒日复日，网上网下年复年。
+ *                但愿老死电脑间，不愿鞠躬老板前；
+ *                奔驰宝马贵者趣，公交自行程序员。
+ *                别人笑我忒疯癫，我笑自己命太贱；
+ *                不见满街漂亮妹，哪个归得程序员？
+ */
+
+
 import React, { Component } from 'react';
 import { View, Text, Checkbox, Image, Input, Navigator, MovableArea, MovableView } from '@tarojs/components';
 import Navbar from '@components/navbar/navbar'
@@ -67,6 +104,10 @@ class CartListView extends Component {
     cartList.forEach((cart, index) => {
       /* 找出规格id对应的规格序号 */
       const spec_index = goodsList[index].specification.findIndex((spec) => spec.id === cart.goods_specification_id);
+
+      /* 检验是否无货 */
+      if (goodsList[index].specification[spec_index].total === 0) cart.soldOut = true
+
       cart.spec_index = spec_index;
       cart.goods_specification = '';
       /* 渲染规格名称 */
@@ -335,7 +376,7 @@ class CartListView extends Component {
       console.log(err)
     })
     this.getData();
-    
+
   }
 
   // 单选按钮
@@ -394,6 +435,16 @@ class CartListView extends Component {
   /* 结算 */
   checkOut() {
     const { checkList, total_count } = this.state;
+
+    if (checkList.some(item => item.soldOut)) {
+      Taro.showToast({
+        title: '有商品已经售光噢，请重新选择',
+        icon: 'none',
+        duration: 2500
+      })
+      return;
+    }
+
     if (checkList.length === 0) {
       Taro.showToast({
         title: '您还没选择商品哦',
@@ -476,13 +527,17 @@ class CartListView extends Component {
           {cartList ? cartList.map((cart, cart_index) => (
             <MovableArea key={cart.id}>
               <MovableView direction='horizontal' inertia outOfBounds x={cart.x} onTouchStart={this.touchMoveStartHandle} onTouchEnd={this.touchMoveEndHandle.bind(this, cart_index)}>
-                <View className='cart_item'>
+                <View className={cart.soldOut ? 'cart_item sold_out' : 'cart_item'}>
                   <View className='checkBox'>
                     <Checkbox checked={cart.is_check} onClick={this.handleCheck.bind(this, cart.id)}></Checkbox>
                   </View>
                   <View className='info_wrap'>
                     <Navigator className='pic' url={'/pages/details/index?gid=' + cart.goods_id}>
                       <Image src={goodsList[cart_index].cover} />
+                      {cart.soldOut
+                        ? <View className='sold_out'><View className='text'>无货</View></View>
+                        : ''
+                      }
                     </Navigator>
                     <View className='info'>
                       <Navigator className='name' url={'/pages/details/index?gid=' + cart.goods_id}>
@@ -498,11 +553,14 @@ class CartListView extends Component {
                       <View className='price_wrap'>
                         {/* <Text className='price'><Text className='sign'>￥</Text>{goodsList[cart_index].sale ? goodsList[cart_index].specification[cart.spec_index].reduced_price : goodsList[cart_index].specification[cart.spec_index].price}</Text> */}
                         <Text className='price'><Text className='sign'>￥</Text>{cart.price}</Text>
-                        <View className='num_wrap'>
-                          <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={-1}>-</View>
-                          <Input value={cart.goods_count} type='number' onBlur={this.handleInputNum.bind(this, cart.id)} />
-                          <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={1}>+</View>
-                        </View>
+                        {cart.soldOut
+                          ? ''
+                          : <View className='num_wrap'>
+                              <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={-1}>-</View>
+                              <Input value={cart.goods_count} type='number' onBlur={this.handleInputNum.bind(this, cart.id)} />
+                              <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={1}>+</View>
+                            </View>
+                        }
                       </View>
                     </View>
                   </View>

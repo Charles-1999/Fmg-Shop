@@ -1,4 +1,4 @@
-import { createCart, getCart } from '../service/Cart'
+import { createCart, getCart, updateCart } from '../service/Cart'
 
 export default {
   namespace: 'cart',
@@ -26,6 +26,9 @@ export default {
           cart
         }
       })
+    },
+    * updateCart({ payload }, { call, put }) {
+      const res = yield call(updateCart, payload)
     }
   },
   reducers: {

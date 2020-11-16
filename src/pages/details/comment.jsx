@@ -24,13 +24,16 @@ class Comment extends Component {
         <View className='title'>买家评论（{commentList.length}）</View>
         <Image className='more' src='http://qiniu.daosuan.net/picture-1598883365000' />
         <View className='comment_list'>
-          {pictureList.map((pic, index) => (
-            <Image src={pic} key={index} />
-          ))}
+          {pictureList.length > 0
+            ? pictureList.map((pic, index) => (
+              <Image src={pic} key={index} />
+            ))
+            : <View className='text'>该商品暂无评论</View>
+          }
         </View>
       </View>
     )
   }
 }
 
-export default Comment; 
+export default Comment;
