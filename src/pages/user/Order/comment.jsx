@@ -71,15 +71,30 @@ class Comment extends Component {
           tag:this.state.tag,
           pictures:this.state.pictures,
         }
-      }).then(()=>{
+        
+      }).then((res)=>{
+        if(res){
+          console.log(this.state.pictures)
           Taro.showToast({
-          title: '谢谢您的评价',
-          icon: 'success',
-          duration: 3000,
-        })
-        Taro.navigateTo({
-          url: `/pages/details/index?gid=${this.state.good_id}`,
-        });
+            title: '谢谢您的评价',
+            icon: 'success',
+            duration: 3000,
+          })
+          Taro.redirectTo({
+            url: `/pages/details/index?gid=${this.state.good_id}`,
+          });
+        }
+        else{
+          this.setState({
+            pictures:[],
+          })
+          Taro.showToast({
+            title: '评价失败',
+            icon: 'fail',
+            duration: 3000,
+          })
+        }
+       
         
       })
     }
@@ -201,10 +216,9 @@ class Comment extends Component {
   }
   async toUpload () {
     const { files } = this.state
+    console.log(files)
     if(files.length>0){
-      //this.props.onFilesValue(files)
       const rootUrl = get('http://upload-z2.qiniup.com') // 服务器地址
-      //const cookieData = Taro.getStorageSync('token')  // 图片上传需要单独写入token
       await this.uploadLoader({rootUrl,path:files})
     }else{
       this.setComment()
@@ -221,9 +235,7 @@ class Comment extends Component {
     const token =  await request(`/goods/resources/qiniu/upload_token`, {
       method: 'GET',
     })
-    console.log(token)
     const timeCode = new Date().getTime();
-    console.log(timeCode)
     //发起上传
     await Taro.uploadFile({
       url:'http://upload-z2.qiniup.com',
@@ -241,7 +253,6 @@ class Comment extends Component {
       success: (resp) => {
          //图片上传成功，图片上传成功的变量+1
           let resultData= JSON.parse(resp.data)
-          console.log(resultData)
           if(resp.statusCode == 200 ){
             success++;
             this.setState({
@@ -267,18 +278,37 @@ class Comment extends Component {
       },
       fail: () => {
           fail++;//图片上传失败，图片上传失败的变量+1
+          Taro.showToast({
+            title: '上传失败',
+            duration: 2000
+          })
       },
       complete: () => {
           Taro.hideLoading()
           i++;//这个图片执行完上传后，开始上传下一张
           if(i==data.path.length){   //当图片传完时，停止调用
-            Taro.showToast({
-              title: '上传成功',
-              icon: 'success',
-              duration: 2000
-            })
-            console.log('成功：'+success+" 失败："+fail);
-            this.setComment()
+            if(fail == 0){
+              Taro.showToast({
+                title: '上传成功',
+                icon: 'success',
+                duration: 2000
+              })
+              console.log('成功：'+success+" 失败："+fail);
+              this.setComment()
+            }
+            else{
+              Taro.showToast({
+                title: '图片上传失败',
+                icon: 'success',
+                duration: 3000
+              })
+              this.setState({
+                pictures:[],
+              })
+              console.log('成功：'+success+" 失败："+fail);
+              // this.setComment()
+            }
+           
          
           }else{//若图片还没有传完，则继续调用函数
               data.i=i;
@@ -296,8 +326,6 @@ class Comment extends Component {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
 
-    console.log(this.state.speId);
-    console.log(this.state.spe_info);
     return (
       <View className='comment' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar

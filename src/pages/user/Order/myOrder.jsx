@@ -29,7 +29,7 @@ class MyOrderList extends Component {
       {id:2, title:'待发货'},
       {id:3, title:'待收货'},
       {id:4, title:'待评价'},
-      {id:6, title:'售后/退款'},
+      {id:7, title:'售后/退款'},
     ],
     orderList:[],
     goodsInfo:[],
@@ -123,49 +123,6 @@ class MyOrderList extends Component {
       }
     })
   }
-  // // 加入购物车
-  // async addCart(item){
-  //   const {userId} = this.state;
-  //   const order_detail = get(item,'order_detail');
-  //   order_detail.map(good => {
-  //     const data = request(`/good/_mget`,{
-  //       method: 'POST',
-  //       body: {
-  //         ids: [get(good,'goods_id')]
-  //       }
-  //     }).then(()=> {
-  //     const specification_list = data.specification
-  //     const spe_index = specification_list.findIndex(i => i.id == get(good,'goods_specification_id'));
-  //     const spe = get(specification_list[spe_index],'specification') 
-  //     try{
-  //       //const currChoose = get(good,'goods_specification_id')
-  //       const res =  request(`/car/info/${userId}/${data.id}`,{
-  //         method: 'POST',
-  //         body: {
-  //           goods_count: get(good,'purchase_qty'),
-  //           goods_specification: spe,
-  //           deliveryKind: get(item,'delivery'),
-  //           goods_specification_id: get(good,'specification_id'),
-  //         }
-  //       });
-  //       console.log(res)
-  //       console.log('addCart_res',res)
-  //       Taro.showToast({
-  //         title: '加入购物车成功',
-  //         icon: 'success'
-  //       })
-  //       this.hiddenFloat();
-  //     }catch (error) {
-  //       console.log('addCart_error',error)
-  //       console.error(error.data.message);
-  //       Taro.showToast({
-  //         title: '加入购物车失败',
-  //         icon: 'none'
-  //       })
-  //     }
-  //     })   
-  //   })
-  // }
   /* 统一下单 */
   pay = async (order_id) => {
     const { order_price } = this.state;
@@ -274,15 +231,37 @@ class MyOrderList extends Component {
   }
   //确认收货
   async handleCheckDelivery(oid,ooid){
-    await this.props.dispatch({
-      type: 'order/editOrderInfo',
-      payload:{
-        status:4,
-        oid:oid,
-        ooid:ooid,
-      }
-    })
-    await this.getOrderList(); //重新加载列表
+    const getOrderList = () => this.getOrderList();
+    const props = this.props
+    try{
+      Taro.showModal({
+        title: '确认收货',
+        //icon: 'success',
+        content: '请确认要收货？',
+        confirmText: '确认',
+        cancelText:'取消',
+        async success(res) {
+          console.log(res)
+          if(res.confirm){
+            await props.dispatch({
+              type: 'order/editOrderInfo',
+              payload:{
+                status:4,
+                oid:oid,
+                ooid:ooid,
+              }
+            })
+            await getOrderList();//重新加载列表
+          }  
+        }
+      })
+    }
+    catch(error){
+      Taro.showToast({
+        title: '确认收货失败',
+        icon: 'none'
+      })
+    }
   }
 
   //跳转到详情页面
@@ -297,13 +276,6 @@ class MyOrderList extends Component {
       url: `/pages/user/Order/deliveryDetail?id=${id}`,
     });
   } 
-  // //跳转到评论页面
-  // toComment= (id) => {
-  //   Taro.navigateTo({
-  //     url: `/pages/user/Order/comment?id=${id}`,
-  //   });
-  // } 
-
 
   render () {
     const {statusBarHeight, capsule} = this.state; 
@@ -395,7 +367,7 @@ class MyOrderList extends Component {
                         </View>
                       :''}
                       </View>
-                      {item.order_status == 6 ? 
+                      {item.order_status == 6 || item.order_status == 1 ? 
                       <View className='fee-wrap'>
                         <View className='pay-fee'> 应付款：</View>
                         <View className='pay-fee-money'> ¥{Number(get(item,'child_order_amount') / 100).toFixed(2)}</View>

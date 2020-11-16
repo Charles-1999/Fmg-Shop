@@ -96,7 +96,7 @@ class UserList extends Component {
               <Image src='http://qiniu.daosuan.net/picture-1598882509000' style='width:90rpx;height:90rpx' />
               <View className='name'>待评价</View>
             </View>
-            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,6)}>
+            <View className='myorder-list-item' onClick={this.handleOrder.bind(this,7)}>
               <Image src='http://qiniu.daosuan.net/picture-1599033897000' style='width:90rpx;height:90rpx' />
               <View className='name-last'>退款/售后</View>
             </View>
