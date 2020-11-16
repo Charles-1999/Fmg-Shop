@@ -36,7 +36,7 @@ function SelectFloat(props) {
     props.hiddenFloat()
   }
 
-  /** 
+  /**
    * 选择规格
    * @param {Number} spec_index 规格的索引
   */
@@ -56,7 +56,7 @@ function SelectFloat(props) {
     setCurrChoose(spec_index)
     setTotal(goods_total)
 
-    // 父组件的回调函数
+    // 选择规格的回调
     if(props.chooseType)
       props.chooseType(spec_index)
   }
@@ -98,7 +98,7 @@ function SelectFloat(props) {
     setCurrCount(Number(value))
     if (!(value >=1 && value <= total)) setCurrCount(1)
   }
-  
+
   /* 加入购物车 */
   function addCart() {
     if (currChoose === null) {
@@ -131,7 +131,9 @@ function SelectFloat(props) {
           title: '加入购物车成功',
           icon: 'success'
         })
-        props.addCallBack()
+        // 加入购物车后的回调
+        if (props.addCallBack)
+          props.addCallBack()
         hiddenFloat()
       }, err => {
         console.error('error', err.data.message)
