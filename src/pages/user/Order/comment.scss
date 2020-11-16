@@ -23,9 +23,14 @@ page{
         flex:1;
         margin-left: 30rpx;
         padding:15rpx 0 ;
-        .sale_point{
-          font-size: 26rpx;
+        .spe_info{
+          display: flex;
+          font-size: 25rpx;
           margin-top: 10rpx;
+          color: #6e6e6e;
+          .item{
+            margin-right: 10rpx;
+          }
         }
         .name{
           font-size: 30rpx;

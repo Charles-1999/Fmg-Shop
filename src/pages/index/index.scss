@@ -253,7 +253,8 @@
 .goods-card{
   .goods-items-wrap{
     padding:0rpx 30rpx;
-    width:100%; overflow:hidden;
+    width:100%; 
+    overflow-y: hidden;
     .item{
       margin-bottom: 25rpx;
       margin-right: 25rpx;

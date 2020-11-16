@@ -19,6 +19,7 @@ class Comment extends Component {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
     userId: Taro.getStorageSync('userId'),
+    speId: Current.router.params.speId,  
     good_id:Current.router.params.id,  //当前订单id
     content:'',
     tag:0,
@@ -44,12 +45,12 @@ class Comment extends Component {
  //获取商品信息
   async getOrderInfo(){
     const goodsInfo = await getGoodsList([parseInt(this.state.good_id)])
-    // const goodsInfo = await request('/goods/_mget',{ 
-    //   body: { ids: [parseInt(this.state.good_id)] }, 
-    //   method: 'POST' 
-    // })
+    const specification_list = get(goodsInfo[0],'specification',[])
+    const spe_index = specification_list.findIndex(item => item.id == this.state.speId);
+    const spe = get(specification_list[spe_index],'specification') 
     this.setState({
-      goods_info:goodsInfo[0]
+      goods_info:goodsInfo[0],
+      spe_info:spe,
     })
     console.log(this.state.goods_info)
   }
@@ -294,6 +295,9 @@ class Comment extends Component {
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
+
+    console.log(this.state.speId);
+    console.log(this.state.spe_info);
     return (
       <View className='comment' style={{ marginTop: statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -308,6 +312,14 @@ class Comment extends Component {
             <Image src={get(this.state.goods_info,'cover','')} />
             <View className='info'>
             <View className='name'>{get(this.state.goods_info,'name','')}</View>
+            <View className='spe_info'>
+            {this.state.spe_info? Object.keys(this.state.spe_info).map(item =>(
+              <View className='item' key={item}>
+                {item}:{this.state.spe_info[item]+" "} 
+              </View>
+            )):''}
+            </View>
+        
               {/* <View className='sale_point'>{get(this.state.goods_info,'sale_point','').substring(0,16)}</View> */}
             </View>
             

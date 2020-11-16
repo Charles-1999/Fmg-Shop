@@ -41,7 +41,7 @@ class ListGood extends Component {
   //跳转到评论页面
   toComment= () => {
     Taro.navigateTo({
-      url: `/pages/user/Order/comment?id=${this.props.goodId}`,
+      url: `/pages/user/Order/comment?id=${this.props.goodId}&speId=${this.props.speId}`,
     });
   } 
   
@@ -71,7 +71,7 @@ class ListGood extends Component {
           </View>
          
           {this.state.isShowComment ?
-            <View className='commit' onClick={this.toComment.bind(this)}>我要评价</View>: ''
+            <View className='commit' onClick={this.toComment.bind(this,this.state.speId)}>我要评价</View>: ''
           }
         
         </View>
