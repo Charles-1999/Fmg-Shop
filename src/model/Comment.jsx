@@ -22,9 +22,9 @@ export default {
       /* 请求 批量获取商品评论 接口 */
       let commentList = yield call(getGoodsComments, payload)
 
+      let pic_count = 0;
       commentList = commentList.map(comment => {
         let pictures = []
-        let pic_count = 0;
 
         /* 存储每条评论的用户id */
         userIdList.push(comment.author_id)
@@ -34,10 +34,12 @@ export default {
           pictures = comment.pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
 
           /* 评论图片列表，只插入每条评论的第一张图片 */
-          if(pic_count < 4){
+          if(pic_count < 5){
             pictureList.push(pictures[0])
             pic_count++
+            console.log(pic_count)
           }
+          console.log(pictureList)
         }
 
         /* 处理评论时间 */
@@ -76,7 +78,7 @@ export default {
       return { ...state, ...payload }
     },
   }
-} 
+}
 
 // payload: {
 //  commentList: [],
