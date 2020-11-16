@@ -380,25 +380,33 @@ class MyOrderList extends Component {
                       <View className='detail-fee'>
                       <View className='fee-wrap'>
                         <View className='all-fee'>总价：</View>
-                        <View className='money'>¥{get(item,'child_goods_amount')*0.01},&ensp;</View>
+                        <View className='money'>¥{Number(get(item,'child_goods_amount') / 100).toFixed(2)},&ensp;</View>
                       </View>
                       {get(item,'child_total_coupon') ? 
                         <View className='fee-wrap'>
                           <View className='all-coupon'> 优惠：</View>
-                          <View className='money'> ¥{get(item,'child_total_coupon')*0.01},&ensp;</View>
+                          <View className='money'> ¥{Number(get(item,'child_total_coupon') / 100).toFixed(2)},&ensp;</View>
                         </View>
                       :''}
                       {get(item,'child_exp_fare') ? 
                         <View className='fee-wrap'>
                           <View className='all-coupon'> 运费：</View>
-                          <View className='money'> ¥{get(item,'child_exp_fare')*0.01}</View>
+                          <View className='money'> ¥{Number(get(item,'child_exp_fare') / 100).toFixed(2)}</View>
                         </View>
                       :''}
                       </View>
+                      {item.order_status == 6 ? 
+                      <View className='fee-wrap'>
+                        <View className='pay-fee'> 应付款：</View>
+                        <View className='pay-fee-money'> ¥{Number(get(item,'child_order_amount') / 100).toFixed(2)}</View>
+                      </View>
+                      :
                       <View className='fee-wrap'>
                         <View className='pay-fee'> 实付款：</View>
-                        <View className='pay-fee-money'> ¥{get(item,'child_order_amount')*0.01}</View>
+                        <View className='pay-fee-money'> ¥{Number(get(item,'child_order_amount') / 100).toFixed(2)}</View>
                       </View>
+                      }
+                     
                     </View>
                     <View className='btn'>
                       {item.order_status == 1  ? <View style='display:inline-flex'>

@@ -56,29 +56,6 @@ class GoodsCard extends Component {
     });
   }
 
-  /* 设置发货方式
-    只有一种发货方式时，返回其自身；
-    多种发货方式时，默认第一种方式
-  */
-setGetWay = () => {
-  let {get_way} = this.state.data;
-  switch (get_way) {
-    case 1:case 2:case 4:
-      return get_way;
-    case 3:case 5:case 7:
-      return 1;
-    case 6:
-      return 2;
-  }
-}
-
-/* 加入购物车的回调 */
-addCallBack = () => {
-  this.props.dispatch({
-    type: 'cart/getCart',
-    payload: {}
-  })
-}
 
 // 加入购物车
 async addCart(good_id) {
@@ -142,7 +119,6 @@ render () {
           currGoods={data}
           isOpen={isOpen}
           showType={1}
-          addCallBack={this.addCallBack} 
           hiddenFloat={() => {this.setState({isOpen: false})}}
         /> 
       </View>

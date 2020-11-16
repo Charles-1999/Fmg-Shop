@@ -160,7 +160,7 @@ page{
     flex:1;
     margin-left: 20rpx;
     .name{
-      font-size: 30rpx;
+      font-size: 28rpx;
       font-weight: 500;
       width:85%;
     }
@@ -184,6 +184,7 @@ page{
     .one-price{
       font-size: 35rpx;
       font-weight: 400;
+      text-align: end;
       .quantity{
         align-items: center;
         justify-content: flex-end;
@@ -201,6 +202,8 @@ page{
       color: white;
       font-size: 26rpx;
       margin-top: 10rpx;
+      width: 105rpx;
+      margin-left: auto;
     }
   }
 }

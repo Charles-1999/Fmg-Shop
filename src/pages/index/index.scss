@@ -101,11 +101,11 @@
         }
         .number{
           position:absolute;
-          font-size: 56rpx;
+          font-size: 45rpx;
           color: rgb(255, 255, 255);
           font-weight: 700;
           left: 16rpx;
-          top: -10rpx;
+          top: -2rpx;
           z-index:2;
         }
       }
@@ -136,13 +136,13 @@
               height:100rpx;
             }
             .number{
-              position:absolute;
-              font-size: 40rpx;
-              color: rgb(255, 255, 255);
+              position: absolute;
+              font-size: 35rpx;
+              color: white;
               font-weight: 700;
               left: 4rpx;
-              top:12rpx;
-              z-index:2;
+              top: 15rpx;
+              z-index: 2;
             }
             .pic-2{
               width:160rpx;
@@ -160,15 +160,14 @@
               top:5rpx;
               width:80rpx;
               height:100rpx;
-             
             }
             .number{
               position:absolute;
-              font-size: 40rpx;
+              font-size: 35rpx;
               color: rgb(255, 255, 255);
               font-weight: 700;
               left: 6rpx;
-              top:12rpx;
+              top:15rpx;
               z-index:2;
             }
             .pic-3{
@@ -256,20 +255,20 @@
     padding:0rpx 30rpx;
     width:100%; overflow:hidden;
     .item{
-      margin-bottom: 30rpx;
-      margin-right: 45rpx;
-      height:430rpx;
-      width:280rpx;
+      margin-bottom: 25rpx;
+      margin-right: 25rpx;
+      height: 455rpx;
+      width: 300rpx;
       background-color: white;
       border-radius: 10PX;
-      padding: 20rpx 20rpx;
+      padding: 20rpx 19rpx;
       float: left;
       .cover{
         width:280rpx;
         border-radius: 10PX;
         image{
-          width:280rpx;
-          height: 250rpx;
+          width:300rpx;
+          height: 270rpx;
           border-radius: 10PX;
           clear: both;
         }
@@ -299,14 +298,14 @@
         .price{
           flex:1;
           .yuan{
-            font-size:30rpx;
+            font-size:28rpx;
             font-weight:900;
             color:#D53E1D;
             float:left;
             margin-top: 9rpx;
           }
           .number{
-            font-size: 30rpx;
+            font-size: 28rpx;
             color: #D53E1D;
             font-weight:500;
             float: left;
@@ -528,6 +527,7 @@
     background-color: rgb(243, 243, 243);
     position: relative;
     height: 100vh;
+    overflow-x: hidden;
   .top-list::-webkit-scrollbar {display:none}
   .top-list{
     background-color: rgb(255, 255, 255);
