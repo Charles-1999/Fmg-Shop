@@ -22,6 +22,10 @@ function SelectFloat(props) {
   const [total, setTotal] = useState()
 
   useEffect(() => {
+    setCurrChoose(null)
+  }, [props.currGoods])
+
+  useEffect(() => {
     setIsOpen(props.isOpen)
     setCurrGoods(props.currGoods)
     setShowType(props.showType)
