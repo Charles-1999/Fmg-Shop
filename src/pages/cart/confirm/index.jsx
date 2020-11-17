@@ -8,8 +8,8 @@ import request, {getGoodsList} from '../../../utils/request'
 import './index.less'
 import { connect } from 'react-redux'
 
-@connect(({ address, cart }) => ({
-  ...address, ...cart
+@connect(({ address, cart, goods }) => ({
+  ...address, ...cart, ...goods
 }))
 export default class Confirm extends Component {
   constructor(props) {
@@ -74,9 +74,13 @@ export default class Confirm extends Component {
     checkList.forEach(item => {
       goodsId.push(item.goods_id);
     })
-    const goodsList = await getGoodsList(goodsId)
+    // const goodsList = await getGoodsList(goodsId)
+    await this.props.dispatch({
+      type: 'goods/mgetGoodsListEntity',
+      payload: goodsId
+    })
     this.setData({
-      goodsList,
+      goodsList: this.props.goodsList,
       goodsId
     })
   }
@@ -371,7 +375,7 @@ export default class Confirm extends Component {
                 <Image src={goodsList ? goodsList[index].cover : ''} />
                 <View className='info_wrap'>
                   <View className='name'>{goodsList ? goodsList[index].name : ''}</View>
-                  <View className='specification'>{goodsList ? (goodsList[index].template.map(temp => temp) + '：' + item.goods_specification) : ''}</View>
+                  <View className='specification'>{goodsList ? (goodsList[index].template.map(temp => temp) + '：' + goodsList[index].specification[item.spec_index].specification_text) : ''}</View>
                 </View>
                 <View className='price_wrap'>
                   <Text className='price'><Text className='sign'>￥</Text>{goodsList?goodsList[index].specification[item.spec_index].showPrice:0}</Text>

@@ -19,7 +19,7 @@ class ToolBar extends Component {
 
   render() {
     const {isIphoneX} = this.state;
-    const {callback, cart} = this.props;
+    const {callback, cartList} = this.props;
     return (
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'} >
         <View className='tool_item'>
@@ -35,8 +35,8 @@ class ToolBar extends Component {
           <Image src='http://qiniu.daosuan.net/picture-1598883445000' mode='heightFix' />
           <Text>购物车</Text>
           {
-            (cart.data ?? []).length != 0
-            ? <Text className='count'>{(cart.data ?? []).length}</Text>
+            (cartList ?? []).length != 0
+            ? <Text className='count'>{(cartList ?? []).length}</Text>
             : ''
           }
         </Navigator>
@@ -51,4 +51,4 @@ class ToolBar extends Component {
   }
 }
 
-export default ToolBar; 
+export default ToolBar;

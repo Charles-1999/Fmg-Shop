@@ -15,8 +15,8 @@ export const createCart = params => {
 
 /* 获取购物车 */
 export const getCart = params => {
-  const uid = Taro.getStorageSync('userId')
-  return request(`/car/info/_mget/${uid}`, {
+  const userId = Taro.getStorageSync('userId')
+  return request(`/car/info/_mget/${userId}`, {
     method: 'POST'
   })
 }
