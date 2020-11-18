@@ -196,77 +196,6 @@ class Details extends Component {
     }
   }
 
-  /* 设置发货方式
-    只有一种发货方式时，返回其自身；
-    多种发货方式时，默认第一种方式
-  */
-  setGetWay = () => {
-    let {get_way} = this.state.data;
-    switch (get_way) {
-      case 1:case 2:case 4:
-        return get_way;
-      case 3:case 5:case 7:
-        return 1;
-      case 6:
-        return 2;
-    }
-  }
-
-  // 加入购物车
-  async addCart() {
-    const { currChoose, currNum, total, data, userId } = this.state;
-    this.props.dispatch({
-      type: 'cart/createCart',
-      payload: {
-        goods: {currChoose, currNum},
-        curr: data
-      }
-    })
-    if (currChoose === null) {
-      Taro.showToast({
-        title: `请选择规格'${data.template.join('、')}'`,
-        icon: 'none',
-        duration: 2000
-      })
-    }
-    if (typeof currChoose == 'number') {
-      if(currNum > total) {
-        Taro.showToast({
-          title: `余量不足，请重试尝试！`,
-          icon: 'none',
-          duration: 2000
-        })
-        return;
-      }
-      try {
-        const res = await request(`/car/info/${data.id}`, {
-          method: 'POST',
-          body: {
-            goods_count: currNum,
-            goods_name: data.name,
-            goods_price: data.specification[currChoose].price,
-            goods_specification_id: data.specification[currChoose].id,
-            delivery_kind: this.setGetWay()
-          }
-        });
-        console.log('addCart_res', res)
-        Taro.showToast({
-          title: '加入购物车成功',
-          icon: 'success'
-        })
-        this.hiddenFloat();
-      } catch (error) {
-        console.log('addCart_error', error)
-        console.error(error.data.message);
-        Taro.showToast({
-          title: '加入购物车失败',
-          icon: 'none'
-        })
-      }
-    }
-    else return;
-  }
-
   /* 加入购物车的回调 */
   addCallBack = () => {
     this.props.dispatch({
@@ -296,66 +225,7 @@ class Details extends Component {
         <Comment />
         <DetailInfo data={data.detail} />
         {/* 选择浮窗 */}
-        {/* <View className={isOpen ? 'active float_wrap' : 'float_wrap'}>
-          <View className='mask' onClick={this.hiddenFloat}></View>
-          <View className={isOpen ? 'container active' : 'container'}>
-            <View className='info_wrap'>
-              <Image src={data.cover ? (typeof currChoose == 'number' ? data.specification[currChoose].picture : data.cover) : ''} />
-              <Text className='name'>{data.name}</Text>
-              <Text className='price'>
-                <Text className='sign'>￥</Text><Text className='text'>{showPrice}</Text>
-                {data.sale
-                ? <Text className='unSalePrice'><Text className='sign'>￥</Text>{unSalePrice}</Text>
-                : ''}
-              </Text>
-            </View>
-            <View className='select_wrap'>
-              <View className='title'>{data.template ? data.template.join('、') : ''}：</View>
-              <View className='options_list'>
-                {data.specification ? data.specification.map((spec, spec_index) => (
-                  <View className={currChoose == spec_index ? 'option active' : 'option'} key={spec_index} onClick={this.chooseType.bind(this, spec_index)}>
-                    {data.template.map((temp, temp_index) => (
-                      temp_index == 0 ? spec.specification[temp] : ' ' + spec.specification[temp]
-                    ))}
-                  </View>
-                )) : ''}
-              </View>
-            </View>
-            <View className='num_wrap'>
-              <View className='left'>
-                <View className='title'>购买数量：</View>
-                <View className='total'>剩余{total}件</View>
-              </View>
-              <View className='right'>
-                <View className='btn' onClick={this.handleClickNum} data-num={-1}>-</View>
-                {isOpen
-                  ? <Input value={currNum} type='number' onBlur={this.handleInputNum} />
-                  : ''}
-                <View className='btn' onClick={this.handleClickNum} data-num={1}>+</View>
-              </View>
-            </View>
-            {showType == 0 ?
-              <View className='select_tool_bar'>
-                <View className='cart' onClick={this.addCart.bind(this)}>加入购物车</View>
-                <View className='buy' onClick={this.buyNow}>立即购买</View>
-              </View>
-              : ''
-            }
-            {showType == 1 ?
-              <View className='select_tool_bar'>
-                <View className='cart' onClick={this.addCart.bind(this)}>加入购物车</View>
-              </View>
-              : ''
-            }
-            {showType == 2 ?
-              <View className='select_tool_bar'>
-                <View className='buy' onClick={this.buyNow}>立即购买</View>
-              </View>
-              : ''
-            }
-          </View>
-        </View> */}
-        <SelectFloat 
+        <SelectFloat
           currGoods={data}
           isOpen={isOpen}
           showType={showType}

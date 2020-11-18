@@ -46,8 +46,8 @@ import { get as getGlobalData } from '../../global_data'
 
 import './index.scss'
 
-@connect(({ goods }) => ({
-  ...goods
+@connect(({ goods, cart }) => ({
+  ...goods, ...cart
 }))
 class CartListView extends Component {
   constructor() {
@@ -82,55 +82,96 @@ class CartListView extends Component {
   }
 
   // 获取购物车数据和购物车商品数据
-  async getData() {
+  getData = async() => {
+    let start = new Date()
     const { userId } = this.state;
     let goodsId = [];
 
+    /* 获取购物车数据 */
     const res_mget = await request(`/car/info/_mget/${userId}`, {
       method: 'POST'
     });
-    // 购物车总件数
-    let total_count = res_mget.count
-
+    // 购物车列表
     let cartList = res_mget.data;
+
+    /* 处理缓存数据 */
+    let cartListStor = Taro.getStorageSync('cartListStor')
+    // 如果有缓存
+    if (cartListStor) {
+      // 先检查缓存中是否有多出来的数据
+      cartListStor.forEach((cart, index) => {
+        // 如果缓存中有而数据库没有，则删除缓存中的
+        if (!cartList.find(item => item.id === cart.id)) {
+          cartListStor.splice(index, 1)
+        }
+      })
+
+      // 再检查缓存中有无少数据
+      cartList.forEach((cart, index) => {
+        // 如果缓存没有该购物车，则添加到缓存
+        let i = cartListStor.findIndex(item => item.id === cart.id)
+        if (i === -1) {
+          cartListStor.push({ id: cart.id, is_check: false })
+          cart.is_check = false
+        } else {
+          // 如果找到，则把缓存中的状态添加到cartList中
+          cart.is_check = cartListStor[i].is_check
+        }
+      })
+    } else {
+      // 如果没有缓存,则添加到缓存
+      cartListStor = cartList.map(cart => {
+        return { id:cart.id, is_check: false }
+      })
+      cartList.forEach(cart => cart.is_check = false)
+    }
+    Taro.setStorageSync('cartListStor', cartListStor)
+
     cartList.forEach((cart) => {
       goodsId.push(cart.goods_id)
     })
 
     /* 获取商品列表 */
-    let goodsList = await getGoodsList(goodsId)
+    // let goodsList = await getGoodsList(goodsId)
+    await this.props.dispatch({
+      type: 'goods/mgetGoodsListEntity',
+      payload: goodsId
+    })
+    let goodsList = this.props.goodsList
 
     /* 购物车数据处理 */
-    cartList.forEach((cart, index) => {
-      /* 找出规格id对应的规格序号 */
-      const spec_index = goodsList[index].specification.findIndex((spec) => spec.id === cart.goods_specification_id);
-
-      /* 检验是否无货 */
-      if (goodsList[index].specification[spec_index].total === 0) cart.soldOut = true
-
-      cart.spec_index = spec_index;
-      cart.goods_specification = '';
-      /* 渲染规格名称 */
-      goodsList[index].template.forEach((temp, temp_index) => {
-        if (temp_index == 0)
-          cart.goods_specification += goodsList[index].specification[spec_index].specification[temp];
-        else
-          cart.goods_specification += ' ' + goodsList[index].specification[spec_index].specification[temp];
-      })
-      /* 商品价格 */
-      if(goodsList[index].sale) {
-        cart.price = Number(goodsList[index].specification[spec_index].reduced_price).toFixed(2);
-      } else {
-        cart.price = Number(goodsList[index].specification[spec_index].price).toFixed(2);
+    await this.props.dispatch({
+      type: 'cart/getCartListWithProcess',
+      payload: {
+        cartList,
+        goodsList
       }
-      /* 移动距离 */
-      cart.x = 0;
     })
+    cartList = this.props.cartList
+
+    /* 选中的购物车  */
     const checkList = this.getCheckList(cartList);
     Taro.setStorageSync('checkList', checkList);
+
+    /* 全选 */
     const allCheck = cartList.every(cart => cart.is_check === true) ? true : false;
 
-    // 获取价格信息
+    this.setData({
+      cartList,
+      goodsList,
+      checkList,
+      allCheck
+    })
+    let end = new Date()
+    console.log(end - start)
+  }
+
+  /* 获取当前购物车的价格信息和购物车数量 */
+  getPrice = async(checkList) => {
+    if (checkList == undefined) {
+      checkList = this.state.checkList
+    }
+
     let list = []
     checkList.forEach(item => {
       list.push({
@@ -148,15 +189,21 @@ class CartListView extends Component {
     })
     const {total_coupon, total_goods_amount} = res_price
 
+    /* 获取购物车数量 */
+    this.getCount()
+
     this.setData({
-      cartList,
-      goodsList,
-      checkList,
-      allCheck,
-      total_count,
       total_coupon,
-      total_goods_amount,
+      total_goods_amount
     })
+  }
+
+  /* 获取当前购物车的数量 */
+  getCount = () => {
+    const { checkList } = this.state
+    let total_count = checkList.reduce((prev, curr) => prev + curr.goods_count, 0)
+    this.setData({ total_count })
+    return total_count
   }
 
   // 获取当前操作的购物车商品
@@ -175,22 +222,6 @@ class CartListView extends Component {
   // 获取当前商品规格的序号
   getSpecIndex = (spec_id, currGoods) => {
     return currGoods.specification.findIndex(item => item.id === spec_id)
-  }
-
-  // 点击规格
-  handleTapSpecification(cart_id) {
-    console.log('cart_id', cart_id);
-    const currCart = this.getCurrCart(cart_id);
-    const currGoods = this.getcurrGoods(currCart);
-    const spec_index = this.getSpecIndex(currCart.goods_specification_id, currGoods);
-    this.setData({
-      isOpen: true,
-      currGoods,
-      spec_index,
-      temp_spec_index: spec_index,
-      temp_count: currCart.goods_count,
-      currCart
-    })
   }
 
   // 删除购物车
@@ -233,7 +264,7 @@ class CartListView extends Component {
     this.setData({
       currCart
     })
-    this.updateCart();
+    this.updateCart(currCart, false)
   }
 
   // 列表中 输入商品数量
@@ -248,7 +279,7 @@ class CartListView extends Component {
     this.setData({
       currCart
     })
-    this.updateCart()
+    this.updateCart(currCart, false)
   }
 
   // 获取当前商品规格的余量
@@ -264,9 +295,7 @@ class CartListView extends Component {
   chooseType(temp_spec_index) {
     const { currGoods } = this.state;
     let { temp_count } = this.state;
-    console.log(temp_spec_index)
     const { total } = currGoods.specification[temp_spec_index]
-    console.log('当前余量：', total);
     // 检查余量
     if (temp_count < 1 || temp_count > total) {
       temp_count = 1
@@ -323,24 +352,39 @@ class CartListView extends Component {
     })
   }
 
+  /* 选择框中 点击规格 */
+  handleTapSpecification(cart_id) {
+    console.log('cart_id', cart_id);
+    const currCart = this.getCurrCart(cart_id);
+    const currGoods = this.getcurrGoods(currCart);
+    const spec_index = this.getSpecIndex(currCart.goods_specification_id, currGoods);
+    this.setData({
+      isOpen: true,
+      currGoods,
+      spec_index,
+      temp_spec_index: spec_index,
+      temp_count: currCart.goods_count,
+      currCart
+    })
+  }
+
   /* 选择框中 确认 */
   confirm = () => {
     let { currCart, currGoods, temp_spec_index, temp_count } = this.state;
     const spec_id = currGoods.specification[temp_spec_index].id;
     currCart.goods_specification_id = spec_id;
     currCart.goods_count = temp_count;
-    console.log(spec_id)
     this.setData({
       currCart
     })
-    this.updateCart()
+    this.updateCart(currCart, false, true)
     this.setData({
       isOpen: false
     })
   }
 
   /* 更新购物车 */
-  updateCart = async (currCart, getData = true) => {
+  updateCart = async (currCart, getData = true, getCart = false) => {
     if (currCart == undefined)
       currCart = this.state.currCart;
     await request(`/car/info/put/${currCart.id}`, {
@@ -354,53 +398,92 @@ class CartListView extends Component {
     })
     if (getData)
       this.getData();
+    else {
+      this.getPrice()
+    }
+    if (getCart) {
+      // 重新处理购物车数据
+      this.props.dispatch({
+        type: 'cart/getCartListWithProcess',
+        payload: {
+          cartList: this.state.cartList,
+          goodsList: this.state.goodsList
+        }
+      })
+      this.setData({
+        cartList: this.props.cartList
+      })
+    }
   }
 
   // 全选按钮
-  handleAllCheck = async() => {
-    let { allCheck, cartList } = this.state;
-    allCheck = !allCheck;
-    // cartList.forEach(cart => {
-    //   let currCart = this.getCurrCart(cart.id);
-    //   currCart.is_check = allCheck;
-    //   this.updateCart(currCart, false);
-    // })
-    request('/car/info/_mset', {
-      body: {
-        flag: allCheck
-      },
-      method: 'PUT'
-    }).then(res => {
-      this.setData({ is_check: allCheck })
-    }).catch(err => {
-      console.log(err)
+  handleAllCheck = () => {
+    let { cartList, allCheck } = this.state
+    allCheck = !allCheck
+    // 修改state中的cartList
+    cartList.forEach(cart => {
+      cart.is_check = allCheck
     })
-    this.getData();
-
-  }
-
-  // 单选按钮
-  handleCheck = (cart_id) => {
-    const { cartList } = this.state;
-    const currCart = this.getCurrCart(cart_id);
-    currCart.is_check = !currCart.is_check;
-    this.setData({
-      currCart
+    // 修改缓存中的cartList
+    let cartListStor = Taro.getStorageSync('cartListStor')
+    cartListStor.forEach(cart => {
+      cart.is_check = allCheck
     })
-    this.updateCart();
-    const allCheck = cartList.every(cart => cart.is_check === true) ? true : false;
-    const checkList = this.getCheckList();
+    Taro.setStorageSync('cartListStor', cartListStor)
+
+    /* 获取选中的列表 */
+    const checkList = this.getCheckList(cartList)
+
     this.setData({
+      cartList,
       allCheck,
       checkList
     })
   }
 
-  /* 获取选中的购物车列表 */
+  // 单选按钮
+  handleCheck = (cart_id) => {
+    let { cartList } = this.state
+    // 改state中的cartList
+    cartList.forEach(cart => {
+      if (cart.id === cart_id) {
+        cart.is_check = !(cart.is_check)
+      }
+    })
+    let cartListStor = Taro.getStorageSync('cartListStor')
+    // 改缓存中的cartList
+    cartListStor.forEach(cart => {
+      if(cart.id === cart_id) {
+        cart.is_check = !(cart.is_check)
+      }
+    })
+    Taro.setStorageSync('cartListStor', cartListStor)
+    // const currCart = this.getCurrCart(cart_id);
+    // currCart.is_check = !currCart.is_check;
+    // this.setData({
+    //   currCart
+    // })
+    // this.updateCart();
+
+    /* 判断是否为全选状态 */
+    const allCheck = cartList.every(cart => cart.is_check === true) ? true : false
+    /* 获取选中的列表 */
+    const checkList = this.getCheckList(cartList)
+
+    this.setData({
+      allCheck,
+      checkList,
+      cartList
+    })
+  }
+
+  /* 获取选中的购物车列表并获取价格信息 */
   getCheckList = (cartList) => {
     if (cartList === undefined)
-      cartList = this.state.cartList;
-    return cartList.filter(cart => cart.is_check === true);
+      cartList = this.state.cartList
+    let checkList = cartList.filter(cart => cart.is_check === true)
+    this.getPrice(checkList)
+    return checkList
   }
 
   /* 获取选中的购物车的总价 */
@@ -545,7 +628,7 @@ class CartListView extends Component {
                       </Navigator>
                       <View className='select'>
                         <View className='main' onClick={this.handleTapSpecification.bind(this, cart.id)}>
-                          {cart.goods_specification}
+                          {goodsList[cart_index].specification[cart.spec_index].specification_text}
                           <Image src='http://qiniu.daosuan.net/picture-1598883801000' />
                         </View>
                         <View className='flex'></View>
@@ -580,7 +663,6 @@ class CartListView extends Component {
               <Image src={currGoods.cover} />
               <Text className='name'>{currGoods.name}</Text>
               <Text className='price'>
-                {/* <Text className='sign'>￥</Text>{currGoods.specification ? currGoods.specification[temp_spec_index].price : 0} */}
                 <Text className='sign'>￥</Text>{currGoods.specification ? currGoods.specification[temp_spec_index].showPrice : 0}
               </Text>
             </View>
@@ -589,9 +671,7 @@ class CartListView extends Component {
               <View className='options_list'>
                 {currGoods.specification ? currGoods.specification.map((spec, index) => (
                   <View className={temp_spec_index == index ? 'option active' : 'option'} key={index} onClick={this.chooseType.bind(this, index)}>
-                    {currGoods.template.map((temp, temp_index) => (
-                      temp_index == 0 ? spec.specification[temp] : ' ' + spec.specification[temp]
-                    ))}
+                    {spec.specification_text}
                   </View>
                 )) : ''}
               </View>
@@ -614,8 +694,8 @@ class CartListView extends Component {
         </View>
         {/* 底部结算栏 */}
         <View className='checkout_bar'>
-          <View className='allCheckBox'>
-            <Checkbox checked={allCheck} onClick={this.handleAllCheck}>全选</Checkbox>
+          <View className='allCheckBox' onClick={this.handleAllCheck}>
+            <Checkbox checked={allCheck}>全选</Checkbox>
           </View>
           <View className='count'>
             <Text className='num'>总计：<Text>{total_count}</Text> 件

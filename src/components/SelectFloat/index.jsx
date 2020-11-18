@@ -160,18 +160,9 @@ function SelectFloat(props) {
       return
     }
     if (typeof currChoose == 'number') {
-      // 规格名称
-      let goods_specification = ''
-      currGoods.template.forEach((temp, temp_index) => {
-        if (temp_index == 0)
-          goods_specification += currGoods.specification[currChoose].specification[temp]
-        else
-          goods_specification += ' ' + currGoods.specification[currChoose].specification[temp]
-      })
       let checkList = [{
         goods_id: currGoods.id,
         goods_specification_id: currGoods.specification[currChoose].id,
-        goods_specification: goods_specification,
         goods_count: currCount,
         delivery_kind: setGetWay(),
         spec_index: currChoose
@@ -204,9 +195,7 @@ function SelectFloat(props) {
           <View className='options_list'>
             {currGoods.specification ? currGoods.specification.map((spec, spec_index) => (
               <View className={currChoose == spec_index ? 'option active' : 'option'} key={spec_index} onClick={chooseType.bind(this, spec_index)}>
-                {currGoods.template.map((temp, temp_index) => (
-                  temp_index == 0 ? spec.specification[temp] : ' ' + spec.specification[temp]
-                ))}
+                {spec.specification_text}
               </View>
             )) : ''}
           </View>
