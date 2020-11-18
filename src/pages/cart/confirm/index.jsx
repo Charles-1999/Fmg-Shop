@@ -224,8 +224,8 @@ export default class Confirm extends Component {
         },
         method: 'POST'
       })
+      console.log('res_order', res_order)
       const { id } = res_order;
-      this.delCart()
       this.pay(id);
     }
     catch (err) {
@@ -249,10 +249,16 @@ export default class Confirm extends Component {
         },
         method: 'POST'
       })
-      console.log(res_pay)
+      console.log('res_pay', res_pay)
       this.requestPayment(res_pay.request, order_id);
+      this.delCart()
     }
     catch (err) {
+      Taro.showToast({
+        title: '下单失败，请重新尝试！',
+        icon: 'none'
+      })
+      console.log(err)
       console.log(err)
     }
   }
