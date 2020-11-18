@@ -340,6 +340,8 @@ class MyOrderList extends Component {
                             quality={get(goods_item,'purchase_qty','')} 
                             goodsInfo={this.state.goodsInfo}
                             message={get(goods_item,'message','')}
+                            ooId={get(item,'order_id')}
+                            oId={item.id}
                             isShowComment
                             status={item.order_status}
                           />  :''

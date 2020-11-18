@@ -115,6 +115,23 @@
       display: inline-flex;
       .myorder-list-item{
         width:130rpx;
+        position: relative;
+        .count{
+          position: absolute;
+          right: 30rpx;
+          top: 3rpx;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 40rpx;
+          border-radius: 30PX;
+          background-color: #e16d6d;
+          font-size: 27rpx;
+          color: #fff;
+          padding: 0 12rpx;
+        }
         .name{
           //text-align: center;
           font-size: 25rpx;

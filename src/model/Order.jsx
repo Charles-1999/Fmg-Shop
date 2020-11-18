@@ -18,7 +18,7 @@ export default {
       yield put({
         type: 'save',
         payload:{
-          orderList:info
+          orderList:res
         }
       }); 
     },

@@ -20,7 +20,9 @@ class Comment extends Component {
     capsule: getGlobalData('capsule'),
     userId: Taro.getStorageSync('userId'),
     speId: Current.router.params.speId,  
-    good_id:Current.router.params.id,  //当前订单id
+    good_id:Current.router.params.id,  //当前商品id
+    oId:Current.router.params.oId, 
+    ooId:Current.router.params.ooId, 
     content:'',
     tag:0,
     tagInfo:[
@@ -64,7 +66,7 @@ class Comment extends Component {
       })
     }
     else {
-      await request(`/comment/info/${this.state.good_id}`, {
+      await request(`/comment/info/${this.state.good_id}/${this.state.oId}`, {
         method: 'POST',
         body:{
           content:this.state.content,
@@ -72,9 +74,15 @@ class Comment extends Component {
           pictures:this.state.pictures,
         }
         
-      }).then((res)=>{
+      }).then(async(res)=>{
         if(res){
-          console.log(this.state.pictures)
+          // await request(`/_order/${this.state.order_id}`, {
+          //   method: 'PUT',
+          //   body:{
+          //     IsComment:true,
+          //   }
+          // })
+          // console.log(this.state.pictures)
           Taro.showToast({
             title: '谢谢您的评价',
             icon: 'success',
@@ -111,8 +119,6 @@ class Comment extends Component {
         tag:id,
       })
     }
-   
-    console.log(id)
   }
   //评论
   handleChange =(value) =>{
@@ -284,38 +290,38 @@ class Comment extends Component {
           })
       },
       complete: () => {
-          Taro.hideLoading()
-          i++;//这个图片执行完上传后，开始上传下一张
-          if(i==data.path.length){   //当图片传完时，停止调用
-            if(fail == 0){
-              Taro.showToast({
-                title: '上传成功',
-                icon: 'success',
-                duration: 2000
-              })
-              console.log('成功：'+success+" 失败："+fail);
-              this.setComment()
-            }
-            else{
-              Taro.showToast({
-                title: '图片上传失败',
-                icon: 'success',
-                duration: 3000
-              })
-              this.setState({
-                pictures:[],
-              })
-              console.log('成功：'+success+" 失败："+fail);
-              // this.setComment()
-            }
-           
-         
-          }else{//若图片还没有传完，则继续调用函数
-              data.i=i;
-              data.success=success;
-              data.fail=fail;
-              that.uploadLoader(data);
+        Taro.hideLoading()
+        i++;//这个图片执行完上传后，开始上传下一张
+        if(i==data.path.length){   //当图片传完时，停止调用
+          if(fail == 0){
+            Taro.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            })
+            console.log('成功：'+success+" 失败："+fail);
+            this.setComment()
           }
+          else{
+            Taro.showToast({
+              title: '图片上传失败',
+              icon: 'none',
+              duration: 3000
+            })
+            this.setState({
+              pictures:[],
+            })
+            console.log('成功：'+success+" 失败："+fail);
+            // this.setComment()
+          }
+
+        }
+        else{//若图片还没有传完，则继续调用函数
+          data.i=i;
+          data.success=success;
+          data.fail=fail;
+          that.uploadLoader(data);
+        }
 
       }
     })

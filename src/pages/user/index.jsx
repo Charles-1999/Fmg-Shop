@@ -10,12 +10,16 @@ import { get as getGlobalData } from '../../global_data'
 
 import Navbar from '../../components/navbar/navbar'
 
+@connect(({ order }) => ({
+  ...order,
+}))
 class UserList extends Component {
   static defaultProps = {
     iconList: [],
   };
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
+    uid: Taro.getStorageSync('userId'),
     capsule: getGlobalData('capsule'),
     numberInfo: [
       { id:1, title:'余额', info:'37.90'},
@@ -23,8 +27,60 @@ class UserList extends Component {
       { id:3, title:'卡', info:'3'},
       { id:4, title:'优惠卷/码', info:'4'},
     ],
+    code1: 0, //待付款
+    code2: 0, //待发货
+    code3: 0, //待收货
+    code4: 0, //待评价
+    code5: 0, //退款/售后
   }
   
+  componentDidMount(){
+    this.getOrderCode();
+  }
+  //获取订单信息code
+  async getOrderCode(){
+    console.log(this.state.uid)
+    await this.props.dispatch({
+      type: 'order/getOrderList',
+      payload: {
+        account_id:this.state.uid,
+      }
+    });
+    const total = get(this.props.orderList,'total');
+    await this.props.dispatch({
+      type: 'order/getOrderList',
+      payload: {
+        limit:total,
+        account_id:this.state.uid,
+      }
+    });
+    const ids = get(this.props.orderList,'orders',[]).map((arr) => {return arr.id})
+    await this.props.dispatch({
+      type: 'order/mgetOrderList',
+      payload: {
+        ids:ids
+      }
+    });
+    console.log(this.props.orderInfoList);
+    const code1 = (this.props.orderInfoList.filter(item => item.order_status == 1)).length;
+    const code2 = (this.props.orderInfoList.filter(item => item.order_status == 2)).length;
+    const code3 = (this.props.orderInfoList.filter(item => item.order_status == 3)).length;
+    const code4 = (this.props.orderInfoList.filter(item => item.order_status == 4)).length;
+    this.setState({
+      code1:code1,
+      code2:code2,
+      code3:code3,
+      code4:code4,
+    })
+    console.log(code1)
+    console.log(code2)
+    console.log(code3)
+    console.log(code4)
+    //
+  }
+
+
+
   handlePage(e){
     if(e == 'address'){
       Taro.navigateTo({
@@ -81,18 +137,34 @@ class UserList extends Component {
           <View className='myorder-title' onClick={this.handleOrder.bind(this,0)}>我的订单</View>
           <View className='myorder-list'>
             <View className='myorder-list-item' onClick={this.handleOrder.bind(this,1)}>
+              {this.state.code1 == 0 ?
+                '':
+                <View className='count'>{this.state.code1}</View>
+              }
               <Image src='http://qiniu.daosuan.net/picture-1598882483000' style='width:90rpx;height:90rpx' />
               <View className='name'>待付款</View>
             </View>
             <View className='myorder-list-item' onClick={this.handleOrder.bind(this,2)}>
+              {this.state.code2 == 0 ?
+                '':
+                <View className='count'>{this.state.code2}</View>
+              }
               <Image src='http://qiniu.daosuan.net/picture-1598882446000' style='width:90rpx;height:90rpx' />
               <View className='name'>待发货</View>
             </View>
             <View className='myorder-list-item'onClick={this.handleOrder.bind(this,3)}>
+              {this.state.code3 == 0 ?
+                '':
+                <View className='count'>{this.state.code3}</View>
+              }
               <Image src='http://qiniu.daosuan.net/picture-1598882531000' style='width:90rpx;height:90rpx' />
               <View className='name'>待收货</View>
             </View>
             <View className='myorder-list-item' onClick={this.handleOrder.bind(this,4)}>
+              {this.state.code4 == 0 ?
+                '':
+                <View className='count'>{this.state.code4}</View>
+              }
               <Image src='http://qiniu.daosuan.net/picture-1598882509000' style='width:90rpx;height:90rpx' />
               <View className='name'>待评价</View>
             </View>

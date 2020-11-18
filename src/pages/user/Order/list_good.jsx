@@ -41,7 +41,7 @@ class ListGood extends Component {
   //跳转到评论页面
   toComment= () => {
     Taro.navigateTo({
-      url: `/pages/user/Order/comment?id=${this.props.goodId}&speId=${this.props.speId}`,
+      url: `/pages/user/Order/comment?id=${this.props.goodId}&speId=${this.props.speId}&ooId=${this.props.ooId}&oId=${this.props.oId}`,
     });
   } 
   
