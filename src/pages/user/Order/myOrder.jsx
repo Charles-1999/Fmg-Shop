@@ -36,6 +36,7 @@ class MyOrderList extends Component {
     currentIndex: Current.router.params.status,
     isLoading:false,
     page:1, //总页面数量
+    isMore:true,
   }
   componentDidMount() {
     this.getOrderList();   
@@ -54,6 +55,7 @@ class MyOrderList extends Component {
       method: 'GET'
     })
     const orders = get(orderList,'orders');
+    const total = get(orderList,'total');
     const Ids = orders.map((arr) => {return arr.id})
     const orderInfoList = await request('/_order/_mget', {
       body: {
@@ -63,6 +65,7 @@ class MyOrderList extends Component {
     })
     this.setState({
       orderList: orderInfoList,
+      total: total,
     })
     //获取订单商品
     await orderInfoList.map(item => {
@@ -97,12 +100,19 @@ class MyOrderList extends Component {
 
   //上拉加载
   onReachBottom() {
-    this.setState({ isLoading: true });
-    this.setState({
-      page: this.state.page+1
-    })
-    this.getOrderList();
-    this.setState({ isLoading: false });
+    if(this.state.page*10 >= this.state.total){
+      this.setState({
+        isMore:false,
+      })
+    }
+    else{
+      this.setState({ isLoading: true });
+      this.setState({
+        page: this.state.page+1
+      })
+      this.getOrderList();
+      this.setState({ isLoading: false });
+    }
   }
 
   /**改变当前订单列表状态tab*/
@@ -343,6 +353,7 @@ class MyOrderList extends Component {
                             ooId={get(item,'order_id')}
                             oId={item.id}
                             isShowComment
+                            is_comment={get(goods_item,'is_comment')}
                             status={item.order_status}
                           />  :''
                           }
@@ -415,7 +426,12 @@ class MyOrderList extends Component {
                </View>  
               ))}
             </View>
-          : ''}          
+          : ''} 
+          {this.state.isMore && this.state.total>=10 ?
+           <View className='have-more'>上拉加载更多...</View>  :
+           <View className='no-more'>没有更多了噢</View>    
+          }
+               
       </View>
         <Loading isLoading={this.state.isLoading} />
       </View>

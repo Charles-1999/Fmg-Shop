@@ -3,8 +3,16 @@ page {
 }
 
 .g_con {
-  width: 100vw;
   overflow-x: hidden;
+  padding:20rpx 20rpx;
+}
+
+.topExpress-info{
+  font-size: 26rpx;
+  background: #fff;
+  margin: 10rpx auto;
+  border-radius: 10rpx;
+  padding: 15rpx 30rpx;
 }
 
 .topExpress {
@@ -44,7 +52,6 @@ page {
 }
 
 .expressRecord {
-  width: 710rpx;
   padding-top: 30rpx;
   padding-bottom: 200rpx;
   background: #fff;

@@ -11,7 +11,7 @@ import ListGood from './list_good'
 import './comment.scss'
 
 
-@connect(({ order, goods }) => ({
+@connect(({ order }) => ({
   ...order,
 }))
 class Comment extends Component {
@@ -76,20 +76,13 @@ class Comment extends Component {
         
       }).then(async(res)=>{
         if(res){
-          // await request(`/_order/${this.state.order_id}`, {
-          //   method: 'PUT',
-          //   body:{
-          //     IsComment:true,
-          //   }
-          // })
-          // console.log(this.state.pictures)
           Taro.showToast({
             title: '谢谢您的评价',
             icon: 'success',
             duration: 3000,
           })
           Taro.redirectTo({
-            url: `/pages/details/index?gid=${this.state.good_id}`,
+            url:`/pages/user/Order/commentSuccess?gid=${this.state.good_id}`,
           });
         }
         else{
@@ -244,7 +237,7 @@ class Comment extends Component {
     const timeCode = new Date().getTime();
     //发起上传
     await Taro.uploadFile({
-      url:'http://upload-z2.qiniup.com',
+      url:'https://upload-z2.qiniup.com',
       header:{
         'content-type': 'multipart/form-data',
       },

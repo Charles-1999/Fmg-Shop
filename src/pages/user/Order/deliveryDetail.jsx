@@ -35,13 +35,9 @@ class deliveryDetail extends Component {
   async componentDidMount(){
     this.getOrderInfo();
    // this.getDeliveryInfo();
-   
-
   }
   /**获取快递信息 */
   async getDeliveryInfo(){
-    console.log(33);
-    console.log(this.state.orderInfo)
     console.log(get(this.state.orderInfo,'tracking_id',''))
     const info = await request('/delivery/info/post', {
       body: {
@@ -53,7 +49,6 @@ class deliveryDetail extends Component {
     this.setState({
       deliveryInfo:get(info,'info'),
     })
-    console.log(this.state.deliveryInfo)
   }
   /**获取订单信息 */
   async getOrderInfo(){
@@ -85,8 +80,6 @@ class deliveryDetail extends Component {
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
-    console.log(this.state.deliveryInfo)
-
 
     return (
       <View className='order-detail-wrap' style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -98,20 +91,23 @@ class deliveryDetail extends Component {
           title='物流详情'
         ></Navbar>
         <view class='g_con'>
-          <view class='topExpress'>
+          {/* <view class='topExpress'>
             <view class='topExpress-left'>
-              {/* <image src='/images/Exchange_goods_map_1.png' style='width:60rpx;height:60rpx;border-radius:50%;'></image> */}
+              {/* <image src='/images/Exchange_goods_map_1.png' style='width:60rpx;height:60rpx;border-radius:50%;'></image> 
             </view>
             <view class='topExpress-right'>
               <view class='topExpress-right-top'>{get(this.state.deliveryNameList.filter(item => item.code == get(this.state.deliveryInfo,'com'))[0],'title')}</view>
               <view class='topExpress-right-middle'>运单号：{get(this.state.deliveryInfo,'nu')}</view>
-              {/* <view class='topExpress-right-bottom'>官方电话 95554 ></view> */}
+              {/* <view class='topExpress-right-bottom'>官方电话 95554 ></view> 
             </view>
+          </view> */}
+          <view class='topExpress-info'>
+            <view class='topExpress-name'>快递公司：{get(this.state.deliveryNameList.filter(item => item.code == get(this.state.deliveryInfo,'com'))[0],'title')}</view>
+            <view class='topExpress-code'>运单号：{get(this.state.deliveryInfo,'nu')}</view>
+            {/* <view class='topExpress-right-bottom'>官方电话 95554 ></view> */}
           </view>
-
           {/* <!-- 物流时间轴 --> */}
           <view class='expressRecord'>
-
 
             {/* <!-- 顶部收货地址 --> */}
             <view class='expressRecord-getAddress'>
@@ -206,10 +202,10 @@ class deliveryDetail extends Component {
 
               <view class='expressRecord-date'>
                 <view class='expressRecord-date-text'>
-                  {formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s').substring(5,10)}
+                  {formatTime(get(this.state.orderInfo,'delivery_time',''),'Y/M/D h:m:s').substring(5,10)}
                 </view>
                 <view class='expressRecord-date-time'>
-                  {formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s').substring(10,16)}
+                  {formatTime(get(this.state.orderInfo,'delivery_time',''),'Y/M/D h:m:s').substring(10,16)}
                 </view>
               </view>
             </view> 
