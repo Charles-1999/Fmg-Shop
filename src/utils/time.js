@@ -1,7 +1,8 @@
 export default function formatTime(number, format) {
+  var number = formatTimeStamp(number)
   var formateArr = ['Y', 'M', 'D', 'h', 'm', 's'];
   var returnArr = [];
-  var date = new Date(number * 1000);
+  var date = new Date(number);
   returnArr.push(date.getFullYear());
   returnArr.push(formatNumber(date.getMonth() + 1));
   returnArr.push(formatNumber(date.getDate()));
@@ -15,7 +16,6 @@ export default function formatTime(number, format) {
   format = format.replace('/', '-');
   return format;
 }
-
 function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n

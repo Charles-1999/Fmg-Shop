@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro';
 import { connect } from 'react-redux';
-import { View, Swiper, SwiperItem, Image, Navigator} from '@tarojs/components'
+import { View, Swiper, SwiperItem, Image, Navigator, Input} from '@tarojs/components'
 // import { AtSearchBar,  AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import { get } from 'lodash'
 import './index.scss'
@@ -83,35 +83,44 @@ class Index extends Component {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
     return (
-      <View className='index' style={{ marginTop: statusBarHeight + capsuleHeight }}>
-        <Navbar
+      <View className='index' >
+        <Swiper
+          className='swiper'
+          circular
+          autoplay
+        >
+          {this.state.slideshowList.map(item => (
+            <SwiperItem key={item.id}>
+              <View className='demo-text'>
+                <Navigator url={'/pages/details/index?gid=' + get(item,'goods_id')}>
+                  <View className='photo'>
+                    <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
+                  </View>
+                </Navigator>
+              </View>
+            </SwiperItem>
+          ))}
+        </Swiper>
+        <View className='logo-search-wrap'>
+          <View className='logo'>
+            <Image src='http://qiniu.daosuan.net/picture-1602721913000' />
+          </View>
+          <View className='search-wrap'>
+            <View className='searchBar'>
+            <Input placeholder='搜索'  maxLength='50' />
+            <Image className='search' src='http://qiniu.daosuan.net/icon-1598881971000'  />
+          </View>
+          </View>
+        </View>
+        {/* <Navbar
           statusBarHeight={statusBarHeight}
           capsuleHeight={capsuleHeight}
           showLogo
           showSearch
-        ></Navbar>
+        ></Navbar> */}
         <View className='home-top-wrap'>
           <PlaceTab placeList={this.state.placeList} key={this.state.placeList} />
-          <Swiper
-            className='swiper'
-            circular
-            indicatorDots
-            indicatorColor='#999'
-            indicatorActiveColor='#bf708f'
-            autoplay
-          >
-            {this.state.slideshowList.map(item => (
-              <SwiperItem key={item.id}>
-                <View className='demo-text'>
-                  <Navigator url={'/pages/details/index?gid=' + get(item,'goods_id')}>
-                    <View className='photo'>
-                      <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
-                    </View>
-                  </Navigator>
-                </View>
-          </SwiperItem>
-        ))}
-      </Swiper>
+
         <Kindtab kindList={this.state.kindList} />
         </View>
         <SaleTop goodsSaleTopList={this.state.goodsSaleTopList}  key={this.state.goodsSaleTopList} />

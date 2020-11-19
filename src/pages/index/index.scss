@@ -1,16 +1,13 @@
 /*首页*/
 .index{
   background-color: rgb(243, 243, 243);
-  padding-top:10rpx;
-  // width:100vx;
   overflow-x: hidden;
-  position: relative;
-  height: 100vh;
   .home-top-wrap{
     background-color: white;
     border-radius: 10PX;
     margin: 30rpx 30rpx;
     padding: 30rpx 30rpx;
+    margin-top: 80rpx;
     .place-tab-row::-webkit-scrollbar {display:none}  //是否显示滑动条
     .place-tab-row{
       overflow-y:hidden;
@@ -26,7 +23,7 @@
           height: 130rpx;
           width: 130rpx;
           border-radius: 10PX;
-          background-color: #DCE9FF;
+          // background-color: #DCE9FF;
           img{
             height: 150rpx;
             width: 150rpx;
@@ -564,16 +561,59 @@
 
   }
 }
+//轮播图
 .swiper {
-  height: 280rpx;
-  margin-top: 20rpx;
-  // image {
-  //   height: 100%;
-  // }
+  height: 450rpx;
   .img{
     width:100%;
-    height: 280rpx;
+    height: 450rpx;
   }
+}
+.logo-search-wrap{
+  position: absolute;
+  top: 400rpx;
+  left: 80rpx;
+  display: flex;
+  .logo{
+    margin-top: -5rpx;
+    image{
+      height:110rpx;
+      width:110rpx;
+      border-radius: 50PX;
+    }
+  }
+  .search-wrap{
+    margin-left: 40rpx;
+    .searchBar {
+      position: relative;
+      text-align: center;
+      align-self: center;
+      width: 450rpx;
+      height: 80rpx;
+      input {
+          width: 100%;
+          height: 100%;
+          // padding-left: 20rpx;
+          text-align: center;
+          border-radius: 50rpx;
+          background-color:white;
+          // box-sizing: border-box;
+          margin-top: 16rpx;
+          //box-shadow: 0.5rpx 0.5rpx 2rpx black;
+      }
+      image {
+          position: absolute;
+          top: 50%;
+          transform: translate(0,-50%);
+          height: 50rpx;
+          width: 50rpx;
+      }
+      .search {
+        margin-right: 15rpx;
+      }
+  }
+  }
+
 }
 
 

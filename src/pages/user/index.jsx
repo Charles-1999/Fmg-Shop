@@ -37,6 +37,10 @@ class UserList extends Component {
   componentDidMount(){
     this.getOrderCode();
   }
+
+  componentDidShow(){
+    this.getOrderCode();
+  }
   //获取订单信息code
   async getOrderCode(){
     console.log(this.state.uid)
@@ -52,34 +56,46 @@ class UserList extends Component {
       payload: {
         limit:total,
         account_id:this.state.uid,
+        status: 1,
       }
     });
-    const ids = get(this.props.orderList,'orders',[]).map((arr) => {return arr.id})
-    await this.props.dispatch({
-      type: 'order/mgetOrderList',
-      payload: {
-        ids:ids
-      }
-    });
-    console.log(this.props.orderInfoList);
-    const code1 = (this.props.orderInfoList.filter(item => item.order_status == 1)).length;
-    const code2 = (this.props.orderInfoList.filter(item => item.order_status == 2)).length;
-    const code3 = (this.props.orderInfoList.filter(item => item.order_status == 3)).length;
-    const code4 = (this.props.orderInfoList.filter(item => item.order_status == 4)).length;
     this.setState({
-      code1:code1,
-      code2:code2,
-      code3:code3,
-      code4:code4,
+      code1: this.props.orderList.total
     })
-    console.log(code1)
-    console.log(code2)
-    console.log(code3)
-    console.log(code4)
-    //
+    await this.props.dispatch({
+      type: 'order/getOrderList',
+      payload: {
+        limit:total,
+        account_id:this.state.uid,
+        status: 2,
+      }
+    });
+    this.setState({
+      code2: this.props.orderList.total
+    })
+    await this.props.dispatch({
+      type: 'order/getOrderList',
+      payload: {
+        limit:total,
+        account_id:this.state.uid,
+        status: 3,
+      }
+    });
+    this.setState({
+      code3: this.props.orderList.total
+    })
+    await this.props.dispatch({
+      type: 'order/getOrderList',
+      payload: {
+        limit:total,
+        account_id:this.state.uid,
+        status: 4,
+      }
+    });
+    this.setState({
+      code4: this.props.orderList.total
+    })
   }
-
-
 
   handlePage(e){
     if(e == 'address'){

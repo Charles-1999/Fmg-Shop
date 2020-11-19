@@ -70,7 +70,7 @@ class ListGood extends Component {
             </View>
           </View>
          
-          {this.state.isShowComment ?
+          {this.state.isShowComment && !this.props.is_comment ?
             <View className='commit' onClick={this.toComment.bind(this,this.state.speId)}>我要评价</View>: ''
           }
         

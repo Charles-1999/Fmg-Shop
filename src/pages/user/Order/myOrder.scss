@@ -123,7 +123,7 @@ page{
           
           .pay{
             background-color: #E26D6D;
-            border-radius: 10PX;
+            border-radius: 10rpx;
             padding: 5rpx 15rpx;
             color: white;
             margin-left: 10rpx;
@@ -206,4 +206,18 @@ page{
       margin-left: auto;
     }
   }
+}
+
+
+.no-more{
+  text-align: center;
+  font-size: 28rpx;
+  color:#6d9dfd;
+  margin-bottom: 20rpx;
+}
+.have-more{
+  text-align: center;
+  font-size: 28rpx;
+  color:#525252;
+  margin-bottom: 20rpx;
 }
