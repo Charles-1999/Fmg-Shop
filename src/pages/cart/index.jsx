@@ -203,6 +203,7 @@ class CartListView extends Component {
     const { checkList } = this.state
     let total_count = checkList.reduce((prev, curr) => prev + curr.goods_count, 0)
     this.setData({ total_count })
+    Taro.setStorageSync('total_count', total_count)
     return total_count
   }
 

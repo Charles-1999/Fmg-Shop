@@ -19,7 +19,7 @@
     .info{
       margin-top: 150rpx;
       margin-left: 40rpx;
-      
+
       .name{
         font-size: 38rpx;
         font-weight: 600;
@@ -28,24 +28,24 @@
       .edit-info{
         border-radius: 6PX;
         border: 1rpx solid black;
-        padding: 0rpx 10rpx;  
+        padding: 0rpx 10rpx;
         display: flex;
         padding-bottom: 10rpx;
         .info{
           font-size: 22rpx;
           margin-top: 10rpx;
           margin-left: 0rpx;
-        } 
+        }
         image{
           width:30rpx;
           height:30rpx;
           margin-top: auto;
           margin-left: 7rpx;
-        } 
+        }
       }
     }
   }
-  .num-info-wrap{ 
+  .num-info-wrap{
     margin: 0 30rpx;
     height: 110rpx;
     background-color: rgb(255, 255, 255);

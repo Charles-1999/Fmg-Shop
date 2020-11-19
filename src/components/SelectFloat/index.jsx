@@ -114,14 +114,14 @@ function SelectFloat(props) {
       return
     }
     if (typeof currChoose == 'number') {
-      // if (currCount > total) {
-      //   Taro.showToast({
-      //     title: `余量不足，请重试尝试！`,
-      //     icon: 'none',
-      //     duration: 2000
-      //   })
-      //   return
-      // }
+      if (currCount > total) {
+        Taro.showToast({
+          title: `余量不足，请重试尝试！`,
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
       props.dispatch({
         type: 'cart/createCart',
         payload: {
