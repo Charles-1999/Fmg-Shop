@@ -72,7 +72,7 @@ class SaleTop extends Component {
                 <View className='number'>3</View>
                 <Image src='http://qiniu.daosuan.net/picture-1599455855000' className='range-3' />
                 <Image 
-                  src={get(goodsSaleTopList[2],'cover','')} 
+                  src={get(goodsSaleTopList[2],'cover','')}
                   className='pic-3' 
                   onClick={this.toDetail.bind(this,get(goodsSaleTopList[3],'id',''))} 
                 />
