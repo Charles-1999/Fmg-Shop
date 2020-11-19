@@ -1,7 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2020-10-26 15:46:00
+ * @LastEditTime: 2020-11-16 20:35:33
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /凤鸣谷商城/src/app.config.js
+ */
 export default {
   pages: [
-    'pages/login/index', 
     'pages/index/index',
+    'pages/login/index',
     'pages/user/index',
     'pages/cart/index',
     'pages/cart/confirm/index',
@@ -23,6 +31,7 @@ export default {
     'pages/studies/index',
     'pages/studies/course/index',
     'pages/studies/news/index',
+    'pages/studies/apply/index',
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -75,6 +84,6 @@ export default {
   //   uploadFile: 4000,
   //   downloadFile: 5000
   // },
-  
+
 
 }
