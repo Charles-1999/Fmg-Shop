@@ -152,7 +152,38 @@ page {
       }
     }
     .container.user {
-      background-color: #e5e5e5;
+      .user_info {
+        display: flex;
+        align-items: center;
+        padding: 50rpx 0 70rpx;
+        // height: 300rpx;
+        background-color: #e5e5e5;
+        .avator {
+          width: 100rpx;
+          height: 100rpx;
+          margin-left: 50rpx;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+        .name {
+          margin-left: 40rpx;
+          font-size: 18PX;
+          font-weight: 700;
+        }
+      }
+      .bottom {
+        position: relative;
+        top: -25rpx;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 40rpx 20rpx;
+        border-radius: 40rpx;
+        background-color: #fff;
+        .item {
+          font-size: 16PX;
+        }
+      }
     }
     .tab_bar {
       position: fixed;

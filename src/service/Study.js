@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:26:50
- * @LastEditTime: 2020-11-16 14:46:44
+ * @LastEditTime: 2020-11-21 01:24:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/service/Study.js
@@ -58,7 +58,9 @@ export const preApply = params => {
   return request(`/study/course/${params.cid}/pre_apply`, {
     body: {
       phone: params.phone,
-      name: params.name
+      name: params.name,
+      people: params.people,
+      session_id: params.session_id
     },
     method: 'POST'
   })
