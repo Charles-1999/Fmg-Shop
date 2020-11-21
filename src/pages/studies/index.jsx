@@ -10,9 +10,9 @@ function Studies(props) {
   const capsule = Taro.getStorageSync('capsule')
   const isIphoneX = Taro.getStorageSync('isIphoneX')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
+  const userInfo = Taro.getStorageSync('userInfo')
 
   const [currTab, setCurrTab] = useState(1)
-  // const [courseList, setCourseList] = useState([])
   const { courseList } = props
 
   useEffect(() => {
@@ -141,7 +141,7 @@ function Studies(props) {
           <View className='course_list'>
             {courseList.map(course => (
               <View className='course' key={course.id} onClick={courseTap.bind(this, course.id)}>
-                <Image src={'http://qiniu.daosuan.net/picture-1598883875000'} mode='widthFix' />
+                <Image src={course.cover} mode='widthFix' />
                 <View className='course_info'>
                   <Text className='name'>{course.name}</Text>
                   <Text className='describe'>{course.describe}</Text>
@@ -209,7 +209,15 @@ function Studies(props) {
       }
       {currTab == 3 ?
         <View className='container user'>
-
+          <View className='user_info'>
+            <Image className='avator' src={userInfo.avatarUrl} />
+            <View className='name'>{userInfo.nickName}</View>
+          </View>
+          <View className='bottom'>
+            <View className='item'>预报名</View>
+            <View className='item'>已报名</View>
+            <View className='item'>游记</View>
+          </View>
         </View>
         : ''
       }
