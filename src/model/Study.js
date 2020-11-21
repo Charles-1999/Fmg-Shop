@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-11-16 14:47:11
+ * @LastEditTime: 2020-11-21 22:47:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
@@ -28,6 +28,9 @@ export default {
 
       /* 课程信息数据处理 */
       courseInfo.forEach(info => {
+        /* 封面前缀 */
+        info.cover = 'http://qiniu.daosuan.net/' + info.cover
+
         /* 研学日期（x年 y月 - m年 n月） */
         let startDate = new Date(formatTimeStamp(info.begin_time))
         let endDate = new Date(formatTimeStamp(info.end_time))
