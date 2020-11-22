@@ -17,7 +17,49 @@ page {
           border-right: 6rpx solid #5e83ff;
         }
       }
-      .waterFall {
+      .course_list {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+        .course {
+          width: calc(50% - 30rpx);
+          margin-top: 15rpx;
+          margin-left: 20rpx;
+          background-color: #fff;
+          border-radius: 20rpx;
+          box-shadow: 5rpx 5rpx 13rpx 1rpx #ccc;
+          overflow: hidden;
+          image {
+            width: 100%;
+          }
+          .course_info {
+            display: flex;
+            flex-direction: column;
+            padding: 20rpx;
+            font-size: 16PX;
+            .name {
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
+            .describe {
+              margin: 10rpx 0 ;
+              font-size: 14PX;
+              color: #3e3e3e;
+            }
+            .price {
+              font-size: 14PX;
+              color: #D53E1D;
+              .sign {
+                // font-size: 10PX;
+              }
+            }
+          }
+        }
+      }
+      .waterFall, .course_list {
         display: flex;
         font-size: 14PX;
         .left, .right {
@@ -25,8 +67,9 @@ page {
           display: flex;
           flex-direction: column;
         }
-        .item {
-          margin: 15rpx 20rpx;
+        .item, .course {
+          margin-top: 15rpx;
+          margin-left: 20rpx;
           background-color: #fff;
           border-radius: 20rpx;
           box-shadow: 5rpx 5rpx 13rpx 1rpx #ccc;
@@ -105,6 +148,40 @@ page {
               overflow: hidden;
             }
           }
+        }
+      }
+    }
+    .container.user {
+      .user_info {
+        display: flex;
+        align-items: center;
+        padding: 50rpx 0 70rpx;
+        // height: 300rpx;
+        background-color: #e5e5e5;
+        .avator {
+          width: 100rpx;
+          height: 100rpx;
+          margin-left: 50rpx;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+        .name {
+          margin-left: 40rpx;
+          font-size: 18PX;
+          font-weight: 700;
+        }
+      }
+      .bottom {
+        position: relative;
+        top: -25rpx;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 40rpx 20rpx;
+        border-radius: 40rpx;
+        background-color: #fff;
+        .item {
+          font-size: 16PX;
         }
       }
     }

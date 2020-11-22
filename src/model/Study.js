@@ -1,11 +1,20 @@
-import { getCourseList, mgetCourseInfo } from '../service/Study'
+/*
+ * @Author: Charles
+ * @Date: 2020-11-10 19:34:39
+ * @LastEditTime: 2020-11-21 22:47:02
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /凤鸣谷商城/src/model/Study.js
+ */
+import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply } from '../service/Study'
 import { formatTimeStamp } from '@utils/time'
 
 export default {
   namespace: 'study',
   state: {
     courseList: [],
-    courseInfo: []
+    courseInfo: [],
+    courseTags: []
   },
   effects: {
     /* 获取课程列表 */
@@ -19,6 +28,9 @@ export default {
 
       /* 课程信息数据处理 */
       courseInfo.forEach(info => {
+        /* 封面前缀 */
+        info.cover = 'http://qiniu.daosuan.net/' + info.cover
+
         /* 研学日期（x年 y月 - m年 n月） */
         let startDate = new Date(formatTimeStamp(info.begin_time))
         let endDate = new Date(formatTimeStamp(info.end_time))
@@ -54,13 +66,26 @@ export default {
     /* 批量获取课程信息 */
     * mgetCourseInfo({ payload }, { call, put}) {
       const courseInfo = yield call(mgetCourseInfo, payload)
-      console.log('courseInfo', courseInfo)
       yield put({
         type: 'save',
         payload: {
           courseInfo
         }
       })
+    },
+    /* 批量获取课程标签 */
+    * mgetCourseTags({ payload }, { call, put }) {
+      const res = yield call(mgetCourseTags, payload)
+      yield put({
+        type: 'save',
+        payload: {
+          courseTags: res
+        }
+      })
+    },
+    /* 创建预报名 */
+    * preApply({ payload }, { call, put }) {
+      const res = yield call(preApply, payload)
     }
   },
   reducers: {
@@ -68,8 +93,8 @@ export default {
       return { ...state, ...payload }
     },
     saveCourseList(state, { payload }) { // Obj {[]}
-      return { 
-        ...state, 
+      return {
+        ...state,
         courseList: payload // []
       }
     }

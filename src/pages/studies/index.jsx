@@ -10,10 +10,21 @@ function Studies(props) {
   const capsule = Taro.getStorageSync('capsule')
   const isIphoneX = Taro.getStorageSync('isIphoneX')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
+  const userInfo = Taro.getStorageSync('userInfo')
 
   const [currTab, setCurrTab] = useState(1)
-  // const [courseList, setCourseList] = useState([])
   const { courseList } = props
+
+  useEffect(() => {
+    /* 获取课程列表 */
+    props.dispatch({
+      type: 'study/getCourseList',
+      payload: {
+        pages: 1,
+        limit: 30
+      }
+    })
+  }, [])
 
   const data = [{
     id: 1,
@@ -99,9 +110,9 @@ function Studies(props) {
     update_time: 1589379241,
   }]
 
-  function itemTap(id) {
+  function courseTap(id) {
     Taro.navigateTo({
-      url: '/pages/studies/course/index'
+      url: '/pages/studies/course/index?id=' + id
     })
   }
 
@@ -110,14 +121,6 @@ function Studies(props) {
       url: '/pages/studies/news/index'
     })
   }
-
-  useEffect(() => {
-    /* 获取课程列表 */
-    props.dispatch({
-      type: 'study/getCourseList',
-      payload: { }
-    })
-  }, [])
 
   return (
     <View className={isIphoneX ? 'isIphoneX studies' : 'studies'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -135,27 +138,22 @@ function Studies(props) {
             <Image src='http://qiniu.daosuan.net/picture-1598883875000' mode='heightFix' />
             <Text>最新课程</Text>
           </View>
-          <View className='waterFall'>
-            <View className='left' id='left'>
-              {((courseList ?? []).filter(x => x.id % 2 != 0)).map(item => (
-                <View className='item' key={item.id} onClick={itemTap.bind(this, item.id)}>
-                  <Image src={'http://qiniu.daosuan.net/picture-1598883875000'} mode='widthFix' />
-                  <Text className='title'>{item.name}</Text>
-                  <View className='nums'>{}<Text>人已报名</Text></View>
-                  <Text className='content'>{item.describe}</Text>
+          <View className='course_list'>
+            {courseList.map(course => (
+              <View className='course' key={course.id} onClick={courseTap.bind(this, course.id)}>
+                <Image src={course.cover} mode='widthFix' />
+                <View className='course_info'>
+                  <Text className='name'>{course.name}</Text>
+                  <Text className='describe'>{course.describe}</Text>
+                  <Text className='price'><Text className='sign'>￥</Text>{course.min_price}</Text>
+                  <View className='tag_wrap'>
+                    {course.course_tag.map(tag => (
+                      <View className='tag' key={tag}></View>
+                    ))}
+                  </View>
                 </View>
-              ))}
-            </View>
-            <View className='right' id='right'>
-              {((courseList ?? []).filter(x => x.id % 2 == 0)).map(item => (
-                <View className='item' key={item.id} onClick={itemTap.bind(this, item.id)}>
-                  <Image src={'http://qiniu.daosuan.net/picture-1598883875000'} mode='widthFix' />
-                  <Text className='title'>{item.name}</Text>
-                  <View className='nums'>{}<Text>人已报名</Text></View>
-                  <Text className='content'>{item.describe}</Text>
-                </View>
-              ))}
-            </View>
+              </View>
+            ))}
           </View>
           <View className='big_title'>
             <Image src='http://qiniu.daosuan.net/picture-1598884155000' mode='heightFix' />
@@ -209,9 +207,24 @@ function Studies(props) {
         </View>
         : ''
       }
+      {currTab == 3 ?
+        <View className='container user'>
+          <View className='user_info'>
+            <Image className='avator' src={userInfo.avatarUrl} />
+            <View className='name'>{userInfo.nickName}</View>
+          </View>
+          <View className='bottom'>
+            <View className='item'>预报名</View>
+            <View className='item'>已报名</View>
+            <View className='item'>游记</View>
+          </View>
+        </View>
+        : ''
+      }
       <View className={isIphoneX ? 'isIphoneX tab_bar' : 'tab_bar'}>
         <View className={currTab == 1 ? 'active tab_item' : 'tab_item'} onClick={() => { setCurrTab(1) }}>课程</View>
         <View className={currTab == 2 ? 'active tab_item' : 'tab_item'} onClick={() => { setCurrTab(2) }}>资讯</View>
+        <View className={currTab == 3 ? 'active tab_item' : 'tab_item'} onClick={() => { setCurrTab(3) }}>我的</View>
       </View>
     </View>
   )
