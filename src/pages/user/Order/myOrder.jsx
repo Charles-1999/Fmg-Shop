@@ -351,7 +351,7 @@ class MyOrderList extends Component {
                             goodsInfo={this.state.goodsInfo}
                             message={get(goods_item,'message','')}
                             ooId={get(item,'order_id')}
-                            oId={item.id}
+                            oId={goods_item.id}
                             isShowComment
                             is_comment={get(goods_item,'is_comment')}
                             status={item.order_status}

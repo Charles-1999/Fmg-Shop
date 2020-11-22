@@ -118,37 +118,40 @@ class UserList extends Component {
 
    
     return (
-      <View className='userlist' style={{ marginTop: statusBarHeight + capsuleHeight }}>
-        <Navbar
+      <View className='userlist' >
+        {/* <Navbar
           statusBarHeight={statusBarHeight}
           capsuleHeight={capsuleHeight}
           showTitle
           title='我的'
-        ></Navbar>
-        <View className='top-wrap'>
-          <View className='touxiang'>
-            <Image circle size='large' src={userInfo.avatarUrl}></Image>
-          </View>
-          <View className='info'>
-            <View className='name'>
-              {userInfo.nickName}
+        ></Navbar> */}
+        <View className='top-wrap' >
+          <View className='user-info'>
+            <View className='touxiang'>
+              <Image circle size='large' src={userInfo.avatarUrl}></Image>
             </View>
-            <View className='edit-info'>
-              <View className='info'>
-                个人信息
+            <View className='info'>
+              <View className='name'>
+                {userInfo.nickName}
               </View>
-              <image src='http://qiniu.daosuan.net/picture-1598883556000' />
+              <View className='edit-info'>
+                <View className='info'>
+                  个人信息
+                </View>
+                <image src='http://qiniu.daosuan.net/picture-1598883556000' />
+              </View>
             </View>
           </View>
+          <View className='num-info-wrap at-row'>
+            {this.state.numberInfo.map(item => (
+              <View className='num-item at-col' key={item.id}>
+                <View className='number'>{item.info}</View>
+                <View className='title'>{item.title}</View>
+              </View>
+            ))}
+          </View>
         </View>
-        <View className='num-info-wrap at-row'>
-          {this.state.numberInfo.map(item => (
-            <View className='num-item at-col' key={item.id}>
-              <View className='number'>{item.info}</View>
-              <View className='title'>{item.title}</View>
-            </View>
-          ))}
-        </View>
+      
         <View className='myorder-list-wrap'>
           <View className='myorder-title' onClick={this.handleOrder.bind(this,0)}>我的订单</View>
           <View className='myorder-list'>
@@ -197,10 +200,10 @@ class UserList extends Component {
               <Image src='http://qiniu.daosuan.net/picture-1598883667000' style='width:90rpx;height:90rpx' />
               <View className='name'>收货地址</View>
             </View>
-            <View className='other-service-item'>
+            {/* <View className='other-service-item'>
               <Image src='http://qiniu.daosuan.net/picture-1598883277000' style='width:90rpx;height:90rpx' />
               <View className='name'>账号设置</View>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>

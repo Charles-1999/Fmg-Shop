@@ -46,7 +46,7 @@ class CommentSuccess extends Component {
         ></Navbar>
         <View className='comment-success-wrap'>
           <View className='comment-success'>
-            <Image src='http://qiniu.daosuan.net/picture-1598882509000'></Image>
+            <Image src='http://qiniu.daosuan.net/picture-1606024570000'></Image>
             <View className='text'>评价成功</View>
           </View>
           <View className='btn-wrap'>

@@ -227,7 +227,7 @@ class OrderDetail extends Component {
                   <View className='money'> -¥{Number(get(this.state.order_info,'child_total_coupon')/ 100).toFixed(2)*0.01}</View>
                 </View>
               :''}
-              { get(this.state.order_info,'order_status','') == 6 ?
+              { get(this.state.order_info,'order_status','') == 6 || get(this.state.order_info,'order_status','') == 1 ?
                 <View className='list'>
                   <View className='pay-fee'> 应付款：</View>
                   <View className='pay-money'> ¥{Number(get(this.state.order_info,'child_order_amount') / 100).toFixed(2)}</View>

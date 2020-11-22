@@ -8,7 +8,7 @@ page{
     margin-top: 30rpx;
     margin: 0 30rpx;
     padding:30rpx 30rpx;
-    border-radius: 25PX;
+    border-radius: 10PX;
     margin-bottom: 40rpx;
     .goods-wrap{
       display: flex;
@@ -46,6 +46,7 @@ page{
         border-radius: 20rpx;
         padding: 6rpx 11rpx;
         font-size: 26rpx;
+        color:white;
         margin-right: 20rpx;
         border: 1PX #d6e4ef solid;
       }
@@ -78,6 +79,8 @@ page{
       border-radius: 40rpx;
       width: 120rpx;
       padding: 10rpx 0;
+      color: white;
+      background-color: #92b8fd;
       border: 1PX #92b8fd solid;
       
     }
@@ -85,28 +88,31 @@ page{
   .comment-success-wrap{
     background-color: white;
     border-radius: 10PX;
+    height: 100vh;
     margin: 0rpx 20rpx;
     padding: 20rpx 20rpx;
     .comment-success{
-      display: flex;
+      margin-top: 250rpx;
+      text-align: center;
       image{
-        margin-left: 180rpx;
-        width: 100rpx;
-        height: 100rpx;
+        // margin-left: 180rpx;
+        width: 200rpx;
+        height: 200rpx;
+        text-align: center;
       }
       .text{
-        margin-left: 20rpx;
         font-size: 50rpx;
         font-weight: 600;
+        text-align: center;
         margin-top: 5rpx;
       }
     }
     .btn-wrap{
       display: flex;
-      margin: 30rpx 30rpx;
+      margin: 80rpx 30rpx;
 
       .to-shouye{
-        font-size: 32rpx;
+        font-size: 35rpx;
         background-color:#6e98f5;
         padding: 5rpx 13rpx;
         border-radius: 5PX;
@@ -115,7 +121,7 @@ page{
         color: white;
       }
       .to-comment{
-        font-size: 32rpx;
+        font-size: 35rpx;
         background-color: #6e98f5;
         box-shadow: 1rpx 1rpx 3rpx #6e6e6e;
         padding: 5rpx 13rpx;

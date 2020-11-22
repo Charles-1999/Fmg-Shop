@@ -15,7 +15,7 @@ class ListGood extends Component {
     price:0,
     quality:0,
     message:'',
-    isShowComment:false,
+    isShowComment:0,
   }
   componentDidMount(){
     const {goodId,speId,price,quality,message,goodsInfo} = this.props;
@@ -70,7 +70,7 @@ class ListGood extends Component {
             </View>
           </View>
          
-          {this.state.isShowComment && !this.props.is_comment ?
+          {this.state.isShowComment && this.props.is_comment==0 ?
             <View className='commit' onClick={this.toComment.bind(this,this.state.speId)}>我要评价</View>: ''
           }
         

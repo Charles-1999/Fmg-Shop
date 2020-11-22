@@ -3,61 +3,66 @@
   position: relative;;
   height: 100vh;
   .top-wrap{
-    background-color: #e5e5e5;
-    height:500rpx;
-    display: flex;
+    background-image: url(http://qiniu.daosuan.net/picture-1606028422000);
+    height: 740rpx;
     width: 100%;
-    .touxiang{
-      margin-top: 120rpx;
-      margin-left: 100rpx;
-      image{
-        border-radius: 999px;
-        width:160rpx;
-        height:160rpx;
-      }
-    }
-    .info{
-      margin-top: 150rpx;
-      margin-left: 40rpx;
-
-      .name{
-        font-size: 38rpx;
-        font-weight: 600;
-
-      }
-      .edit-info{
-        border-radius: 6PX;
-        border: 1rpx solid black;
-        padding: 0rpx 10rpx;
-        display: flex;
-        padding-bottom: 10rpx;
-        .info{
-          font-size: 22rpx;
-          margin-top: 10rpx;
-          margin-left: 0rpx;
-        }
+    padding-top: 90px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    .user-info{
+      display: flex;
+      .touxiang{
+        margin-top: 150rpx;
+        margin-left: 100rpx;
         image{
-          width:30rpx;
-          height:30rpx;
-          margin-top: auto;
-          margin-left: 7rpx;
+          border-radius: 999rpx;
+          width: 200rpx;
+          height: 200rpx;
+          box-shadow: 0 0 10px #355e9a;
+        }
+      }
+      .info{
+        margin-top: 150rpx;
+        margin-left: 40rpx;
+        align-self: center;
+        .name{
+          align-self: center;
+          font-size: 40rpx;
+          font-weight: 600;
+        }
+        .edit-info{
+          padding: 0rpx 10rpx;
+          display: flex;
+          background-color: rgb(236, 235, 235);
+          padding-bottom: 10rpx;
+          box-shadow: 0 3rpx 5rpx #464646;
+          .info{
+            font-size: 22rpx;
+            margin-top: 10rpx;
+            margin-left: 0rpx;
+          }
+          image{
+            width:30rpx;
+            height:30rpx;
+            margin-top: auto;
+            margin-left: 7rpx;
+          }
         }
       }
     }
   }
   .num-info-wrap{
     margin: 0 30rpx;
-    height: 110rpx;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     border-radius: 20rpx;
     padding: 15rpx 45rpx;
     display: inline-flex;
-    position: absolute;
-    top: 440rpx;
     width: 80%;
+    margin-top: 80rpx;
+    box-shadow: 1px 3px 5px #464646;
     .num-item{
       width: 50rpx;
-
       .number{
         font-size: 45rpx;
         font-weight: 600;
@@ -72,11 +77,14 @@
   }
   .other-service-wrap{
     margin: 0 30rpx;
+    margin-top: 60rpx;
     background-color: rgb(255, 255, 255);
     border-radius: 20rpx;
     padding: 15rpx 45rpx;
     width: 80%;
-    margin-top: 30rpx;
+    margin-top: 80rpx;
+    margin-bottom: 80rpx;
+    box-shadow: 0px 3px 5px #464646;
     .other-service-title{
       font-size: 30rpx;
       font-weight: 600;
@@ -102,11 +110,9 @@
     background-color: rgb(255, 255, 255);
     border-radius: 20rpx;
     padding: 15rpx 45rpx;
-    // position: absolute;
-    // top: 640rpx;
     width: 80%;
-    margin-top: 110rpx;
-
+    margin-top: -100rpx;
+    box-shadow: 1px 3px 5px #464646;
     .myorder-title{
       font-size: 30rpx;
       font-weight: 600;
