@@ -44,12 +44,12 @@ class SaleTop extends Component {
         </View> */}
         <View className='goodsList'>
           <View className='left-item'>
-            <View className='number'>1</View>
-            <Image src='http://qiniu.daosuan.net/picture-1599455855000' style='width:110rpx;height:130rpx' className='range-1' />
+            {/* <View className='number'>1</View> */}
+            <Image src='http://qiniu.daosuan.net/picture-1606024868000' className='range-1' />
             <Image 
               src={get(goodsSaleTopList[0],'cover','')} 
               style='width:250rpx;height: 250rpx;border-radius: 15px;' 
-              className='first-img'
+              className='pic-1'
               onClick={this.toDetail.bind(this,get(goodsSaleTopList[0],'id',''))} 
             />
           </View>
@@ -60,8 +60,8 @@ class SaleTop extends Component {
             </View>
             <View className='mid-right-wrap'>
               <View className='mid-item'>
-                <View className='number'>2</View>
-                <Image src='http://qiniu.daosuan.net/picture-1599455855000' className='range-2' />
+                {/* <View className='number'>2</View> */}
+                <Image src='http://qiniu.daosuan.net/picture-1606024893000' className='range-2' />
                 <Image 
                   src={get(goodsSaleTopList[1],'cover','')} 
                   className='pic-2' 
@@ -69,8 +69,8 @@ class SaleTop extends Component {
                 />
               </View>
               <View className='right-item'>
-                <View className='number'>3</View>
-                <Image src='http://qiniu.daosuan.net/picture-1599455855000' className='range-3' />
+                {/* <View className='number'>3</View> */}
+                <Image src='http://qiniu.daosuan.net/picture-1606024903000' className='range-3' />
                 <Image 
                   src={get(goodsSaleTopList[2],'cover','')}
                   className='pic-3' 

@@ -5,7 +5,6 @@ import { View, Image } from '@tarojs/components'
 import { get } from 'lodash';
 import './index.scss'
 import Navbar from '../../components/navbar/navbar'
-import more from '../../assets/icon/下拉.png'
 import GoodsCard from './Components/GoodsCard'
 import { get as getGlobalData } from '../../global_data'
 

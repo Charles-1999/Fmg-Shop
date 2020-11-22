@@ -38,6 +38,9 @@ class PlaceGoodsList extends Component {
     //种类
     await this.props.dispatch({
       type: 'goods/getGoodsKind',
+      payload:{
+        limit:30
+      }
     });
     const Ids = this.props.kindList.map((arr) => {return arr.id})
     await this.props.dispatch({
@@ -46,34 +49,14 @@ class PlaceGoodsList extends Component {
         ids:Ids
       }
     });
-    // //商品
-    await this.props.dispatch({
-      type: 'goods/getGoodsList',
-      payload: {
-        place_tag:Current.router.params.id,
-      }
-    });
-    console.log(this.props.goodsListIds)
-    //const ids = this.props.goodsListIds.map((arr) => {return arr.id})
-    if (this.props.goodsListIds !== []){
-      await this.props.dispatch({
-        type: 'goods/mgetGoodsListEntity',
-        payload: 
-          this.props.goodsListIds
-        
-      })
-      console.log(this.props.goodsList)
-    }
-    this.setState({
-      goodsList:this.props.goodsList,
-    })
+   
     const { placeList, kindInfoList} = this.props
     //数据过滤
     const current_place = placeList.filter(item => item.id == Current.router.params.id)[0];
-    const current_kind = kindInfoList.filter(item => get(item, 'parent_id', '') == Current.router.params.id);
+    // const current_kind = kindInfoList.filter(item => get(item, 'parent_id', '') == Current.router.params.id);
     this.setState({
       placeList: current_place,
-      kindList: current_kind,
+      kindList: kindInfoList,
     })
   }
   toKindList(id){
@@ -104,7 +87,8 @@ class PlaceGoodsList extends Component {
             <View className='check-info'>查看简介</View>
           </View>
         </View>
-        {this.state.kindList.map(item => (
+        <GoodsCard place_tag={parseInt(Current.router.params.id)} />
+        {/* {this.state.kindList.filter(item=>item.parent_id == 0).map(item => (
           <View className='place-kind-goods-list' key={item.id}>
             <View className='title-list' >
               <View className='name'>
@@ -117,7 +101,7 @@ class PlaceGoodsList extends Component {
             </View>
             <GoodsCard place_tag={parseInt(Current.router.params.id)} kind_tag={item.id} />
           </View>
-          ))}
+          ))} */}
       </View>
     )
   }

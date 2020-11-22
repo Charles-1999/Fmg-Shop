@@ -90,11 +90,19 @@
         margin-right: 28rpx;
         position: relative;
         .range-1{
+          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
-          position:absolute;
-          left:-27rpx;
-          top:-19rpx;
-         
+          position: absolute;
+          left: -37rpx;
+          top: -39rpx;
+          width: 115rpx;
+          height: 135rpx;
+        }
+        .pic-1{
+          width: 110rpx;
+          height: 130rpx;
+          box-shadow: 0 3rpx 5rpx #464646;
         }
         .number{
           position:absolute;
@@ -105,6 +113,7 @@
           top: -2rpx;
           z-index:2;
         }
+
       }
       .mid-right-icon-wrap{
         .icon-info-wrap{
@@ -126,11 +135,11 @@
             margin-right: 28rpx;
             .range-2{
               display: flex;
-              position:absolute;
-              left:-25rpx;
-              top:5rpx;
-              width:80rpx;
-              height:100rpx;
+              position: absolute;
+              left: -30rpx;
+              top: -12rpx;
+              width: 99rpx;
+              height: 110rpx;
             }
             .number{
               position: absolute;
@@ -146,18 +155,20 @@
               height: 160rpx;
               border-radius: 10PX;
               margin-top:20rpx;
+              box-shadow: 0 3rpx 5rpx #464646;
+              
             }
           }
           .right-item{
             position: relative;
             .range-3{
               display: flex;
-              position:absolute;
-              left:-22rpx;
-              top:5rpx;
-              width:80rpx;
-              height:100rpx;
-            }
+              position: absolute;
+              left: -30rpx;
+              top: -12rpx;
+              width: 99rpx;
+              height: 110rpx;  
+          }
             .number{
               position:absolute;
               font-size: 35rpx;
@@ -172,6 +183,7 @@
               height: 160rpx;
               margin-top:20rpx;
               border-radius: 10PX;
+              box-shadow: 0 3rpx 5rpx #464646;
             }
           }
         }
@@ -220,17 +232,20 @@
   background-color: rgb(243, 243, 243);
   position: relative;
   overflow-x: hidden;
-  height: 100vh;
   padding-top:10rpx;
   .title-wrap{
-    padding:30rpx 30rpx;
-    display: inline-flex;
+    padding: 15rpx 30rpx;
+    background-color: white;
+    margin: 30rpx 30rpx;
+    display: flex;
+    border-radius: 10PX;
     .info{
-      margin-left: 15rpx;
+      margin-left: 25rpx;
+      align-self: center;
       .name{
-        margin-top: 25rpx;
         font-size: 33rpx;
         font-weight: 600;
+        align-self: center;
       }
       .check-info{
         margin-top: 5rpx;
@@ -243,7 +258,6 @@
 
       }
     }
-   
   }
 }
 /*商品卡片*/
@@ -524,7 +538,6 @@
 .kind-goods-list-wrap{
     background-color: rgb(243, 243, 243);
     position: relative;
-    height: 100vh;
     overflow-x: hidden;
   .top-list::-webkit-scrollbar {display:none}
   .top-list{
@@ -538,8 +551,8 @@
     .kind-item{
       margin-right: 10rpx;
       overflow-x: auto;
-      border-radius: 20rpx;
-      padding: 0rpx 20rpx;   
+      border-radius: 10PX;
+      padding: 5rpx 20rpx;
       font-size: 30rpx;
       margin-top: 5rpx;   
       display: inline-table;
@@ -549,11 +562,12 @@
     .kind-item-active{
       margin-right: 10rpx;
       overflow-x: auto;
-      background-color: rgba(219, 219, 219, 0.6);
-      border-radius: 20rpx;
-      padding: 0rpx 20rpx;    
+      background-color: #92b8fd;
+      border-radius: 10PX;
+      padding: 5rpx 20rpx;
+      color: white;
       font-size: 30rpx;
-      margin-top: 5rpx;  
+      margin-top: 5rpx;
       display: inline-table;
       vertical-align: top;
       overflow-x: hidden;
@@ -569,6 +583,7 @@
     height: 450rpx;
   }
 }
+//中间logo+search
 .logo-search-wrap{
   position: absolute;
   top: 400rpx;
@@ -593,13 +608,10 @@
       input {
           width: 100%;
           height: 100%;
-          // padding-left: 20rpx;
           text-align: center;
           border-radius: 50rpx;
           background-color:white;
-          // box-sizing: border-box;
           margin-top: 16rpx;
-          //box-shadow: 0.5rpx 0.5rpx 2rpx black;
       }
       image {
           position: absolute;
@@ -615,6 +627,3 @@
   }
 
 }
-
-
-@import '~taro-ui/dist/style/index.scss';
