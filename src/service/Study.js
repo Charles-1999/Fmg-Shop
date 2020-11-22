@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:26:50
- * @LastEditTime: 2020-11-21 01:24:34
+ * @LastEditTime: 2020-11-22 22:57:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/service/Study.js
@@ -62,6 +62,27 @@ export const preApply = params => {
       people: params.people,
       session_id: params.session_id
     },
+    method: 'POST'
+  })
+}
+
+/**
+ * 获取预报名列表
+ * @param   {Number}  status 状态
+ */
+export const getPreApplyList = (params = { page: 1, limit: 10}) => {
+  return request('/study/course/pre_apply/list', {
+    body: params,
+    method: 'GET'
+  })
+}
+
+/**
+ * 批量获取预报名信息
+ */
+export const mgetPreApply = params => {
+  return request(`/study/course/pre_apply/_mget`, {
+    body: params,
     method: 'POST'
   })
 }

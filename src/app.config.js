@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-26 15:46:00
- * @LastEditTime: 2020-11-16 20:35:33
+ * @LastEditTime: 2020-11-21 23:28:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/app.config.js
@@ -33,6 +33,7 @@ export default {
     'pages/studies/course/index',
     'pages/studies/news/index',
     'pages/studies/apply/index',
+    'pages/studies/apply_list/index',
   ],
   window: {
     backgroundTextStyle: 'light',

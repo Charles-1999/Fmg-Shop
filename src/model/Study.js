@@ -1,12 +1,12 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-11-21 22:47:02
+ * @LastEditTime: 2020-11-22 23:30:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
  */
-import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply } from '../service/Study'
+import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply } from '../service/Study'
 import { formatTimeStamp } from '@utils/time'
 
 export default {
@@ -14,7 +14,8 @@ export default {
   state: {
     courseList: [],
     courseInfo: [],
-    courseTags: []
+    courseTags: [],
+    preApplyList: []
   },
   effects: {
     /* 获取课程列表 */
@@ -86,6 +87,26 @@ export default {
     /* 创建预报名 */
     * preApply({ payload }, { call, put }) {
       const res = yield call(preApply, payload)
+    },
+    /* 获取预报名列表 */
+    * getPreApplyList({ payload }, { call, put }) {
+      const res = yield call(getPreApplyList, payload)
+
+      yield put({
+        type: 'save',
+        payload: {
+          preApplyList: res.preApplys
+        }
+      })
+    },
+    /* 批量获取预报名信息 */
+    * mgetPreApply({ payload }, { call, put }) {
+      const res = yield call(mgetPreApply, payload)
+
+      yield put({
+        type: 'sava',
+        payload: { }
+      })
     }
   },
   reducers: {

@@ -20,8 +20,17 @@ function Studies(props) {
     props.dispatch({
       type: 'study/getCourseList',
       payload: {
-        pages: 1,
+        page: 1,
         limit: 30
+      }
+    })
+
+    /* 获取预报名列表，只是为了获取数量，所以limit为0 */
+    props.dispatch({
+      type: 'study/getPreApplyList',
+      payload: {
+        page: 1,
+        limit: 0
       }
     })
   }, [])
@@ -122,6 +131,12 @@ function Studies(props) {
     })
   }
 
+  function toApplyList(status = 0) {
+    Taro.navigateTo({
+      url: '/pages/studies/apply_list/index?status=' + status
+    })
+  }
+
   return (
     <View className={isIphoneX ? 'isIphoneX studies' : 'studies'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
@@ -214,9 +229,9 @@ function Studies(props) {
             <View className='name'>{userInfo.nickName}</View>
           </View>
           <View className='bottom'>
-            <View className='item'>预报名</View>
-            <View className='item'>已报名</View>
-            <View className='item'>游记</View>
+            <View className='item' onClick={toApplyList.bind(this, 1)}>预报名</View>
+            <View className='item' onClick={toApplyList.bind(this, 2)}>已报名</View>
+            <View className='item' onClick={toApplyList}>游记</View>
           </View>
         </View>
         : ''
