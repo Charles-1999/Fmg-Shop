@@ -12,7 +12,7 @@ function Studies(props) {
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
   const userInfo = Taro.getStorageSync('userInfo')
 
-  const [currTab, setCurrTab] = useState(1)
+  const [currTab, setCurrTab] = useState(3)
   const { courseList } = props
 
   useEffect(() => {
@@ -131,9 +131,9 @@ function Studies(props) {
     })
   }
 
-  function toApplyList(status = 0) {
+  function toPreApplyList(status = 0) {
     Taro.navigateTo({
-      url: '/pages/studies/apply_list/index?status=' + status
+      url: '/pages/studies/preApply_list/index?status=' + status
     })
   }
 
@@ -144,6 +144,8 @@ function Studies(props) {
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
+        backType="switchTab"
+        url="/pages/index/index"
         title='研学'
       >
       </Navbar>
@@ -155,7 +157,7 @@ function Studies(props) {
           </View>
           <View className='course_list'>
             {courseList.map(course => (
-              <View className='course' key={course.id} onClick={courseTap.bind(this, course.id)}>
+              <View className='course_wrap' key={course.id} onClick={courseTap.bind(this, course.id)}>
                 <Image src={course.cover} mode='widthFix' />
                 <View className='course_info'>
                   <Text className='name'>{course.name}</Text>
@@ -229,9 +231,9 @@ function Studies(props) {
             <View className='name'>{userInfo.nickName}</View>
           </View>
           <View className='bottom'>
-            <View className='item' onClick={toApplyList.bind(this, 1)}>预报名</View>
-            <View className='item' onClick={toApplyList.bind(this, 2)}>已报名</View>
-            <View className='item' onClick={toApplyList}>游记</View>
+            <View className='item' onClick={toPreApplyList.bind(this, 1)}>预报名</View>
+            <View className='item' onClick={toPreApplyList.bind(this, 2)}>已报名</View>
+            <View className='item' onClick={toPreApplyList}>游记</View>
           </View>
         </View>
         : ''
