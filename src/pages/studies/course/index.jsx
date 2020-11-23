@@ -94,7 +94,7 @@ function Course(props) {
 
   function apply() {
     Taro.navigateTo({
-      url: '/pages/studies/apply/index?cid=' + cid
+      url: '/pages/studies/preApply/index?cid=' + cid
     })
   }
 
