@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:26:50
- * @LastEditTime: 2020-11-22 22:57:47
+ * @LastEditTime: 2020-11-23 16:45:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/service/Study.js
@@ -84,5 +84,45 @@ export const mgetPreApply = params => {
   return request(`/study/course/pre_apply/_mget`, {
     body: params,
     method: 'POST'
+  })
+}
+
+/**
+ * 获取报名列表
+ */
+export const getApplyList = (params = { page: 1, limit: 10}) => {
+  return request('/study/course/apply/list', {
+    body: params,
+    method: 'GET'
+  })
+}
+
+/**
+ * 批量获取报名信息
+ */
+export const mgetApply = params => {
+  return request('/study/course/apply/_mget', {
+    body: params,
+    method: 'POST'
+  })
+}
+
+/**
+ * 取消预报名
+ * @param {Number} pid 预报名id
+ */
+export const canclePreApply = params => {
+  return request(`/study/course/pre_apply/${params.pid}/cancel`, {
+    method: 'POST'
+  })
+}
+
+/**
+ * 修改预报名信息
+ */
+export const updatePreApply = params => {
+  return request(`/study/course/pre_apply/${params.pid}`, {
+    body: params,
+    method: 'PUT'
   })
 }
