@@ -88,7 +88,7 @@ class CartListView extends Component {
     let goodsId = [];
 
     /* 获取购物车数据 */
-    const res_mget = await request(`/car/info/_mget/${userId}`, {
+    const res_mget = await request(`/car/info/_mget`, {
       method: 'POST'
     });
     // 购物车列表
