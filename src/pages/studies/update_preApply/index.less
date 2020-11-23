@@ -1,0 +1,101 @@
+page {
+  .update_preApply {
+    padding-bottom: 180rpx;
+    .form_wrap {
+      padding: 20rpx 0;
+      .form_item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20rpx 40rpx;
+        font-size: 16PX;
+        input {
+          flex: 1;
+          margin-left: 20rpx;
+          padding: 10rpx 30rpx;
+          border-radius: 20rpx;
+          background-color: #fff;
+        }
+        .input-placeholder {
+          font-size: 13PX;
+        }
+        .picker {
+          flex: 1;
+          position: relative;
+          width: 100%;
+          margin-left: 20rpx;
+          border-radius: 20rpx;
+          .picker_item {
+            padding: 10rpx 30rpx;
+          }
+        }
+      }
+    }
+    .course_wrap {
+      margin-bottom: 40rpx;
+      .name {
+        padding: 0 40rpx;
+        font-size: 18PX;
+      }
+    }
+    .session_wrap {
+      padding-bottom: 20rpx;
+      .session_list {
+        padding: 0 40rpx;
+        .session {
+          margin-top: 40rpx;
+          .title {
+            font-size: 20PX;
+          }
+        }
+        .info_wrap {
+          display: flex;
+          margin-top: 20rpx;
+          margin-left: 20rpx;
+          color: #3e3e3e;
+          .title {
+            font-size: 16PX;
+            width: 180rpx;
+          }
+          .content {
+            font-size: 16PX;
+          }
+        }
+      }
+    }
+    .title_wrap {
+      margin: 20rpx;
+      padding-left: 20rpx;
+      font-size: 18PX;
+      font-weight: 700;
+      border-left: 3PX solid #6684f7;
+    }
+    .tool_bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      height: 120rpx;
+      background-color: #fff;
+      border-top: 1px solid #eee;
+      .bar_item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 90rpx;
+        margin: 10rpx 20rpx 0;
+        font-size: 16PX;
+        font-weight: 700;
+        color: #fff;
+        border-radius: 50rpx;
+        background-color: #6684f7;
+      }
+    }
+    .tool_bar.isIphoneX {
+      height: 180rpx;
+    }
+  }
+}
