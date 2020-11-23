@@ -5,7 +5,7 @@ import { View, Image, Text, Input, Picker } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
 import './index.less'
 
-function Apply(props) {
+function PreApply(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
   const capsule = Taro.getStorageSync('capsule')
   const isIphoneX = Taro.getStorageSync('isIphoneX')
@@ -27,10 +27,12 @@ function Apply(props) {
     setCourseInfo(courseInfo)
   }, [])
 
+  /* 选择场次 */
   function handlePickerChange(e) {
     setSessionIndex(Number(e.detail.value))
   }
 
+  /* 预报名 */
   async function preApply() {
     const formItems = [name, phone, people]
     if (formItems.some(item => item == '')) {
@@ -47,13 +49,6 @@ function Apply(props) {
       })
       return
     }
-    // if (name == '' || phone == '' || people == '') {
-    //   Taro.showToast({
-    //     title: '请填写完整信息',
-    //     icon: 'none'
-    //   })
-    //   return
-    // }
     await props.dispatch({
       type: 'study/preApply',
       payload: {
@@ -66,9 +61,14 @@ function Apply(props) {
     })
     Taro.showToast({
       title: '预报名成功！',
-      icon: 'success'
+      icon: 'success',
+      duration: 1000
     })
-
+    setTimeout(() => {
+      Taro.reLaunch({
+        url: '/pages/studies/preApply_list/index?status=' + 1
+      })
+    }, 1000)
   }
 
   return (
@@ -129,4 +129,4 @@ function Apply(props) {
 
 export default connect (({ study }) => ({
   ...study
-}))(Apply)
+}))(PreApply)
