@@ -94,7 +94,7 @@ export default function MemberList(props) {
           </View>
           <View className='input_wrap'>
             <View className='title'>出生日期</View>
-            <Picker mode="date" className='date_picker' end={new Date().toLocaleDateString()} onChange={(e) => { SetBirth(e.detail.value) }}>
+            <Picker mode="date" className='date_picker' end={new Date().toLocaleDateString()} onChange={(e) => { SetBirth(new Date(e.detail.value).getTime()) }}>
                 <View className='picker_view'>{birth == '' ? <Text>请选择</Text> : birth}</View>
             </Picker>
           </View>
