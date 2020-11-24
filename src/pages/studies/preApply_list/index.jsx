@@ -1,4 +1,4 @@
-import Taro, { getCurrentInstance } from '@tarojs/taro'
+import Taro, { getCurrentInstance, useDidShow } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
@@ -21,6 +21,10 @@ function PreApplyList(props) {
     const { status } = getCurrentInstance().router.params
     switchTab(status)
   }, [])
+
+  useDidShow(() => {
+    getPreApplyList(currTab)
+  })
 
   function switchTab(tab) {
     setCurrTab(tab)
