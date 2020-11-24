@@ -106,6 +106,9 @@ function Course(props) {
         showTitle
         showBack
         title='研学课程'
+        backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
+        backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
+        color='#fff'
       >
       </Navbar>
       <MySwiper pictures={data.cover} />
