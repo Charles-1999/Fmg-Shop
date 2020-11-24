@@ -1,12 +1,12 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-11-23 19:06:33
+ * @LastEditTime: 2020-11-24 20:48:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
  */
-import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, updatePreApply } from '../service/Study'
+import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, updatePreApply, preToApply } from '../service/Study'
 import { formatTimeStamp } from '@utils/time'
 
 export default {
@@ -100,7 +100,9 @@ export default {
           let startDate = new Date(formatTimeStamp(session.begin_time))
           let endDate = new Date(formatTimeStamp(session.end_time))
           let dayDiff = (endDate - startDate) / (1000 * 60 * 60 * 24)
-          days.push(Math.ceil(dayDiff))
+          let day = Math.ceil(dayDiff)
+          session.days = day
+          days.push(day)
 
           // 价格单位处理
           session.money = Number((session.money / 100).toFixed(2))
@@ -208,6 +210,11 @@ export default {
     /* 修改预报名信息 */
     * updatePreApply({ payload }, { call, put }) {
       const res = yield call(updatePreApply, payload)
+    },
+    /* 通过预报名创建报名 */
+    * preToApply({ payload }, { call, put }) {
+      const res = yield call(preToApply, payload)
+      console.log(res)
     }
   },
   reducers: {

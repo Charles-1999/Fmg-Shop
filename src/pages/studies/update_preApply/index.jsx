@@ -5,8 +5,6 @@ import Navbar from '@components/navbar/navbar'
 import { connect } from "react-redux"
 
 import './index.less'
-import course from '../course'
-
 
 function UpdatePreApply(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')

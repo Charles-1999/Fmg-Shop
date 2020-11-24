@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:26:50
- * @LastEditTime: 2020-11-23 16:45:04
+ * @LastEditTime: 2020-11-24 20:47:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/service/Study.js
@@ -124,5 +124,15 @@ export const updatePreApply = params => {
   return request(`/study/course/pre_apply/${params.pid}`, {
     body: params,
     method: 'PUT'
+  })
+}
+
+/**
+ * 通过预报名创建报名
+ */
+export const preToApply = params => {
+  return request(`/study/course/pre_apply/${params.pid}/apply`, {
+    body: params,
+    method: 'POST'
   })
 }

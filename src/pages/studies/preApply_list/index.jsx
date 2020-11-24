@@ -131,7 +131,7 @@ function PreApplyList(props) {
               ? <View className='btn_wrap'>
                 <View className='btn cancle' onClick={cancle.bind(this, data.id)}>取消</View>
                 <View className='btn update' onClick={() => Taro.navigateTo({ url: `/pages/studies/update_preApply/index?pid=${data.id}` })}>修改</View>
-                <View className='btn'>报名</View>
+                <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${data.id}&cid=${data.course_id}` })}>报名</View>
               </View>
               : null
             }

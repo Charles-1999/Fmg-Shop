@@ -25,11 +25,11 @@ export default class Navbar extends Component {
 
   render() {
     const { windowWidth, capsule } = this.state;
-    const { statusBarHeight, capsuleHeight, title, color, showBack, showLogo, showSearch, showTitle } = this.props;
+    const { statusBarHeight, capsuleHeight, title, color, showBack, showLogo, showSearch, showTitle, backgroundColor } = this.props;
     return (
       <View className='navbar'>
-        <View className='status' style={{ height: statusBarHeight }}></View>
-        <View className='capsule' style={{ height: capsuleHeight }}>
+        <View className='status' style={{ height: statusBarHeight, backgroundColor }}></View>
+        <View className='capsule' style={{ height: capsuleHeight, backgroundColor }}>
           {showLogo ?
             <View className='logo' style={{ marginLeft: windowWidth - capsule.right }}>凤鸣谷</View>
             : ''
@@ -62,4 +62,5 @@ Navbar.defaultProps = {
   showSearch: false,
   showTitle: false,
   backType: 'back',
+  backgroundColor: '#e5e5e5'
 }
