@@ -105,6 +105,9 @@ function PreApplyList(props) {
         backType='redirect'
         url='/pages/studies/index'
         title='预报名'
+        color='#fff'
+        backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
+        backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
       />
       <View className='tab_bar'>
         <View className={currTab == 0 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 0)}>全部</View>
