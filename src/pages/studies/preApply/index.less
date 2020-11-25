@@ -1,72 +1,101 @@
 page {
   background-color: #f3f3f3;
   .apply {
-    .form_wrap {
-      padding: 20rpx 0;
-      .form_item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20rpx 40rpx;
-        font-size: 16PX;
-        input {
-          flex: 1;
-          margin-left: 20rpx;
-          padding: 10rpx 30rpx;
-          border-radius: 20rpx;
+    .bg {
+      width: 100%;
+      height: 500rpx;
+      background-image: linear-gradient(180deg, #2d79f8, #2d79f8 60%, #f3f4f5);
+    }
+    .container {
+      position: relative;
+      top: -500rpx;
+      padding: 20rpx;
+      .main {
+        .form_wrap {
           background-color: #fff;
-        }
-        .input-placeholder {
-          font-size: 13PX;
-        }
-        .picker {
-          flex: 1;
-          position: relative;
-          width: 100%;
-          margin-left: 20rpx;
           border-radius: 20rpx;
-          .picker_item {
-            padding: 10rpx 30rpx;
+          padding: 20rpx;
+          .form_item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25rpx 20rpx;
+            font-size: 14PX;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            .title {
+              width: 70PX;
+            }
+            input {
+              flex: 1;
+              background-color: #fff;
+              border: none;
+            }
+            .input-placeholder {
+              color: #999;
+            }
+            .text {
+              flex: 1;
+              color: #2d79f8;
+            }
+            .radio-list {
+              flex: 1;
+              .radio-list_label {
+                margin-right: 40rpx;
+              }
+            }
+            .session_picker {
+              flex: 1;
+              .picker_view {
+                text {
+                  color: #999;
+                }
+              }
+            }
           }
         }
-      }
-    }
-    .course_wrap {
-      font-size: 16PX;
-      .info {
-        padding: 20rpx;
-        display: flex;
-        align-items: center;
-        .title {
-          font-weight: 700;
-        }
-        .content {
-          flex: 1;
-          margin-left: 20rpx;
-        }
-      }
-    }
-    .session_wrap {
-      padding: 20rpx;
-      .title {
-        font-weight: 700;
-      }
-      .content {
-        .title {
-          font-weight: 700;
-        }
-        .session {
+        .course_wrap {
+          background-color: #fff;
+          border-radius: 20rpx;
           margin-top: 20rpx;
+          padding: 20rpx;
+          font-size: 16PX;
+          .info {
+            padding: 20rpx;
+            display: flex;
+            align-items: center;
+            .title {
+              font-weight: 700;
+            }
+            .content {
+              flex: 1;
+              margin-left: 20rpx;
+            }
+          }
+        }
+        .session_wrap {
+          padding: 20rpx;
+          .title {
+            font-weight: 700;
+          }
+          .content {
+            .title {
+              font-weight: 700;
+            }
+            .session {
+              margin-top: 20rpx;
+              padding-left: 20rpx;
+            }
+          }
+        }
+        .title_wrap {
+          margin: 20rpx;
           padding-left: 20rpx;
+          font-size: 18PX;
+          font-weight: 700;
+          border-left: 3PX solid #6684f7;
         }
       }
-    }
-    .title_wrap {
-      margin: 20rpx;
-      padding-left: 20rpx;
-      font-size: 18PX;
-      font-weight: 700;
-      border-left: 3PX solid #6684f7;
     }
     .tool_bar {
       position: fixed;
@@ -89,7 +118,8 @@ page {
         font-weight: 700;
         color: #fff;
         border-radius: 50rpx;
-        background-color: #6684f7;
+        // background-color: #6684f7;
+        background-image: linear-gradient(90deg, #2d79f8, #5594f4);
       }
     }
     .tool_bar.isIphoneX {

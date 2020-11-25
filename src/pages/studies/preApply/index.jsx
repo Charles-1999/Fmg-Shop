@@ -79,44 +79,52 @@ function PreApply(props) {
         showTitle
         showBack
         title='预约报名'
+        backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
+        backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
+        color='#fff'
       />
-      <View className='form_wrap'>
-        <View className='title_wrap'>填写预约信息</View>
-        <View className='form_item'>
-          <View className='title'>姓名</View>
-          <Input value={name} placeholder="联系人姓名" onBlur={(e) => {setName(e.detail.value.trim())}}/>
-        </View>
-        <View className='form_item'>
-          <View className='title'>电话</View>
-          <Input value={phone} placeholder="联系人电话" type="number" onBlur={(e) => {setPhone(e.detail.value.trim())}}/>
-        </View>
-        <View className='form_item'>
-          <View className='title'>人数</View>
-          <Input value={people} placeholder="预约人数" type="number" onBlur={(e) => {setPeople(Number(e.detail.value))}}/>
-        </View>
-        <View className='form_item'>
-          <View className='title'>场次</View>
-          <Picker mode="selector" className='picker' range={sessionArr} onChange={handlePickerChange}>
-              <View className='picker_item'>{sessionArr[sessionIndex]}</View>
-          </Picker>
-        </View>
-      </View>
-      <View className='course_wrap'>
-        <View className='title_wrap'>当前课程信息</View>
-        <View className='info'>
-          <View className='title'>课程:</View>
-          <View className='content'>{courseInfo.name}</View>
-        </View>
-        <View className='session_wrap'>
-          <View className='title'>开营时间:</View>
-          <View className='content'>{(courseInfo.session ?? []).map((item,index) => (
-            <View className='session' key={item.id}>
-              <View className='title'>第{index + 1}期：</View>
-              <View className='time'>
-                {`${new Date(item.begin_time).toLocaleDateString() + ' - ' + new Date(item.end_time).toLocaleDateString()}`}
+      <View className='bg'></View>
+      <View className='container'>
+        <View className='main'>
+          <View className='form_wrap'>
+            <View className='title_wrap'>填写预约信息</View>
+            <View className='form_item'>
+              <View className='title'>姓名</View>
+              <Input value={name} placeholder="联系人姓名" onBlur={(e) => { setName(e.detail.value.trim()) }} />
+            </View>
+            <View className='form_item'>
+              <View className='title'>电话</View>
+              <Input value={phone} placeholder="联系人电话" type="number" onBlur={(e) => { setPhone(e.detail.value.trim()) }} />
+            </View>
+            <View className='form_item'>
+              <View className='title'>人数</View>
+              <Input value={people} placeholder="预约人数" type="number" onBlur={(e) => { setPeople(Number(e.detail.value)) }} />
+            </View>
+            <View className='form_item'>
+              <View className='title'>场次</View>
+              <Picker mode="selector" className='session_picker' range={sessionArr} onChange={handlePickerChange}>
+                <View className='picker_item'>{sessionArr[sessionIndex]}</View>
+              </Picker>
+            </View>
+          </View>
+          <View className='course_wrap'>
+            <View className='title_wrap'>当前课程信息</View>
+            <View className='info'>
+              <View className='title'>课程:</View>
+              <View className='content'>{courseInfo.name}</View>
+            </View>
+            <View className='session_wrap'>
+              <View className='title'>开营时间:</View>
+              <View className='content'>{(courseInfo.session ?? []).map((item, index) => (
+                <View className='session' key={item.id}>
+                  <View className='title'>第{index + 1}期：</View>
+                  <View className='time'>
+                    {`${new Date(item.begin_time).toLocaleDateString() + ' - ' + new Date(item.end_time).toLocaleDateString()}`}
+                  </View>
+                </View>
+              ))}
               </View>
             </View>
-            ))}
           </View>
         </View>
       </View>
@@ -127,6 +135,6 @@ function PreApply(props) {
   )
 }
 
-export default connect (({ study }) => ({
+export default connect(({ study }) => ({
   ...study
 }))(PreApply)
