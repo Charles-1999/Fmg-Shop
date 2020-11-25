@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import { createCart, getCart, updateCart } from '../service/Cart'
 
 export default {
@@ -20,13 +21,17 @@ export default {
      * @param
      */
     * getCart({ payload }, { call, put }) {
-      const res = yield call(getCart, payload)
+      const cartList = yield call(getCart, payload)
+
+      Taro.setTabBarBadge({
+        index: 3,
+        text: cartList.data.length + ''
+      })
 
       yield put({
         type: 'save',
         payload: {
-          cartList: res.data,
-          cartCount: res.count
+          cartList: cartList.data
         }
       })
     },
@@ -53,6 +58,11 @@ export default {
 
         /* 移动距离 */
         cart.x = 0
+      })
+
+      Taro.setTabBarBadge({
+        index: 3,
+        text: cartList.length + ''
       })
 
       yield put({
