@@ -111,7 +111,7 @@ function Course(props) {
         color='#fff'
       >
       </Navbar>
-      <MySwiper pictures={data.cover} />
+      <MySwiper pictures={courseInfo.pictures} />
       <View className='baseInfo'>
         <View className='title'>{courseInfo.name}</View>
         <View className='sub_title'>{courseInfo.small_name}</View>
