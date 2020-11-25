@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-26 15:46:00
- * @LastEditTime: 2020-11-21 23:28:03
+ * @LastEditTime: 2020-11-24 16:41:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/app.config.js
@@ -32,8 +32,12 @@ export default {
     'pages/studies/index',
     'pages/studies/course/index',
     'pages/studies/news/index',
+    'pages/studies/preApply/index',
+    'pages/studies/preApply_list/index',
+    'pages/studies/update_preApply/index',
     'pages/studies/apply/index',
-    'pages/studies/apply_list/index',
+    'pages/studies/member_list/index',
+    'pages/studies/add_member/index',
   ],
   window: {
     backgroundTextStyle: 'light',

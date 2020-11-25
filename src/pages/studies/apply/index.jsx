@@ -1,8 +1,10 @@
-import Taro, { getCurrentInstance } from '@tarojs/taro'
+import Taro, { getCurrentInstance, useDidShow } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import { View, Image, Text, Input, Picker } from '@tarojs/components'
+import { View, Text, Image, Input, Picker } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
+import { connect } from "react-redux"
+import { timeFormat } from '@utils/time'
+
 import './index.less'
 
 function Apply(props) {
@@ -11,64 +13,84 @@ function Apply(props) {
   const isIphoneX = Taro.getStorageSync('isIphoneX')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
-  const [cid, setCid] = useState(0) // 课程id
-  const [courseInfo, setCourseInfo] = useState({}) // 当前课程
-  const [sessionArr, setSessionArr] = useState([]) // 可选的场次列表
-  const [sessionIndex, setSessionIndex] = useState(0) // 选择的场次索引
-  const [name, setName] = useState('')
+  const { courseInfos, preApply } = props
+  const [currCourse, setCurrCourse] = useState({})
+  const [currPreApply, setCurrPreApply] = useState({})
+  const [sessionIndex, setSessionIndex] = useState(0)
+  const [memberList, setMemberList] = useState([])
+  const [idCard, setIdCard] = useState('')
   const [phone, setPhone] = useState('')
-  const [people, setPeople] = useState('')
 
   useEffect(() => {
-    const { cid } = getCurrentInstance().router.params
-    setCid(cid)
-    let courseInfo = props.courseList.find(course => course.id == cid)
-    setSessionArr(courseInfo.session.map((item, index) => `第${index + 1}期`))
-    setCourseInfo(courseInfo)
+    // pid：预报名id， cid：课程id
+    const { pid, cid } = getCurrentInstance().router.params
+
+    // 设置当前报名的课程
+    const currCourse = courseInfos.find(item => item.id == cid)
+    setCurrCourse(currCourse)
+
+    // 设置当前预报名信息
+    const currPreApply = preApply.find(item => item.id == pid)
+    setCurrPreApply(currPreApply)
+
+    // 设置场次在场次列表中的索引
+    const sessionIndex = currCourse.session.findIndex(item => item.id === currPreApply.session_id)
+    setSessionIndex(sessionIndex)
   }, [])
 
-  function handlePickerChange(e) {
-    setSessionIndex(Number(e.detail.value))
+  useDidShow(() => {
+    const list = Taro.getStorageSync('memberList')
+    if (list.length != 0)
+      setMemberList(Taro.getStorageSync('memberList').filter(item => item.checked))
+  })
+
+  /* 添加成员 */
+  function addMember() {
+    Taro.navigateTo({
+      url: '/pages/studies/member_list/index'
+    })
   }
 
-  async function preApply() {
-    const formItems = [name, phone, people]
-    if (formItems.some(item => item == '')) {
+  /* 移除成员 */
+  function removeMember(id) {
+    let tempList = Taro.getStorageSync('memberList')
+    tempList.forEach(item => {
+      if (item.id === id) item.checked = false
+    })
+    setMemberList(tempList.filter(item => item.checked))
+    Taro.setStorageSync('memberList', tempList)
+  }
+
+  /* 去支付 */
+  function checkOut() {
+    if (memberList.length == 0) {
       Taro.showToast({
-        title: '请填写完整信息',
+        title: '请选择参与的成员',
         icon: 'none'
       })
       return
     }
-    if (phone.length != 11) {
+
+    let formArr = [phone, idCard]
+    if (formArr.some(item => item == '')) {
       Taro.showToast({
-        title: '请填写正确的手机号码',
+        title: '请填写联系人信息',
         icon: 'none'
       })
       return
     }
-    // if (name == '' || phone == '' || people == '') {
-    //   Taro.showToast({
-    //     title: '请填写完整信息',
-    //     icon: 'none'
-    //   })
-    //   return
-    // }
-    await props.dispatch({
-      type: 'study/preApply',
+
+    props.dispatch({
+      type: 'study/preToApply',
       payload: {
-        cid,
-        name,
-        phone,
-        people,
-        session_id: courseInfo.session[sessionIndex].id
+        pid: currPreApply.id,
+        session_id: currPreApply.session_id,
+        parters: memberList,
+        people: memberList.length,
+        number: idCard,
+        phone: phone
       }
     })
-    Taro.showToast({
-      title: '预报名成功！',
-      icon: 'success'
-    })
-
   }
 
   return (
@@ -78,55 +100,65 @@ function Apply(props) {
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
-        title='预约报名'
+        title='报名'
+        backgroundColor='#2d79f8'
+        color='#fff'
       />
-      <View className='form_wrap'>
-        <View className='title_wrap'>填写预约信息</View>
-        <View className='form_item'>
-          <View className='title'>姓名</View>
-          <Input value={name} placeholder="联系人姓名" onBlur={(e) => {setName(e.detail.value.trim())}}/>
-        </View>
-        <View className='form_item'>
-          <View className='title'>电话</View>
-          <Input value={phone} placeholder="联系人电话" type="number" onBlur={(e) => {setPhone(e.detail.value.trim())}}/>
-        </View>
-        <View className='form_item'>
-          <View className='title'>人数</View>
-          <Input value={people} placeholder="预约人数" type="number" onBlur={(e) => {setPeople(Number(e.detail.value))}}/>
-        </View>
-        <View className='form_item'>
-          <View className='title'>场次</View>
-          <Picker mode="selector" className='picker' range={sessionArr} onChange={handlePickerChange}>
-              <View className='picker_item'>{sessionArr[sessionIndex]}</View>
-          </Picker>
+      <View className='course_info'>
+        <Text className='name'>{currCourse.name}</Text>
+        <View className='time'>
+          <View className='date'>
+            <View className='year'>{currCourse.session ? new Date(currCourse.session[sessionIndex].begin_time).getFullYear() + '年' : null}</View>
+            <View>{currCourse.session ? timeFormat(currCourse.session[sessionIndex].begin_time, 'MMDD') : null}</View>
+          </View>
+          <View className='mid'>
+            <View className='session'>{`第${sessionIndex + 1}期`}</View>
+            <View className='day'>{`共${currCourse.session ? currCourse.session[sessionIndex].days : null}天`}</View>
+          </View>
+          <View className='date'>
+            <View className='year'>{currCourse.session ? new Date(currCourse.session[sessionIndex].end_time).getFullYear() + '年' : null}</View>
+            <View>{currCourse.session ? timeFormat(currCourse.session[sessionIndex].end_time, 'MMDD') : null}</View>
+          </View>
         </View>
       </View>
-      <View className='course_wrap'>
-        <View className='title_wrap'>当前课程信息</View>
-        <View className='info'>
-          <View className='title'>课程:</View>
-          <View className='content'>{courseInfo.name}</View>
-        </View>
-        <View className='session_wrap'>
-          <View className='title'>开营时间:</View>
-          <View className='content'>{(courseInfo.session ?? []).map((item,index) => (
-            <View className='session' key={item.id}>
-              <View className='title'>第{index + 1}期：</View>
-              <View className='time'>
-                {`${new Date(item.begin_time).toLocaleDateString() + ' - ' + new Date(item.end_time).toLocaleDateString()}`}
+      <View className='float_container'>
+        <View className='member_wrap'>
+          {memberList.map(member => (
+            <View className='member' key={member.id}>
+              <Image src='http://qiniu.daosuan.net/picture-1606228544000' className='del' onClick={removeMember.bind(this, member.id)} />
+              <View className='info_wrap'>
+                <View className='name'>{member.name}</View>
+                <View className='idCard'>
+                  <Text>二代身份证</Text>
+                  <Text className='id_text'>{member.number.replace(member.number.substr(4,11), '***********')}</Text>
+                </View>
               </View>
             </View>
-            ))}
+          ))}
+          <View className='add_wrap' onClick={addMember.bind(this)}>
+            <Image src='http://qiniu.daosuan.net/picture-1606228515000' />
+            添加成员
+          </View>
+        </View>
+        <View className='contact_wrap'>
+          <View className='title_wrap'>联系人信息</View>
+          <View className='input_wrap'>
+            <View className='title'>证件</View>
+            <Input type="idcard" placeholder='联系人证件号码' onBlur={(e) => setIdCard(e.detail.value)} />
+          </View>
+          <View className='input_wrap'>
+            <View className='title'>手机号码</View>
+            <Input type="number" placeholder='联系人手机号码' onBlur={(e) => setPhone(e.detail.value)} />
           </View>
         </View>
       </View>
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
-        <View className='bar_item' onClick={preApply}>确认提交</View>
+        <View className='bar_item' onClick={checkOut.bind(this)}>去支付</View>
       </View>
     </View>
   )
 }
 
-export default connect (({ study }) => ({
+export default connect(({ study }) => ({
   ...study
 }))(Apply)

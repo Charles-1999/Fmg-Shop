@@ -1,0 +1,99 @@
+page {
+  .preApply_list {
+    .tab_bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 20rpx;
+      background-color: #fff;
+      .tab_item {
+        // flex: 1;
+        padding: 10rpx 20rpx;
+        text-align: center;
+        font-size: 14PX;
+        border-radius: 20rpx;
+      }
+      .tab_item.active {
+        background-color: #4279ea;
+        color: #fff;
+      }
+    }
+    .list_wrap {
+      padding: 0 20rpx 20rpx;
+      .apply_wrap {
+        padding: 20rpx;
+        margin: 25rpx 0;
+        border-radius: 20rpx;
+        font-size: 14PX;
+        background-color: #fff;
+        box-shadow: 0 0 10rpx 1rpx #ccc;
+        .top_wrap {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          // .create_time {
+          //   padding: 5rpx 10rpx;
+          //   color: #fff;
+          //   background-color: #6684f7;
+          //   border-radius: 20rpx;
+          // }
+          .status {
+            color: #f77438;
+          }
+        }
+        .info_wrap {
+          display: flex;
+          justify-content: center;
+          margin: 20rpx 0;
+          .cover {
+            width: 150rpx;
+            height: 150px;
+            border-radius: 20rpx;
+            overflow: hidden;
+          }
+          .info {
+            flex: 1;
+            margin-left: 20rpx;
+            color: #666;
+            .name {
+              // height: 44PX;
+              font-size: 16PX;
+              color: #111;
+              display: -webkit-box;
+              text-overflow: ellipsis;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+            .session {
+              margin-top: 10rpx;
+            }
+          }
+        }
+        .btn_wrap {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          .btn {
+            margin-left: 20rpx;
+            padding: 5rpx 20rpx;
+            border-radius: 20rpx;
+            border: 1rpx solid #fff;
+            background-color: #4279ea;
+            color: #fff;
+          }
+          .btn.update {
+            color: #4279ea;
+            background-color: #fff;
+            border-color: #4279ea;
+          }
+          .btn.cancle {
+            color: #666;
+            background-color: #fff;
+            border-color: #666;
+          }
+        }
+      }
+    }
+  }
+}

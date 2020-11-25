@@ -76,7 +76,7 @@ export function getToNow(targetDate) {
 
 /** 格式化时间戳，转为13位
  * @param {Number} timeStamp
- * @param {Number} 13位的时间戳 
+ * @param {Number} 13位的时间戳
  */
 export function formatTimeStamp(timeStamp) {
   let arrTimestamp = (timeStamp + '').split('') // 拆分成每一个数字
@@ -84,4 +84,32 @@ export function formatTimeStamp(timeStamp) {
     if(!arrTimestamp[i])  arrTimestamp[i] = '0'
   }
   return Number(arrTimestamp.join(''))
+}
+
+/**
+ * 格式化时间
+ */
+export function timeFormat(timeStamp, format) {
+  timeStamp = formatTimeStamp(timeStamp)
+  let date = new Date(timeStamp);
+
+  const Year = date.getFullYear()
+  const Month = date.getMonth() + 1
+  const Day = date.getDate()
+  const Hour = date.getHours()
+  const Minute = date.getMinutes()
+  const Second = date.getSeconds()
+
+  switch (format) {
+    case 'YYYYMMDD':
+      return `${Year}年${Month}月${Day}日`
+    case 'MMDD':
+      return `${Month}月${Day}日`
+    case 'YYYYMMDD HH:mm:SS':
+      return `${Year}年${Month}月${Day}日 ${Hour}:${Minute}:${Second}`
+    case 'HH:mm:SS':
+      return `${Hour}:${Minute}:${Second}`
+    case 'YYYY-MM-DD HH:mm:SS':
+      return `${Year}-${Month}-${Day} ${Hour}:${Minute}:${Second}`
+  }
 }

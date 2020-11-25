@@ -1,72 +1,123 @@
 page {
-  background-color: #f3f3f3;
   .apply {
-    .form_wrap {
-      padding: 20rpx 0;
-      .form_item {
+    .course_info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40rpx 300rpx;
+      text-align: center;
+      font-size: 18PX;
+      color: #fff;
+      // background-color: #2d79f8;
+      background-image: linear-gradient(180deg, #2d79f8, #2d79f8 60%, #f3f4f5);
+      .name {
+        padding: 20rpx;
+        // border-radius: 20rpx;
+        // border: 1px solid #ccc;
+      }
+      .time {
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 20rpx 40rpx;
-        font-size: 16PX;
-        input {
-          flex: 1;
-          margin-left: 20rpx;
-          padding: 10rpx 30rpx;
-          border-radius: 20rpx;
-          background-color: #fff;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20rpx;
+        padding-bottom: 40rpx;
+        border-bottom: 1px dashed #ccc;
+        .date {
+          font-weight: 900;
+          .year {
+            font-size: 14PX;
+            font-weight: 500;
+          }
         }
-        .input-placeholder {
-          font-size: 13PX;
-        }
-        .picker {
-          flex: 1;
-          position: relative;
-          width: 100%;
-          margin-left: 20rpx;
-          border-radius: 20rpx;
-          .picker_item {
-            padding: 10rpx 30rpx;
+        .mid {
+          font-size: 16PX;
+          .day {
+            font-size: 14PX;
           }
         }
       }
     }
-    .course_wrap {
-      padding: 20rpx;
-      font-size: 16PX;
-      .info {
-        display: flex;
-        align-items: center;
-        .title {
+    .float_container {
+      position: relative;
+      top: -260rpx;
+      left: 0;
+      .member_wrap {
+        padding: 20rpx;
+        margin: 0 20rpx;
+        border-radius: 20rpx;
+        background-color: #fff;
+        overflow: hidden;
+        box-shadow: 3rpx 3rpx 15rpx 0rpx #888;
+        .member {
+          display: flex;
+          align-items: center;
+          padding: 0 20rpx 20rpx;
+          margin-bottom: 20rpx;
+          border-bottom: 1rpx solid #eee;
+          .del {
+            width: 20PX;
+            height: 20PX;
+          }
+          .info_wrap {
+            flex: 1;
+            margin-left: 30rpx;
+            .name {
+              font-size: 14PX;
+            }
+            .idCard {
+              color: #999;
+              font-size: 12PX;
+              .id_text {
+                margin-left: 20rpx;
+              }
+            }
+          }
+        }
+        .add_wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #2d79f8;
+          font-weight: 700;
+          text-align: center;
+          image {
+            width: 20PX;
+            height: 20PX;
+            margin-right: 5PX;
+          }
+        }
+      }
+      .contact_wrap {
+        padding: 20rpx;
+        margin: 20rpx;
+        border-radius: 20rpx;
+        background-color: #fff;
+        overflow: hidden;
+        box-shadow: 3rpx 3rpx 15rpx 0rpx #888;
+        .title_wrap {
+          font-size: 16PX;
           font-weight: 700;
         }
-        .content {
-          flex: 1;
-          margin-left: 20rpx;
+        .input_wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 25rpx 20rpx;
+          font-size: 14PX;
+          color: #666;
+          border-bottom: 1px solid #eee;
+          .title {
+            width: 85PX;
+          }
+          input {
+            flex: 1;
+            background-color: #fff;
+            border: none;
+          }
         }
       }
-    }
-    .session_wrap {
-      margin-top: 20rpx;
-      .title {
-        font-weight: 700;
-      }
-      .content {
-        .title {
-          font-weight: 700;
-        }
-        .session {
-          margin-top: 20rpx;
-          padding-left: 20rpx;
-        }
-      }
-    }
-    .title_wrap {
-      margin: 20rpx;
-      padding-left: 20rpx;
-      font-size: 18PX;
-      font-weight: 700;
-      border-left: 3PX solid #6684f7;
     }
     .tool_bar {
       position: fixed;
@@ -89,7 +140,7 @@ page {
         font-weight: 700;
         color: #fff;
         border-radius: 50rpx;
-        background-color: #6684f7;
+        background-image: linear-gradient(90deg, #2d79f8, #5594f4);
       }
     }
     .tool_bar.isIphoneX {
