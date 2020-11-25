@@ -15,7 +15,6 @@ class LoginView extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      userId: Taro.getStorageSync('userId'),
       js_code: null
     }
   }
@@ -118,8 +117,10 @@ class LoginView extends Component {
   render () {
     return (
       <View className='loginViewWrap'>
-        <Image src={headerjpg} className='fmg-logo' />
-        <View className='fmg-name'>凤鸣谷</View>
+        <View className='logo-info'>
+          <Image src={headerjpg} className='fmg-logo' />
+          <View className='fmg-name'>凤鸣谷</View>
+        </View>
         <View className='fmg-login'>该程序将获取以下授权</View>
         <View className='fmg-login-info'>·获得您的公开信息（昵称，头像等）</View>
         <Button className='btn' openType='getUserInfo' onGetUserInfo={this.getUserInfo} type='primary' lang='zh_CN'>

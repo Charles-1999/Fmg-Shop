@@ -30,9 +30,17 @@ class PlaceTab extends Component {
     this.setState({
       currentId: e,
     })
-    Taro.navigateTo({
-      url: `/pages/index/placeGoodsList?id=${this.state.currentId}`,
-    });
+    if(e==5){
+      Taro.navigateTo({
+        url: `/pages/studies/index`,
+      });
+    }
+    else{
+      Taro.navigateTo({
+        url: `/pages/index/placeGoodsList?id=${this.state.currentId}`,
+      });
+    }
+   
   }
 
   render () {
