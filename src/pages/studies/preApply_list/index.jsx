@@ -106,8 +106,8 @@ function PreApplyList(props) {
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
-        backType='redirect'
-        url='/pages/studies/index'
+        // backType='redirect'
+        // url='/pages/studies/index'
         title='预报名'
         color='#fff'
         backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
