@@ -74,7 +74,7 @@ export default function MemberList(props) {
                   <View className='name'>{item.name}</View>
                   <View className='idCard'>
                     <Text>身份证</Text>
-                    <Text className='id_text'>{item.number}</Text>
+                    <Text className='id_text'>{item.number.replace(item.number.substr(4,11), '***********')}</Text>
                   </View>
                 </View>
                 <View className='checkBox'>

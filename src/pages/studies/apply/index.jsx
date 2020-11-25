@@ -130,7 +130,7 @@ function Apply(props) {
                 <View className='name'>{member.name}</View>
                 <View className='idCard'>
                   <Text>二代身份证</Text>
-                  <Text className='id_text'>{member.number}</Text>
+                  <Text className='id_text'>{member.number.replace(member.number.substr(4,11), '***********')}</Text>
                 </View>
               </View>
             </View>
