@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { Provider } from 'react-redux'
 import './app.scss'
 import request from './utils/request'
-import login, {appLogin} from './utils/login'
+import login, {appLogin, register} from './utils/login'
 import dva from './utils/dva'
 import models from './model'
 
@@ -14,32 +14,36 @@ const dvaApp = dva.createApp({
   initialState: {},
   models: models,
   onError() {
-    
+
   }
 });
 const store = dvaApp.getStore();
 
 class App extends Component {
-  // async onLaunch() {
-  //   const userInfo = Taro.getStorageSync("userInfo");
-  //   if(!userInfo) {
-  //     Taro.redirectTo({ url:"/pages/login/index" });
-  //   }
-  //   else {
-  //     try {
-  //       const js_code = await appLogin();
-  //       const res = await login(js_code);
-  //       console.log(res)
-  //     }catch(err) {
-  //       console.log(err)
-  //       Taro.showToast({
-  //         title: '小程序登录失败，请重新进入小程序。',
-  //         icon: 'none',
-  //         duration: 2500
-  //       })
-  //     }
-  //   }
-  // }
+  async onLaunch() {
+    const userInfo = Taro.getStorageSync("userInfo");
+    if(!userInfo) {
+      Taro.redirectTo({ url:"/pages/login/index" });
+    }
+    else {
+      try {
+        const js_code = await appLogin();
+        const res = await login(js_code);
+        // res中存在key，即账号没注册
+        if(res.key) {
+          await register(res.key, userInfo);
+        }
+        console.log(res)
+      }catch(err) {
+        console.log(err)
+        Taro.showToast({
+          title: '小程序登录失败，请重新进入小程序。',
+          icon: 'none',
+          duration: 2500
+        })
+      }
+    }
+  }
 
   componentWillMount(){
     this.getSysInfo();
@@ -68,13 +72,15 @@ class App extends Component {
     // 存储到缓存中
     Taro.setStorageSync('isIphoneX', isIphoneX);
     Taro.setStorageSync('sysInfo', sysInfo);
+    Taro.setStorageSync('statusBarHeight', statusBarHeight);
+    Taro.setStorageSync('capsule', capsule);
     // 设置全局变量
     setGlobalData('isIphoneX', isIphoneX);
     setGlobalData('statusBarHeight', statusBarHeight);
     setGlobalData('capsule', capsule);
     setGlobalData('windowWidth', windowWidth);
   }
-  
+
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render () {
