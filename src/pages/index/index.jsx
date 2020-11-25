@@ -15,8 +15,8 @@ import Navbar from '../../components/navbar/navbar'
 import { get as getGlobalData } from '../../global_data'
 
 
-@connect(({ goods }) => ({
-   ...goods
+@connect(({ goods, cart }) => ({
+   ...goods, ...cart
 }))
 
 class Index extends Component {
@@ -29,7 +29,7 @@ class Index extends Component {
       kindList:[],
       slideshowList:[],
       goodsSaleTopList:[],
-      
+
     }
   }
   async componentDidMount(){
@@ -51,7 +51,7 @@ class Index extends Component {
       }
     });
     const {kindInfoList} = this.props;
-  
+
     await this.props.dispatch({
       type: 'goods/getslideshow',
     });
@@ -67,7 +67,7 @@ class Index extends Component {
       type: 'goods/getGoodsTopList',
       payload: {
         sale_tag: 3,
-      },    
+      },
     });
     const { placeList, slideshowList, goodsSaleTopList } = this.props;
 
@@ -79,8 +79,15 @@ class Index extends Component {
     })
 
   }
+
+  async componentDidShow() {
+    await this.props.dispatch({
+      type: 'cart/getCart'
+    })
+  }
+
   render () {
-    const {statusBarHeight, capsule} = this.state; 
+    const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
     return (
       <View className='index' >
@@ -127,7 +134,7 @@ class Index extends Component {
         <SaleNew />
         {/* <PlaceKindTab placeList={this.state.placeList} kindList={this.state.kindList} /> */}
       </View>
-        
+
     )
   }
 }

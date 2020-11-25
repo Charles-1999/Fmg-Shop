@@ -11,7 +11,7 @@ import '../index.scss'
 //商品卡片
 @connect(({ goods,cart }) => ({
   ...goods,...cart
-  
+
 }))
 class GoodsCard extends Component {
   constructor () {
@@ -37,9 +37,9 @@ class GoodsCard extends Component {
     if (this.props.goodsListIds !== []){
       await this.props.dispatch({
         type: 'goods/mgetGoodsListEntity',
-        payload: 
+        payload:
           this.props.goodsListIds
-        
+
       })
       console.log(this.props.goodsList)
     }
@@ -89,14 +89,14 @@ render () {
                   </View>
                 </View>
               }
-              {get(item,'sale','') ? 
+              {get(item,'sale','') ?
                 <View className='count'>
                   <AtTag className='count-tag' size='small' type='primary' >满减优惠</AtTag>
                 </View>:  <View className='count-null'>
                 </View>
               }
               <View className='info'>
-               
+
                 <View className='price'>
                   <View className='yuan'>¥</View>
                   <View className='number'>
@@ -111,16 +111,17 @@ render () {
                   </View>
                 </View>
                 <View className='join-cart' onClick={this.addCart.bind(this,item.id)}> 加入购物车 </View>
-              </View>     
+              </View>
           </View>
-          )))}        
+          )))}
         </View>
-        <SelectFloat 
+        <SelectFloat
           currGoods={data}
           isOpen={isOpen}
           showType={1}
           hiddenFloat={() => {this.setState({isOpen: false})}}
-        /> 
+          addCallBack={() => {this.props.dispatch({ type: 'cart/getCart' })}}
+        />
       </View>
     )
   }
