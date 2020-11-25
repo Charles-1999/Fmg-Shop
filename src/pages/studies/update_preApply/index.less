@@ -1,74 +1,105 @@
 page {
   .update_preApply {
     padding-bottom: 180rpx;
-    .form_wrap {
-      padding: 20rpx 0;
-      .form_item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20rpx 40rpx;
-        font-size: 16PX;
-        input {
-          flex: 1;
-          margin-left: 20rpx;
-          padding: 10rpx 30rpx;
-          border-radius: 20rpx;
+    .bg {
+      width: 100%;
+      height: 500rpx;
+      background-image: linear-gradient(180deg, #2d79f8, #2d79f8 60%, #f3f4f5);
+    }
+    .container {
+      .main {
+        position: relative;
+        top: -500rpx;
+        padding: 20rpx;
+        .form_wrap {
           background-color: #fff;
-        }
-        .input-placeholder {
-          font-size: 13PX;
-        }
-        .picker {
-          flex: 1;
-          position: relative;
-          width: 100%;
-          margin-left: 20rpx;
           border-radius: 20rpx;
-          .picker_item {
-            padding: 10rpx 30rpx;
+          padding: 20rpx;
+          .form_item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25rpx 20rpx;
+            font-size: 14PX;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            .title {
+              width: 70PX;
+            }
+            input {
+              flex: 1;
+              background-color: #fff;
+              border: none;
+            }
+            .input-placeholder {
+              color: #999;
+            }
+            .text {
+              flex: 1;
+              color: #2d79f8;
+            }
+            .radio-list {
+              flex: 1;
+              .radio-list_label {
+                margin-right: 40rpx;
+              }
+            }
+            .session_picker {
+              flex: 1;
+              .picker_view {
+                text {
+                  color: #999;
+                }
+              }
+            }
           }
         }
-      }
-    }
-    .course_wrap {
-      margin-bottom: 40rpx;
-      .name {
-        padding: 0 40rpx;
-        font-size: 18PX;
-      }
-    }
-    .session_wrap {
-      padding-bottom: 20rpx;
-      .session_list {
-        padding: 0 40rpx;
-        .session {
-          margin-top: 40rpx;
-          .title {
-            font-size: 20PX;
+        .course_wrap {
+          background-color: #fff;
+          border-radius: 20rpx;
+          margin: 20rpx 0;
+          padding: 20rpx;
+          font-size: 16PX;
+          .name {
+            padding: 0 40rpx;
+            font-size: 16PX;
           }
         }
-        .info_wrap {
-          display: flex;
+        .session_wrap {
+          background-color: #fff;
+          border-radius: 20rpx;
           margin-top: 20rpx;
-          margin-left: 20rpx;
-          color: #3e3e3e;
-          .title {
-            font-size: 16PX;
-            width: 180rpx;
-          }
-          .content {
-            font-size: 16PX;
+          padding: 20rpx;
+          padding-bottom: 20rpx;
+          .session_list {
+            padding: 0 40rpx;
+            .session {
+              margin-top: 40rpx;
+              .title {
+                font-size: 18PX;
+              }
+            }
+            .info_wrap {
+              display: flex;
+              margin-top: 20rpx;
+              margin-left: 20rpx;
+              color: #3e3e3e;
+              font-size: 15PX;
+              .title {
+                font-size: 15PX;
+                width: 180rpx;
+              }
+            }
           }
         }
+        .title_wrap {
+          margin: 20rpx;
+          padding-left: 20rpx;
+          font-size: 18PX;
+          font-weight: 700;
+          border-left: 3PX solid #6684f7;
+        }
       }
-    }
-    .title_wrap {
-      margin: 20rpx;
-      padding-left: 20rpx;
-      font-size: 18PX;
-      font-weight: 700;
-      border-left: 3PX solid #6684f7;
     }
     .tool_bar {
       position: fixed;
