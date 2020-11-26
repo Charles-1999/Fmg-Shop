@@ -68,9 +68,9 @@ class CartListView extends Component {
     }
   }
 
-  UNSAFE_componentWillMount() {
-    this.init();
-  }
+  // UNSAFE_componentWillMount() {
+  //   this.init();
+  // }
 
   componentDidShow() {
     this.init()
@@ -84,7 +84,6 @@ class CartListView extends Component {
   // 获取购物车数据和购物车商品数据
   getData = async() => {
     let start = new Date()
-    const { userId } = this.state;
     let goodsId = [];
 
     /* 获取购物车数据 */
