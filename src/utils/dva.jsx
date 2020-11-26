@@ -22,6 +22,7 @@ function createApp(opt) {
   global.registered = true;
   app.start();
 
+  // 顶部的state数据
   store = app._store;
   app.getStore = () => store;
 

@@ -66,8 +66,11 @@ function UpdatePreApply(props) {
       duration: 1000
     })
     setTimeout(() => {
-      Taro.redirectTo({
-        url: '/pages/studies/preApply_list/index?status=' + 1
+      // Taro.navigateTo({
+      //   url: '/pages/studies/preApply_list/index?status=' + 1
+      // })
+      Taro.navigateBack({
+        delta: 1
       })
     }, 1000)
   }

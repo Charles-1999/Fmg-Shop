@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import request from './request'
 
-/* 
+/*
   小程序登录
 */
 export function appLogin() {
@@ -13,7 +13,7 @@ export function appLogin() {
   })
 }
 
-/* 
+/*
   后端登录
 */
 export default function login(js_code) {
@@ -25,7 +25,7 @@ export default function login(js_code) {
         },
         method: "POST"
       })
-      console.log('register',res);
+      console.log('login',res);
       Taro.setStorageSync('userId',res.id);
       Taro.setStorageSync('token',res.token);
       Taro.setStorageSync('open_id',res.open_id);
@@ -38,7 +38,7 @@ export default function login(js_code) {
   })
 }
 
-/* 
+/*
   注册功能
 */
 export function register(key, userInfo) {

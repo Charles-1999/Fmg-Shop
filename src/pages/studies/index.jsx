@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro, {getApp} from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { View, Image, Text } from '@tarojs/components'
@@ -12,8 +12,8 @@ function Studies(props) {
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
   const userInfo = Taro.getStorageSync('userInfo')
 
-  const [currTab, setCurrTab] = useState(3)
-  const { courseList } = props
+  const [currTab, setCurrTab] = useState(1)
+  const { courseInfos } = props
 
   useEffect(() => {
     /* 获取课程列表 */
@@ -159,7 +159,7 @@ function Studies(props) {
             <Text>最新课程</Text>
           </View>
           <View className='course_list'>
-            {courseList.map(course => (
+            {(courseInfos ?? []).map(course => (
               <View className='course_wrap' key={course.id} onClick={courseTap.bind(this, course.id)}>
                 <Image src={course.cover} mode='widthFix' />
                 <View className='course_info'>
