@@ -5,7 +5,7 @@ import Navbar from '@components/navbar/navbar'
 
 import './index.less'
 
-export default function MemberList(props) {
+export default function AddMember(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
   const capsule = Taro.getStorageSync('capsule')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
@@ -94,7 +94,7 @@ export default function MemberList(props) {
           </View>
           <View className='input_wrap'>
             <View className='title'>出生日期</View>
-            <Picker mode="date" className='date_picker' end={new Date().toLocaleDateString()} onChange={(e) => { SetBirth(new Date(e.detail.value).getTime()) }}>
+            <Picker mode="date" className='date_picker' end={new Date().toLocaleDateString()} onChange={(e) => { SetBirth(e.detail.value) }}>
                 <View className='picker_view'>{birth == '' ? <Text>请选择</Text> : birth}</View>
             </Picker>
           </View>
