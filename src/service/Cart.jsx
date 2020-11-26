@@ -32,3 +32,11 @@ export const updateCart = params => {
     method: 'PUT'
   })
 }
+
+/* 删除购物车 */
+export const delCart = params => {
+  return request(`/car/info/delete`, {
+    body: params,
+    method: 'DELETE'
+  })
+}

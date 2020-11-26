@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { createCart, getCart, updateCart } from '../service/Cart'
+import { createCart, getCart, updateCart, delCart } from '../service/Cart'
 
 export default {
   namespace: 'cart',
@@ -23,10 +23,18 @@ export default {
     * getCart({ payload }, { call, put }) {
       const cartList = yield call(getCart, payload)
 
-      Taro.setTabBarBadge({
-        index: 3,
-        text: cartList.data.length + ''
-      })
+      // 设置购物车小红点
+      const length = cartList.data.length
+      if (length > 0) {
+        Taro.setTabBarBadge({
+          index: 3,
+          text: length + ''
+        })
+      } else {
+        Taro.removeTabBarBadge({
+          index: 3
+        })
+      }
 
       yield put({
         type: 'save',
@@ -55,15 +63,20 @@ export default {
 
         /* 购物车价格 */
         cart.price = goodsList[index].specification[spec_index].showPrice
-
-        /* 移动距离 */
-        cart.x = 0
       })
 
-      Taro.setTabBarBadge({
-        index: 3,
-        text: cartList.length + ''
-      })
+      // 设置购物车小红点
+      const length = cartList.length
+      if (length > 0) {
+        Taro.setTabBarBadge({
+          index: 3,
+          text: length + ''
+        })
+      } else {
+        Taro.removeTabBarBadge({
+          index: 3
+        })
+      }
 
       yield put({
         type: 'save',
@@ -84,6 +97,10 @@ export default {
     /* 更新购物车 */
     * updateCart({ payload }, { call, put }) {
       const res = yield call(updateCart, payload)
+    },
+    /* 删除购物车 */
+    * delCart({ payload }, { call, put }) {
+      const res = yield call(delCart, payload)
     }
   },
   reducers: {

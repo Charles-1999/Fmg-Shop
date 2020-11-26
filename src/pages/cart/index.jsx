@@ -93,6 +93,8 @@ class CartListView extends Component {
     // 购物车列表
     let cartList = res_mget.data;
 
+    let xArr = new Array(cartList.length).fill(0)
+
     /* 处理缓存数据 */
     let cartListStor = Taro.getStorageSync('cartListStor')
     // 如果有缓存
@@ -159,7 +161,8 @@ class CartListView extends Component {
       cartList,
       goodsList,
       checkList,
-      allCheck
+      allCheck,
+      xArr
     })
     let end = new Date()
     console.log(end - start)
@@ -226,13 +229,12 @@ class CartListView extends Component {
 
   // 删除购物车
   async delCart(cart_id) {
-    const data = await request(`/car/info/delete`, {
-      body: {
+    this.props.dispatch({
+      type: 'cart/delCart',
+      payload: {
         ids: [cart_id]
-      },
-      method: 'DELETE'
-    });
-    console.log(data)
+      }
+    })
     this.getData();
   }
 
@@ -552,7 +554,7 @@ class CartListView extends Component {
   }
 
   touchMoveEndHandle(index, e) {
-    const { cartList, startX, startY } = this.state;
+    const { startX, startY, xArr } = this.state;
     const touchMoveEndX = e.changedTouches[0].clientX; // 滑动变化X坐标
     const touchMoveEndY = e.changedTouches[0].clientY; // 滑动变化Y坐标
     const angle = this.angle({
@@ -565,20 +567,34 @@ class CartListView extends Component {
     // 滑动超过50度角 return，防止上下滑动触发
     if (Math.abs(angle) > 50) return;
     if (Math.abs(touchMoveEndX - startX) < 1) return;
-    cartList.forEach((cart, cart_index) => {
+    // xArr.forEach((item, x_index) => {
+    //   if (touchMoveEndX > startX) {
+    //     // 右滑
+    //     // console.log('右滑');
+    //     if (index == x_index) xArr[x_index] = 0;
+    //   } else {
+    //     // 左滑
+    //     // console.log('左滑');
+    //     xArr[x_index] = -120
+    //     if (index != x_index) xArr[x_index] = 0;
+    //   }
+    // })
+    xArr.forEach((item, x_index) => {
       if (touchMoveEndX > startX) {
         // 右滑
         // console.log('右滑');
-        if (index == cart_index) cart.x = 0;
+        if (index == x_index) item = 0;
       } else {
         // 左滑
         // console.log('左滑');
-        cart.x = -120
-        if (index != cart_index) cart.x = 0;
+        item = -120
+        if (index != x_index) item = 0;
       }
+      console.log(x_index, item, xArr)
     })
+    console.log(xArr)
     this.setData({
-      cartList
+      xArr
     })
   }
 
@@ -595,7 +611,7 @@ class CartListView extends Component {
 
   render() {
     console.log('%c ........cart/index render.........', 'color:green');
-    const { statusBarHeight, capsule, cartList, goodsList, isOpen, currGoods, allCheck, temp_spec_index, temp_count, total_count, total_coupon, total_goods_amount } = this.state;
+    const { statusBarHeight, capsule, cartList, goodsList, isOpen, currGoods, allCheck, temp_spec_index, temp_count, total_count, total_coupon, total_goods_amount, xArr } = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     return (
       <View className='cart' style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -609,7 +625,7 @@ class CartListView extends Component {
         <View className='cart_list'>
           {cartList ? cartList.map((cart, cart_index) => (
             <MovableArea key={cart.id}>
-              <MovableView direction='horizontal' inertia outOfBounds x={cart.x} onTouchStart={this.touchMoveStartHandle} onTouchEnd={this.touchMoveEndHandle.bind(this, cart_index)}>
+              <MovableView direction='horizontal' inertia outOfBounds x={xArr[cart_index]} onTouchStart={this.touchMoveStartHandle} onTouchEnd={this.touchMoveEndHandle.bind(this, cart_index)}>
                 <View className={cart.soldOut ? 'cart_item sold_out' : 'cart_item'}>
                   <View className='checkBox'>
                     <Checkbox checked={cart.is_check} onClick={this.handleCheck.bind(this, cart.id)}></Checkbox>
