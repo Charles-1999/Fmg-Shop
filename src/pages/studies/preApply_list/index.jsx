@@ -14,16 +14,17 @@ function PreApplyList(props) {
   const isIphoneX = Taro.getStorageSync('isIphoneX')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
-  const [currTab, setCurrTab] = useState(0)
+  const [currTab, setCurrTab] = useState(1)
   const [dataList, setDataList] = useState([])
 
-  useEffect(() => {
-    const { status } = getCurrentInstance().router.params
-    switchTab(status)
-  }, [])
+  // useEffect(() => {
+  //   const { status } = getCurrentInstance().router.params
+  //   switchTab(status)
+  // }, [])
 
   useDidShow(() => {
-    getPreApplyList(currTab)
+    const { status } = getCurrentInstance().router.params
+    getPreApplyList(status == currTab ? currTab : status)
   })
 
   function switchTab(tab) {
