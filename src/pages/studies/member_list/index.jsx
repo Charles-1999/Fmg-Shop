@@ -26,6 +26,13 @@ export default function MemberList(props) {
     })
   }
 
+  /* 修改成员信息 */
+  function updataMember(id) {
+    Taro.navigateTo({
+      url: '/pages/studies/update_member/index?id=' + id
+    })
+  }
+
   /* 点击复选框 */
   function checkedClick(index) {
     // 复制数组
@@ -69,7 +76,7 @@ export default function MemberList(props) {
           <View className='list_wrap'>
             {(memberList ?? []).map((item, index) => (
               <View className='member' key={item.id}>
-                <Image src='http://qiniu.daosuan.net/icon-1606046423000' className='edit'/>
+                <Image src='http://qiniu.daosuan.net/icon-1606046423000' className='edit' onClick={updataMember.bind(this, item.id)}/>
                 <View className='info_wrap'>
                   <View className='name'>{item.name}</View>
                   <View className='idCard'>
