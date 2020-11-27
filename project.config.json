@@ -39,12 +39,6 @@
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
@@ -68,6 +62,49 @@
           "name": "pages/cart/index",
           "pathName": "pages/cart/index",
           "query": "kind_tag=8",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/category/index",
+          "pathName": "pages/category/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/goods_list/index",
+          "pathName": "pages/goods_list/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/studies/index",
+          "pathName": "pages/studies/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/details/index",
+          "pathName": "pages/details/index",
+          "query": "gid=14",
+          "scene": null
+        },
+        {
+          "name": "pages/studies/apply/index",
+          "pathName": "pages/studies/apply/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/studies/member_list/index",
+          "pathName": "pages/studies/member_list/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/studies/add_member/index",
+          "pathName": "pages/studies/add_member/index",
           "scene": null
         }
       ]
