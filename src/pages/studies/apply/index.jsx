@@ -40,8 +40,10 @@ function Apply(props) {
 
   useDidShow(() => {
     const list = Taro.getStorageSync('memberList')
-    if (list.length != 0)
-      setMemberList(Taro.getStorageSync('memberList').filter(item => item.checked))
+    if (list.length != 0) {
+      list.forEach(item => item.birth = new Date(item.birth).getTime())
+      setMemberList(list.filter(item => item.checked))
+    }
   })
 
   /* 添加成员 */
@@ -130,7 +132,7 @@ function Apply(props) {
                 <View className='name'>{member.name}</View>
                 <View className='idCard'>
                   <Text>二代身份证</Text>
-                  <Text className='id_text'>{member.number.replace(member.number.substr(4,11), '***********')}</Text>
+                  <Text className='id_text'>{member.number.replace(member.number.substring(4,15), '***********')}</Text>
                 </View>
               </View>
             </View>

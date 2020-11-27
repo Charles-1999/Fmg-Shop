@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-11-24 20:48:10
+ * @LastEditTime: 2020-11-26 12:54:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
@@ -11,15 +11,12 @@ import { formatTimeStamp } from '@utils/time'
 
 export default {
   namespace: 'study',
-  state: {
-    courseList: [],
-    courseInfo: [],
-    courseTags: [],
-    preApplyList: [],
-    preApply: [],
-    apply: []
-  },
+  state: {},
   effects: {
+    // call     调用异步逻辑
+    // put      用于触发action
+    // select   用于从state中获取数据
+
     /* 获取课程列表 */
     * getCourseList({ payload }, { call, put }) {
       // 获取课程ids
@@ -27,49 +24,11 @@ export default {
       const ids = courseList.courses.map(item => item.id)
 
       // 批量获取课程信息
-      let courseInfo = yield call(mgetCourseInfo, { ids })
-
-      /* 课程信息数据处理 */
-      courseInfo.forEach(info => {
-        /* 封面前缀 */
-        info.cover = 'http://qiniu.daosuan.net/' + info.cover
-
-        /* 价格单位处理 */
-        info.min_price = Number((info.min_price / 100).toFixed(2))
-
-        /* 研学日期（x年 y月 - m年 n月） */
-        let startDate = new Date(formatTimeStamp(info.begin_time))
-        let endDate = new Date(formatTimeStamp(info.end_time))
-        // 如果是同一个月，只显示 x年 y月
-        if (startDate.getFullYear() == endDate.getFullYear() && startDate.getMonth() == endDate.getMonth()) {
-          info.date = `${startDate.getFullYear()}年${startDate.getMonth() + 1}月`
-        } else {
-          info.date = `${startDate.getFullYear()}年${startDate.getMonth() + 1}月-${endDate.getFullYear()}年${endDate.getMonth() + 1}月`
-        }
-
-        /* 行程天数（x天） */
-        let days = []
-        info.session.forEach(session => {
-          let startDate = new Date(formatTimeStamp(session.begin_time))
-          let endDate = new Date(formatTimeStamp(session.end_time))
-          let dayDiff = (endDate - startDate) / (1000 * 60 * 60 * 24)
-          days.push(Math.ceil(dayDiff))
-
-          // 价格单位处理
-          session.money = Number((session.money / 100).toFixed(2))
-        })
-        let min = Math.min(...days)
-        let max = Math.max(...days)
-        if (min == max) {
-          info.days = `${min}天`
-        } else {
-          info.days = `${min}天-${max}天`
-        }
-      })
-
       yield put({
-        type: 'saveCourseList',
-        payload: courseInfo // Arr[]
+        type: 'mgetCourseInfo',
+        payload: {
+          ids
+        }
       })
     },
     /* 批量获取课程信息 */

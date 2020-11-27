@@ -5,16 +5,16 @@ import Navbar from '@components/navbar/navbar'
 
 import './index.less'
 
-export default function AddMember(props) {
+export default function UpdataMember(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
   const capsule = Taro.getStorageSync('capsule')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
-  const sexs = [
+  let sexArr = [
     {
       value: 1,
       text: '男',
-      checked: true
+      checked: false
     },{
       value: 2,
       text: '女',
@@ -22,15 +22,38 @@ export default function AddMember(props) {
     },
   ]
 
+  const [sexs, setSexs] = useState(sexArr)
+  let memberList = Taro.getStorageSync("memberList")
+  const [id, setId] = useState(Infinity)
   const [name, setName] = useState('')
   const [idCard, setIdCard] = useState('')
   const [phone, setPhone] = useState('')
   const [sex, setSex] = useState('')
   const [birth, SetBirth] = useState('')
 
+  useEffect(() => {
+    const { id } = getCurrentInstance().router.params
+    const member = memberList.find(item => item.id == id)
+
+    // 设置性别
+    let temp = [...sexs]
+    temp.forEach(item => item.checked = item.value == member.sex ? true : false)
+    setSexs(temp)
+    setId(member.id)
+    setName(member.name)
+    setSex(member.sex)
+    setIdCard(member.number)
+    setPhone(member.phone)
+    SetBirth(member.birth)
+  }, [])
+
+  /* 处理性别单选框变更事件 */
+  function handleRadioChange(e) {
+    setSex(e.detail.value)
+  }
+
   /* 确认 */
   function comfirm() {
-    let sex = sexs.find(item => item.checked).value
     let formArr = [name, idCard, phone, sex, birth]
     if (formArr.some(item => item == '')) {
       Taro.showToast({
@@ -40,21 +63,12 @@ export default function AddMember(props) {
       return
     }
 
-    let member = { name, number: idCard, phone, sex, birth, checked: false }
-    let memberList = Taro.getStorageSync('memberList') || []
-
-    // 设置member的id值
-    let id
-    if (memberList.length === 0) {
-      id = 1
-    }
-    else id = Math.max(...memberList.map(item => item.id)) + 1
-
-    // 动态添加属性
-    let member_temp = Object.assign(member, { id })
+    // 更新信息
+    let member = { id, name, number: idCard, phone, sex, birth }
+    const index = memberList.findIndex(item => item.id == id)
+    memberList.splice(index, 1, member)
 
     // 加入到缓存
-    memberList.push(member_temp)
     Taro.setStorageSync('memberList', memberList)
 
     Taro.navigateBack({
@@ -63,13 +77,13 @@ export default function AddMember(props) {
   }
 
   return (
-    <View className={'add_member'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
+    <View className={'updata_member'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
-        title='添加成员'
+        title='更新成员信息'
         backgroundColor='#2d79f8'
         color='#fff'
       />
@@ -78,12 +92,12 @@ export default function AddMember(props) {
         <View className='main'>
           <View className='input_wrap'>
             <View className='title'>姓名</View>
-            <Input type="text" placeholder='与成员证件姓名一致' onBlur={(e) => setName(e.detail.value)}/>
+            <Input type="text" value={name} placeholder='与成员证件姓名一致' onBlur={(e) => setName(e.detail.value)}/>
           </View>
           <View className='input_wrap'>
             <View className='title'>性别</View>
             <View className='radio-list'>
-              <RadioGroup>
+              <RadioGroup onChange={handleRadioChange.bind(this)}>
                 {sexs.map((item, index) => (
                   <Label className='radio-list_label' key={index} for={index}>
                     <Radio className='radio-list_radio' value={item.value} checked={item.checked} color="#2d79f8">{item.text}</Radio>
@@ -104,11 +118,11 @@ export default function AddMember(props) {
           </View>
           <View className='input_wrap'>
             <View className='title'>证件</View>
-            <Input type="idcard" placeholder='与成员证件号码一致' onBlur={(e) => setIdCard(e.detail.value)}/>
+            <Input type="idcard" value={idCard} placeholder='与成员证件号码一致' onBlur={(e) => setIdCard(e.detail.value)}/>
           </View>
           <View className='input_wrap'>
             <View className='title'>手机号码</View>
-            <Input type="number" placeholder='成员本人手机号码' onBlur={(e) => setPhone(e.detail.value)}/>
+            <Input type="number" value={phone} placeholder='成员本人手机号码' onBlur={(e) => setPhone(e.detail.value)}/>
           </View>
           <View className='btn_wrap'>
             <View className='btn' onClick={comfirm.bind(this)}>确认</View>

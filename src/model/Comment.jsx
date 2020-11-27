@@ -51,8 +51,13 @@ export default {
       commentList.forEach(comment => {
         const account = accountList.find(acc => acc.id === comment.author_id)
         /* 获取用户信息 */
-        comment.nickname = account.nickname
-        comment.avator = account.avator
+        if (account) {
+          comment.nickname = account.nickname
+          comment.avator = account.avator
+        } else {
+          comment.nickname = ''
+          comment.avator = ''
+        }
       })
 
       const goodComments = commentList.filter(comment => comment.comment_tag === 1)

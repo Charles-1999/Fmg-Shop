@@ -6,7 +6,11 @@ import { get as getGlobalData } from '../../global_data'
 import request from '../../utils/request'
 
 import './index.less'
+import { connect } from 'react-redux';
 
+@connect(({ cart }) => ({
+  ...cart
+}))
 class CategoryListView extends Component {
   constructor() {
     super(...arguments)
@@ -15,12 +19,18 @@ class CategoryListView extends Component {
       capsule: getGlobalData('capsule'),
       leftMenuList: [], // 左边一级菜单
       rightMenuList: [], // 右边二级菜单
-      curr_menu_index: 0, // 当前一级菜单的序号 
+      curr_menu_index: 0, // 当前一级菜单的序号
     }
   }
 
   UNSAFE_componentWillMount() {
     this.getCateList();
+  }
+
+  componentDidShow() {
+    this.props.dispatch({
+      type: 'cart/getCart'
+    })
   }
 
   /* 获取菜单列表 */

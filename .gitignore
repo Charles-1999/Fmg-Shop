@@ -4,6 +4,7 @@ deploy_versions/
 .rn_temp/
 node_modules/
 .DS_Store
+.VSCodeCounter
 蓝黑/畅销.png
 蓝黑/大米.png
 蓝黑/待发货.png
