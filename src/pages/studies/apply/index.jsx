@@ -13,7 +13,7 @@ function Apply(props) {
   const isIphoneX = Taro.getStorageSync('isIphoneX')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
-  const { courseInfos, preApply } = props
+  const { courseInfos, dataList } = props
   const [currCourse, setCurrCourse] = useState({})
   const [currPreApply, setCurrPreApply] = useState({})
   const [sessionIndex, setSessionIndex] = useState(0)
@@ -30,7 +30,7 @@ function Apply(props) {
     setCurrCourse(currCourse)
 
     // 设置当前预报名信息
-    const currPreApply = preApply.find(item => item.id == pid)
+    const currPreApply = dataList.find(item => item.id == pid)
     setCurrPreApply(currPreApply)
 
     // 设置场次在场次列表中的索引
@@ -92,6 +92,16 @@ function Apply(props) {
         number: idCard,
         phone: phone
       }
+    }).then(() => {
+      Taro.showToast({
+        title: '报名成功！',
+        icon: 'success'
+      })
+    }).catch(err => {
+      Taro.showToast({
+        title: `报名失败，请重新尝试。(错误码${err.statusCode})`,
+        icon: 'none'
+      })
     })
   }
 
@@ -132,7 +142,7 @@ function Apply(props) {
                 <View className='name'>{member.name}</View>
                 <View className='idCard'>
                   <Text>二代身份证</Text>
-                  <Text className='id_text'>{member.number.replace(member.number.substring(4,15), '***********')}</Text>
+                  <Text className='id_text'>{member.number.replace(member.number.substring(4, 15), '***********')}</Text>
                 </View>
               </View>
             </View>

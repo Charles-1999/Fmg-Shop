@@ -22,7 +22,7 @@ function PreApply(props) {
   useEffect(() => {
     const { cid } = getCurrentInstance().router.params
     setCid(cid)
-    let courseInfo = props.courseList.find(course => course.id == cid)
+    let courseInfo = props.courseInfos.find(course => course.id == cid)
     setSessionArr(courseInfo.session.map((item, index) => `第${index + 1}期`))
     setCourseInfo(courseInfo)
   }, [])

@@ -12,7 +12,7 @@ function UpdatePreApply(props) {
   const isIphoneX = Taro.getStorageSync('isIphoneX')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
-  const { preApply, courseInfos } = props
+  const { dataList, courseInfos } = props
   const [currApply, setCurrApply] = useState({}) // 当前预报名信息
   const [courseInfo, setCourseInfo] = useState({}) // 当前课程
   const [sessionArr, setSessionArr] = useState([]) // 可选的场次列表
@@ -25,7 +25,7 @@ function UpdatePreApply(props) {
     const { pid } = getCurrentInstance().router.params
 
     // 获取当前预报名的信息
-    const currApply = preApply.find(item => item.id == pid)
+    const currApply = dataList.find(item => item.id == pid)
     setCurrApply(currApply)
     setName(currApply.name)
     setPhone(currApply.phone)

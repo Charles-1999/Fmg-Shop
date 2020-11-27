@@ -44,7 +44,6 @@ export default function MemberList(props) {
 
   /* 确认 */
   function confirm() {
-    console.log(tempList)
     // 重新设置缓存
     Taro.setStorageSync('memberList', tempList)
 

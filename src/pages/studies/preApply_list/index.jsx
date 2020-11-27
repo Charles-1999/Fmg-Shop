@@ -17,67 +17,59 @@ function PreApplyList(props) {
   const [currTab, setCurrTab] = useState(1)
   const [dataList, setDataList] = useState([])
 
-  // useEffect(() => {
-  //   const { status } = getCurrentInstance().router.params
-  //   switchTab(status)
-  // }, [])
-
   useDidShow(() => {
     const { status } = getCurrentInstance().router.params
-    getPreApplyList(status == currTab ? currTab : status)
+    setCurrTab(status)
+    // getPreApplyList(status == currTab ? currTab : status)
+    getApplyList(status)
   })
 
+  // 在getApplyList之后，检测到courseInfos有返回时
+  useEffect(() => {
+    let { dataList, courseInfos } = props
+    if (dataList instanceof Array) {
+      dataList.forEach(data => {
+        data = Object.assign(data, { courseInfo: courseInfos.find(item => item.id == data.course_id) })
+      })
+      setDataList(dataList)
+    }
+  }, [props.courseInfos])
+
+  // 切换tab
   function switchTab(tab) {
     setCurrTab(tab)
-    getPreApplyList(tab)
+    getApplyList(tab)
   }
 
-  /* 获取预报名列表 */
-  async function getPreApplyList(status) {
-    // 1: 取消, 2: 预报名, 4: 已报名
-    const statusArr = [null, 2, 4, null, 1]
+  /* 获取报名列表 */
+  async function getApplyList(status) {
+    // 预报名状态 1: 取消, 2: 预报名, 4: 已报名
+    // 已报名状态 1: 未支付, 2: 已支付, 4: 已取消
+    // status 0: 全部, 1: 预报名, 2: 未支付, 3: 已支付, 4: 已取消,
+    status = parseInt(status)
+    const statusArr = [null, 2, 1, 2, 1]
 
-    // 获取预报名列表
-    await props.dispatch({
-      type: 'study/getPreApplyList',
-      payload: {
-        status: statusArr[status],
-        page: 1,
-        limit: 100
-      }
-    }).then(preApplyList => {
-      const ids = preApplyList.map(item => item.id)
-      mgetPreApply(ids)
-    })
-  }
-
-  /* 批量获取预报名信息 */
-  async function mgetPreApply(ids) {
-    await props.dispatch({
-      type: 'study/mgetPreApply',
-      payload: {
-        ids
-      }
-    }).then(preApply => {
-      const ids = preApply.map(item => item.course_id)
-      mgetCourseInfo(ids, preApply)
-    })
-  }
-
-  /* 批量获取课程信息 */
-  async function mgetCourseInfo(ids, preApply) {
-    ids = [...new Set(ids)]
-    await props.dispatch({
-      type: 'study/mgetCourseInfo',
-      payload: {
-        ids
-      }
-    }).then(courseInfo => {
-      preApply.forEach(apply => {
-        apply = Object.assign(apply, { courseInfo: courseInfo.find(course => course.id === apply.course_id) })
+    // 获取报名列表
+    if ([2, 3].includes(status)) {
+      props.dispatch({
+        type: 'study/getApplyList',
+        payload: {
+          status: statusArr[status],
+          page: 1,
+          limit: 100,
+        }
       })
-      setDataList(preApply)
-    })
+    } else {
+      // 获取预报名列表
+      props.dispatch({
+        type: 'study/getPreApplyList',
+        payload: {
+          status: statusArr[status],
+          page: 1,
+          limit: 100,
+        }
+      })
+    }
   }
 
   /* 取消报名 */
@@ -117,7 +109,8 @@ function PreApplyList(props) {
       <View className='tab_bar'>
         <View className={currTab == 0 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 0)}>全部</View>
         <View className={currTab == 1 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 1)}>预报名</View>
-        <View className={currTab == 2 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 2)}>已报名</View>
+        <View className={currTab == 2 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 2)}>未支付</View>
+        <View className={currTab == 3 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 3)}>已支付</View>
         <View className={currTab == 4 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 4)}>已取消</View>
       </View>
       <View className='list_wrap'>

@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-11-26 12:54:48
+ * @LastEditTime: 2020-11-27 15:43:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
@@ -33,6 +33,10 @@ export default {
     },
     /* 批量获取课程信息 */
     * mgetCourseInfo({ payload }, { call, put }) {
+      // ids 去重
+      const ids = [...new Set(payload.ids)]
+      payload = {...payload, ids}
+
       const courseInfo = yield call(mgetCourseInfo, payload)
 
       /* 课程信息数据处理 */
@@ -109,7 +113,13 @@ export default {
         }
       })
 
-      return res.preApplys
+      // 批量获取预报名信息
+      yield put({
+        type: 'mgetPreApply',
+        payload: {
+          ids: res.preApplys.map(item => item.id)
+        }
+      })
     },
     /* 批量获取预报名信息 */
     * mgetPreApply({ payload }, { call, put }) {
@@ -124,11 +134,17 @@ export default {
       yield put({
         type: 'save',
         payload: {
-          preApply
+          dataList: preApply
         }
       })
 
-      return preApply
+      // 批量获取课程信息
+      yield put({
+        type: 'mgetCourseInfo',
+        payload: {
+          ids: preApply.map(item => item.course_id)
+        }
+      })
     },
     /* 获取报名列表 */
     * getApplyList({ payload }, { call, put }) {
@@ -141,7 +157,13 @@ export default {
         }
       })
 
-      return res.applys
+      // 批量获取报名信息
+      yield put({
+        type: 'mgetApply',
+        payload: {
+          ids: res.applys.map(item => item.id)
+        }
+      })
     },
     /* 批量获取报名信息 */
     * mgetApply({ payload }, { call, put }) {
@@ -156,11 +178,17 @@ export default {
       yield put({
         type: 'save',
         payload: {
-          apply
+          dataList: apply
         }
       })
 
-      return apply
+      // 批量获取课程信息
+      yield put({
+        type: 'mgetCourseInfo',
+        payload: {
+          ids: apply.map(item => item.course_id)
+        }
+      })
     },
     /* 取消预报名 */
     * canclePreApply({ payload }, { call, put }) {
@@ -173,7 +201,6 @@ export default {
     /* 通过预报名创建报名 */
     * preToApply({ payload }, { call, put }) {
       const res = yield call(preToApply, payload)
-      console.log(res)
     }
   },
   reducers: {
