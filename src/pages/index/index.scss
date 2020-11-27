@@ -8,6 +8,7 @@
     margin: 30rpx 30rpx;
     padding: 30rpx 30rpx;
     margin-top: 80rpx;
+    box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
     .place-tab-row::-webkit-scrollbar {display:none}  //是否显示滑动条
     .place-tab-row{
       overflow-y:hidden;
@@ -84,6 +85,7 @@
     border-radius: 10PX;
     margin: 30rpx 30rpx;
     padding: 20rpx 30rpx;
+    box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
     .goodsList{
       display: inline-flex;
       .left-item{ 
@@ -102,7 +104,7 @@
         .pic-1{
           width: 110rpx;
           height: 130rpx;
-          box-shadow: 0 3rpx 5rpx #464646;
+          box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
         }
         .number{
           position:absolute;
@@ -155,7 +157,7 @@
               height: 160rpx;
               border-radius: 10PX;
               margin-top:20rpx;
-              box-shadow: 0 3rpx 5rpx #464646;
+              box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
               
             }
           }
@@ -183,7 +185,7 @@
               height: 160rpx;
               margin-top:20rpx;
               border-radius: 10PX;
-              box-shadow: 0 3rpx 5rpx #464646;
+              box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
             }
           }
         }
@@ -199,6 +201,7 @@
       //display: block;
       height:50rpx;
       margin: 30rpx 30rpx;
+      box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
       .icon{
         margin-top: -15rpx;
         left:100rpx;
@@ -274,6 +277,7 @@
       background-color: white;
       border-radius: 10PX;
       padding: 20rpx 19rpx;
+      box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
       float: left;
       .cover{
         width:280rpx;
@@ -603,7 +607,7 @@
       position: relative;
       text-align: center;
       align-self: center;
-      width: 450rpx;
+      width: 500rpx;
       height: 80rpx;
       input {
           width: 100%;
@@ -612,6 +616,9 @@
           border-radius: 50rpx;
           background-color:white;
           margin-top: 16rpx;
+          box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
+        
+        
       }
       image {
           position: absolute;

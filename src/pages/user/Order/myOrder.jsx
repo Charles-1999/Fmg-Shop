@@ -158,6 +158,7 @@ class MyOrderList extends Component {
 
   /* 发起微信支付 */
   requestPayment = async (data) => {
+    const getOrderList = () => this.getOrderList();
     Taro.requestPayment({
       timeStamp: data.timeStamp, // 时间戳
       nonceStr: data.nonceStr, // 随机字符串
@@ -166,6 +167,7 @@ class MyOrderList extends Component {
       paySign: data.paySign, // 签名
       success: res => {
         console.log('发起微信支付：' , res);
+        getOrderList();
       },
       fail: err => {
         console.log(err)
@@ -242,7 +244,6 @@ class MyOrderList extends Component {
   //确认收货
   async handleCheckDelivery(oid,ooid){
     const getOrderList = () => this.getOrderList();
-    const props = this.props
     try{
       Taro.showModal({
         title: '确认收货',
@@ -253,12 +254,10 @@ class MyOrderList extends Component {
         async success(res) {
           console.log(res)
           if(res.confirm){
-            await props.dispatch({
-              type: 'order/editOrderInfo',
-              payload:{
-                status:4,
-                oid:oid,
-                ooid:ooid,
+            await request(`/_order/${ooid}/child_order/${oid}/check_get`,{
+              method: 'GET',
+              body:{
+                status:4
               }
             })
             await getOrderList();//重新加载列表

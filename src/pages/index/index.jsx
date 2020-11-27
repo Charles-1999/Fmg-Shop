@@ -102,9 +102,9 @@ class Index extends Component {
           ))}
         </Swiper>
         <View className='logo-search-wrap'>
-          <View className='logo'>
+          {/* <View className='logo'>
             <Image src='http://qiniu.daosuan.net/picture-1602721913000' />
-          </View>
+          </View> */}
           <View className='search-wrap'>
             <View className='searchBar'>
             <Input placeholder='搜索'  maxLength='50' />
