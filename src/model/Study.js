@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-11-27 15:43:42
+ * @LastEditTime: 2020-11-28 11:28:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
@@ -109,7 +109,9 @@ export default {
       yield put({
         type: 'save',
         payload: {
-          preApplyList: res.preApplys
+          preApplyList: res.preApplys,
+          page: res.page,
+          total: res.total
         }
       })
 
@@ -153,7 +155,9 @@ export default {
       yield put({
         type: 'save',
         payload: {
-          applyList: res.applys
+          applyList: res.applys,
+          page: res.page,
+          total: res.total
         }
       })
 

@@ -1,4 +1,4 @@
-import Taro, { getCurrentInstance, useDidShow } from '@tarojs/taro'
+import Taro, { getCurrentInstance, useDidShow, useReachBottom } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
@@ -16,6 +16,7 @@ function PreApplyList(props) {
 
   const [currTab, setCurrTab] = useState(1)
   const [dataList, setDataList] = useState([])
+  const [courseInfos, setCourseInfos] = useState([])
 
   useDidShow(() => {
     const { status } = getCurrentInstance().router.params
@@ -24,14 +25,51 @@ function PreApplyList(props) {
     getApplyList(status)
   })
 
-  // 在getApplyList之后，检测到courseInfos有返回时
+  /* 触底加载 */
+  useReachBottom(() => {
+    let { page, total } = props
+    if ( page * 10 < total)
+      getApplyList(currTab, page + 1)
+  })
+
+  /* 在getApplyList之后，检测到courseInfos有返回时 */
   useEffect(() => {
-    let { dataList, courseInfos } = props
-    if (dataList instanceof Array) {
-      dataList.forEach(data => {
-        data = Object.assign(data, { courseInfo: courseInfos.find(item => item.id == data.course_id) })
-      })
-      setDataList(dataList)
+    let { page } = props
+    let res_mget_apply = props.dataList
+    let res_mget_course = props.courseInfos
+
+    if (res_mget_apply instanceof Array) {
+      if (page == 1) {
+        // 首次加载
+        setCourseInfos(res_mget_course)
+
+        res_mget_apply.forEach(data => {
+          data = Object.assign(data, { courseInfo: res_mget_course.find(item => item.id == data.course_id) })
+        })
+
+        setDataList(res_mget_apply)
+      } else {
+        // 触底加载
+        // state中的dataList和courseInfos
+        let [SDataList, SCourseInfos] = [[...dataList], [...courseInfos]]
+
+        // 把新请求回来的追加到原数组
+        SDataList.push(...res_mget_apply)
+        SCourseInfos.push(...res_mget_course)
+
+        // 去重
+        let obj = {}
+        SCourseInfos =  SCourseInfos.reduce((item, next) => {
+          obj[next.id] ? null : obj[next.id] = true && item.push(next)
+          return item
+        }, [])
+        setCourseInfos(SCourseInfos)
+
+        SDataList.forEach(data => {
+          data = Object.assign(data, { courseInfo: SCourseInfos.find(item => item.id == data.course_id) })
+        })
+        setDataList(SDataList)
+      }
     }
   }, [props.courseInfos])
 
@@ -42,7 +80,7 @@ function PreApplyList(props) {
   }
 
   /* 获取报名列表 */
-  async function getApplyList(status) {
+  async function getApplyList(status, page = 1, limit = 10) {
     // 预报名状态 1: 取消, 2: 预报名, 4: 已报名
     // 已报名状态 1: 未支付, 2: 已支付, 4: 已取消
     // status 0: 全部, 1: 预报名, 2: 未支付, 3: 已支付, 4: 已取消,
@@ -55,8 +93,8 @@ function PreApplyList(props) {
         type: 'study/getApplyList',
         payload: {
           status: statusArr[status],
-          page: 1,
-          limit: 100,
+          page,
+          limit,
         }
       })
     } else {
@@ -65,8 +103,8 @@ function PreApplyList(props) {
         type: 'study/getPreApplyList',
         payload: {
           status: statusArr[status],
-          page: 1,
-          limit: 100,
+          page,
+          limit,
         }
       })
     }
@@ -101,7 +139,7 @@ function PreApplyList(props) {
         showBack
         // backType='redirect'
         // url='/pages/studies/index'
-        title='预报名'
+        title='我的报名'
         color='#fff'
         backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
