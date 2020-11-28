@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import Taro  from '@tarojs/taro'; 
+import Taro  from '@tarojs/taro';
 import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { connect } from 'react-redux';
 import { get } from 'lodash';
@@ -33,14 +33,11 @@ class UserList extends Component {
     code4: 0, //待评价
     code5: 0, //退款/售后
   }
-  
-  componentDidMount(){
-    this.getOrderCode();
-  }
 
   componentDidShow(){
     this.getOrderCode();
   }
+
   //获取订单信息code
   async getOrderCode(){
     console.log(this.state.uid)
@@ -112,11 +109,11 @@ class UserList extends Component {
   }
 
   render () {
-    const {statusBarHeight, capsule} = this.state; 
+    const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     const userInfo = Taro.getStorageSync('userInfo'); //获取当前用户信息
 
-   
+
     return (
       <View className='userlist' >
         {/* <Navbar
@@ -151,7 +148,7 @@ class UserList extends Component {
             ))}
           </View>
         </View>
-      
+
         <View className='myorder-list-wrap'>
           <View className='myorder-title' onClick={this.handleOrder.bind(this,0)}>我的订单</View>
           <View className='myorder-list'>
