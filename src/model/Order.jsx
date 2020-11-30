@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder } from '../service/Order';
+import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, exchangeOrder } from '../service/Order';
 
 export default {
   namespace: 'order',
@@ -51,7 +51,17 @@ export default {
     /* 创建订单 */
     * createOrder({ payload }, { call, put }) {
       const res = yield call(createOrder, payload)
-    }
+    },
+
+    //退换货 exchangeOrder
+    * exchangeOrder({ payload }, { call, put }) {
+      const res = yield call(exchangeOrder, payload);
+      yield put({
+        type: 'save',
+        payload:res,
+      }); 
+    },
+    
   },
   reducers: {
     save(state, { payload }) {

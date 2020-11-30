@@ -3,12 +3,11 @@ import { View, Text, Image } from '@tarojs/components'
 //import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import Taro, {Current} from '@tarojs/taro'; 
+import Taro, {connectSocket, Current} from '@tarojs/taro'; 
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import Loading from '../../../components/Loading'
 import request from '../../../utils/request'
-import getGoodsList from '../../../utils/request'
 import './myOrder.scss'
 
 import ListGood from './list_good'
@@ -274,9 +273,11 @@ class MyOrderList extends Component {
   }
 
   //跳转到详情页面
-  toDetail = (id) => {
+  toDetail(oid,ooid) {
+    console.log(ooid)
+    console.log(oid)
     Taro.navigateTo({
-      url: `/pages/user/Order/orderDetail?id=${id}`,
+      url: `/pages/user/Order/orderDetail?oid=${oid}&ooid=${ooid}`,
     });
   } 
   //跳转到物流详情页面
@@ -317,11 +318,11 @@ class MyOrderList extends Component {
                 <View key={item.id}>
                   <View className='list-item' key={item.id}>
                     <View className='top-wrap'>
-                      <View className='order-code' onClick={this.toDetail.bind(this,item.id)}>
+                      <View className='order-code' onClick={this.toDetail.bind(this,item.id,item.order_id)}>
                         <View className='name'>
                           订单编号：
                         </View>
-                        <View className='code' onClick={this.toDetail.bind(this,item.id)}>
+                        <View className='code' onClick={this.toDetail.bind(this,item.id,item.order_id)}>
                           {get(item,'order_num')}
                         </View>
                       </View>
@@ -339,7 +340,7 @@ class MyOrderList extends Component {
                     </View>
                     <View key={item.id}>
                       {get(item,'order_detail',[]).map(goods_item=>(
-                        <View className='good-item' key={goods_item.id} onClick={this.toDetail.bind(this,item.id)}>
+                        <View className='good-item' key={goods_item.id} onClick={this.toDetail.bind(this,item.id,item.order_id)}>
                           {this.state.goodsInfo.length !== 0 ?
                           <ListGood 
                             key={this.state.goodsInfo}

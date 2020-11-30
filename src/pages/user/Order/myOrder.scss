@@ -193,13 +193,31 @@ page{
         margin-left: 70rpx;
       }
     }
-  
+    .refund{
+      border-radius: 10PX;
+      padding: 5rpx 19rpx;
+      color: #3a3a3a;
+      font-size: 26rpx;
+      margin-top: 10rpx;
+      width: 53rpx;
+      margin-left: auto;
+      border: 1rpx solid #3a3a3a;
+    }
+    .after-sale{
+      border-radius: 10PX;
+      padding: 5rpx 10rpx;
+      color:#3a3a3a;
+      font-size: 26rpx;
+      margin-top: 10rpx;
+      width: 105rpx;
+      margin-left: auto;
+      border: 1rpx solid #3a3a3a;
+    }
     .commit{
       border-radius: 5PX;
       padding: 5rpx 10rpx;
       color: white;
       background-color: #fdb289;
-      color: white;
       font-size: 26rpx;
       margin-top: 10rpx;
       width: 105rpx;

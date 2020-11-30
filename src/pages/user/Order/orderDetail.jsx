@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
@@ -18,7 +18,8 @@ class OrderDetail extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
-    order_id:Current.router.params.id,  //当前订单id
+    order_id:Current.router.params.oid,  //当前订单id
+    test_order_id:Current.router.params.ooid,  //当前订单的总订单id
     order_info:[],
     goods_info:[],
     address_info:{},
@@ -36,6 +37,7 @@ class OrderDetail extends Component {
     ],
     status:'', //改订单目前状态
     delivery_time: '',  //发货时间
+    IsRefund: true,
   }
   async componentDidMount () {
     this.getOrderInfo();
@@ -52,6 +54,7 @@ class OrderDetail extends Component {
     this.setState({
       order_info : orderInfoList[0]
     })
+    console.log(this.state.order_info)
     this.getgoodsInfo();
     this.getDeliveryInfo();
     this.getAddressInfo();
@@ -69,10 +72,6 @@ class OrderDetail extends Component {
       payload: 
         this.state.ids
     })
-    // const goodsInfo = await request('/goods/_mget',{ 
-    //   body: {ids:this.state.ids}, 
-    //   method: 'POST' 
-    // })
     this.setState({
       goods_info:this.props.goodsList
     })
@@ -208,7 +207,11 @@ class OrderDetail extends Component {
                   quality={get(item,'purchase_qty','')} 
                   message={get(item,'message','')}
                   goodsInfo={this.state.goods_info}
-                  status={item.order_status}
+                  status={get(this.state.order_info,'order_status')}
+                  detailID={get(item,'id')}
+                  oId={this.state.order_id}
+                  ooId={this.state.test_order_id}
+                  IsRefund
                 /> 
               </View>
             ))}
@@ -249,7 +252,7 @@ class OrderDetail extends Component {
                 <View className='info'>{get(this.state.order_info,'order_num','')}</View>
               </View>
               <View className='list'>
-                <View className='name'>发货方式</View>
+                <View className='name'>发货方式：</View>
                 {get(this.state.order_info,'delivery','') == 1 ?
                   <View className='info'>快递 </View>
                 :''}
