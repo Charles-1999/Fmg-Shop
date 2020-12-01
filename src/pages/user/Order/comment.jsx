@@ -18,11 +18,13 @@ class Comment extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
     capsule: getGlobalData('capsule'),
-    userId: Taro.getStorageSync('userId'),
-    speId: Current.router.params.speId,
-    good_id:Current.router.params.id,  //当前商品id
+    //userId: Taro.getStorageSync('userId'),
+    speId: 0,
+    good_id:0,  //当前商品id
     oId:Current.router.params.oId,
-    ooId:Current.router.params.ooId,
+    ooId:0,
+    status:Current.router.params.status,
+    dId:Current.router.params.dId,
     content:'',
     tag:0,
     tagInfo:[
@@ -38,14 +40,38 @@ class Comment extends Component {
   }
   async componentDidMount () {
     this.getOrderInfo();
+    this.getGoodInfo();
 
   }
   unique(arr) {
     const res = new Map();
     return arr.filter((a) => !res.has(a) && res.set(a,1))
   }
+
+ //获取订单信息
+ async getOrderInfo(){
+  console.log(this.state.dId)
+  await this.props.dispatch({
+    type: 'order/mgetOrderList',
+    payload: {
+      ids:[parseInt(this.state.oId)],
+    }
+  })
+  let orderList = this.props.orderInfoList[0]
+  console.log(orderList)
+  this.setState({
+    order_detail:get(orderList,'order_detail',[]).filter(item => item.id == this.state.dId)[0]
+  })
+  console.log(this.state.order_detail)
+  this.setState({
+    good_id: get(this.state.order_detail,'goods_id'),
+    speId: get(this.state.order_detail,'goods_specification_id'),
+    ooId: get(this.state.order_detail,'order_id'),
+  })
+}
+
  //获取商品信息
-  async getOrderInfo(){
+  async getGoodInfo(){
     const goodsInfo = await getGoodsList([parseInt(this.state.good_id)])
     const specification_list = get(goodsInfo[0],'specification',[])
     const spe_index = specification_list.findIndex(item => item.id == this.state.speId);
@@ -65,7 +91,7 @@ class Comment extends Component {
         icon:''
       })
     }
-    else {
+    else if(this.state.status==0){
       await request(`/comment/info/${this.state.good_id}/${this.state.oId}`, {
         method: 'POST',
         body:{
@@ -95,8 +121,37 @@ class Comment extends Component {
             duration: 3000,
           })
         }
+      })
+    }
+    else if(this.state.status==1){
+      await request(`/comment/info/${this.state.good_id}/${this.state.oId}`, {
+        method: 'POST',
+        body:{
+          second_content:this.state.content,
+          second_content:this.state.pictures,
+        }
 
-
+      }).then(async(res)=>{
+        if(res){
+          Taro.showToast({
+            title: '谢谢您的追评',
+            icon: 'success',
+            duration: 3000,
+          })
+          Taro.redirectTo({
+            url:`/pages/user/Order/commentSuccess?gid=${this.state.good_id}`,
+          });
+        }
+        else{
+          this.setState({
+            pictures:[],
+          })
+          Taro.showToast({
+            title: '评价失败',
+            icon: 'fail',
+            duration: 3000,
+          })
+        }
       })
     }
   }

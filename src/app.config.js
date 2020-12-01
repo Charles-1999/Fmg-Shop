@@ -29,6 +29,8 @@ export default {
     'pages/user/Order/deliveryDetail',
     'pages/user/Order/comment',
     'pages/user/Order/commentSuccess',
+    'pages/user/Order/refundSelect',
+    'pages/user/Order/refundDetail',
     'pages/studies/index',
     'pages/studies/course/index',
     'pages/studies/news/index',

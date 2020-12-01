@@ -54,3 +54,11 @@ export const getPrice = params => {
     method: 'POST'
   })
 }
+
+//退换货
+export const exchangeOrder = params => {
+  return request(`/exchange/${params.ooId}/${params.oId}/${params.dId}`, {
+    body: params,
+    method: 'POST'
+  })
+}

@@ -1,13 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-11-18 09:40:36
- * @LastEditTime: 2020-12-01 17:51:23
+ * @LastEditTime: 2020-12-01 19:22:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Order.js
  */
 import { get } from 'lodash';
-import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, getPrice } from '../service/Order';
+import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, getPrice, exchangeOrder } from '../service/Order';
+
 
 export default {
   namespace: 'order',
@@ -67,7 +68,16 @@ export default {
         type: 'save',
         payload: { res_price }
       })
-    }
+    },
+    //退换货 exchangeOrder
+    * exchangeOrder({ payload }, { call, put }) {
+      const res = yield call(exchangeOrder, payload);
+      yield put({
+        type: 'save',
+        payload:res,
+      });
+    },
+
   },
   reducers: {
     save(state, { payload }) {

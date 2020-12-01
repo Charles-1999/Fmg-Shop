@@ -18,7 +18,7 @@ class ListGood extends Component {
     isShowComment:0,
   }
   componentDidMount(){
-    const {goodId,speId,price,quality,message,goodsInfo} = this.props;
+    const {goodId,speId,price,quality,message,goodsInfo,IsRefund,status,detailID} = this.props;
     if(goodsInfo.length !== 0){
       const data = goodsInfo.filter(item => item.id == goodId)[0]
       const specification_list = get(data,'specification',[])
@@ -30,8 +30,11 @@ class ListGood extends Component {
         spe_info:spe,
         quality:quality,
         message:message,
+        IsRefund:IsRefund,
+        status:status,
       })
     }
+
     if(this.props.isShowComment && this.props.status == 4){
       this.setState({
         isShowComment: true,
@@ -39,11 +42,18 @@ class ListGood extends Component {
     }
   }
   //跳转到评论页面
-  toComment= () => {
+  toComment = (value) => {
     Taro.navigateTo({
-      url: `/pages/user/Order/comment?id=${this.props.goodId}&speId=${this.props.speId}&ooId=${this.props.ooId}&oId=${this.props.oId}`,
+      url: `/pages/user/Order/comment?&oId=${this.props.oId}&dId=${this.props.detailID}&status=${value}`,
     });
   } 
+  //跳转到退款选择界面
+  toSelect =() =>{
+    Taro.navigateTo({
+      url: `/pages/user/Order/refundSelect?gid=${this.props.goodId}&speId=${this.props.speId}&ooId=${this.props.ooId}&oId=${this.props.oId}&dId=${this.props.detailID}`,
+      // url: `/pages/user/Order/refundSelect?&oId=${this.props.oId}&dId=${this.props.detailID}`,
+    });
+  }
   
   render () {
     return (
@@ -69,10 +79,19 @@ class ListGood extends Component {
               x{this.state.quality}
             </View>
           </View>
-         
           {this.state.isShowComment && this.props.is_comment==0 ?
-            <View className='commit' onClick={this.toComment.bind(this,this.state.speId)}>我要评价</View>: ''
+            <View className='commit' onClick={this.toComment.bind(this,0)}>我要评价</View>: ''
           }
+          {this.state.isShowComment && this.props.is_comment==1 ?
+            <View className='commit' onClick={this.toComment.bind(this,1)}>可追评</View>: ''
+          }
+          {this.state.IsRefund && this.state.status==5? 
+            <View className='after-sale' onClick={this.toSelect.bind(this)}>申请售后</View>: ''  
+          }
+          {this.state.IsRefund && (this.state.status==2||this.state.status==3||this.state.status==4)? 
+            <View className='refund' onClick={this.toSelect.bind(this)}>退款</View>: ''  
+          }
+
         
         </View>
        
