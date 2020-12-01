@@ -17,9 +17,9 @@ class OthersInfo extends Component {
           <Text className='title'>运费</Text>
           <Text className='content'>￥{info.carriage}</Text>
         </View>
-        <View className='info_wrap'> 
+        <View className='info_wrap'>
           <Text className='title'>月销</Text>
-          <Text className='content'>{info.month_sale}</Text>
+          <Text className='content'>{info.month_sale}件</Text>
         </View>
       </View>
     )
