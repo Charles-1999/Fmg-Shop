@@ -435,11 +435,11 @@ class CartListView extends Component {
     xArr.forEach((item, x_index) => {
       if (touchMoveEndX > startX) {
         // 右滑
-        if (index == x_index) item = 0;
+        if (index == x_index) xArr[x_index] = 0;
       } else {
         // 左滑
-        item = -120
-        if (index != x_index) item = 0;
+        xArr[x_index] = -120
+        if (index != x_index) xArr[x_index] = 0;
       }
     })
     this.setData({
