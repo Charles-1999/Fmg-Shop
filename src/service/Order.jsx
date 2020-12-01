@@ -46,3 +46,11 @@ export const createOrder = params => {
     method: 'POST'
   })
 }
+
+/* 获取价格信息 */
+export const getPrice = params => {
+  return request(`/_order/get_price`, {
+    body: params,
+    method: 'POST'
+  })
+}

@@ -1,61 +1,21 @@
-/*
- *                        _oo0oo_
- *                       o8888888o
- *                       88" . "88
- *                       (| -_- |)
- *                       0\  =  /0
- *                     ___/`---'\___
- *                   .' \\|     |// '.
- *                  / \\|||  :  |||// \
- *                 / _||||| -:- |||||- \
- *                |   | \\\  - /// |   |
- *                | \_|  ''\---/''  |_/ |
- *                \  .-\__  '-'  ___/-. /
- *              ___'. .'  /--.--\  `. .'___
- *           ."" '<  `.___\_<|>_/___.' >' "".
- *          | | :  `- \`.;`\ _ /`;.`/ - ` : | |
- *          \  \ `_.   \_ __\ /__ _/   .-` /  /
- *      =====`-.____`.___ \_____/___.-`___.-'=====
- *                        `=---='
- *
- *
- *      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *
- *            佛祖保佑       永不宕机     永无BUG
- *
- *        佛曰:
- *                写字楼里写字间，写字间里程序员；
- *                程序人员写程序，又拿程序换酒钱。
- *                酒醒只在网上坐，酒醉还来网下眠；
- *                酒醉酒醒日复日，网上网下年复年。
- *                但愿老死电脑间，不愿鞠躬老板前；
- *                奔驰宝马贵者趣，公交自行程序员。
- *                别人笑我忒疯癫，我笑自己命太贱；
- *                不见满街漂亮妹，哪个归得程序员？
- */
-
-
 import React, { Component } from 'react';
 import { View, Text, Checkbox, Image, Input, Navigator, MovableArea, MovableView } from '@tarojs/components';
 import Navbar from '@components/navbar/navbar'
 import Taro from '@tarojs/taro'
 import { connect } from 'react-redux'
-import request, {getGoodsList} from '../../utils/request'
-
-import { get as getGlobalData } from '../../global_data'
 
 import './index.scss'
 
-@connect(({ goods, cart }) => ({
-  ...goods, ...cart
+@connect(({ goods, cart, order }) => ({
+  ...goods, ...cart, ...order
 }))
 class CartListView extends Component {
   constructor() {
     super(...arguments)
     this.state = {
       userId: Taro.getStorageSync('userId'),
-      statusBarHeight: getGlobalData('statusBarHeight'),
-      capsule: getGlobalData('capsule'),
+      statusBarHeight: Taro.getStorageSync('statusBarHeight'),
+      capsule: Taro.getStorageSync('capsule'),
       cartList: [], // 购物车数据
       goodsList: [], //购物车商品物品数据
       isOpen: false, // 是否打开选择框
@@ -65,12 +25,9 @@ class CartListView extends Component {
       allCheck: false,
       checkList: [], // 选中的商品列表
       total_count: 0, // 购物车中选中的数量
+      xArr: []
     }
   }
-
-  // UNSAFE_componentWillMount() {
-  //   this.init();
-  // }
 
   componentDidShow() {
     this.init()
@@ -81,115 +38,46 @@ class CartListView extends Component {
     this.getData();
   }
 
-  // 获取购物车数据和购物车商品数据
-  getData = async() => {
-    let start = new Date()
-    let goodsId = [];
+  /* 获取购物车列表和商品列表，并且获取价格信息 */
+  getData = async () => {
+    await this.props.dispatch({
+      type: 'cart/getCartAndGoodsList'
+    })
+    const { cartList } = this.props
 
-    /* 获取购物车数据 */
-    const res_mget = await request(`/car/info/_mget`, {
-      method: 'POST'
-    });
-    // 购物车列表
-    let cartList = res_mget.data;
+    this.getCheckList(cartList);
 
+    // 购物车移动距离
     let xArr = new Array(cartList.length).fill(0)
-
-    /* 处理缓存数据 */
-    let cartListStor = Taro.getStorageSync('cartListStor')
-    // 如果有缓存
-    if (cartListStor) {
-      // 先检查缓存中是否有多出来的数据
-      cartListStor.forEach((cart, index) => {
-        // 如果缓存中有而数据库没有，则删除缓存中的
-        if (!cartList.find(item => item.id === cart.id)) {
-          cartListStor.splice(index, 1)
-        }
-      })
-
-      // 再检查缓存中有无少数据
-      cartList.forEach((cart, index) => {
-        // 如果缓存没有该购物车，则添加到缓存
-        let i = cartListStor.findIndex(item => item.id === cart.id)
-        if (i === -1) {
-          cartListStor.push({ id: cart.id, is_check: false })
-          cart.is_check = false
-        } else {
-          // 如果找到，则把缓存中的状态添加到cartList中
-          cart.is_check = cartListStor[i].is_check
-        }
-      })
-    } else {
-      // 如果没有缓存,则添加到缓存
-      cartListStor = cartList.map(cart => {
-        return { id:cart.id, is_check: false }
-      })
-      cartList.forEach(cart => cart.is_check = false)
-    }
-    Taro.setStorageSync('cartListStor', cartListStor)
-
-    cartList.forEach((cart) => {
-      goodsId.push(cart.goods_id)
-    })
-
-    /* 获取商品列表 */
-    // let goodsList = await getGoodsList(goodsId)
-    await this.props.dispatch({
-      type: 'goods/mgetGoodsListEntity',
-      payload: goodsId
-    })
-    let goodsList = this.props.goodsList
-
-    /* 购物车数据处理 */
-    await this.props.dispatch({
-      type: 'cart/getCartListWithProcess',
-      payload: {
-        cartList,
-        goodsList
-      }
-    })
-    cartList = this.props.cartList
-
-    /* 选中的购物车  */
-    const checkList = this.getCheckList(cartList);
-    Taro.setStorageSync('checkList', checkList);
-
-    /* 全选 */
-    const allCheck = cartList.every(cart => cart.is_check === true) ? true : false;
-
+    // 全选
+    const allCheck = cartList.every(cart => cart.is_check === true) ? true : false
     this.setData({
-      cartList,
-      goodsList,
-      checkList,
-      allCheck,
-      xArr
+      xArr,
+      allCheck
     })
-    let end = new Date()
-    console.log(end - start)
   }
 
   /* 获取当前购物车的价格信息和购物车数量 */
-  getPrice = async(checkList) => {
+  getPrice = async (checkList) => {
     if (checkList == undefined) {
       checkList = this.state.checkList
     }
 
-    let list = []
-    checkList.forEach(item => {
-      list.push({
+    let goods_list = checkList.map(item => {
+      return {
         goods_id: item.goods_id,
         goods_specification: item.goods_specification_id,
         goods_total: item.goods_count,
         delivery: item.delivery_kind
-      })
+      }
     })
-    const res_price = await request(`/_order/get_price`, {
-      body: {
-        goods_list: list
-      },
-      method: 'POST'
+
+    // 获取价格信息
+    await this.props.dispatch({
+      type: 'order/getPrice',
+      payload: { goods_list }
     })
-    const {total_coupon, total_goods_amount} = res_price
+    const { total_coupon, total_goods_amount } = this.props.res_price
 
     /* 获取购物车数量 */
     this.getCount()
@@ -211,13 +99,13 @@ class CartListView extends Component {
 
   // 获取当前操作的购物车商品
   getCurrCart = (cart_id) => {
-    const { cartList } = this.state;
+    const { cartList } = this.props;
     return cartList.find(cart => cart.id == cart_id);
   }
 
   // 获取当前操作的商品
   getcurrGoods(currCart) {
-    const { goodsList } = this.state;
+    const { goodsList } = this.props;
     const { goods_id } = currCart;
     return goodsList.find(item => item.id === goods_id);
   }
@@ -243,7 +131,6 @@ class CartListView extends Component {
     const { num } = e.target.dataset;
     const currCart = this.getCurrCart(cart_id);
     const total = this.getTotal(cart_id);
-    console.log('当前余量：', total);
     if (num === 1) {
       if (currCart.goods_count >= total) {
         Taro.showToast({
@@ -274,7 +161,6 @@ class CartListView extends Component {
     const { value } = e.detail;
     const currCart = this.getCurrCart(cart_id);
     const total = this.getTotal(cart_id);
-    console.log('当前余量：', total);
     if (value >= 1 && value <= total) {
       currCart.goods_count = Number(value)
     }
@@ -314,7 +200,6 @@ class CartListView extends Component {
     let { temp_count } = this.state;
     const { num } = e.target.dataset;
     const total = this.getTotal(currCart.id, temp_spec_index);
-    console.log('当前余量：', total);
     if (num === 1) {
       if (temp_count >= total) {
         Taro.showToast({
@@ -345,7 +230,6 @@ class CartListView extends Component {
     const { currCart, temp_spec_index } = this.state;
     let { temp_count } = this.state;
     const total = this.getTotal(currCart.id, temp_spec_index);
-    console.log('当前余量：', total);
     if (value >= 1 && value <= total) {
       temp_count = Number(value)
     }
@@ -356,7 +240,6 @@ class CartListView extends Component {
 
   /* 选择框中 点击规格 */
   handleTapSpecification(cart_id) {
-    console.log('cart_id', cart_id);
     const currCart = this.getCurrCart(cart_id);
     const currGoods = this.getcurrGoods(currCart);
     const spec_index = this.getSpecIndex(currCart.goods_specification_id, currGoods);
@@ -379,50 +262,48 @@ class CartListView extends Component {
     this.setData({
       currCart
     })
-    this.updateCart(currCart, false, true)
+    this.updateCart(currCart)
     this.setData({
       isOpen: false
     })
   }
 
   /* 更新购物车 */
-  updateCart = async (currCart, getData = true, getCart = false) => {
+  updateCart = async (currCart, getData = true) => {
     if (currCart == undefined)
       currCart = this.state.currCart;
-    await request(`/car/info/put/${currCart.id}`, {
-      body: {
-        goods_count: currCart.goods_count,
-        goods_id: currCart.goods_id,
-        goods_specification_id: currCart.goods_specification_id,
-        check: currCart.is_check
-      },
-      method: 'PUT'
-    })
-    if (getData)
-      this.getData();
-    else {
-      this.getPrice()
-    }
-    if (getCart) {
-      // 重新处理购物车数据
-      this.props.dispatch({
-        type: 'cart/getCartListWithProcess',
+
+    try {
+      // 更新购物车
+      await this.props.dispatch({
+        type: 'cart/updateCart',
         payload: {
-          cartList: this.state.cartList,
-          goodsList: this.state.goodsList
+          id: currCart.id,
+          goods_count: currCart.goods_count,
+          goods_id: currCart.goods_id,
+          goods_specification_id: currCart.goods_specification_id,
         }
       })
-      this.setData({
-        cartList: this.props.cartList
+      // 是否需要重新获取购物车和商品信息，否则只获取价格信息
+      if (getData)
+        this.getData();
+      else {
+        this.getPrice()
+      }
+    } catch (err) {
+      Taro.showToast({
+        title: `操作失败，请重新尝试（错误码：${err.statusCode}）`,
+        icon: 'none'
       })
     }
   }
 
   // 全选按钮
   handleAllCheck = () => {
-    let { cartList, allCheck } = this.state
+    let { cartList } = this.props
+    let { allCheck } = this.state
     allCheck = !allCheck
-    // 修改state中的cartList
+    // 修改cartList
     cartList.forEach(cart => {
       cart.is_check = allCheck
     })
@@ -437,7 +318,6 @@ class CartListView extends Component {
     const checkList = this.getCheckList(cartList)
 
     this.setData({
-      cartList,
       allCheck,
       checkList
     })
@@ -445,8 +325,8 @@ class CartListView extends Component {
 
   // 单选按钮
   handleCheck = (cart_id) => {
-    let { cartList } = this.state
-    // 改state中的cartList
+    let { cartList } = this.props
+    // 修改cartList
     cartList.forEach(cart => {
       if (cart.id === cart_id) {
         cart.is_check = !(cart.is_check)
@@ -455,17 +335,11 @@ class CartListView extends Component {
     let cartListStor = Taro.getStorageSync('cartListStor')
     // 改缓存中的cartList
     cartListStor.forEach(cart => {
-      if(cart.id === cart_id) {
+      if (cart.id === cart_id) {
         cart.is_check = !(cart.is_check)
       }
     })
     Taro.setStorageSync('cartListStor', cartListStor)
-    // const currCart = this.getCurrCart(cart_id);
-    // currCart.is_check = !currCart.is_check;
-    // this.setData({
-    //   currCart
-    // })
-    // this.updateCart();
 
     /* 判断是否为全选状态 */
     const allCheck = cartList.every(cart => cart.is_check === true) ? true : false
@@ -475,33 +349,23 @@ class CartListView extends Component {
     this.setData({
       allCheck,
       checkList,
-      cartList
     })
   }
 
   /* 获取选中的购物车列表并获取价格信息 */
   getCheckList = (cartList) => {
     if (cartList === undefined)
-      cartList = this.state.cartList
+      cartList = this.props.cartList
     let checkList = cartList.filter(cart => cart.is_check === true)
+
+    Taro.setStorageSync('checkList', checkList)
+    this.setData({
+      checkList
+    })
+
     this.getPrice(checkList)
+
     return checkList
-  }
-
-  /* 获取选中的购物车的总价 */
-  getTotalPrice = (checkList) => {
-    let total = 0;
-    checkList.forEach(item => {
-      total += item.goods_count * item.price;
-    })
-    return Number(total).toFixed(2);
-  }
-
-  // 显示选择框
-  showFloat = () => {
-    this.setState({
-      isOpen: true,
-    })
   }
 
   // 隐藏选择框
@@ -514,7 +378,7 @@ class CartListView extends Component {
   // 自己封装的setState
   setData = (...params) => {
     this.setState(...params)
-    console.log(...params)
+    // console.log(...params)
   }
 
   /* 结算 */
@@ -567,32 +431,17 @@ class CartListView extends Component {
     // 滑动超过50度角 return，防止上下滑动触发
     if (Math.abs(angle) > 50) return;
     if (Math.abs(touchMoveEndX - startX) < 1) return;
-    // xArr.forEach((item, x_index) => {
-    //   if (touchMoveEndX > startX) {
-    //     // 右滑
-    //     // console.log('右滑');
-    //     if (index == x_index) xArr[x_index] = 0;
-    //   } else {
-    //     // 左滑
-    //     // console.log('左滑');
-    //     xArr[x_index] = -120
-    //     if (index != x_index) xArr[x_index] = 0;
-    //   }
-    // })
+
     xArr.forEach((item, x_index) => {
       if (touchMoveEndX > startX) {
         // 右滑
-        // console.log('右滑');
         if (index == x_index) item = 0;
       } else {
         // 左滑
-        // console.log('左滑');
         item = -120
         if (index != x_index) item = 0;
       }
-      console.log(x_index, item, xArr)
     })
-    console.log(xArr)
     this.setData({
       xArr
     })
@@ -610,8 +459,9 @@ class CartListView extends Component {
   }
 
   render() {
-    console.log('%c ........cart/index render.........', 'color:green');
-    const { statusBarHeight, capsule, cartList, goodsList, isOpen, currGoods, allCheck, temp_spec_index, temp_count, total_count, total_coupon, total_goods_amount, xArr } = this.state;
+    // console.log('%c ........cart/index render.........', 'color:green');
+    const { statusBarHeight, capsule, isOpen, currGoods, allCheck, temp_spec_index, temp_count, total_count, total_coupon, total_goods_amount, xArr } = this.state;
+    const { cartList } = this.props
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     return (
       <View className='cart' style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -623,7 +473,7 @@ class CartListView extends Component {
         >
         </Navbar>
         <View className='cart_list'>
-          {cartList ? cartList.map((cart, cart_index) => (
+          {cartList.length != 0 &&'goods' in cartList[0] ? cartList.map((cart, cart_index) => (
             <MovableArea key={cart.id}>
               <MovableView direction='horizontal' inertia outOfBounds x={xArr[cart_index]} onTouchStart={this.touchMoveStartHandle} onTouchEnd={this.touchMoveEndHandle.bind(this, cart_index)}>
                 <View className={cart.soldOut ? 'cart_item sold_out' : 'cart_item'}>
@@ -632,7 +482,7 @@ class CartListView extends Component {
                   </View>
                   <View className='info_wrap'>
                     <Navigator className='pic' url={'/pages/details/index?gid=' + cart.goods_id}>
-                      <Image src={goodsList[cart_index].cover} />
+                      <Image src={cart.goods.cover} />
                       {cart.soldOut
                         ? <View className='sold_out'><View className='text'>无货</View></View>
                         : ''
@@ -640,11 +490,11 @@ class CartListView extends Component {
                     </Navigator>
                     <View className='info'>
                       <Navigator className='name' url={'/pages/details/index?gid=' + cart.goods_id}>
-                        {goodsList[cart_index].name}
+                        {cart.goods.name}
                       </Navigator>
                       <View className='select'>
                         <View className='main' onClick={this.handleTapSpecification.bind(this, cart.id)}>
-                          {goodsList[cart_index].specification[cart.spec_index].specification_text}
+                          {cart.goods.specification[cart.spec_index].specification_text}
                           <Image src='http://qiniu.daosuan.net/picture-1598883801000' />
                         </View>
                         <View className='flex'></View>
@@ -655,10 +505,10 @@ class CartListView extends Component {
                         {cart.soldOut
                           ? ''
                           : <View className='num_wrap'>
-                              <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={-1}>-</View>
-                              <Input value={cart.goods_count} type='number' onBlur={this.handleInputNum.bind(this, cart.id)} />
-                              <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={1}>+</View>
-                            </View>
+                            <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={-1}>-</View>
+                            <Input value={cart.goods_count} type='number' onBlur={this.handleInputNum.bind(this, cart.id)} />
+                            <View className='btn' onClick={this.handleClickNum.bind(this, cart.id)} data-num={1}>+</View>
+                          </View>
                         }
                       </View>
                     </View>
@@ -715,12 +565,12 @@ class CartListView extends Component {
           </View>
           <View className='count'>
             <Text className='num'>总计：<Text>{total_count}</Text> 件
-              { total_coupon != 0
-                ? <Text className='discount'> 已优惠：￥{Number(total_coupon/100).toFixed(2)}</Text>
+              {total_coupon != 0
+                ? <Text className='discount'> 已优惠：￥{Number(total_coupon / 100).toFixed(2)}</Text>
                 : ''
               }
             </Text>
-            <Text className='price'>合计：<Text>￥{Number((total_goods_amount-total_coupon)/100).toFixed(2)}</Text></Text>
+            <Text className='price'>合计：<Text>￥{Number((total_goods_amount - total_coupon) / 100).toFixed(2)}</Text></Text>
           </View>
           <View className='btn' onClick={this.checkOut.bind(this)}>结 算</View>
         </View>

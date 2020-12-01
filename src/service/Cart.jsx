@@ -27,7 +27,6 @@ export const updateCart = params => {
       goods_count: params.goods_count,
       goods_id: params.goods_id,
       goods_specification_id: params.goods_specification_id,
-      check: params.is_check
     },
     method: 'PUT'
   })
