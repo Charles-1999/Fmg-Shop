@@ -83,7 +83,7 @@ class ListGood extends Component {
             <View className='commit' onClick={this.toComment.bind(this,0)}>我要评价</View>: ''
           }
           {this.state.isShowComment && this.props.is_comment==1 ?
-            <View className='commit' onClick={this.toComment.bind(this,1)}>可追评</View>: ''
+            <View className='secont-commit' onClick={this.toComment.bind(this,1)}>可追评</View>: ''
           }
           {this.state.IsRefund && this.state.status==5? 
             <View className='after-sale' onClick={this.toSelect.bind(this)}>申请售后</View>: ''  

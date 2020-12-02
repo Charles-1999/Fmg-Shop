@@ -163,6 +163,7 @@ class OrderDetail extends Component {
               {get(this.state.order_info,'order_status')  == 4 ? <View>·待评价</View> : ''}
               {get(this.state.order_info,'order_status')  == 5 ? <View>·订单已完成</View> : ''}
               {get(this.state.order_info,'order_status')  == 6 ? <View>·订单已取消</View> : ''}
+              {get(this.state.order_info,'order_status')  == 7 ? <View>·申请中</View> : ''}
             </View>
           </View>
           {get(this.state.deliveryInfo,'data') == null? 

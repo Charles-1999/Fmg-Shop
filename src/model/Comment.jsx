@@ -3,6 +3,7 @@ import { compose } from 'redux'
 import { getGoodsComments } from '../service/Comment'
 import { mgetAccountInfo } from '../service/Account'
 import { getToNow } from '../utils/time'
+import  {getUserComment} from '../service/Comment'
 
 export default {
   namespace: 'comment',

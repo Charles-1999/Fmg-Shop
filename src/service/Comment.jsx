@@ -13,3 +13,11 @@ export const getGoodsComments = gid => {
     method: 'POST'
   })
 }
+
+//退换货
+export const getUserComment = params => {
+  return request(`/comment/info/${params.uid}`, {
+    body: params,
+    method: 'GET'
+  })
+}

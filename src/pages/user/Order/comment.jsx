@@ -39,9 +39,8 @@ class Comment extends Component {
     pictures:[], //上传到数据库的图片数组
   }
   async componentDidMount () {
-    this.getOrderInfo();
-    this.getGoodInfo();
-
+    await this.getOrderInfo();
+    await this.getGoodInfo();
   }
   unique(arr) {
     const res = new Map();
@@ -57,6 +56,7 @@ class Comment extends Component {
       ids:[parseInt(this.state.oId)],
     }
   })
+  console.log(this.props.orderInfoList)
   let orderList = this.props.orderInfoList[0]
   console.log(orderList)
   this.setState({
@@ -72,6 +72,7 @@ class Comment extends Component {
 
  //获取商品信息
   async getGoodInfo(){
+    console.log(this.state.good_id)
     const goodsInfo = await getGoodsList([parseInt(this.state.good_id)])
     const specification_list = get(goodsInfo[0],'specification',[])
     const spe_index = specification_list.findIndex(item => item.id == this.state.speId);
@@ -85,14 +86,14 @@ class Comment extends Component {
 
   //为用户创建评论
   async setComment(){
-    if(this.state.tag == 0){
+    if(this.state.tag == 0 && this.state.status==0){
       Taro.showToast({
         title: '请选择一个标签',
         icon:''
       })
     }
     else if(this.state.status==0){
-      await request(`/comment/info/${this.state.good_id}/${this.state.oId}`, {
+      await request(`/comment/info/${this.state.good_id}/${this.state.dId}`, {
         method: 'POST',
         body:{
           content:this.state.content,
@@ -128,7 +129,7 @@ class Comment extends Component {
         method: 'POST',
         body:{
           second_content:this.state.content,
-          second_content:this.state.pictures,
+          second_pictures:this.state.pictures,
         }
 
       }).then(async(res)=>{
@@ -402,21 +403,24 @@ class Comment extends Component {
               {/* <View className='sale_point'>{get(this.state.goods_info,'sale_point','').substring(0,16)}</View> */}
             </View>
           </View>
-          <View className='tag-wrap'>
-          {this.state.tagInfo.map(item => (
-            <View key={item.id}>
-              {item.id == this.state.tag ?
-                <View className='tag-active' key={item.id} onClick={this.changeTag.bind(this,item.id)}>
-                {item.title}
-                </View>
-                :
-                <View className='tag' onClick={this.changeTag.bind(this,item.id)}>
-                  {item.title}
-                </View>
-              }
-            </View>
-          ))}
-        </View>
+          {this.state.status==0?
+             <View className='tag-wrap'>
+             {this.state.tagInfo.map(item => (
+               <View key={item.id}>
+                 {item.id == this.state.tag ?
+                   <View className='tag-active' key={item.id} onClick={this.changeTag.bind(this,item.id)}>
+                   {item.title}
+                   </View>
+                   :
+                   <View className='tag' onClick={this.changeTag.bind(this,item.id)}>
+                     {item.title}
+                   </View>
+                 }
+               </View>
+             ))}
+           </View>:''
+          } 
+       
         <View className='content-wrap'>
           <AtTextarea
             name='content'
@@ -437,9 +441,15 @@ class Comment extends Component {
           showAddBtn={this.state.showUploadBtn} //是否显示添加图片按钮
         />
         {/* <ChooseImage chooseImg={this.state.chooseImg} onFilesValue={this.getOnFilesValue.bind(this)} /> */}
-        <View className='submit' onClick={this.toUpload.bind(this)}>
-          提交
-        </View>
+        {this.state.status==0?
+          <View className='submit' onClick={this.toUpload.bind(this)}>
+            提交
+          </View>:
+          <View className='second-submit' onClick={this.toUpload.bind(this)}>
+            发表追评
+          </View>
+        }
+      
 
         </View>
 

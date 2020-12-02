@@ -95,6 +95,42 @@
 
     }
   }
+  .content-pic-wrap{
+    background-color: white;
+    margin-bottom: 30rpx;
+    border-radius: 10PX;
+    padding :20rpx 20rpx;
+    .info-text{
+      font-size: 32rpx;
+      font-weight: 500;
+      margin-bottom: 20rpx;
+    }
+    .comment{
+      .content-wrap{
+        margin-bottom: 30rpx;
+        .at-textarea {
+          width: 100%;
+          font-size: 27rpx;
+          line-height: 1.5;
+          border-radius: 20rpx;
+          border-radius: 20rpx;
+          box-sizing: border-box;
+        }
+      }
+    }
+
+  }
+  .submit{
+    background-color: #5053ad;
+    color: white;
+    text-align: center;
+    padding: 16rpx 79rpx;
+    border-radius: 10PX;
+    font-size: 32rpx;
+    margin-bottom: 20rpx;
+    left: 36%;
+    box-shadow: 1rpx 1rpx 7px -1px black;
+  }
   .float_wrap {
     visibility: hidden;
     position: fixed;
