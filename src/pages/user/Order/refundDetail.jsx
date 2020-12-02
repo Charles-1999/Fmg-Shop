@@ -7,6 +7,8 @@ import Taro, { Current } from '@tarojs/taro';
 import request, { getGoodsList } from '../../../utils/request'
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
+import RefundComment from './refundComment'
+import { message } from 'taro-ui';
 
 @connect(({  order,goods }) => ({
   ...order,...goods,
@@ -29,6 +31,10 @@ class RefundDetail extends Component {
     isOpenReason: false, //退款原因---弹窗是否弹出
     statusCheck:0, //0 为请选择状态
     reasonCheck:0, //0 为请选择状态
+    files:[],
+    pictures:[],
+    message:'',
+    service_type:parseInt(Current.router.params.status),
     data:[
       {
         id:1,
@@ -60,7 +66,6 @@ class RefundDetail extends Component {
         ]
       }
     ]
-    //hiddenFloat:true, 
   } 
   async componentDidMount(){
     await this.getOrderInfo();
@@ -145,17 +150,182 @@ class RefundDetail extends Component {
   }
   //货品状态选择框
   statusCheck=(value)=>{
+    console.log(value)
     this.setState({
       statusCheck:value,
       isOpenStatus: false,
+      status:false,
       reasonCheck:0,
     })
   }
   //原因状态选择框
   reasonCheck=(value)=>{
+    console.log(value)
     this.setState({
       reasonCheck:value,
+      status:true,
       isOpenReason: false
+    })
+  }
+
+  callback=(content,files,upLoadImg)=>{
+    this.setState({
+      message:content,
+      files:files,
+      upLoadImg:upLoadImg,
+    })
+  }
+  //提交申请
+  async handleCheck(){
+    if(this.state.statusCheck==0){
+      Taro.showToast({
+        title: '请选择货物状态',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    else if(this.state.reasonCheck==0){
+      Taro.showToast({
+        title: '请选择退货原因',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    else{
+      this.toUpload();
+    }
+  }
+  async handleSubmit(){
+    //退换货接口
+    await this.props.dispatch({
+      type: 'order/exchangeOrder',
+      payload:{
+        oId:this.state.oId,
+        ooId:this.state.ooId,
+        dId:this.state.dId,
+        return_amount:parseFloat(this.state.money)*100,
+        service_type:parseInt(Current.router.params.status),
+        goods_stats: this.state.status,
+        reason: this.state.reasonCheck,
+        return_mode:2,//默认自行寄回
+        picture:this.state.pictures,
+        message:this.state.message,
+      }
+    })
+    let id = this.props.exchangeId;
+    console.log(id)
+    if(id!==0){
+      Taro.showToast({
+        title: '提交成功',
+        icon: 'success',
+        duration: 2000
+      }).then(()=>{
+        Taro.redirectTo({
+          url:'/pages/user/Order/myOrder?status=0'
+        })
+      })
+    
+    }
+  }
+
+  //图片的上传
+  async toUpload () {
+    console.log(this.state.files)
+    if(this.state.files.length>0){
+      const rootUrl = get('https://upload-z2.qiniup.com') // 服务器地址
+      await this.uploadLoader({rootUrl,path:this.state.files})
+    }else{
+      this.handleSubmit();
+    }
+  }
+  //图片的上传+提交
+  async uploadLoader(data){
+    let that = this
+    let i = data.i ? data.i : 0 // 当前所上传的图片位置
+    let success=data.success?data.success:0//上传成功的个数
+    let fail=data.fail?data.fail:0;//上传失败的个数
+    Taro.showLoading({
+      title: `正在上传第${i+1}张`
+    })
+    const token =  await request(`/goods/resources/qiniu/upload_token`, {
+      method: 'GET',
+    })
+    const timeCode = new Date().getTime();
+    //发起上传
+    await Taro.uploadFile({
+      url:'https://upload-z2.qiniup.com',
+      header:{
+        'content-type': 'multipart/form-data',
+      },
+      name:'file',
+      filePath:data.path[i].url,
+      formData: {
+        action:'z2',
+        token:token.token,
+        file:data.path[i].url,
+        key:'comment-pic-'+timeCode,
+      },
+      success: (resp) => {
+         //图片上传成功，图片上传成功的变量+1
+          let resultData= JSON.parse(resp.data)
+          if(resp.statusCode == 200 ){
+            success++;
+            this.setState({
+              pictures:[...this.state.pictures,resultData.key]
+            })
+            console.log(this.state.pictures)
+            this.setState((prevState)=>{
+              let oldUpload = prevState.upLoadImg
+              oldUpload.push(resultData.key)
+              return({
+                upLoadImg:oldUpload
+              })
+            },()=>{
+            })
+          }else{
+            fail++;
+          }
+      },
+      fail: (err) => {
+          fail++;//图片上传失败，图片上传失败的变量+1
+          console.log(err)
+          Taro.showToast({
+            title: '上传失败',
+            duration: 10000
+          })
+      },
+      complete: () => {
+        Taro.hideLoading()
+        i++;//这个图片执行完上传后，开始上传下一张
+        if(i==data.path.length){   //当图片传完时，停止调用
+          if(fail == 0){
+            Taro.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            })
+            console.log('成功：'+success+" 失败："+fail);
+            this.handleSubmit();
+          }
+          else{
+            Taro.showToast({
+              title: '图片上传失败',
+              icon: 'none',
+              duration: 3000
+            })
+            this.setState({
+              pictures:[],
+            })
+            console.log('成功：'+success+" 失败："+fail);
+          }
+        }
+        else{//若图片还没有传完，则继续调用函数
+          data.i=i;
+          data.success=success;
+          data.fail=fail;
+          that.uploadLoader(data);
+        }
+      }
     })
   }
 
@@ -215,17 +385,22 @@ class RefundDetail extends Component {
               <View className='title'>退款金额*</View>
               <View className='money'>¥{this.state.money}</View>
             </View>
-            <View className='info-item' >
-              <View className='title'>退货方式</View>
-              <View className='info'>自行寄回</View>
-              {/* <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' /> */}
-            </View>
+            {this.state.service_type!==1?
+              <View className='info-item' >
+                <View className='title'>退货方式</View>
+                <View className='info'>自行寄回</View>
+                {/* <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' /> */}
+              
+              </View>
+            :''}
+           
           </View>     
         </View>
-        {/* <View className='des-pic-wrap'>
-
-        </View> */}
-
+        <View className='content-pic-wrap'>
+          <View className='info-text'>补充描述和凭证</View>
+          <RefundComment getInfo={this.callback}/>
+        </View>
+        <View className='submit' onclick={this.handleCheck.bind(this)}>提交</View>
         <View className={this.state.isOpenStatus ? 'active float_wrap' : 'float_wrap'}>
           {/* 遮罩层 */}
           <View className='mask' onClick={this.hiddenFloat.bind(this,'status')}></View>
@@ -271,7 +446,7 @@ class RefundDetail extends Component {
             </View>
           </View>:''
         }
-       
+
 
 
       </View>

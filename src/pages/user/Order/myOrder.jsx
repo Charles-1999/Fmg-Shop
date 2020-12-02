@@ -121,17 +121,6 @@ class MyOrderList extends Component {
     })
     this.getOrderList()
   }
-  /**暂时 最好不能///  手动修改订单状态 */
-  async changeStatus(oid,ooid){
-    await this.props.dispatch({
-      type: 'order/editOrderInfo',
-      payload:{
-        status:4,
-        oid:oid,
-        ooid:ooid,
-      }
-    })
-  }
   /* 统一下单 */
   pay = async (order_id) => {
     const { order_price } = this.state;
@@ -334,6 +323,7 @@ class MyOrderList extends Component {
                         {item.order_status == 4 ? <View>待评价</View> : ''}
                         {item.order_status == 5 ? <View>订单已完成</View> : ''}
                         {item.order_status == 6 ? <View>订单已取消</View> : ''}
+                        {item.order_status == 7 ? <View>申请中</View> : ''}
                       </View>
                     </View>
                                  
@@ -351,7 +341,8 @@ class MyOrderList extends Component {
                             goodsInfo={this.state.goodsInfo}
                             message={get(goods_item,'message','')}
                             ooId={get(item,'order_id')}
-                            oId={goods_item.id}
+                            oId={item.id}
+                            detailID={get(goods_item,'id')}
                             isShowComment
                             is_comment={get(goods_item,'is_comment')}
                             status={item.order_status}

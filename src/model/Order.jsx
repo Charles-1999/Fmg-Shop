@@ -8,6 +8,7 @@ export default {
     orderInfoList:[],
     userOrderInfo:[],
     ids:[],
+    exchangeId:0,
   },
   effects: {
     //获取订单列表-------------
@@ -55,11 +56,17 @@ export default {
 
     //退换货 exchangeOrder
     * exchangeOrder({ payload }, { call, put }) {
+      console.log(payload)
+      const { resolve } = payload
       const res = yield call(exchangeOrder, payload);
+      console.log(res)
       yield put({
         type: 'save',
-        payload:res,
+        payload:{
+          exchangeId:res,
+        },
       }); 
+
     },
     
   },

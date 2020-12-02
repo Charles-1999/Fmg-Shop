@@ -40,10 +40,22 @@ class RefundSelect extends Component {
 
   //跳转至退款详情界面
   toDetail(tag){
-    //退货退款
-    if(tag==1){
+     //退款(不退货)
+     if(tag==1){
       Taro.navigateTo({
-        url: `/pages/user/Order/refundDetail?&oId=${this.state.oId}&dId=${this.state.dId}`,
+        url: `/pages/user/Order/refundDetail?&oId=${this.state.oId}&dId=${this.state.dId}&status=${tag}`,
+      })
+    }
+    //退货退款
+    else if(tag==2){
+      Taro.navigateTo({
+        url: `/pages/user/Order/refundDetail?&oId=${this.state.oId}&dId=${this.state.dId}&status=${tag}`,
+      })
+    }
+     //换货
+    else if(tag==4){
+      Taro.navigateTo({
+        url: `/pages/user/Order/refundDetail?&oId=${this.state.oId}&dId=${this.state.dId}&status=${tag}`,
       })
     }
   }
@@ -79,7 +91,7 @@ class RefundSelect extends Component {
         </View>
         <View className='select-wrap'>
           <View className='select-text'>选择服务类型</View>
-          <View className='item-wrap'>
+          <View className='item-wrap' onClick={this.toDetail.bind(this,1)}>
             <Image src='http://qiniu.daosuan.net/picture-1606629874000 ' className='icon' />
             <View className='info'>
               <View className='title'>我要退款(无须退货)</View>
@@ -87,7 +99,7 @@ class RefundSelect extends Component {
             </View>
             <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
           </View>
-          <View className='item-wrap' onClick={this.toDetail.bind(this,1)}>
+          <View className='item-wrap' onClick={this.toDetail.bind(this,2)}>
             <Image src='http://qiniu.daosuan.net/picture-1606629896000 ' className='icon' />
             <View className='info'>
               <View className='title'>我要退货退款</View>
@@ -95,7 +107,7 @@ class RefundSelect extends Component {
             </View>
             <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
           </View>
-          <View className='item-wrap'>
+          <View className='item-wrap' onClick={this.toDetail.bind(this,4)}>
             <Image src='http://qiniu.daosuan.net/picture-1606630723000 ' className='icon' />
             <View className='info'>
               <View className='title'>我要换货</View>

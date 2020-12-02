@@ -92,6 +92,17 @@ class UserList extends Component {
     this.setState({
       code4: this.props.orderList.total
     })
+    await this.props.dispatch({
+      type: 'order/getOrderList',
+      payload: {
+        limit:total,
+        account_id:this.state.uid,
+        status: 7,
+      }
+    });
+    this.setState({
+      code5: this.props.orderList.total
+    })
   }
 
   handlePage(e){
@@ -185,6 +196,10 @@ class UserList extends Component {
               <View className='name'>待评价</View>
             </View>
             <View className='myorder-list-item' onClick={this.handleOrder.bind(this,7)}>
+              {this.state.code5 == 0 ?
+                '':
+                <View className='count'>{this.state.code5}</View>
+              }
               <Image src='http://qiniu.daosuan.net/picture-1599033897000' style='width:90rpx;height:90rpx' />
               <View className='name-last'>退款/售后</View>
             </View>

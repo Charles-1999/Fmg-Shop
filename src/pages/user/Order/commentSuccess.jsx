@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import Taro, {Current} from '@tarojs/taro'; 
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
-import './comment.scss'
+import './commentCenter.scss'
 
 class CommentSuccess extends Component {
   state = {
