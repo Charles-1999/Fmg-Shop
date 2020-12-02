@@ -1,5 +1,14 @@
+/*
+ * @Author: your name
+ * @Date: 2020-11-18 09:40:36
+ * @LastEditTime: 2020-12-01 19:22:03
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /凤鸣谷商城/src/model/Order.js
+ */
 import { get } from 'lodash';
-import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, exchangeOrder } from '../service/Order';
+import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, getPrice, exchangeOrder } from '../service/Order';
+
 
 export default {
   namespace: 'order',
@@ -21,7 +30,7 @@ export default {
         payload:{
           orderList:res
         }
-      }); 
+      });
     },
     //批量获取订单列表
     * mgetOrderList({ payload }, { call, put }) {
@@ -31,7 +40,7 @@ export default {
         payload:{
           orderInfoList:res
         }
-      }); 
+      });
     },
     //修改用户子订单
     * editOrderInfo({ payload }, { call, put }) {
@@ -39,7 +48,7 @@ export default {
       yield put({
         type: 'save',
         payload:res,
-      }); 
+      });
     },
     //删除用户子订单
     * delOrderInfo({ payload }, { call, put }) {
@@ -47,13 +56,20 @@ export default {
       yield put({
         type: 'save',
         payload:res,
-      }); 
+      });
     },
     /* 创建订单 */
     * createOrder({ payload }, { call, put }) {
       const res = yield call(createOrder, payload)
     },
-
+    /* 获取价格信息 */
+    * getPrice({ payload }, { call, put }) {
+      const res_price = yield call(getPrice, payload)
+      yield put({
+        type: 'save',
+        payload: { res_price }
+      })
+    },
     //退换货 exchangeOrder
     * exchangeOrder({ payload }, { call, put }) {
       console.log(payload)
@@ -68,7 +84,7 @@ export default {
       }); 
 
     },
-    
+
   },
   reducers: {
     save(state, { payload }) {

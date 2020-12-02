@@ -181,7 +181,6 @@ export default {
     /* 批量获取商品信息 */
     * mgetGoodsListEntity({ payload }, { call, put }) {
       let goodsList = yield call(_mgetGoodsList, { payload })
-
       /* 数据处理 */
       goodsList = processGoodsList(goodsList)
 
@@ -191,12 +190,13 @@ export default {
           goodsList
         }
       })
-    }
+    },
   },
   reducers: {
     save(state, { payload }) {
+      console.log(state, payload)
       return { ...state, ...payload };
-    },
+    }
   },
 };
 

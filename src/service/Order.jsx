@@ -47,6 +47,14 @@ export const createOrder = params => {
   })
 }
 
+/* 获取价格信息 */
+export const getPrice = params => {
+  return request(`/_order/get_price`, {
+    body: params,
+    method: 'POST'
+  })
+}
+
 //退换货
 export const exchangeOrder = params => {
   return request(`/exchange/${params.ooId}/${params.oId}/${params.dId}`, {
