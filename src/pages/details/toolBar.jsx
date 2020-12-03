@@ -18,17 +18,21 @@ class ToolBar extends Component {
   }
 
   render() {
-    const {isIphoneX} = this.state;
-    const {callback, cartList} = this.props;
+    const { isIphoneX } = this.state;
+    const { callback, cartList } = this.props;
     return (
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'} >
         <View className='tool_item'>
-          <Image src='http://qiniu.daosuan.net/picture-1598882867000' mode='heightFix' />
+          <View className='icon'>
+            <Image src='http://qiniu.daosuan.net/picture-1598882867000' mode='heightFix' className='share' />
+          </View>
           <Text>转发</Text>
           <Button openType='share'></Button>
         </View>
         <View className='tool_item'>
-          <Image src='http://qiniu.daosuan.net/picture-1598883925000' mode='heightFix' />
+          <View className='icon'>
+            <Image src='http://qiniu.daosuan.net/picture-1598883925000' mode='heightFix' className='favor' />
+          </View>
           <Text>收藏</Text>
         </View>
         <Navigator className='tool_item cart' url='/pages/cart/index' openType='switchTab'>
@@ -36,14 +40,14 @@ class ToolBar extends Component {
           <Text>购物车</Text>
           {
             (cartList ?? []).length != 0
-            ? <Text className='count'>{(cartList ?? []).length}</Text>
-            : ''
+              ? <Text className='count'>{(cartList ?? []).length}</Text>
+              : ''
           }
         </Navigator>
-        <View className='tool_item_2 add_cart' onClick={callback.bind(this,1)}>
+        <View className='tool_item_2 add_cart' onClick={callback.bind(this, 1)}>
           加入购物车
         </View>
-        <View className='tool_item_2' onClick={callback.bind(this,2)}>
+        <View className='tool_item_2' onClick={callback.bind(this, 2)}>
           立即购买
         </View>
       </View>

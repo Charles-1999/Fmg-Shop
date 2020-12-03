@@ -11,15 +11,25 @@
     box-sizing: border-box;
     .tool_item {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
         position: relative;
         height: 100rpx;
         margin-right: 25rpx;
         font-size: 24rpx;
         text-align: center;
         line-height: 20rpx;
+        .icon {
+          padding-top: 5rpx;
+        }
         image {
             width: 100%;
             height: 80rpx;
+        }
+        image.favor, image.share {
+          height: 70rpx;
         }
         button {
             position: absolute;
