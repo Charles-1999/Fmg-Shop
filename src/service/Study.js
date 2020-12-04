@@ -1,12 +1,14 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:26:50
- * @LastEditTime: 2020-11-24 20:47:15
+ * @LastEditTime: 2020-12-02 11:14:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/service/Study.js
  */
 import request from '@utils/request'
+import { API } from '@utils/api'
+import { compile } from 'path-to-regexp'
 /**
  * 研学模块
 */
@@ -21,7 +23,7 @@ import request from '@utils/request'
  * @param {String}  is_put      是否发布
  */
 export const getCourseList = params => {
-  return request(`/study/course/list`, {
+  return request(API.STUDY.COURSE.LIST, {
     body: params,
     method: 'GET'
   })
@@ -55,7 +57,8 @@ export const mgetCourseTags = params => {
  * @return  {Number}  预报名id
  */
 export const preApply = params => {
-  return request(`/study/course/${params.cid}/pre_apply`, {
+  const pattern = compile(API.STUDY.COURSE.PREAPPLY.CREATE)
+  return request(pattern({ cid: params.cid }), {
     body: {
       phone: params.phone,
       name: params.name,
@@ -132,6 +135,27 @@ export const updatePreApply = params => {
  */
 export const preToApply = params => {
   return request(`/study/course/pre_apply/${params.pid}/apply`, {
+    body: params,
+    method: 'POST'
+  })
+}
+
+/**
+ * 获取咨询列表
+ */
+export const getNewsList = params => {
+  return request(`/news/info/list`, {
+    body: params,
+    method: 'GET'
+  })
+}
+
+/**
+ * 批量获取咨询
+ * @param {Array} ids
+ */
+export const mgetNews = params => {
+  return request(`/news/info/_mget`, {
     body: params,
     method: 'POST'
   })

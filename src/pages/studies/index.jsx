@@ -1,4 +1,4 @@
-import Taro, {getApp} from '@tarojs/taro'
+import Taro, { getApp, useDidShow } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { View, Image, Text } from '@tarojs/components'
@@ -12,19 +12,50 @@ function Studies(props) {
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
   const userInfo = Taro.getStorageSync('userInfo')
 
+  const tabs = new Map([['course', 1], ['news', 2], ['my', 3]])
   const [currTab, setCurrTab] = useState(1)
-  const { courseInfos } = props
+  const { courseInfos, newsList } = props
 
-  useEffect(() => {
-    /* 获取课程列表 */
+  useDidShow(() => {
+    if (currTab == tabs.get('course')) {
+      getCourseList()
+    } else if (currTab == tabs.get('news')) {
+      getNewsList()
+    }
+  })
+
+  /* 获取课程列表 */
+  function getCourseList(page = 1, limit = 10) {
     props.dispatch({
       type: 'study/getCourseList',
       payload: {
-        page: 1,
-        limit: 30
+        page,
+        limit
       }
     })
-  }, [])
+  }
+
+  /* 获取咨询列表 */
+  function getNewsList(page = 1, limit = 10) {
+    props.dispatch({
+      type: 'study/getNewsList',
+      payload: {
+        page,
+        limit
+      }
+    })
+  }
+
+  /* 切换Tab */
+  function switchTab(tab) {
+    setCurrTab(tab)
+
+    if (tab == tabs.get('course')) {
+      getCourseList()
+    } else if (tab == tabs.get('news')) {
+      getNewsList()
+    }
+  }
 
   function courseTap(id) {
     Taro.navigateTo({
@@ -32,9 +63,9 @@ function Studies(props) {
     })
   }
 
-  function newsTap() {
+  function newsTap(id) {
     Taro.navigateTo({
-      url: '/pages/studies/news/index'
+      url: '/pages/studies/news/index?id=' + id
     })
   }
 
@@ -96,15 +127,15 @@ function Studies(props) {
             <Text>最新资讯</Text>
           </View>
           <View className='news_list'>
-            {infomations.map(item => (
-              <View className='news' key={item.id} onClick={newsTap}>
+            {(newsList ?? []).map(news => (
+              <View className='news' key={news.id} onClick={newsTap.bind(this, news.id)}>
                 <View className='left'>
-                  <View className='title'>{item.title}</View>
-                  <View className='abstract'>{item.abstract}</View>
-                  <View className='time'>{new Date(item.create_time * 1000).toLocaleString()}</View>
+                  <View className='title'>{news.title}</View>
+                  <View className='abstract'>{news.desc}</View>
+                  <View className='time'>{new Date(news.create_time * 1000).toLocaleString()}</View>
                 </View>
                 <View className='right'>
-                  <Image src={item.cover} />
+                  <Image src={news.cover} />
                 </View>
               </View>
             ))}
@@ -127,14 +158,14 @@ function Studies(props) {
         : ''
       }
       <View className={isIphoneX ? 'isIphoneX tab_bar' : 'tab_bar'}>
-        <View className={currTab == 1 ? 'active tab_item' : 'tab_item'} onClick={() => { setCurrTab(1) }}>课程</View>
-        <View className={currTab == 2 ? 'active tab_item' : 'tab_item'} onClick={() => { setCurrTab(2) }}>资讯</View>
-        <View className={currTab == 3 ? 'active tab_item' : 'tab_item'} onClick={() => { setCurrTab(3) }}>我的</View>
+        <View className={currTab == 1 ? 'active tab_item' : 'tab_item'} onClick={switchTab.bind(this, 1)}>课程</View>
+        <View className={currTab == 2 ? 'active tab_item' : 'tab_item'} onClick={switchTab.bind(this, 2)}>资讯</View>
+        <View className={currTab == 3 ? 'active tab_item' : 'tab_item'} onClick={switchTab.bind(this, 3)}>我的</View>
       </View>
     </View>
   )
 }
 
-export default connect (({ study }) => ({
+export default connect(({ study }) => ({
   ...study
 }))(Studies)

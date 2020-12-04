@@ -1,12 +1,12 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-11-28 11:28:54
+ * @LastEditTime: 2020-12-01 19:55:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
  */
-import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, updatePreApply, preToApply } from '../service/Study'
+import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, updatePreApply, preToApply, getNewsList, mgetNews } from '../service/Study'
 import { formatTimeStamp } from '@utils/time'
 
 export default {
@@ -205,6 +205,28 @@ export default {
     /* 通过预报名创建报名 */
     * preToApply({ payload }, { call, put }) {
       const res = yield call(preToApply, payload)
+    },
+    /* 获取咨询列表 */
+    * getNewsList({ payload }, { call, put }) {
+      const res = yield call(getNewsList, payload)
+
+      yield put({
+        type: 'mgetNews',
+        payload: {
+          ids: res.news.map(item => item.id)
+        }
+      })
+    },
+    /* 批量获取咨询 */
+    * mgetNews({ payload }, { call, put}) {
+      const newsList = yield call(mgetNews, payload)
+
+      yield put({
+        type: 'saveNewsList',
+        payload: {
+          newsList
+        }
+      })
     }
   },
   reducers: {
@@ -216,6 +238,15 @@ export default {
         ...state,
         courseList: payload // []
       }
+    },
+    saveNewsList(state, { payload }) {
+      let { newsList } = payload
+
+      newsList.forEach(news => {
+        news.cover = `http://qiniu.daosuan.net/` + news.cover
+      })
+
+      return { state, newsList }
     }
   }
 }
