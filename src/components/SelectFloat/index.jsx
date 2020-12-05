@@ -20,6 +20,7 @@ function SelectFloat(props) {
   const [currChoose, setCurrChoose] = useState(null)
   const [currCount, setCurrCount] = useState(1)
   const [total, setTotal] = useState()
+  const { cartList } = props
 
   useEffect(() => {
     setCurrChoose(null)
@@ -100,7 +101,7 @@ function SelectFloat(props) {
   function handleInputNum(e) {
     const { value } = e.detail
     setCurrCount(Number(value))
-    if (!(value >=1 && value <= total)) setCurrCount(1)
+    if (!(value >= 1 && value <= total)) setCurrCount(1)
   }
 
   /* 加入购物车 */
@@ -122,30 +123,13 @@ function SelectFloat(props) {
         })
         return
       }
-      props.dispatch({
-        type: 'cart/createCart',
-        payload: {
-          currGoods,
-          spec_index: currChoose,
-          count: currCount,
-          delivery_kind: setGetWay()
-        }
-      }).then(res => {
-        Taro.showToast({
-          title: '加入购物车成功',
-          icon: 'success'
-        })
-        // 加入购物车后的回调
-        if (props.addCallBack)
-          props.addCallBack()
-        hiddenFloat()
-      }, err => {
-        console.error('error', err.data.message)
-        Taro.showToast({
-          title: '加入购物车失败',
-          icon: 'none'
-        })
-      })
+
+      // 商品id, 规格id
+      const [goods_id, goods_specification_id] = [currGoods.id, currGoods.specification[currChoose].id]
+
+      // 检测是否需要合并购物车
+      let cart = cartList.find(cart => cart.goods_id == goods_id && cart.goods_specification_id == goods_specification_id)
+      cart ? updateCart(cart, goods_specification_id) : createCart(goods_id, goods_specification_id)
     }
   }
 
@@ -172,6 +156,62 @@ function SelectFloat(props) {
         url: '/pages/cart/confirm/index'
       })
     }
+  }
+
+  /* 创建购物车 */
+  function createCart(goods_id, goods_specification_id) {
+    props.dispatch({
+      type: 'cart/createCart',
+      payload: {
+        goods_id,
+        goods_specification_id,
+        count: currCount,
+        delivery_kind: setGetWay()
+      }
+    }).then(res => {
+      Taro.showToast({
+        title: '加入购物车成功',
+        icon: 'success'
+      })
+      // 加入购物车后的回调
+      if (props.addCallBack)
+        props.addCallBack()
+      hiddenFloat()
+    }, err => {
+      console.error('error', err.data.message)
+      Taro.showToast({
+        title: '加入购物车失败',
+        icon: 'none'
+      })
+    })
+  }
+
+  /* 更新购物车 */
+  function updateCart(currCart, goods_specification_id) {
+    props.dispatch({
+      type: 'cart/updateCart',
+      payload: {
+        cart_id: currCart.id,
+        goods_count: currCart.goods_count + currCount,
+        goods_id: currCart.goods_id,
+        goods_specification_id
+      }
+    }).then(res => {
+      Taro.showToast({
+        title: '加入购物车成功',
+        icon: 'success'
+      })
+      // 加入购物车后的回调
+      if (props.addCallBack)
+        props.addCallBack()
+      hiddenFloat()
+    }, err => {
+      console.error('error', err.data.message)
+      Taro.showToast({
+        title: '加入购物车失败',
+        icon: 'none'
+      })
+    })
   }
 
   return(
