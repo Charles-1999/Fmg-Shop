@@ -16,13 +16,19 @@ function PreApplyList(props) {
   const [currTab, setCurrTab] = useState(1)
   const [dataList, setDataList] = useState([])
   const [courseInfos, setCourseInfos] = useState([])
+  const [firstShow, setFirstShow] = useState(true)
   const { page, total } = props
   const LIMIT = 10
 
-  useDidShow(() => {
+  useEffect(() => {
     const { status } = getCurrentInstance().router.params
+    setFirstShow(false)
     setCurrTab(status)
     getApplyList(status)
+  }, [])
+
+  useDidShow(() => {
+    if (!firstShow) getApplyList(currTab)
   })
 
   /* 触底加载 */
