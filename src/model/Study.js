@@ -1,12 +1,12 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-12-01 19:55:35
+ * @LastEditTime: 2020-12-07 11:59:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
  */
-import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, updatePreApply, preToApply, getNewsList, mgetNews } from '../service/Study'
+import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, cancleApply, updatePreApply, updateApply, preToApply, getNewsList, mgetNews } from '../service/Study'
 import { formatTimeStamp } from '@utils/time'
 
 export default {
@@ -177,6 +177,9 @@ export default {
         /* 订单状态 */
         let statusArr = [, '未支付', '已支付', , '已取消']
         item.status_text = statusArr[item.status]
+
+        /* 订单价格 */
+        item.total_price = Number((item.total_money / 100).toFixed(2))
       })
 
       yield put({
@@ -198,9 +201,17 @@ export default {
     * canclePreApply({ payload }, { call, put }) {
       const res = yield call(canclePreApply, payload)
     },
+    /* 取消报名 */
+    * cancleApply({ payload }, { call, put }) {
+      const res = yield call(cancleApply, payload)
+    },
     /* 修改预报名信息 */
     * updatePreApply({ payload }, { call, put }) {
       const res = yield call(updatePreApply, payload)
+    },
+    /* 修改报名信息 */
+    * updateApply({ payload }, { call, put }) {
+      const res = yield call(updateApply, payload)
     },
     /* 通过预报名创建报名 */
     * preToApply({ payload }, { call, put }) {
