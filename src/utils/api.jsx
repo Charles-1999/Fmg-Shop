@@ -47,8 +47,10 @@ export const API = {
       },
       APPLY: {
         CREATE: `/study/course/pre_apply/:pid/apply`,
+        UPDATE: `/study/course/apply/:aid`,
         LIST: `/study/course/apply/list`,
         MGET: `/study/course/apply/_mget`,
+        CANCLE: `/study/course/apply/:aid/cancel`
       }
     },
     NEWS: {

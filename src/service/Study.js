@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:26:50
- * @LastEditTime: 2020-12-02 11:14:23
+ * @LastEditTime: 2020-12-06 22:27:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/service/Study.js
@@ -34,7 +34,7 @@ export const getCourseList = params => {
  * @param {Array} ids id数组
  */
 export const mgetCourseInfo = params => {
-  return request(`/study/course/_mget`, {
+  return request(API.STUDY.COURSE.MGET, {
     body: params,
     method: 'POST'
   })
@@ -44,7 +44,7 @@ export const mgetCourseInfo = params => {
  * 批量获取课程标签
  */
 export const mgetCourseTags = params => {
-  return request(`/study/course/tag/_mget`, {
+  return request(API.STUDY.COURSE.TAGS, {
     body: params,
     method: 'POST'
   })
@@ -73,8 +73,8 @@ export const preApply = params => {
  * 获取预报名列表
  * @param   {Number}  status 状态
  */
-export const getPreApplyList = (params = { page: 1, limit: 10}) => {
-  return request('/study/course/pre_apply/list', {
+export const getPreApplyList = (params = { page: 1, limit: 10 }) => {
+  return request(API.STUDY.COURSE.PREAPPLY.LIST, {
     body: params,
     method: 'GET'
   })
@@ -84,7 +84,7 @@ export const getPreApplyList = (params = { page: 1, limit: 10}) => {
  * 批量获取预报名信息
  */
 export const mgetPreApply = params => {
-  return request(`/study/course/pre_apply/_mget`, {
+  return request(API.STUDY.COURSE.PREAPPLY.MGET, {
     body: params,
     method: 'POST'
   })
@@ -93,8 +93,8 @@ export const mgetPreApply = params => {
 /**
  * 获取报名列表
  */
-export const getApplyList = (params = { page: 1, limit: 10}) => {
-  return request('/study/course/apply/list', {
+export const getApplyList = (params = { page: 1, limit: 10 }) => {
+  return request(API.STUDY.COURSE.APPLY.LIST, {
     body: params,
     method: 'GET'
   })
@@ -104,7 +104,7 @@ export const getApplyList = (params = { page: 1, limit: 10}) => {
  * 批量获取报名信息
  */
 export const mgetApply = params => {
-  return request('/study/course/apply/_mget', {
+  return request(API.STUDY.COURSE.APPLY.MGET, {
     body: params,
     method: 'POST'
   })
@@ -121,10 +121,35 @@ export const canclePreApply = params => {
 }
 
 /**
+ * 取消报名
+ * @param {Number} aid 报名id
+ */
+export const cancleApply = params => {
+  const pattern = compile(API.STUDY.COURSE.APPLY.CANCLE)
+  return request(pattern({ aid: params.aid }), {
+    method: 'POST'
+  })
+}
+
+/**
  * 修改预报名信息
  */
 export const updatePreApply = params => {
-  return request(`/study/course/pre_apply/${params.pid}`, {
+  const pattern = compile(API.STUDY.COURSE.PREAPPLY.UPDATE)
+  return request(pattern({ pid: params.pid }), {
+    body: params,
+    method: 'PUT'
+  })
+}
+
+/**
+ * 修改报名信息
+ * @param {Number} aid        报名id
+ * @param {Number} session_id 场次id
+ */
+export const updateApply = params => {
+  const pattern = compile(API.STUDY.COURSE.APPLY.UPDATE)
+  return request(pattern({ aid: params.aid }), {
     body: params,
     method: 'PUT'
   })
@@ -134,7 +159,8 @@ export const updatePreApply = params => {
  * 通过预报名创建报名
  */
 export const preToApply = params => {
-  return request(`/study/course/pre_apply/${params.pid}/apply`, {
+  const pattern = compile(API.STUDY.COURSE.APPLY.CREATE)
+  return request(pattern({ pid: params.pid }), {
     body: params,
     method: 'POST'
   })
@@ -144,7 +170,7 @@ export const preToApply = params => {
  * 获取咨询列表
  */
 export const getNewsList = params => {
-  return request(`/news/info/list`, {
+  return request(API.STUDY.NEWS.LIST, {
     body: params,
     method: 'GET'
   })
@@ -155,7 +181,7 @@ export const getNewsList = params => {
  * @param {Array} ids
  */
 export const mgetNews = params => {
-  return request(`/news/info/_mget`, {
+  return request(API.STUDY.NEWS.MGET, {
     body: params,
     method: 'POST'
   })

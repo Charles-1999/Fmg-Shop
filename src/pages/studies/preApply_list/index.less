@@ -11,11 +11,13 @@ page {
         padding: 10rpx 20rpx;
         text-align: center;
         font-size: 14PX;
-        border-radius: 20rpx;
+        border-bottom: 2px solid transparent;
+        // border-radius: 20rpx;
       }
       .tab_item.active {
-        background-color: #4279ea;
-        color: #fff;
+        // background-color: #4279ea;
+        color: #4279ea;
+        border-bottom: 2px solid #4279ea;
       }
     }
     .list_wrap {
@@ -82,7 +84,7 @@ page {
             background-color: #4279ea;
             color: #fff;
           }
-          .btn.update {
+          .btn.plain {
             color: #4279ea;
             background-color: #fff;
             border-color: #4279ea;
@@ -93,6 +95,23 @@ page {
             border-color: #666;
           }
         }
+      }
+      .no_wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20rpx;
+        font-size: 16PX;
+        color: #1b68ff;
+        .icon_noMore {
+          width: 100%;
+        }
+      }
+      .get_more {
+        width: 100%;
+        text-align: center;
+        font-size: 16PX;
       }
     }
   }

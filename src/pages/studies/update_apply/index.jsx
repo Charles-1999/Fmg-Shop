@@ -78,9 +78,12 @@ function UpdateApply(props) {
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
         color='#fff'
       />
-      <View className='bg'></View>
       <View className='container'>
         <View className='main'>
+          <View className='course_wrap'>
+            <View className='title_wrap'>课程信息</View>
+            <View className='name'>{courseInfo.name}</View>
+          </View>
           <View className='form_wrap'>
             <View className='title_wrap'>修改报名场次</View>
             <View className='form_item'>
@@ -90,10 +93,6 @@ function UpdateApply(props) {
               </Picker>
             </View>
           </View>
-          <View className='course_wrap'>
-            <View className='title_wrap'>课程信息</View>
-            <View className='name'>{courseInfo.name}</View>
-          </View>
           <View className='session_wrap'>
             <View className='title_wrap'>场次信息</View>
             <View className='session_list'>
@@ -102,11 +101,11 @@ function UpdateApply(props) {
                   <View className='title'>第{index + 1}期</View>
                   <View className='info_wrap'>
                     <Text className='title'>计划人数：</Text>
-                    <Text className='content'>{session.people_limit}</Text>
+                    <Text className='content'>{session.people_limit}人</Text>
                   </View>
                   <View className='info_wrap'>
                     <Text className='title'>价格：</Text>
-                    <Text className='content'>{session.money}</Text>
+                    <Text className='content'>¥{session.money}</Text>
                   </View>
                   <View className='info_wrap'>
                     <Text className='title'>活动时间：</Text>

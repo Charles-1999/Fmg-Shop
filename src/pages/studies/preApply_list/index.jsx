@@ -7,7 +7,6 @@ import { formatTimeStamp } from '@utils/time'
 
 import './index.less'
 
-
 function PreApplyList(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
   const capsule = Taro.getStorageSync('capsule')
@@ -17,18 +16,18 @@ function PreApplyList(props) {
   const [currTab, setCurrTab] = useState(1)
   const [dataList, setDataList] = useState([])
   const [courseInfos, setCourseInfos] = useState([])
+  const { page, total } = props
+  const LIMIT = 10
 
   useDidShow(() => {
     const { status } = getCurrentInstance().router.params
     setCurrTab(status)
-    // getPreApplyList(status == currTab ? currTab : status)
     getApplyList(status)
   })
 
   /* 触底加载 */
   useReachBottom(() => {
-    let { page, total } = props
-    if ( page * 10 < total)
+    if (page * LIMIT < total)
       getApplyList(currTab, page + 1)
   })
 
@@ -59,7 +58,7 @@ function PreApplyList(props) {
 
         // 去重
         let obj = {}
-        SCourseInfos =  SCourseInfos.reduce((item, next) => {
+        SCourseInfos = SCourseInfos.reduce((item, next) => {
           obj[next.id] ? null : obj[next.id] = true && item.push(next)
           return item
         }, [])
@@ -73,24 +72,28 @@ function PreApplyList(props) {
     }
   }, [props.courseInfos])
 
-  // 切换tab
+  /* 切换tab */
   function switchTab(tab) {
     setCurrTab(tab)
     getApplyList(tab)
   }
 
   /* 获取报名列表 */
-  async function getApplyList(status, page = 1, limit = 10) {
-    // 预报名状态 1: 取消, 2: 预报名, 4: 已报名
-    // 已报名状态 1: 未支付, 2: 已支付, 4: 已取消
-    // status 0: 全部, 1: 预报名, 2: 未支付, 3: 已支付, 4: 已取消,
+  function getApplyList(status, page = 1, limit = 10) {
     status = parseInt(status)
-    const statusArr = [null, 2, 1, 2, 1]
 
-    // 获取报名列表
-    if ([2, 3].includes(status)) {
+    // 预报名状态 1: 取消, 2: 预报名, 4: 已报名
+    const preApplyMap = new Map([['已取消', 1], ['预报名', 2], ['已报名', 4]])
+    // 已报名状态 1: 未支付, 2: 已支付, 4: 已取消
+    const applyMap = new Map([['未支付', 1], ['已支付', 2], ['已取消', 4]])
+    // status 0: 全部, 1: 预报名, 2: 未支付, 3: 已支付, 4: 已取消
+    const statusMap = new Map([['预报名', 1], ['未支付', 2], ['已支付', 3], ['已取消', 4]])
+    const statusArr = [null, preApplyMap.get('预报名'), applyMap.get('未支付'), applyMap.get('已支付'), applyMap.get('已取消')]
+
+    // 获取预报名列表
+    if (status == statusMap.get('预报名')) {
       props.dispatch({
-        type: 'study/getApplyList',
+        type: 'study/getPreApplyList',
         payload: {
           status: statusArr[status],
           page,
@@ -98,9 +101,9 @@ function PreApplyList(props) {
         }
       })
     } else {
-      // 获取预报名列表
+      // 获取报名列表
       props.dispatch({
-        type: 'study/getPreApplyList',
+        type: 'study/getApplyList',
         payload: {
           status: statusArr[status],
           page,
@@ -111,19 +114,19 @@ function PreApplyList(props) {
   }
 
   /* 取消报名 */
-  function cancle(pid) {
+  function cancle(aid) {
     Taro.showModal({
       title: '提示',
-      content: '确认取消预定？',
+      content: '确认取消报名？',
       success: res => {
         if (res.confirm) {
           props.dispatch({
-            type: 'study/canclePreApply',
+            type: 'study/cancleApply',
             payload: {
-              pid
+              aid
             }
           }).then(() => {
-            getPreApplyList(currTab)
+            getApplyList(currTab)
           })
         }
       }
@@ -137,15 +140,12 @@ function PreApplyList(props) {
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
-        // backType='redirect'
-        // url='/pages/studies/index'
         title='我的报名'
         color='#fff'
         backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
       />
       <View className='tab_bar'>
-        <View className={currTab == 0 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 0)}>全部</View>
         <View className={currTab == 1 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 1)}>预报名</View>
         <View className={currTab == 2 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 2)}>未支付</View>
         <View className={currTab == 3 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 3)}>已支付</View>
@@ -155,10 +155,21 @@ function PreApplyList(props) {
         {dataList.map((data, index) => (
           <View className='apply_wrap' key={data.id}>
             <View className='top_wrap'>
-              <Text className='create_time'>{'预报名日期：' + new Date(formatTimeStamp(data.create_time)).toLocaleDateString()}</Text>
+              {currTab == 1
+                ? <Text className='create_time'>{'预报名日期：' + new Date(formatTimeStamp(data.create_time)).toLocaleDateString()}</Text>
+                : null
+              }
+              {currTab == (2 || 3)
+                ? <Text className='create_time'>{'报名日期：' + new Date(formatTimeStamp(data.create_time)).toLocaleDateString()}</Text>
+                : null
+              }
+              {currTab == 4
+                ? <Text className='create_time'>{'取消日期：' + new Date(formatTimeStamp(data.update_time)).toLocaleDateString()}</Text>
+                : null
+              }
               <Text className='status'>{data.status_text}</Text>
             </View>
-            <View className='info_wrap'>
+            <View className='info_wrap' onClick={() => {Taro.navigateTo({ url: '/pages/studies/apply_detail/index?id=' + data.id })}}>
               <Image src={data.courseInfo.cover} className='cover' />
               <View className='info'>
                 <View className='name'>{data.courseInfo.name}</View>
@@ -166,16 +177,31 @@ function PreApplyList(props) {
                 <View className='people'>{`人数：${data.people} 人`}</View>
               </View>
             </View>
-            {data.status == 2
+            {currTab == 1
+              ? <View className='btn_wrap'>
+                {/* <View className='btn cancle' onClick={cancle.bind(this, data.id)}>取消</View> */}
+                <View className='btn plain' onClick={() => Taro.navigateTo({ url: `/pages/studies/update_preApply/index?pid=${data.id}` })}>修改</View>
+                <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${data.id}&cid=${data.course_id}` })}>报名</View>
+              </View>
+              : null
+            }
+            {currTab == 2
               ? <View className='btn_wrap'>
                 <View className='btn cancle' onClick={cancle.bind(this, data.id)}>取消</View>
-                <View className='btn update' onClick={() => Taro.navigateTo({ url: `/pages/studies/update_preApply/index?pid=${data.id}` })}>修改</View>
-                <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${data.id}&cid=${data.course_id}` })}>报名</View>
+                <View className='btn plain' onClick={() => Taro.navigateTo({ url: `/pages/studies/update_apply/index?pid=${data.id}` })}>修改</View>
+                <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${data.id}&cid=${data.course_id}` })}>支付</View>
               </View>
               : null
             }
           </View>
         ))}
+        {page * LIMIT >= total
+          ? <View className='no_wrap'>
+            <Image src='http://qiniu.daosuan.net/picture-1598884234000' mode='widthFix' className='icon_noMore' />
+            <Text>没有更多啦</Text>
+          </View>
+          : <View className='get_more'>上拉加载更多</View>
+        }
       </View>
     </View>
   )
