@@ -67,7 +67,7 @@ function UpdateApply(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX update_preApply' : 'update_preApply'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
+    <View className={isIphoneX ? 'isIphoneX update_preApply' : 'update_preApply'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
