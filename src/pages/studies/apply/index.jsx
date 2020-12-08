@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import { timeFormat } from '@utils/time'
 
 import './index.less'
+import '../study_common.less'
 
 function Apply(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
@@ -114,37 +115,37 @@ function Apply(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
+    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
         title='报名'
-        backgroundColor='#2d79f8'
+        backgroundColor='#2D79F7'
         color='#fff'
       />
-      <View className='course_info'>
-        <Text className='name'>{currCourse.name}</Text>
-        <View className='time'>
-          <View className='date'>
-            <View className='year'>{currCourse.session ? new Date(currCourse.session[sessionIndex].begin_time).getFullYear() + '年' : null}</View>
-            <View>{currCourse.session ? timeFormat(currCourse.session[sessionIndex].begin_time, 'MMDD') : null}</View>
-          </View>
-          <View className='mid'>
-            <View className='session'>{`第${sessionIndex + 1}期`}</View>
-            <View className='day'>{`共${currCourse.session ? currCourse.session[sessionIndex].days : null}天`}</View>
-          </View>
-          <View className='date'>
-            <View className='year'>{currCourse.session ? new Date(currCourse.session[sessionIndex].end_time).getFullYear() + '年' : null}</View>
-            <View>{currCourse.session ? timeFormat(currCourse.session[sessionIndex].end_time, 'MMDD') : null}</View>
+      <View className='container'>
+        <View className='course_info'>
+          <Text className='name'>{currCourse.name}</Text>
+          <View className='time'>
+            <View className='date'>
+              <View className='year'>{currCourse.session ? new Date(currCourse.session[sessionIndex].begin_time).getFullYear() + '年' : null}</View>
+              <View>{currCourse.session ? timeFormat(currCourse.session[sessionIndex].begin_time, 'MMDD') : null}</View>
+            </View>
+            <View className='mid'>
+              <View className='session'>{`第${sessionIndex + 1}期`}</View>
+              <View className='day'>{`共${currCourse.session ? currCourse.session[sessionIndex].days : null}天`}</View>
+            </View>
+            <View className='date'>
+              <View className='year'>{currCourse.session ? new Date(currCourse.session[sessionIndex].end_time).getFullYear() + '年' : null}</View>
+              <View>{currCourse.session ? timeFormat(currCourse.session[sessionIndex].end_time, 'MMDD') : null}</View>
+            </View>
           </View>
         </View>
-      </View>
-      <View className='float_container'>
-        <View className='member_wrap'>
+        <View className='wrapper'>
           {memberList.map(member => (
-            <View className='member' key={member.id}>
+            <View className='member_wrap' key={member.id}>
               <Image src='http://qiniu.daosuan.net/picture-1606228544000' className='del' onClick={removeMember.bind(this, member.id)} />
               <View className='info_wrap'>
                 <View className='name'>{member.name}</View>
@@ -160,7 +161,7 @@ function Apply(props) {
             添加成员
           </View>
         </View>
-        <View className='contact_wrap'>
+        <View className='wrapper'>
           <View className='title_wrap'>联系人信息</View>
           <View className='input_wrap'>
             <View className='title'>证件</View>

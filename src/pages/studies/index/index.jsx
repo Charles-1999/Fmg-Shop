@@ -85,13 +85,12 @@ function Studies(props) {
         backType="switchTab"
         url="/pages/index/index"
         title='研学'
-        backgroundImageStatus='linear-gradient(#2d79f8, #4279ea)'
-        backgroundImageCapsule='linear-gradient(#4279ea, #387ade)'
+        backgroundColor='#2D79F7'
         color='#fff'
       >
       </Navbar>
       {currTab == 1 ?
-        <View className='container'>
+        <View className='container_course'>
           <View className='big_title'>
             <Image src='http://qiniu.daosuan.net/picture-1598883875000' mode='heightFix' />
             <Text>最新课程</Text>
@@ -121,7 +120,7 @@ function Studies(props) {
         : ''
       }
       {currTab == 2 ?
-        <View className='container'>
+        <View className='container_course'>
           <View className='big_title'>
             <Image src='http://qiniu.daosuan.net/picture-1598883875000' mode='heightFix' />
             <Text>最新资讯</Text>
@@ -144,7 +143,7 @@ function Studies(props) {
         : ''
       }
       {currTab == 3 ?
-        <View className='container user'>
+        <View className='container_user container'>
           <View className='user_info'>
             <Image className='avator' src={userInfo.avatarUrl} />
             <View className='name'>{userInfo.nickName}</View>

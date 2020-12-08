@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { timeFormat } from '@utils/time'
 
 import './index.less'
+// import '../style/study_common.less'
 
 function ApplyDetail(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
@@ -35,14 +36,14 @@ function ApplyDetail(props) {
   }, [])
 
   return (
-    <View className={isIphoneX ? 'isIphoneX apply_detail' : 'apply_detail'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
+    <View className={isIphoneX ? 'isIphoneX apply_detail' : 'apply_detail'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
         title='报名详情'
-        backgroundColor='#2d79f8'
+        backgroundColor='#2D79F7'
         color='#fff'
       />
       <View className='container'>
@@ -64,7 +65,7 @@ function ApplyDetail(props) {
           </View>
         </View>
         {apply && apply.parters ?
-          <View className='member_list wraper'>
+          <View className='member_list wrapper'>
             <View className='title_wrap'>成员信息</View>
             {apply.parters.map(member => (
               <View className='member_wrap' key={member.id}>
@@ -81,7 +82,7 @@ function ApplyDetail(props) {
           : null
         }
         {apply && apply.pre_apply ?
-          <View className='contact wraper'>
+          <View className='contact wrapper'>
             <View className='title_wrap'>联系人信息</View>
             <View className='contact_wrap'>
               <View className='info_wrap'>
@@ -92,7 +93,7 @@ function ApplyDetail(props) {
           : null
         }
         {apply && apply.name ?
-          <View className='contact wraper'>
+          <View className='contact wrapper'>
             <View className='title_wrap'>联系人信息</View>
             <View className='contact_wrap'>
               <View className='info_wrap'>
@@ -103,7 +104,7 @@ function ApplyDetail(props) {
           : null
         }
         {apply ?
-          <View className='order_wrap wraper'>
+          <View className='order_wrap wrapper'>
             <View className='title_wrap'>订单详情</View>
             <View className='order_info'>
               <View className='title'>报名人数</View>

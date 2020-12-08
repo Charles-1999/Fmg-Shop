@@ -4,6 +4,7 @@ import { View, Text, Input, RadioGroup, Label, Radio, Picker } from "@tarojs/com
 import Navbar from '@components/navbar/navbar'
 
 import './index.less'
+import '../study_common.less'
 
 export default function UpdataMember(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
@@ -77,19 +78,18 @@ export default function UpdataMember(props) {
   }
 
   return (
-    <View className={'updata_member'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
+    <View className={'updata_member'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
         title='更新成员信息'
-        backgroundColor='#2d79f8'
+        backgroundColor='#2D79F7'
         color='#fff'
       />
-      <View className="bg"></View>
       <View className='container'>
-        <View className='main'>
+        <View className='wrapper'>
           <View className='input_wrap'>
             <View className='title'>姓名</View>
             <Input type="text" value={name} placeholder='与成员证件姓名一致' onBlur={(e) => setName(e.detail.value)}/>

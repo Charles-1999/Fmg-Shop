@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { View, Image, Text, Input, Picker } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
 import './index.less'
+import '../study_common.less'
 
 function PreApply(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
@@ -72,7 +73,7 @@ function PreApply(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
+    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
@@ -84,46 +85,53 @@ function PreApply(props) {
         color='#fff'
       />
       <View className='container'>
-        <View className='main'>
-          <View className='form_wrap'>
-            <View className='title_wrap'>填写预约信息</View>
-            <View className='form_item'>
-              <View className='title'>姓名</View>
-              <Input value={name} placeholder="联系人姓名" onBlur={(e) => { setName(e.detail.value.trim()) }} />
-            </View>
-            <View className='form_item'>
-              <View className='title'>电话</View>
-              <Input value={phone} placeholder="联系人电话" type="number" onBlur={(e) => { setPhone(e.detail.value.trim()) }} />
-            </View>
-            <View className='form_item'>
-              <View className='title'>人数</View>
-              <Input value={people} placeholder="预约人数" type="number" onBlur={(e) => { setPeople(Number(e.detail.value)) }} />
-            </View>
-            <View className='form_item'>
-              <View className='title'>场次</View>
-              <Picker mode="selector" className='session_picker' range={sessionArr} onChange={handlePickerChange}>
-                <View className='picker_item'>{sessionArr[sessionIndex]}</View>
-              </Picker>
-            </View>
+        <View className='wrapper'>
+          <View className='title_wrap'>填写预约信息</View>
+          <View className='input_wrap'>
+            <View className='title'>姓名</View>
+            <Input value={name} placeholder="联系人姓名" onBlur={(e) => { setName(e.detail.value.trim()) }} />
           </View>
+          <View className='input_wrap'>
+            <View className='title'>电话</View>
+            <Input value={phone} placeholder="联系人电话" type="number" onBlur={(e) => { setPhone(e.detail.value.trim()) }} />
+          </View>
+          <View className='input_wrap'>
+            <View className='title'>人数</View>
+            <Input value={people} placeholder="预约人数" type="number" onBlur={(e) => { setPeople(Number(e.detail.value)) }} />
+          </View>
+          <View className='input_wrap'>
+            <View className='title'>场次</View>
+            <Picker mode="selector" className='session_picker' range={sessionArr} onChange={handlePickerChange}>
+              <View className='picker_item'>{sessionArr[sessionIndex]}</View>
+            </Picker>
+          </View>
+        </View>
+        <View className='wrapper'>
           <View className='course_wrap'>
-            <View className='title_wrap'>当前课程信息</View>
-            <View className='info'>
-              <View className='title'>课程:</View>
-              <View className='content'>{courseInfo.name}</View>
-            </View>
-            <View className='session_wrap'>
-              <View className='title'>开营时间:</View>
-              <View className='content'>{(courseInfo.session ?? []).map((item, index) => (
-                <View className='session' key={item.id}>
-                  <View className='title'>第{index + 1}期：</View>
-                  <View className='time'>
-                    {`${new Date(item.begin_time).toLocaleDateString() + ' - ' + new Date(item.end_time).toLocaleDateString()}`}
-                  </View>
+            <View className='title_wrap'>课程信息</View>
+            <View className='name'>{courseInfo.name}</View>
+          </View>
+        </View>
+        <View className='wrapper'>
+          <View className='title_wrap'>场次信息</View>
+          <View className='session_list'>
+            {(courseInfo.session ?? []).map((session, index) => (
+              <View className='session' key={session.id}>
+                <View className='title'>第{index + 1}期</View>
+                <View className='info_wrap'>
+                  <Text className='title'>计划人数：</Text>
+                  <Text className='content'>{session.people_limit}人</Text>
                 </View>
-              ))}
+                <View className='info_wrap'>
+                  <Text className='title'>价格：</Text>
+                  <Text className='content'>¥{session.money}</Text>
+                </View>
+                <View className='info_wrap'>
+                  <Text className='title'>活动时间：</Text>
+                  <Text className='content'>{new Date(session.begin_time).toLocaleDateString() + ' - ' + new Date(session.end_time).toLocaleDateString()}</Text>
+                </View>
               </View>
-            </View>
+            ))}
           </View>
         </View>
       </View>

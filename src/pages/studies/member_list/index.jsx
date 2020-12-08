@@ -4,6 +4,7 @@ import { View, Image, Checkbox, Text } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
 
 import './index.less'
+import '../study_common.less'
 
 export default function MemberList(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
@@ -53,41 +54,39 @@ export default function MemberList(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX member_list' : 'member_list'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
+    <View className={isIphoneX ? 'isIphoneX member_list' : 'member_list'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
         showTitle
         showBack
         title='成员选择'
-        backgroundColor='#2d79f8'
+        backgroundColor='#2D79F7'
         color='#fff'
       />
       <View className='container'>
-        <View className='main'>
-          <View className='btn_wrap'>
-            <View className='btn' onClick={addMember.bind(this)}>
-              <Image src='http://qiniu.daosuan.net/picture-1606228515000' />
+        <View className='btn_wrap wrapper'>
+          <View className='btn' onClick={addMember.bind(this)}>
+            <Image src='http://qiniu.daosuan.net/picture-1606228515000' />
               新增成员
             </View>
-          </View>
-          <View className='list_wrap'>
-            {(memberList ?? []).map((item, index) => (
-              <View className='member' key={item.id}>
-                <Image src='http://qiniu.daosuan.net/icon-1606046423000' className='edit' onClick={updataMember.bind(this, item.id)}/>
-                <View className='info_wrap'>
-                  <View className='name'>{item.name}</View>
-                  <View className='idCard'>
-                    <Text>身份证</Text>
-                    <Text className='id_text'>{item.number.replace(item.number.substr(4,11), '***********')}</Text>
-                  </View>
-                </View>
-                <View className='checkBox'>
-                  <Checkbox checked={item.checked} onClick={checkedClick.bind(this, index)} />
+        </View>
+        <View className='list_wrap wrapper'>
+          {(memberList ?? []).map((item, index) => (
+            <View className='member_wrap' key={item.id}>
+              <Image src='http://qiniu.daosuan.net/icon-1606046423000' className='edit' onClick={updataMember.bind(this, item.id)} />
+              <View className='info_wrap'>
+                <View className='name'>{item.name}</View>
+                <View className='idCard'>
+                  <Text>身份证</Text>
+                  <Text className='id_text'>{item.number.replace(item.number.substr(4, 11), '***********')}</Text>
                 </View>
               </View>
-            ))}
-          </View>
+              <View className='checkBox'>
+                <Checkbox checked={item.checked} onClick={checkedClick.bind(this, index)} />
+              </View>
+            </View>
+          ))}
         </View>
       </View>
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>

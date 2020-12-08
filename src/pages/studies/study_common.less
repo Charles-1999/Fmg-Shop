@@ -1,0 +1,248 @@
+page {
+  .container {
+    background-image: linear-gradient(180deg, #2D79F7 30%, #f3f3f3 50%);
+    background-attachment: fixed;
+    padding: 20rpx;
+    padding-bottom: 120rpx;
+    /* 包裹层 */
+    .wrapper {
+      padding: 20rpx;
+      margin-bottom: 30rpx;
+      border-radius: 20rpx;
+      background-color: #fff;
+      overflow: hidden;
+      box-shadow: 3rpx 3rpx 15rpx 0rpx #888;
+      /* 包裹层标题 */
+      .title_wrap {
+        border-left: 3PX solid #4479ed;
+        padding-left: 10PX;
+        margin: 5PX 10PX 15PX;
+        font-size: 16PX;
+      }
+      /* 输入层包裹 */
+      .input_wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 25rpx 20rpx;
+        font-size: 14PX;
+        color: #666;
+        border-bottom: 1px solid #eee;
+        .title {
+          width: 85PX;
+        }
+        input {
+          flex: 1;
+          background-color: #fff;
+          border: none;
+        }
+        .input-placeholder {
+          color: #999;
+        }
+        .text {
+          flex: 1;
+          color: #2d79f8;
+        }
+        .radio-list {
+          flex: 1;
+          .radio-list_label {
+            margin-right: 40rpx;
+          }
+        }
+        .date_picker {
+          flex: 1;
+          .picker_view {
+            text {
+              color: #999;
+            }
+          }
+        }
+        .session_picker {
+          flex: 1;
+          .picker_view {
+            text {
+              color: #999;
+            }
+          }
+        }
+      }
+      /* 按钮层包裹 */
+      .btn_wrap {
+        padding: 20rpx;
+        font-size: 16PX;
+        font-weight: 700;
+        text-align: center;
+        .btn {
+          width: 100%;
+          padding: 20rpx 0;
+          border-radius: 20rpx;
+          background-image: linear-gradient(90deg, #2d79f8, #5594f4);
+          color: #fff;
+        }
+      }
+      /* 成员包裹 */
+      .member_wrap {
+        display: flex;
+        align-items: center;
+        padding: 0 20rpx 20rpx;
+        margin-bottom: 20rpx;
+        border-bottom: 1rpx solid #eee;
+        .del {
+          width: 20PX;
+          height: 20PX;
+          margin-right: 30rpx;
+        }
+        .edit {
+          width: 30PX;
+          height: 30PX;
+          margin-right: 30rpx;
+        }
+        .info_wrap {
+          flex: 1;
+          .name {
+            font-size: 15PX;
+            text {
+              margin-right: 10PX;
+            }
+          }
+          .idCard {
+            color: #999;
+            font-size: 12PX;
+            .id_text {
+              margin-left: 20rpx;
+            }
+          }
+        }
+      }
+      /* 场次信息包裹 */
+      .session_list {
+        padding: 0 20rpx;
+        .session {
+          margin-top: 40rpx;
+          .title {
+            font-size: 16PX;
+          }
+        }
+        .info_wrap {
+          display: flex;
+          margin: 20rpx 20rpx 0;
+          color: #3e3e3e;
+          font-size: 15PX;
+          .title {
+            width: 180rpx;
+            text-align: right;
+            font-size: 15PX;
+          }
+          .content {
+            flex: 1;
+            text-align: right;
+          }
+        }
+      }
+      /* 课程信息包裹 */
+      .course_wrap {
+        font-size: 16PX;
+        .name {
+          padding: 20rpx 40rpx;
+          font-size: 16PX;
+        }
+      }
+    }
+    /* 课程详情包裹层 */
+    .course_info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40rpx 40rpx;
+      text-align: center;
+      font-size: 18PX;
+      color: #fff;
+      .name {
+        padding: 20rpx;
+      }
+      .time {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20rpx;
+        padding-bottom: 40rpx;
+        border-bottom: 1px dashed #ccc;
+        .date {
+          font-weight: 900;
+          .year {
+            font-size: 14PX;
+            font-weight: 500;
+          }
+        }
+        .mid {
+          font-size: 16PX;
+          .day {
+            font-size: 14PX;
+          }
+        }
+      }
+    }
+  }
+  .isIphoneX .container{
+    padding-bottom: 180rpx;
+  }
+  /* 底部固定bar */
+  .tool_bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: 120rpx;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    .bar_item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 90rpx;
+      margin: 10rpx 20rpx 0;
+      font-size: 16PX;
+      font-weight: 700;
+      color: #fff;
+      border-radius: 50rpx;
+      background-image: linear-gradient(90deg, #2d79f8, #5594f4);
+    }
+  }
+  .tool_bar.isIphoneX {
+    height: 180rpx;
+  }
+  /* CheckBox */
+  .checkBox {
+    /*checkbox 选项框大小  */
+    checkbox .wx-checkbox-input {
+      width: 22PX;
+      height: 22PX;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+    /*checkbox选中后样式  */
+    checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+      background: #fff;
+      border: none;
+    }
+    /*checkbox选中后图标样式  */
+    checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+      width: 22PX;
+      height: 22PX;
+      line-height: 22PX;
+      text-align: center;
+      font-size: 35rpx;
+      color: #2d79f8;
+      border: 1rpx solid #2d79f8;
+      border-radius: 50%;
+      background: transparent;
+      transform: translate(-50%, -50%) scale(1);
+      -webkit-transform: translate(-50%, -50%) scale(1);
+    }
+  }
+}

@@ -67,7 +67,7 @@ function UpdateApply(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX update_preApply' : 'update_preApply'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
+    <View className={isIphoneX ? 'isIphoneX update_preApply' : 'update_preApply'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
@@ -79,41 +79,41 @@ function UpdateApply(props) {
         color='#fff'
       />
       <View className='container'>
-        <View className='main'>
+        <View className='wrapper'>
           <View className='course_wrap'>
             <View className='title_wrap'>课程信息</View>
             <View className='name'>{courseInfo.name}</View>
           </View>
-          <View className='form_wrap'>
-            <View className='title_wrap'>修改报名场次</View>
-            <View className='form_item'>
-              <View className='title'>场次</View>
-              <Picker mode="selector" className='session_picker' range={sessionArr} onChange={handlePickerChange}>
-                <View className='picker_item'>{sessionArr[sessionIndex]}</View>
-              </Picker>
-            </View>
+        </View>
+        <View className='wrapper'>
+          <View className='title_wrap'>修改报名场次</View>
+          <View className='input_wrap'>
+            <View className='title'>场次</View>
+            <Picker mode="selector" className='session_picker' range={sessionArr} onChange={handlePickerChange}>
+              <View className='picker_item'>{sessionArr[sessionIndex]}</View>
+            </Picker>
           </View>
-          <View className='session_wrap'>
-            <View className='title_wrap'>场次信息</View>
-            <View className='session_list'>
-              {(courseInfo.session ?? []).map((session, index) => (
-                <View className='session' key={session.id}>
-                  <View className='title'>第{index + 1}期</View>
-                  <View className='info_wrap'>
-                    <Text className='title'>计划人数：</Text>
-                    <Text className='content'>{session.people_limit}人</Text>
-                  </View>
-                  <View className='info_wrap'>
-                    <Text className='title'>价格：</Text>
-                    <Text className='content'>¥{session.money}</Text>
-                  </View>
-                  <View className='info_wrap'>
-                    <Text className='title'>活动时间：</Text>
-                    <Text className='content'>{new Date(session.begin_time).toLocaleDateString() + ' - ' + new Date(session.end_time).toLocaleDateString()}</Text>
-                  </View>
+        </View>
+        <View className='wrapper'>
+          <View className='title_wrap'>场次信息</View>
+          <View className='session_list'>
+            {(courseInfo.session ?? []).map((session, index) => (
+              <View className='session' key={session.id}>
+                <View className='title'>第{index + 1}期</View>
+                <View className='info_wrap'>
+                  <Text className='title'>计划人数：</Text>
+                  <Text className='content'>{session.people_limit}人</Text>
                 </View>
-              ))}
-            </View>
+                <View className='info_wrap'>
+                  <Text className='title'>价格：</Text>
+                  <Text className='content'>¥{session.money}</Text>
+                </View>
+                <View className='info_wrap'>
+                  <Text className='title'>活动时间：</Text>
+                  <Text className='content'>{new Date(session.begin_time).toLocaleDateString() + ' - ' + new Date(session.end_time).toLocaleDateString()}</Text>
+                </View>
+              </View>
+            ))}
           </View>
         </View>
       </View>

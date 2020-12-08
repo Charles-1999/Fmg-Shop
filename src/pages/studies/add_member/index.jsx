@@ -4,6 +4,7 @@ import { View, Text, Input, RadioGroup, Label, Radio, Picker } from "@tarojs/com
 import Navbar from '@components/navbar/navbar'
 
 import './index.less'
+import '../study_common.less'
 
 export default function AddMember(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
@@ -63,7 +64,7 @@ export default function AddMember(props) {
   }
 
   return (
-    <View className={'add_member'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
+    <View className={'add_member'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
@@ -74,7 +75,7 @@ export default function AddMember(props) {
         color='#fff'
       />
       <View className='container'>
-        <View className='main'>
+        <View className='wrapper'>
           <View className='input_wrap'>
             <View className='title'>姓名</View>
             <Input type="text" placeholder='与成员证件姓名一致' onBlur={(e) => setName(e.detail.value)}/>
