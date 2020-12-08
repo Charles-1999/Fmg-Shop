@@ -87,6 +87,7 @@ function Studies(props) {
         title='研学'
         backgroundColor='#2D79F7'
         color='#fff'
+        backColor='white'
       >
       </Navbar>
       {currTab == 1 ?

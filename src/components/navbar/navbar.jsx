@@ -25,7 +25,7 @@ export default class Navbar extends Component {
 
   render() {
     const { windowWidth, capsule } = this.state;
-    const { statusBarHeight, capsuleHeight, title, color, showBack, showLogo, showSearch, showTitle, backgroundColor, backgroundImageStatus, backgroundImageCapsule } = this.props;
+    const { statusBarHeight, capsuleHeight, title, color, showBack, showLogo, showSearch, showTitle, backgroundColor, backgroundImageStatus, backgroundImageCapsule, backColor } = this.props;
     return (
       <View className='navbar'>
         <View className='status' style={{ height: statusBarHeight, backgroundColor, backgroundImage: backgroundImageStatus }}></View>
@@ -36,7 +36,7 @@ export default class Navbar extends Component {
           }
           {showBack ?
             <View className='back' onClick={this.back} style={{ height: capsuleHeight, width: capsuleHeight }}>
-              <Image src={'http://qiniu.daosuan.net/picture-1604460100000'}></Image>
+              {backColor == 'black' ? <Image src={'http://qiniu.daosuan.net/picture-1604460100000'} /> : <Image src={'http://qiniu.daosuan.net/picture-1607398148000'} />}
             </View>
             : ''
           }
@@ -62,6 +62,7 @@ Navbar.defaultProps = {
   showSearch: false,
   showTitle: false,
   backType: 'back',
+  backColor: 'black',
   backgroundColor: '#e5e5e5',
   backgroundImageStatus: '',
   backgroundImageCapsule: '',

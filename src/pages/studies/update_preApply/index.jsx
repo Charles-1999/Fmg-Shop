@@ -86,6 +86,7 @@ function UpdatePreApply(props) {
         title='修改预报名信息'
         backgroundColor='#2d79f7'
         color='#fff'
+        backColor='white'
       />
       <View className='container'>
         <View className='wrapper'>

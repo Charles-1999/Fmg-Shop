@@ -63,6 +63,7 @@ export default function MemberList(props) {
         title='成员选择'
         backgroundColor='#2D79F7'
         color='#fff'
+        backColor='white'
       />
       <View className='container'>
         <View className='btn_wrap wrapper'>

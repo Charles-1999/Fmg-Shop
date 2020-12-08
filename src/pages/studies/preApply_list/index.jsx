@@ -150,6 +150,7 @@ function PreApplyList(props) {
         color='#fff'
         backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
+        backColor='white'
       />
       <View className='tab_bar'>
         <View className={currTab == 1 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 1)}>预报名</View>

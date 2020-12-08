@@ -77,6 +77,7 @@ function UpdateApply(props) {
         backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
         color='#fff'
+        backColor='white'
       />
       <View className='container'>
         <View className='wrapper'>

@@ -87,6 +87,7 @@ export default function UpdataMember(props) {
         title='更新成员信息'
         backgroundColor='#2D79F7'
         color='#fff'
+        backColor='white'
       />
       <View className='container'>
         <View className='wrapper'>

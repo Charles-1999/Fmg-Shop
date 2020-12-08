@@ -73,6 +73,7 @@ export default function AddMember(props) {
         title='添加成员'
         backgroundColor='#2d79f8'
         color='#fff'
+        backColor='white'
       />
       <View className='container'>
         <View className='wrapper'>

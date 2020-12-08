@@ -124,6 +124,7 @@ function Apply(props) {
         title='报名'
         backgroundColor='#2D79F7'
         color='#fff'
+        backColor='white'
       />
       <View className='container'>
         <View className='course_info'>

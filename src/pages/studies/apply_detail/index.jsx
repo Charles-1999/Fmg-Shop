@@ -45,6 +45,7 @@ function ApplyDetail(props) {
         title='报名详情'
         backgroundColor='#2D79F7'
         color='#fff'
+        backColor='white'
       />
       <View className='container'>
         <View className='course_info'>

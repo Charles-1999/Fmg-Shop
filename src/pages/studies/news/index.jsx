@@ -31,14 +31,15 @@ function News(props) {
         color='#fff'
         backgroundImageStatus='linear-gradient(90deg, #2d79f8, #4279ea)'
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
+        backColor='white'
       >
       </Navbar>
-      <View className='container'>
+      <View className='container_news'>
         <View className='title_wrap'>
           <View className='title'>{data.title}</View>
           <View className='info'>
             <View className='time'>发布时间：{new Date(data.create_time*1000).toLocaleString()}</View>
-            <View className='institution'>标签：{}</View>
+            {/* <View className='institution'>标签：{}</View> */}
           </View>
         </View>
         <View className='content'>
