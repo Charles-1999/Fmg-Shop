@@ -33,6 +33,9 @@ function Apply(props) {
     const currPreApply = dataList.find(item => item.id == pid)
     setCurrPreApply(currPreApply)
 
+    // 设置联系人手机号码
+    setPhone(currPreApply.phone)
+
     // 设置场次在场次列表中的索引
     const sessionIndex = currCourse.session.findIndex(item => item.id === currPreApply.session_id)
     setSessionIndex(sessionIndex)
@@ -97,6 +100,11 @@ function Apply(props) {
         title: '报名成功！',
         icon: 'success'
       })
+      setTimeout(() => {
+        Taro.redirectTo({
+          url: '/pages/studies/preApply_list/index?status=' + 2
+        })
+      }, 2000)
     }).catch(err => {
       Taro.showToast({
         title: `报名失败，请重新尝试。(错误码${err.statusCode})`,
@@ -106,7 +114,7 @@ function Apply(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
+    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
@@ -160,7 +168,7 @@ function Apply(props) {
           </View>
           <View className='input_wrap'>
             <View className='title'>手机号码</View>
-            <Input type="number" placeholder='联系人手机号码' onBlur={(e) => setPhone(e.detail.value)} />
+            <Input type="number" value={phone} placeholder='联系人手机号码' onBlur={(e) => setPhone(e.detail.value)} />
           </View>
         </View>
       </View>

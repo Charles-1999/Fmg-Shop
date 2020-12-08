@@ -76,7 +76,7 @@ function UpdatePreApply(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX update_preApply' : 'update_preApply'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
+    <View className={isIphoneX ? 'isIphoneX update_preApply' : 'update_preApply'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
@@ -87,7 +87,6 @@ function UpdatePreApply(props) {
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
         color='#fff'
       />
-      <View className='bg'></View>
       <View className='container'>
         <View className='main'>
           <View className='form_wrap'>
@@ -123,11 +122,11 @@ function UpdatePreApply(props) {
                   <View className='title'>第{index + 1}期</View>
                   <View className='info_wrap'>
                     <Text className='title'>计划人数：</Text>
-                    <Text className='content'>{session.people_limit}</Text>
+                    <Text className='content'>{session.people_limit}人</Text>
                   </View>
                   <View className='info_wrap'>
                     <Text className='title'>价格：</Text>
-                    <Text className='content'>{session.money}</Text>
+                    <Text className='content'>¥{session.money}</Text>
                   </View>
                   <View className='info_wrap'>
                     <Text className='title'>活动时间：</Text>

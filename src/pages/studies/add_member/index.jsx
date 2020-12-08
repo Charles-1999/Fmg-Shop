@@ -63,7 +63,7 @@ export default function AddMember(props) {
   }
 
   return (
-    <View className={'add_member'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
+    <View className={'add_member'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
@@ -73,7 +73,6 @@ export default function AddMember(props) {
         backgroundColor='#2d79f8'
         color='#fff'
       />
-      <View className="bg"></View>
       <View className='container'>
         <View className='main'>
           <View className='input_wrap'>

@@ -14,56 +14,6 @@ function Course(props) {
 
   const [currTab, setCurrTab] = useState(0)
   const [courseInfo, setCourseInfo] = useState({})
-  const data = {
-    address: {
-      city_id: 170,
-      city_name: "武汉市",
-      country_id: 1,
-      country_name: "中国",
-      details: "汇源农谷体验园",
-      district_id: 0,
-      district_name: "",
-      id: 13,
-      province_id: 17,
-      province_name: "湖北省",
-      zip_code: ""
-    },
-    attribute: 0,
-    author_id: 4,
-    course_type: 4,
-    cover: ["picture-1603293284000"],
-    description: "打造自然生态课堂，深入了解湖北历史、地理和人文背景，在细节中学习，反思自我，完善人格。",
-    details: "<p>1、走进基地、疏导研学课程目标，开营仪式，军事训练、队列训练、体验军旅生活，学会自强自立。</p><p>2、读万卷书，行万里路。少年儿童亲身体验科学的变化无穷和创造的无限乐趣，激发探索科学奥秘的热情，是课堂教育的补充，培养科学探索的兴趣，提供科学实践的机会。</p><p>3、打造自然生态课堂，深入了解湖北历史、地理和人文背景，在细节中学习，反思自我，完善人格。</p>",
-    end_time: 1592582400,
-    enroll_additional: "",
-    id: 27,
-    institution_id: 1,
-    notice: '<p><span style="color: rgb(51, 51, 51);">1、出发前，相关人员沟通出行计划。</span></p><p><span style="color: rgb(51, 51, 51);">2、提前15天报名。&nbsp;（每批次200人左右，每车45人左右）</span></p><p><span style="color: rgb(51, 51, 51);">3、实际行程线路安排，可能根据天气等原因有所调整。</span></p><p><span style="color: rgb(51, 51, 51);">4、安全提示，不要到有危险的地区写生或攀爬；同时注意不要随意去动摆设的物品，以防意外损坏。</span></p>',
-    price: 1480,
-    resources: [],
-    scheduling: '<p><br></p><p><br></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb7faaa9086.jpg" alt="1.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb801618786.jpg" alt="汇源农谷1.jpg"></p><p><br></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb80202bba9.jpg" alt="汇源农谷2.jpg"></p><p><br></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb80251cb90.jpg" alt="汇源农谷3.jpg"></p><p><br></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb802c158ae.jpg" alt="汇源农谷4.jpg"></p><p><br></p><p><br></p><p><br></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb8053c796d.jpg" alt="2.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb80834354e.jpg" alt="大口国家森林公园1.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb80885a704.jpg" alt="大口2.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb808c4aad5.jpg" alt="大口3.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb809072d71.jpg" alt="大口4.jpg"></p><p><br></p><p><br></p><p><br></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb80b10b60b.jpg" alt="3.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb80b5bacd8.jpg" alt="3.1.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb810ab8172.jpg" alt="明显陵1.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb811036e19.jpg" alt="明显陵2.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb811958b54.jpg" alt="莫愁村1.jpg"></p><p><img style="width:100%" src="http://www.yxwcn.cn/d/file/content/2019/05/5cdb8120d73f9.jpg" alt="莫愁村2.jpg"></p>',
-    start_time: 1592064000,
-    status: 1,
-    sub_title: "亲近自然 快乐成长",
-    suitable_for_crowd: "不限",
-    tag: [{
-      create_time: 1589378596,
-      id: 1,
-      name: "历史",
-    },
-    {
-      create_time: 1589434450,
-      id: 9,
-      name: "社会实践",
-    },
-    {
-      create_time: 1591019209,
-      id: 13,
-      name: "全真课堂",
-    }],
-    title: "学生“自然课堂”研学实践活动",
-    travel_days: 3
-  }
   const [content, setContent] = useState(courseInfo.detail)
   const [cid, setCid] = useState(0)
 

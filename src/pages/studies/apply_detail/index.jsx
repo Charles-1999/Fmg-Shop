@@ -80,12 +80,23 @@ function ApplyDetail(props) {
           </View>
           : null
         }
-        {apply ?
+        {apply && apply.pre_apply ?
           <View className='contact wraper'>
             <View className='title_wrap'>联系人信息</View>
             <View className='contact_wrap'>
               <View className='info_wrap'>
                 <View className='name'><Text>{apply.pre_apply.name}</Text><Text>{apply.pre_apply.phone}</Text></View>
+              </View>
+            </View>
+          </View>
+          : null
+        }
+        {apply && apply.name ?
+          <View className='contact wraper'>
+            <View className='title_wrap'>联系人信息</View>
+            <View className='contact_wrap'>
+              <View className='info_wrap'>
+                <View className='name'><Text>{apply.name}</Text><Text>{apply.phone}</Text></View>
               </View>
             </View>
           </View>
@@ -113,7 +124,14 @@ function ApplyDetail(props) {
         }
       </View>
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
-        <View className='bar_item' onClick={() => { }}>支付</View>
+        {apply && apply.status_text == '预报名'
+          ? <View className='bar_item' onClick={() => {Taro.navigateTo({url: `/pages/studies/apply/index?pid=${apply.id}&cid=${apply.course_id}`})}}>报名</View>
+          : null
+        }
+        {apply && apply.status_text == '未支付'
+          ? <View className='bar_item' onClick={() => { }}>支付</View>
+          : null
+        }
       </View>
     </View>
   )

@@ -77,7 +77,7 @@ export default function UpdataMember(props) {
   }
 
   return (
-    <View className={'updata_member'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
+    <View className={'updata_member'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}

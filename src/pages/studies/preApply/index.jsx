@@ -72,7 +72,7 @@ function PreApply(props) {
   }
 
   return (
-    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
+    <View className={isIphoneX ? 'isIphoneX apply' : 'apply'} style={{ marginTop: statusBarHeight + capsuleHeight, height: `calc(100vh - ${statusBarHeight}px - ${capsuleHeight}px)` }}>
       <Navbar
         statusBarHeight={statusBarHeight}
         capsuleHeight={capsuleHeight}
@@ -83,7 +83,6 @@ function PreApply(props) {
         backgroundImageCapsule='linear-gradient(90deg, #2d79f8, #4279ea)'
         color='#fff'
       />
-      <View className='bg'></View>
       <View className='container'>
         <View className='main'>
           <View className='form_wrap'>
