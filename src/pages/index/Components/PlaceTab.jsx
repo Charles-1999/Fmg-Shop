@@ -16,7 +16,7 @@ class PlaceTab extends Component {
     this.state={
       currentId: 0,
       placeList: [],
-     
+
     }
   }
   componentDidMount(){
@@ -32,7 +32,7 @@ class PlaceTab extends Component {
     })
     if(e==5){
       Taro.navigateTo({
-        url: `/pages/studies/index`,
+        url: `/pages/studies/index/index`,
       });
     }
     else{
@@ -40,12 +40,12 @@ class PlaceTab extends Component {
         url: `/pages/index/placeGoodsList?id=${this.state.currentId}`,
       });
     }
-   
+
   }
 
   render () {
-   
- 
+
+
     return (
       <View className='place-tab-row'>
       {this.state.placeList.map(item => (
@@ -58,7 +58,7 @@ class PlaceTab extends Component {
             </View>
         </View>
       ))}
-       
+
       </View>
     )
   }
