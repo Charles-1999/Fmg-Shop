@@ -4,6 +4,7 @@ import { View, Text, Image, Input, Picker } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
 import { connect } from "react-redux"
 import { timeFormat } from '@utils/time'
+import { isValidPhone } from '@utils/check'
 
 import './index.less'
 import '../study_common.less'
@@ -67,6 +68,15 @@ function Apply(props) {
     Taro.setStorageSync('memberList', tempList)
   }
 
+  /* 输入手机号码 */
+  function checkPhone(phone) {
+    if (isValidPhone(phone)) setPhone(phone)
+    else Taro.showToast({
+      title: '请填写正确的手机号码',
+      icon: 'none'
+    })
+  }
+
   /* 去支付 */
   function checkOut() {
     if (memberList.length == 0) {
@@ -126,7 +136,7 @@ function Apply(props) {
         color='#fff'
         backColor='white'
       />
-      <View className='container'>
+      <View className='container_study'>
         <View className='course_info'>
           <Text className='name'>{currCourse.name}</Text>
           <View className='time'>
@@ -170,7 +180,7 @@ function Apply(props) {
           </View>
           <View className='input_wrap'>
             <View className='title'>手机号码</View>
-            <Input type="number" value={phone} placeholder='联系人手机号码' onBlur={(e) => setPhone(e.detail.value)} />
+            <Input type="number" value={phone} placeholder='联系人手机号码' onBlur={(e) => checkPhone(e.detail.value)} />
           </View>
         </View>
       </View>

@@ -2,6 +2,7 @@ import Taro, { getCurrentInstance } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Input, RadioGroup, Label, Radio, Picker } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
+import { isValidPhone } from '@utils/check'
 
 import './index.less'
 import '../study_common.less'
@@ -63,6 +64,15 @@ export default function AddMember(props) {
     })
   }
 
+  /* 输入手机号码 */
+  function checkPhone(phone) {
+    if (isValidPhone(phone)) setPhone(phone)
+    else Taro.showToast({
+      title: '请填写正确的手机号码',
+      icon: 'none'
+    })
+  }
+
   return (
     <View className={'add_member'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
@@ -75,7 +85,7 @@ export default function AddMember(props) {
         color='#fff'
         backColor='white'
       />
-      <View className='container'>
+      <View className='container_study'>
         <View className='wrapper'>
           <View className='input_wrap'>
             <View className='title'>姓名</View>
@@ -109,7 +119,7 @@ export default function AddMember(props) {
           </View>
           <View className='input_wrap'>
             <View className='title'>手机号码</View>
-            <Input type="number" placeholder='成员本人手机号码' onBlur={(e) => setPhone(e.detail.value)}/>
+            <Input type="number" placeholder='成员本人手机号码' onBlur={(e) => checkPhone(e.detail.value)}/>
           </View>
           <View className='btn_wrap'>
             <View className='btn' onClick={comfirm.bind(this)}>确认</View>
