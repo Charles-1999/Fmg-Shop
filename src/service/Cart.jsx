@@ -3,10 +3,10 @@ import request from '@utils/request'
 
 /* 创建购物车 */
 export const createCart = params => {
-  return request(`/car/info/${params.currGoods.id}`, {
+  return request(`/car/info/${params.goods_id}`, {
     body: {
       goods_count: params.count,
-      goods_specification_id: params.currGoods.specification[params.spec_index].id,
+      goods_specification_id: params.goods_specification_id,
       delivery_kind: params.delivery_kind
     },
     method: 'POST'
@@ -22,7 +22,7 @@ export const getCart = params => {
 
 /* 更新购物车 */
 export const updateCart = params => {
-  return request(`/car/info/put/${params.id}`, {
+  return request(`/car/info/put/${params.cart_id}`, {
     body: {
       goods_count: params.goods_count,
       goods_id: params.goods_id,
