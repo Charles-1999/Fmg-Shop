@@ -29,7 +29,7 @@ class Index extends Component {
       kindList:[],
       slideshowList:[],
       goodsSaleTopList:[],
-
+      input_Val: '', // 搜索内容
     }
   }
   async componentDidMount(){
@@ -86,8 +86,16 @@ class Index extends Component {
     })
   }
 
+  /* 搜索 */
+  search(e) {
+    Taro.navigateTo({
+      url: `/pages/goods_list/index?keyword=${e.detail.value}`
+    })
+    this.setState({ input_Val: '' });
+  }
+
   render () {
-    const {statusBarHeight, capsule} = this.state;
+    const {statusBarHeight, capsule, input_Val} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
     return (
       <View className='index' >
@@ -114,7 +122,7 @@ class Index extends Component {
           </View> */}
           <View className='index-search-wrap'>
             <View className='searchBar'>
-            <Input placeholder='搜索'  maxLength='50' />
+            <Input placeholder='搜索'  maxLength='50' confirmType='search' onConfirm={this.search.bind(this)} value={input_Val} />
             <Image className='index-search' src='http://qiniu.daosuan.net/icon-1598881971000'  />
           </View>
           </View>
