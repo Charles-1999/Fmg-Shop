@@ -47,7 +47,7 @@ function ApplyDetail(props) {
         color='#fff'
         backColor='white'
       />
-      <View className='container'>
+      <View className='container_study'>
         <View className='course_info'>
           <Text className='name'>{currCourse.name}</Text>
           <View className='time'>
