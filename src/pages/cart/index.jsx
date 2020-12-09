@@ -278,7 +278,7 @@ class CartListView extends Component {
       await this.props.dispatch({
         type: 'cart/updateCart',
         payload: {
-          id: currCart.id,
+          cart_id: currCart.id,
           goods_count: currCart.goods_count,
           goods_id: currCart.goods_id,
           goods_specification_id: currCart.goods_specification_id,

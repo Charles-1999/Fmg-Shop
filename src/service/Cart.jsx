@@ -22,7 +22,7 @@ export const getCart = params => {
 
 /* 更新购物车 */
 export const updateCart = params => {
-  return request(`/car/info/put/${params.id}`, {
+  return request(`/car/info/put/${params.cart_id}`, {
     body: {
       goods_count: params.goods_count,
       goods_id: params.goods_id,
