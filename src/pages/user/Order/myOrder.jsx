@@ -12,10 +12,9 @@ import './myOrder.scss'
 
 import ListGood from './list_good'
 
-//要想下拉加载就不能用connect dva
-// @connect(({ order, goods }) => ({
-//   ...order,...goods,
-// }))
+@connect(({ order, goods }) => ({
+  ...order,...goods,
+}))
 class MyOrderList extends Component {
   state = {
     statusBarHeight: getGlobalData('statusBarHeight'),
@@ -276,6 +275,7 @@ class MyOrderList extends Component {
     });
   } 
 
+
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
@@ -323,7 +323,8 @@ class MyOrderList extends Component {
                         {item.order_status == 4 ? <View>待评价</View> : ''}
                         {item.order_status == 5 ? <View>订单已完成</View> : ''}
                         {item.order_status == 6 ? <View>订单已取消</View> : ''}
-                        {item.order_status == 7 ? <View>申请中</View> : ''}
+                        {item.order_status == 7 ? <View>售后申请中</View> : ''}
+                        {item.order_status == 8 ? <View>退款成功</View> : ''}
                       </View>
                     </View>
                                  

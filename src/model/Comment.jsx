@@ -75,7 +75,16 @@ export default {
           badComments
         }
       })
-    }
+    },
+    //获取用户评论
+    * getUserComment({ payload }, { call, put }) {
+      const res = yield call(getUserComment, payload);
+      yield put({
+        type: 'save',
+        payload:res,
+      });
+    },
+
   },
   reducers: {
     save(state, { payload }) {

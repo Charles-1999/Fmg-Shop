@@ -15,7 +15,9 @@ class ListGood extends Component {
     price:0,
     quality:0,
     message:'',
+    is_after_serve:0,
     isShowComment:0,
+    isShowSecondComment:0,
   }
   componentDidMount(){
     const {goodId,speId,price,quality,message,goodsInfo,IsRefund,status,detailID} = this.props;
@@ -24,6 +26,7 @@ class ListGood extends Component {
       const specification_list = get(data,'specification',[])
       const spe_index = specification_list.findIndex(item => item.id == speId);
       const spe = get(specification_list[spe_index],'specification') 
+      const is_after_serve = this.props.isShowRefund;
       this.setState({
         goodInfo: data,
         price:price,
@@ -32,12 +35,18 @@ class ListGood extends Component {
         message:message,
         IsRefund:IsRefund,
         status:status,
+        is_after_serve:is_after_serve,
       })
     }
 
     if(this.props.isShowComment && this.props.status == 4){
       this.setState({
         isShowComment: true,
+      })
+    }
+    else if(this.props.isShowComment && this.props.status == 5){
+      this.setState({
+        isShowSecondComment: true,
       })
     }
   }
@@ -82,15 +91,20 @@ class ListGood extends Component {
           {this.state.isShowComment && this.props.is_comment==0 ?
             <View className='commit' onClick={this.toComment.bind(this,0)}>我要评价</View>: ''
           }
-          {this.state.isShowComment && this.props.is_comment==1 ?
+          {this.state.isShowSecondComment && this.props.is_comment==1 ?
             <View className='secont-commit' onClick={this.toComment.bind(this,1)}>可追评</View>: ''
           }
-          {this.state.IsRefund && this.state.status==5? 
+          {this.state.IsRefund && this.state.status==5  ? 
             <View className='after-sale' onClick={this.toSelect.bind(this)}>申请售后</View>: ''  
           }
           {this.state.IsRefund && (this.state.status==2||this.state.status==3||this.state.status==4)? 
             <View className='refund' onClick={this.toSelect.bind(this)}>退款</View>: ''  
           }
+          {
+            this.state.IsRefund &&  !this.state.is_after_serve  && this.state.status==7? 
+            <View className='after-sale' onClick={this.toSelect.bind(this)}>申请售后</View>: ''  
+          }
+   
 
         
         </View>

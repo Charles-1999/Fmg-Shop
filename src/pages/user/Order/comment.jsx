@@ -125,13 +125,13 @@ class Comment extends Component {
       })
     }
     else if(this.state.status==1){
-      await request(`/comment/info/${this.state.good_id}/${this.state.oId}`, {
-        method: 'POST',
+      await request(`/comment/info/put/${this.state.dId}`, {
+        method: 'PUT',
         body:{
+          // content:'',
           second_content:this.state.content,
           second_pictures:this.state.pictures,
         }
-
       }).then(async(res)=>{
         if(res){
           Taro.showToast({
@@ -449,8 +449,6 @@ class Comment extends Component {
             发表追评
           </View>
         }
-      
-
         </View>
 
       </View>

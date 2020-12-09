@@ -62,3 +62,11 @@ export const exchangeOrder = params => {
     method: 'POST'
   })
 }
+
+//获取订单个数
+export const getOrderSum = params => {
+  return request(`/_order/list/sum`, {
+    body: params,
+    method: 'GET'
+  })
+}

@@ -163,7 +163,8 @@ class OrderDetail extends Component {
               {get(this.state.order_info,'order_status')  == 4 ? <View>·待评价</View> : ''}
               {get(this.state.order_info,'order_status')  == 5 ? <View>·订单已完成</View> : ''}
               {get(this.state.order_info,'order_status')  == 6 ? <View>·订单已取消</View> : ''}
-              {get(this.state.order_info,'order_status')  == 7 ? <View>·申请中</View> : ''}
+              {get(this.state.order_info,'order_status')  == 7 ? <View>·售后申请中</View> : ''}
+              {get(this.state.order_info,'order_status')  == 8 ? <View>·退款成功</View> : ''}
             </View>
           </View>
           {get(this.state.deliveryInfo,'data') == null? 
@@ -212,6 +213,7 @@ class OrderDetail extends Component {
                   detailID={get(item,'id')}
                   oId={this.state.order_id}
                   ooId={this.state.test_order_id}
+                  isShowRefund={get(item,'is_after_serve','')}
                   IsRefund
                 /> 
               </View>

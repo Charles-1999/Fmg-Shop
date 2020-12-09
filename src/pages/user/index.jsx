@@ -42,66 +42,16 @@ class UserList extends Component {
   async getOrderCode(){
     console.log(this.state.uid)
     await this.props.dispatch({
-      type: 'order/getOrderList',
-      payload: {
-        account_id:this.state.uid,
-      }
+      type: 'order/getOrderSum',
     });
-    const total = get(this.props.orderList,'total');
-    await this.props.dispatch({
-      type: 'order/getOrderList',
-      payload: {
-        limit:total,
-        account_id:this.state.uid,
-        status: 1,
-      }
-    });
+    const orderListSum = this.props.orderListSum
+    console.log(orderListSum)
     this.setState({
-      code1: this.props.orderList.total
-    })
-    await this.props.dispatch({
-      type: 'order/getOrderList',
-      payload: {
-        limit:total,
-        account_id:this.state.uid,
-        status: 2,
-      }
-    });
-    this.setState({
-      code2: this.props.orderList.total
-    })
-    await this.props.dispatch({
-      type: 'order/getOrderList',
-      payload: {
-        limit:total,
-        account_id:this.state.uid,
-        status: 3,
-      }
-    });
-    this.setState({
-      code3: this.props.orderList.total
-    })
-    await this.props.dispatch({
-      type: 'order/getOrderList',
-      payload: {
-        limit:total,
-        account_id:this.state.uid,
-        status: 4,
-      }
-    });
-    this.setState({
-      code4: this.props.orderList.total
-    })
-    await this.props.dispatch({
-      type: 'order/getOrderList',
-      payload: {
-        limit:total,
-        account_id:this.state.uid,
-        status: 7,
-      }
-    });
-    this.setState({
-      code5: this.props.orderList.total
+      code1:orderListSum.submit,
+      code2:orderListSum.wf_shipped,
+      code3:orderListSum.tb_shipped,
+      code4:orderListSum.received,
+      code5:orderListSum.after_sales,
     })
   }
 

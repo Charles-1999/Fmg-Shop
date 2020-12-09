@@ -14,10 +14,11 @@ export const getGoodsComments = gid => {
   })
 }
 
-//退换货
+//获取用户评论
 export const getUserComment = params => {
-  return request(`/comment/info/${params.uid}`, {
-    body: params,
+  console.log(params)
+  return request(`/comment/info/get_by_user`, {
+    body: {},
     method: 'GET'
   })
 }

@@ -107,14 +107,14 @@ class RefundSelect extends Component {
             </View>
             <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
           </View>
-          <View className='item-wrap' onClick={this.toDetail.bind(this,4)}>
+          {/* <View className='item-wrap' onClick={this.toDetail.bind(this,4)}>
             <Image src='http://qiniu.daosuan.net/picture-1606630723000 ' className='icon' />
             <View className='info'>
               <View className='title'>我要换货</View>
               <View className='desc'>已收到货，需要更换已收到的货物</View>
             </View>
             <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
-          </View>
+          </View> */}
          
         </View>
       </View>

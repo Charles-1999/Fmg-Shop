@@ -74,7 +74,7 @@ class SaleTop extends Component {
                 <Image 
                   src={get(goodsSaleTopList[2],'cover','')}
                   className='pic-3' 
-                  onClick={this.toDetail.bind(this,get(goodsSaleTopList[3],'id',''))} 
+                  onClick={this.toDetail.bind(this,get(goodsSaleTopList[2],'id',''))} 
                 />
               </View>  
             </View>

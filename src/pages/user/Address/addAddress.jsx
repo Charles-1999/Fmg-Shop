@@ -66,29 +66,48 @@ class AddAddressList extends Component {
   }
 
   handleOk = () => {
-    if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
+    if (this.state.name == "")  {
       Taro.showToast({
-        title: '手机号格式错误，请重新输入',
+        title: '收货人姓名不能为空，请输入',
+        icon: 'none'
+      })
+    }
+    else if(this.state.phone == ""){
+      Taro.showToast({
+        title: '手机号不能为空，请输入',
+        icon: 'none'
+      })
+    }
+    else if(this.state.detail == ""){
+      Taro.showToast({
+        title: '地址详情不能为空，请输入',
+        icon: 'none'
+      })
+    }
+    else if(this.state.provinceCode==0 || this.state.cityCode==0){
+      Taro.showToast({
+        title: '地址不能为空，请选择',
         icon: 'none'
       })
     }
     else{
-    this.props.dispatch({
-      type: 'address/setAddressInfo',
-      payload: {
-        province_id: this.state.provinceCode,
-        city_id: this.state.cityCode,
-        country_id: 1,
-        district_id: this.state.areaCode,
-        detail: this.state.detail,
-        name:this.state.name,
-        phone: this.state.phone,
-        uid: Taro.getStorageSync('userId'),
-      }
-    }).then(()=>{
-      Taro.navigateBack();
-    })
-  }
+      this.props.dispatch({
+        type: 'address/setAddressInfo',
+        payload: {
+          province_id: this.state.provinceCode,
+          city_id: this.state.cityCode,
+          country_id: 1,
+          district_id: this.state.areaCode,
+          detail: this.state.detail,
+          name:this.state.name,
+          phone: this.state.phone,
+          uid: Taro.getStorageSync('userId'),
+        }
+      }).then(()=>{
+        Taro.navigateBack();
+      })
+    }
+  
 }
   callback =(pName, pCode, cName, cCode, aName, aCode )=> {
     //this.getCityStore(cCode, this.state.longitudeLatitude);

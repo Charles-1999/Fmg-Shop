@@ -7,7 +7,7 @@
  * @FilePath: /凤鸣谷商城/src/model/Order.js
  */
 import { get } from 'lodash';
-import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, getPrice, exchangeOrder } from '../service/Order';
+import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, getPrice, exchangeOrder, getOrderSum} from '../service/Order';
 
 
 export default {
@@ -18,6 +18,7 @@ export default {
     userOrderInfo:[],
     ids:[],
     exchangeId:0,
+    orderListSum:{},
   },
   effects: {
     //获取订单列表-------------
@@ -82,7 +83,16 @@ export default {
           exchangeId:res,
         },
       }); 
-
+    },
+    //获取订单个数
+    * getOrderSum({ payload }, { call, put }) {
+      const res = yield call(getOrderSum, payload);
+      yield put({
+        type: 'save',
+        payload:{
+          orderListSum:res
+        }
+      });
     },
 
   },
