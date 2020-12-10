@@ -90,7 +90,7 @@ class OrderDetail extends Component {
   async getDeliveryInfo(){
     const info = await request('/delivery/info/post', {
       body: {
-        "delivry_corp_name":"zhongtong",
+        "delivry_corp_name":get(this.state.order_info,'tracking_company',''),
         "delivry_sheet_code":get(this.state.order_info,'tracking_id','') 
       },
       method: 'POST'
@@ -98,22 +98,40 @@ class OrderDetail extends Component {
     this.setState({
       deliveryInfo:get(info,'info'),
     })
-    console.log(get(this.state.order_info,'tracking_id','' ))
+    console.log(this.state.deliveryInfo)
     if(get(this.state.order_info,'tracking_id','' ) !== '0' && get(this.state.deliveryInfo,'data')!== null){
       this.setState({
         delivery_time:get(get(this.state.deliveryInfo,'data',[])[0],'ftime',''),
       })
-      const delivery_status = get(this.state.deliveryInfo,'status');
+      const delivery_status = get(this.state.deliveryInfo,'state');
       console.log(delivery_status)
       switch(delivery_status){
-        case '99':
-          this.setState({
-            status:'订单已取消'
-          })
-        case '200':
+        //0在途，1揽收，2疑难，3签收，4退签，5派件，6退回，7转单，10待清关，11清关中，12已清关，13清关异常，14收件人拒签等13个状态
+        case '0':
           this.setState({
             status:'运输中'
+          })
+          break;
+        case '1':
+          this.setState({
+            status:'揽收中'
           }) 
+          break;
+        case '3':
+          this.setState({
+            status:'已签收'
+          }) 
+          break;
+        case '5':
+          this.setState({
+            status:'派件中'
+          }) 
+          break;
+        case '6':
+          this.setState({
+            status:'快递已退回'
+          }) 
+          break;
         
       }
     }

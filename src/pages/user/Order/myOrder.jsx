@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 //import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import Taro, {connectSocket, Current} from '@tarojs/taro'; 
+import Taro, {Current} from '@tarojs/taro'; 
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import Loading from '../../../components/Loading'
@@ -122,10 +122,7 @@ class MyOrderList extends Component {
   }
   /* 统一下单 */
   pay = async (order_id) => {
-    const { order_price } = this.state;
     const sysInfo = Taro.getStorageSync('sysInfo');
-    const open_id = Taro.getStorageSync('open_id');
-    const userId = Taro.getStorageSync('userId');
     try {
       const res_pay = await request(`/pay/unified/${order_id}`, {
         body: {
@@ -398,8 +395,6 @@ class MyOrderList extends Component {
                         </View> : ''}
                       {item.order_status == 4  ? 
                         <View style='display:inline-flex'>
-                          {/* <View className='commit' onClick={this.addCart.bind(this,item)}>加入购物车</View> */}
-                        {/* <View className='commit' onClick={this.toComment.bind(this,item.id)}>我要评价</View> */}
                         </View> : ''}
                       {item.order_status == 5  ? 
                         <View style='display:inline-flex'> 
@@ -410,7 +405,6 @@ class MyOrderList extends Component {
                         <View style='display:inline-flex'> 
                           <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
                           <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
-                        {/* <View className='pay' onClick={this.changeStatus.bind(this,item.id,get(item,'order_id'))}>修改订单状态</View> */}
                         </View> : ''}
                     </View>
                     <View style='clear:both'></View>

@@ -39,10 +39,11 @@ class deliveryDetail extends Component {
   }
   /**获取快递信息 */
   async getDeliveryInfo(){
+    console.log(this.state.orderInfo)
     console.log(get(this.state.orderInfo,'tracking_id',''))
     const info = await request('/delivery/info/post', {
       body: {
-        "delivry_corp_name":"zhongtong",
+        "delivry_corp_name":get(this.state.orderInfo,'tracking_company',''),
         "delivry_sheet_code":get(this.state.orderInfo,'tracking_id','')   
       },
       method: 'POST'
@@ -51,11 +52,6 @@ class deliveryDetail extends Component {
       deliveryInfo:get(info,'info'),
     })
     console.log(this.state.deliveryInfo)
-    if(this.state.deliveryInfo.status == ""){
-      this.setState({
-        isGetMessage:false
-      })
-    }
   }
   /**获取订单信息 */
   async getOrderInfo(){
@@ -97,7 +93,6 @@ class deliveryDetail extends Component {
           showBack
           title='物流详情'
         ></Navbar>
-        {this.state.isGetMessage?
         <view class='g_con'>
         {/* <view class='topExpress'>
           <view class='topExpress-left'>
@@ -111,7 +106,7 @@ class deliveryDetail extends Component {
         </view> */}
         <view class='topExpress-info'>
           <view class='topExpress-name'>快递公司：{get(this.state.deliveryNameList.filter(item => item.code == get(this.state.deliveryInfo,'com'))[0],'title')}</view>
-          <view class='topExpress-code'>运单号：{get(this.state.deliveryInfo,'nu')}</view>
+          <view class='topExpress-code'>运单号：{get(this.state.orderInfo,'tracking_id','')}</view>
           {/* <view class='topExpress-right-bottom'>官方电话 95554 ></view> */}
         </view>
         {/* <!-- 物流时间轴 --> */}
@@ -138,62 +133,68 @@ class deliveryDetail extends Component {
          
 
           {/* <!-- 单个物流记录点时间轴：已经过去的物流状态 --> */}
-          {get(this.state.deliveryInfo,'data',[]).map((item,index)=>(
-            <View  key={index} >
-              {index == 0 ? 
-               <view class='expressRecord-single-close'>
+          {get(this.state.deliveryInfo,'data',[])?
+            <View>
+                {get(this.state.deliveryInfo,'data',[]).map((item,index)=>(
+                <View  key={index} >
+                  {index == 0 ? 
+                  <view class='expressRecord-single-close'>
 
-               {/* <!-- 左边子容器 --> */}
-               <view class='expressRecord-single-noReach-online-top-close'>
-                 {/* <!-- 正在进行的时间轴上半个时间线 --> */}
-                 <view class='online-top-closing'></view>
-                 {/* <!-- 正在进行的时间轴点 --> */}
-                 <view class='dot-closing'></view>
-                 {/* <!-- 正在进行的时间轴下半个时间线 --> */}
-                 <view class='online-bottom'></view>
-               </view>
- 
-               {/* <!-- 右边子容器 --> */}
-               <view class='expressRecord-text'>
-                 <view class='expressRecord-statusing'></view>
-                 <view class='expressRecord-status-addressing'>{get(item,'context')}</view>
-               </view>
- 
-               {/* <!-- 相对父级容器绝对定位的日期 --> */}
-               <view class='expressRecord-dating'>
-                 <view class='expressRecord-date-text'>
-                  {get(item,'ftime').substring(5,10)}
-                 </view>
-                 <view class='expressRecord-date-time'>
-                  {get(item,'ftime').substring(10,16)}
-                 </view>
-               </view>
-              </view>:
-              <view class='expressRecord-single-close'>
-              <view class='expressRecord-single-noReach-online-top-close'>
-                <view class='online-top-close'></view>
-                <view class='dot-close'></view>
-                <view class='online-bottom'></view>
-              </view>
+                  {/* <!-- 左边子容器 --> */}
+                  <view class='expressRecord-single-noReach-online-top-close'>
+                    {/* <!-- 正在进行的时间轴上半个时间线 --> */}
+                    <view class='online-top-closing'></view>
+                    {/* <!-- 正在进行的时间轴点 --> */}
+                    <view class='dot-closing'></view>
+                    {/* <!-- 正在进行的时间轴下半个时间线 --> */}
+                    <view class='online-bottom'></view>
+                  </view>
+    
+                  {/* <!-- 右边子容器 --> */}
+                  <view class='expressRecord-text'>
+                    <view class='expressRecord-statusing'></view>
+                    <view class='expressRecord-status-addressing'>{get(item,'context')}</view>
+                  </view>
+    
+                  {/* <!-- 相对父级容器绝对定位的日期 --> */}
+                  <view class='expressRecord-dating'>
+                    <view class='expressRecord-date-text'>
+                      {get(item,'ftime').substring(5,10)}
+                    </view>
+                    <view class='expressRecord-date-time'>
+                      {get(item,'ftime').substring(10,16)}
+                    </view>
+                  </view>
+                  </view>:
+                  <view class='expressRecord-single-close'>
+                  <view class='expressRecord-single-noReach-online-top-close'>
+                    <view class='online-top-close'></view>
+                    <view class='dot-close'></view>
+                    <view class='online-bottom'></view>
+                  </view>
 
-              <view class='expressRecord-text'>
-                <view class='expressRecord-status'></view>
-                <view class='expressRecord-status-address'>{get(item,'context')}</view>
-              </view>
+                  <view class='expressRecord-text'>
+                    <view class='expressRecord-status'></view>
+                    <view class='expressRecord-status-address'>{get(item,'context')}</view>
+                  </view>
 
-              <view class='expressRecord-date'>
-                <view class='expressRecord-date-text'>
-                  {get(item,'ftime').substring(5,10)}
+                  <view class='expressRecord-date'>
+                    <view class='expressRecord-date-text'>
+                      {get(item,'ftime').substring(5,10)}
+                    </view>
+                    <view class='expressRecord-date-time'>
+                      {get(item,'ftime').substring(10,16)}
+                    </view>
+                  </view>
                 </view>
-                <view class='expressRecord-date-time'>
-                  {get(item,'ftime').substring(10,16)}
-                </view>
-              </view>
-            </view>
-            }
+                }
 
-            </View>
-          ))}   
+                </View>
+              ))}
+
+            </View>:
+            <View className='null-delivery'>查询不到物流信息，请联系商家</View>
+          } 
 
           <view class='expressRecord-single-close'>
             <view class='expressRecord-single-noReach-online-top-close'>
@@ -221,10 +222,7 @@ class deliveryDetail extends Component {
             
 
         </view>
-        </view>:
-        <view className=''>查询不到物流信息</view>
-        }
-
+        </view>
         
       </View>
     )
