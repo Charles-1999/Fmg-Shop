@@ -1,15 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2020-10-26 15:46:00
- * @LastEditTime: 2020-11-26 15:37:09
+ * @LastEditTime: 2020-12-08 17:08:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/app.config.js
  */
 export default {
   pages: [
-    'pages/login/index',
     'pages/index/index',
+    'pages/login/index',
     'pages/user/index',
     'pages/cart/index',
     'pages/cart/confirm/index',
@@ -35,15 +35,18 @@ export default {
     'pages/user/Order/refundCenter',
     'pages/user/Order/userRefundDetail',
     'pages/studies/index',
+    'pages/studies/index/index',
     'pages/studies/course/index',
     'pages/studies/news/index',
     'pages/studies/preApply/index',
     'pages/studies/preApply_list/index',
     'pages/studies/update_preApply/index',
+    'pages/studies/update_apply/index',
     'pages/studies/apply/index',
     'pages/studies/member_list/index',
     'pages/studies/add_member/index',
     'pages/studies/update_member/index',
+    'pages/studies/apply_detail/index',
   ],
   window: {
     backgroundTextStyle: 'light',

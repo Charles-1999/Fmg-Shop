@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { View, Image, Text, Input, Picker } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
+import { isValidPhone } from '@utils/check'
 import './index.less'
 import '../study_common.less'
 
@@ -31,6 +32,15 @@ function PreApply(props) {
   /* 选择场次 */
   function handlePickerChange(e) {
     setSessionIndex(Number(e.detail.value))
+  }
+
+  /* 输入手机号码 */
+  function checkPhone(phone) {
+    if (isValidPhone(phone)) setPhone(phone)
+    else Taro.showToast({
+      title: '请填写正确的手机号码',
+      icon: 'none'
+    })
   }
 
   /* 预报名 */
@@ -85,7 +95,7 @@ function PreApply(props) {
         color='#fff'
         backColor='white'
       />
-      <View className='container'>
+      <View className='container_study'>
         <View className='wrapper'>
           <View className='title_wrap'>填写预约信息</View>
           <View className='input_wrap'>
@@ -94,7 +104,7 @@ function PreApply(props) {
           </View>
           <View className='input_wrap'>
             <View className='title'>电话</View>
-            <Input value={phone} placeholder="联系人电话" type="number" onBlur={(e) => { setPhone(e.detail.value.trim()) }} />
+            <Input value={phone} placeholder="联系人电话" type="number" onBlur={(e) => { checkPhone(e.detail.value.trim()) }} />
           </View>
           <View className='input_wrap'>
             <View className='title'>人数</View>

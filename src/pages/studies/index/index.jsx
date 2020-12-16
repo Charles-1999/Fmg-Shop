@@ -144,7 +144,7 @@ function Studies(props) {
         : ''
       }
       {currTab == 3 ?
-        <View className='container_user container'>
+        <View className='container_user container_study'>
           <View className='user_info'>
             <Image className='avator' src={userInfo.avatarUrl} />
             <View className='name'>{userInfo.nickName}</View>

@@ -65,7 +65,7 @@ export default function MemberList(props) {
         color='#fff'
         backColor='white'
       />
-      <View className='container'>
+      <View className='container_study'>
         <View className='btn_wrap wrapper'>
           <View className='btn' onClick={addMember.bind(this)}>
             <Image src='http://qiniu.daosuan.net/picture-1606228515000' />
@@ -73,21 +73,24 @@ export default function MemberList(props) {
             </View>
         </View>
         <View className='list_wrap wrapper'>
-          {(memberList ?? []).map((item, index) => (
-            <View className='member_wrap' key={item.id}>
-              <Image src='http://qiniu.daosuan.net/icon-1606046423000' className='edit' onClick={updataMember.bind(this, item.id)} />
-              <View className='info_wrap'>
-                <View className='name'>{item.name}</View>
-                <View className='idCard'>
-                  <Text>身份证</Text>
-                  <Text className='id_text'>{item.number.replace(item.number.substr(4, 11), '***********')}</Text>
+          {memberList.length > 0 ?
+            memberList.map((item, index) => (
+              <View className='member_wrap' key={item.id}>
+                <Image src='http://qiniu.daosuan.net/icon-1606046423000' className='edit' onClick={updataMember.bind(this, item.id)} />
+                <View className='info_wrap'>
+                  <View className='name'>{item.name}</View>
+                  <View className='idCard'>
+                    <Text>身份证</Text>
+                    <Text className='id_text'>{item.number.replace(item.number.substr(4, 11), '***********')}</Text>
+                  </View>
+                </View>
+                <View className='checkBox'>
+                  <Checkbox checked={item.checked} onClick={checkedClick.bind(this, index)} />
                 </View>
               </View>
-              <View className='checkBox'>
-                <Checkbox checked={item.checked} onClick={checkedClick.bind(this, index)} />
-              </View>
-            </View>
-          ))}
+            ))
+            : null
+          }
         </View>
       </View>
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>

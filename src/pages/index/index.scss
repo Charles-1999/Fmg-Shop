@@ -66,7 +66,7 @@
       overflow-y:hidden;
       overflow-x:auto;
       white-space: nowrap;
-      .place-tab-item{   
+      .place-tab-item{
         margin-right: 40rpx;
         overflow-x: hidden;
         //overflow-x: none;
@@ -97,7 +97,7 @@
         overflow-y:hidden;
         overflow-x:auto;
         white-space: nowrap;
-        .kind-tab-item{   
+        .kind-tab-item{
           overflow-x: hidden;
           display: inline-table;
           vertical-align: top;
@@ -140,7 +140,7 @@
     box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
     .goodsList{
       display: inline-flex;
-      .left-item{ 
+      .left-item{
         margin-right: 28rpx;
         position: relative;
         .range-1{
@@ -210,7 +210,7 @@
               border-radius: 10PX;
               margin-top:20rpx;
               box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
-              
+
             }
           }
           .right-item{
@@ -221,7 +221,7 @@
               left: -30rpx;
               top: -12rpx;
               width: 99rpx;
-              height: 110rpx;  
+              height: 110rpx;
           }
             .number{
               position:absolute;
@@ -279,7 +279,7 @@
         }
       }
     }
-   
+
   }
 }
 /*场地-产品页面*/
@@ -319,7 +319,7 @@
 .goods-card{
   .goods-items-wrap{
     padding:0rpx 30rpx;
-    width:100%; 
+    width:100%;
     overflow-y: hidden;
     .item{
       margin-bottom: 25rpx;
@@ -358,8 +358,8 @@
         font-size: 14rpx;
         height: 24rpx;
         width: 55rpx;
-        padding: 4rpx 8rpx;  
-        width:60rpx; 
+        padding: 4rpx 8rpx;
+        width:60rpx;
       }
       .info{
         display: flex;
@@ -390,7 +390,7 @@
         font-size: 27rpx;
         border-radius: 7PX;
         padding: 7rpx 10rpx;
-   
+
       }
   }
   }
@@ -463,7 +463,7 @@
         -webkit-overflow-scrolling: touch;
         .options_list {
           display: flex;
-          flex-flow: row wrap;         
+          flex-flow: row wrap;
           .option {
             margin-top: 20rpx;
             margin-right: 20rpx;
@@ -537,7 +537,7 @@
     }
     .active {
       transform: translate3d(0, 0, 0);
-    }  
+    }
   }
   .active {
     visibility: visible;
@@ -587,7 +587,7 @@
         font-size: 30rpx;
       }
     }
-   
+
   }
 }
 /*种类-商品-页面*/
@@ -610,7 +610,7 @@
       border-radius: 10PX;
       padding: 5rpx 20rpx;
       font-size: 30rpx;
-      margin-top: 5rpx;   
+      margin-top: 5rpx;
       display: inline-table;
       vertical-align: top;
       overflow-x: hidden;
@@ -630,4 +630,55 @@
     }
 
   }
+}
+//轮播图
+.swiper {
+  height: 450rpx;
+  .img{
+    width:100%;
+    height: 450rpx;
+  }
+}
+//中间logo+search
+.logo-search-wrap{
+  position: absolute;
+  top: 400rpx;
+  left: 30rpx;
+  display: flex;
+  .logo{
+    margin-top: -5rpx;
+    image{
+      height:110rpx;
+      width:110rpx;
+      border-radius: 50PX;
+    }
+  }
+  .index-search-wrap{
+    //margin-left: 40rpx;
+    .searchBar {
+      position: relative;
+      text-align: center;
+      align-self: center;
+      width: 865rpx;
+      height: 70rpx;
+      input {
+        width: 80%;
+        height: 90%;
+        text-align: center;
+        border-radius: 50rpx;
+        background-color:white;
+        margin-top: 16rpx;
+        box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
+      }
+      image {
+        position: absolute;
+        top: 50%;
+        transform: translate(0,-50%);
+        height: 50rpx;
+        margin-left: 21%;
+        width: 50rpx;
+      }
+    }
+  }
+
 }

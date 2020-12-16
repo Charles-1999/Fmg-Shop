@@ -79,7 +79,7 @@ function UpdateApply(props) {
         color='#fff'
         backColor='white'
       />
-      <View className='container'>
+      <View className='container_study'>
         <View className='wrapper'>
           <View className='course_wrap'>
             <View className='title_wrap'>课程信息</View>
