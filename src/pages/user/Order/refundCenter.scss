@@ -1,0 +1,127 @@
+.refund-center-wrap{
+  padding-top: 10rpx;
+  .refund-center-list{
+    .refund-card{
+      background-color: white;
+      border-radius: 10PX;
+      margin: 30rpx 30rpx;
+      padding: 20rpx 20rpx;
+      .refund-type{
+        display: flex;
+        .out_refund_no{
+          flex: 1;
+          font-size: 22rpx;
+        }
+        .icon{
+          text-align: end;
+          width: 40rpx;
+          height: 40rpx;
+        }
+        .text{
+          text-align: end;
+          font-size: 27rpx;
+          margin-left: 5rpx;
+          align-self: center;
+
+        }
+      }
+      .refund-status-list{
+        background-color: #c5c5c51f;
+        font-size: 27rpx;
+        padding: 15rpx 30rpx;
+        border-radius: 5PX;
+        margin: 15rpx 30rpx 0 30rpx;
+      }
+      .btn-list{
+        display: flex;
+        margin-top: 20rpx;
+        .refund-delete{
+          margin-left: auto;
+          font-size: 26rpx;
+          margin-right: 30rpx;
+          padding: 8rpx 18rpx;
+          border: 1rpx solid #5a5a5a;
+          color:#5a5a5a;
+          border-radius: 10PX;
+        }
+        .refund-detail{
+          font-size: 26rpx;
+          border: 1rpx solid rgb(226, 154, 45);
+          padding: 8rpx 18rpx;
+          border-radius: 10PX;
+          color:rgb(226, 154, 45);
+        }
+      }
+    }
+  }
+}
+.refund-list-good{
+  margin-top: 15rpx;
+  display: flex;
+  image{
+    border-radius: 5PX;
+    width: 160rpx;
+    height: 160rpx;
+  }
+  .title{
+    flex:1;
+    margin-left: 20rpx;
+    .name{
+      font-size: 28rpx;
+      font-weight: 500;
+      width:98%;
+    }
+    .spe{
+      display: inline-flex;
+      .item{
+        margin-right: 10rpx;
+        font-size: 24rpx;
+        color:rgb(102, 102, 102);
+      }
+    }
+    .price{
+      font-size: 26rpx;
+      margin-top: 5rpx;
+      color:rgb(27, 27, 27);
+    }
+  }
+
+}
+.user-refund-detail-wrap{
+  padding-top: 10rpx;
+  .user-refund-detail{
+    .status-tab{
+      background-color: white;
+      margin: 15rpx 20rpx;
+      border-radius: 10PX;
+      padding: 20rpx 30rpx;
+      .title{font-size: 30rpx;font-weight: 500;}
+      .date{margin-top: 5rpx;font-size: 25rpx;color: #5a5a5a;}
+    }
+    .refund-info-wrap{
+      background-color: white;
+      margin: 15rpx 20rpx;
+      border-radius: 10PX;
+      padding: 20rpx 30rpx;
+      .info-item-wrap{
+        margin-top: 20rpx;
+        .info-item{
+          display: flex;
+          margin: 5rpx 0;
+          .title{
+            font-size: 25rpx;
+            color: #5a5a5a;
+            align-self: center;
+          }
+          .info{
+            font-size: 27rpx;
+            align-self: center;
+            margin-left: 80rpx;
+          }
+        }
+      }
+     
+    }
+   
+  }
+}

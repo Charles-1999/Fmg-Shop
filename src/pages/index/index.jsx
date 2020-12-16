@@ -90,7 +90,7 @@ class Index extends Component {
     const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
     return (
-      <View className='index' >
+      <View className='index-main-wrap' >
         <Swiper
           className='swiper'
           circular
@@ -127,8 +127,7 @@ class Index extends Component {
         ></Navbar> */}
         <View className='home-top-wrap'>
           <PlaceTab placeList={this.state.placeList} key={this.state.placeList} />
-
-        <Kindtab kindList={this.state.kindList} />
+          <Kindtab kindList={this.state.kindList} />
         </View>
         <SaleTop goodsSaleTopList={this.state.goodsSaleTopList}  key={this.state.goodsSaleTopList} />
         <SaleNew />

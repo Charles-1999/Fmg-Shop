@@ -20,7 +20,7 @@ export default class Navbar extends Component {
     const {marginRight,marginLeft} = this.props;
     let {input_Val} = this.state;
     return (
-      <View className='searchBar' style={{marginRight,marginLeft}}>
+      <View className='searchBar-component' style={{marginRight,marginLeft}}>
         <Input placeholder='搜索' confirmType='search' onConfirm={this.search.bind(this)} value={input_Val}/>
         <Image className='search' src='http://qiniu.daosuan.net/icon-1598881971000' mode='heightFix' onClick={this.search.bind(this)} />
       </View>

@@ -79,6 +79,7 @@ export default {
     //获取用户评论
     * getUserComment({ payload }, { call, put }) {
       const res = yield call(getUserComment, payload);
+      console.log(res)
       yield put({
         type: 'save',
         payload:res,
@@ -93,7 +94,3 @@ export default {
   }
 }
 
-// payload: {
-//  commentList: [],
-//  pictureList: []
-// }

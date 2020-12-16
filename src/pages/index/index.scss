@@ -1,13 +1,65 @@
 /*首页*/
-.index{
+.index-main-wrap{
   background-color: rgb(243, 243, 243);
   overflow-x: hidden;
+  width:100%;
+  //轮播图
+  .swiper {
+    height: 450rpx;
+    .img{
+      width:100%;
+      height: 450rpx;
+    }
+  }
+  //中间logo+search
+  .logo-search-wrap{
+    position: absolute;
+    top: 400rpx;
+    left: 30rpx;
+    display: flex;
+    .logo{
+      margin-top: -5rpx;
+      image{
+        height:110rpx;
+        width:110rpx;
+        border-radius: 50PX;
+      }
+    }
+    .index-search-wrap{
+      //margin-left: 40rpx;
+      .searchBar {
+        position: relative;
+        text-align: center;
+        align-self: center;
+        width: 865rpx;
+        height: 90rpx;
+        input {
+          width: 80%;
+          height: 90%;
+          text-align: center;
+          border-radius: 50rpx;
+          background-color:white;
+          margin-top: 16rpx;
+          box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
+        }
+        image {
+          position: absolute;
+          top: 50%;
+          transform: translate(0,-50%);
+          height: 50rpx;
+          margin-left: 21%;
+          width: 50rpx;
+        }
+      }
+    }
+  }
   .home-top-wrap{
     background-color: white;
     border-radius: 10PX;
     margin: 30rpx 30rpx;
     padding: 30rpx 30rpx;
     margin-top: 80rpx;
+    overflow-x: hidden;
     box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
     .place-tab-row::-webkit-scrollbar {display:none}  //是否显示滑动条
     .place-tab-row{
@@ -78,7 +130,7 @@
           font-size: 20px;
         }
       }
-    }
+  }
   /*畅销榜*/
   .sale-top-wrap{
     background-color: white;
@@ -578,55 +630,4 @@
     }
 
   }
-}
-//轮播图
-.swiper {
-  height: 450rpx;
-  .img{
-    width:100%;
-    height: 450rpx;
-  }
-}
-//中间logo+search
-.logo-search-wrap{
-  position: absolute;
-  top: 400rpx;
-  left: 30rpx;
-  display: flex;
-  .logo{
-    margin-top: -5rpx;
-    image{
-      height:110rpx;
-      width:110rpx;
-      border-radius: 50PX;
-    }
-  }
-  .index-search-wrap{
-    //margin-left: 40rpx;
-    .searchBar {
-      position: relative;
-      text-align: center;
-      align-self: center;
-      width: 865rpx;
-      height: 70rpx;
-      input {
-        width: 80%;
-        height: 90%;
-        text-align: center;
-        border-radius: 50rpx;
-        background-color:white;
-        margin-top: 16rpx;
-        box-shadow: 1rpx 1rpx 20rpx -10rpx #575757;
-      }
-      image {
-        position: absolute;
-        top: 50%;
-        transform: translate(0,-50%);
-        height: 50rpx;
-        margin-left: 21%;
-        width: 50rpx;
-      }
-    }
-  }
-
 }

@@ -7,7 +7,7 @@
  * @FilePath: /凤鸣谷商城/src/model/Order.js
  */
 import { get } from 'lodash';
-import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, getPrice, exchangeOrder, getOrderSum} from '../service/Order';
+import  { getOrderList,mgetOrderList,editOrderInfo,delOrderInfo, createOrder, getPrice, exchangeOrder, getOrderSum, getExchangeList, mgetExchangeList, mgetOrderDetailList} from '../service/Order';
 
 
 export default {
@@ -19,6 +19,9 @@ export default {
     ids:[],
     exchangeId:0,
     orderListSum:{},
+    refundList:{},
+    refundInfoList:{},
+    orderDetailList:[],
   },
   effects: {
     //获取订单列表-------------
@@ -73,8 +76,6 @@ export default {
     },
     //退换货 exchangeOrder
     * exchangeOrder({ payload }, { call, put }) {
-      console.log(payload)
-      const { resolve } = payload
       const res = yield call(exchangeOrder, payload);
       console.log(res)
       yield put({
@@ -94,7 +95,36 @@ export default {
         }
       });
     },
-
+    //获取售后list
+    * getExchangeList({ payload }, { call, put }) {
+      const res = yield call(getExchangeList, payload);
+      yield put({
+        type: 'save',
+        payload:{
+          refundList:res
+        }
+      });
+    },
+    //批量获取售后list
+    * mgetExchangeList({ payload }, { call, put }) {
+      const res = yield call(mgetExchangeList, payload);
+      yield put({
+        type: 'save',
+        payload:{
+          refundInfoList:res
+        }
+      });
+    },
+    //批量获取订单明细list mgetOrderDetailList
+    * mgetOrderDetailList({ payload }, { call, put }) {
+      const res = yield call(mgetOrderDetailList, payload);
+      yield put({
+        type: 'save',
+        payload:{
+          orderDetailList:res
+        }
+      });
+    },
   },
   reducers: {
     save(state, { payload }) {

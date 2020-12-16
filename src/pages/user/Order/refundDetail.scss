@@ -167,7 +167,7 @@
         padding: 0 30rpx;
         .select-item{
           display: flex;
-          margin: 30rpx 10rpx;
+          margin: 40rpx 10rpx;
           .select-title{
             font-size: 27rpx;
             flex: 1;
@@ -178,6 +178,7 @@
             align-self: center;
             width: 50rpx;
             height: 50rpx;
+            padding-right: 40rpx;
           }
         }
       }

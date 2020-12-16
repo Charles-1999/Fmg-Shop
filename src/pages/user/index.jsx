@@ -63,10 +63,22 @@ class UserList extends Component {
     }
   }
   handleOrder = (status) => {
-    console.log(status);
-    Taro.navigateTo({
-      url: `/pages/user/Order/myOrder?status=${status}`,
-    });
+    if(status==4){
+      Taro.navigateTo({
+        url: `/pages/user/Order/commentCenter`,
+      });
+    }
+    else if(status==7){
+      Taro.navigateTo({
+        url: `/pages/user/Order/refundCenter`,
+      });
+    }
+    else{
+      Taro.navigateTo({
+        url: `/pages/user/Order/myOrder?status=${status}`,
+      });
+    }
+   
   }
 
   render () {

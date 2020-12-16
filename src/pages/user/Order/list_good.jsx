@@ -20,7 +20,7 @@ class ListGood extends Component {
     isShowSecondComment:0,
   }
   componentDidMount(){
-    const {goodId,speId,price,quality,message,goodsInfo,IsRefund,status,detailID} = this.props;
+    const {goodId,speId,price,quality,message,goodsInfo,IsRefund,status} = this.props;
     if(goodsInfo.length !== 0){
       const data = goodsInfo.filter(item => item.id == goodId)[0]
       const specification_list = get(data,'specification',[])

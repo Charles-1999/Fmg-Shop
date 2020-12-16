@@ -70,3 +70,29 @@ export const getOrderSum = params => {
     method: 'GET'
   })
 }
+
+//获取退款list
+export const getExchangeList = params => {
+  return request(`/exchange/list?author_id=${params.uid}`, {
+    method: 'GET',
+    body: {},
+  })
+}
+
+//批量获取退款list
+export const mgetExchangeList = params =>{
+  console.log(params)
+  return request('/exchange/mget', {
+    method: 'POST',
+    body: params,
+  });
+}
+
+//批量获取订单明细
+export const mgetOrderDetailList = params =>{
+  console.log(params)
+  return request('/_order/detail/_mget', {
+    method: 'POST',
+    body: params,
+  });
+}

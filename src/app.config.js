@@ -32,6 +32,8 @@ export default {
     'pages/user/Order/commentCenter',
     'pages/user/Order/refundSelect',
     'pages/user/Order/refundDetail',
+    'pages/user/Order/refundCenter',
+    'pages/user/Order/userRefundDetail',
     'pages/studies/index',
     'pages/studies/course/index',
     'pages/studies/news/index',

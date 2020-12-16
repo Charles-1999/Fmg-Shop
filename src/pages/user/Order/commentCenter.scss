@@ -1,0 +1,63 @@
+.comment-center-wrap{
+  padding-top: 20rpx;
+  .comment-center-header{
+    display: flex;
+    margin: 30rpx 30rpx;
+    background-color: white;
+    padding: 20rpx 20rpx;
+    border-radius: 10PX;
+    .touxiang{
+      image{
+        border-radius: 999rpx;
+        width: 160rpx;
+        height: 160rpx;
+        box-shadow: 0 0 10px #355e9a;
+      }
+     
+    }
+    .number-card{
+      align-self: center;
+      margin-left: 30rpx;
+      text-align: center;
+      .number{
+        font-size: 39rpx;
+        font-weight: 500;
+      }
+      .title{
+        font-size: 30rpx;
+      }
+    }
+  }
+  .select-tab{
+    display: flex;
+    text-align: center;
+    background-color: white;
+    margin: 30rpx 30rpx;
+    border-radius: 10PX;
+    padding: 20rpx 20rpx;
+    .comment-tab{
+      font-size: 32rpx;
+      flex: 1;
+    }
+    .comment-tab-active{
+      font-size: 32rpx;
+      flex: 1;
+      color: rgb(90, 90, 170);
+    }
+  }
+  .comment-list-wrap{
+   
+    .comment-list-card{
+      background-color: white;
+      margin: 30rpx 30rpx;
+      border-radius: 10PX;
+      padding: 20rpx 20rpx;
+    }
+  } 
+  .comment-null{
+    text-align: center;
+    color: #679cca;
+    font-size: 30rpx;
+  }
+}
+ 
