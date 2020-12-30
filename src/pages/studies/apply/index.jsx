@@ -1,4 +1,4 @@
-import Taro, { getCurrentInstance, useDidShow } from '@tarojs/taro'
+import Taro, { getCurrentInstance, useDidShow, getCurrentPages } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, Input, Picker } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
@@ -112,8 +112,14 @@ function Apply(props) {
         icon: 'success'
       })
       setTimeout(() => {
-        Taro.redirectTo({
-          url: '/pages/studies/preApply_list/index?status=' + 2
+        const pages = getCurrentPages().reverse()
+        Taro.navigateBack({
+          delta: pages.findIndex(item => item.route == 'pages/studies/index/index'),
+          success() {
+            Taro.navigateTo({
+              url: '/pages/studies/preApply_list/index?status=2'
+            })
+          }
         })
       }, 2000)
     }).catch(err => {
@@ -185,7 +191,7 @@ function Apply(props) {
         </View>
       </View>
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
-        <View className='bar_item' onClick={checkOut.bind(this)}>去支付</View>
+        <View className='bar_item' onClick={checkOut.bind(this)}>提交报名</View>
       </View>
     </View>
   )
