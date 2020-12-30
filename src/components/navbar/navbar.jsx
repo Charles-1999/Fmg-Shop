@@ -21,6 +21,7 @@ export default class Navbar extends Component {
     else if(backType === 'navigate') Taro.navigateTo({ url });
     else if(backType === 'redirect') Taro.redirectTo({ url });
     else if(backType === 'switchTab') Taro.switchTab({ url });
+    else if(backType === 'relaunch') Taro.reLaunch({ url })
   }
 
   render() {

@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-12-07 11:59:12
+ * @LastEditTime: 2020-12-31 01:02:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
@@ -35,7 +35,7 @@ export default {
     * mgetCourseInfo({ payload }, { call, put }) {
       // ids 去重
       const ids = [...new Set(payload.ids)]
-      payload = {...payload, ids}
+      payload = { ...payload, ids }
 
       const courseInfo = yield call(mgetCourseInfo, payload)
 
@@ -83,6 +83,63 @@ export default {
         type: 'save',
         payload: {
           courseInfos: courseInfo
+        }
+      })
+
+      return courseInfo
+    },
+    /* 单独获取课程信息 */
+    * getCourseInfo({ payload }, { call, put }) {
+      // ids 去重
+      const ids = [...new Set(payload.ids)]
+      payload = { ...payload, ids }
+
+      const courseInfo = yield call(mgetCourseInfo, payload)
+
+      /* 课程信息数据处理 */
+      courseInfo.forEach(info => {
+        /* 封面前缀 */
+        info.cover = 'http://qiniu.daosuan.net/' + info.cover
+
+        /* 价格单位处理 */
+        info.min_price = Number((info.min_price / 100).toFixed(2))
+
+        /* 研学日期（x年 y月 - m年 n月） */
+        let startDate = new Date(formatTimeStamp(info.begin_time))
+        let endDate = new Date(formatTimeStamp(info.end_time))
+        // 如果是同一个月，只显示 x年 y月
+        if (startDate.getFullYear() == endDate.getFullYear() && startDate.getMonth() == endDate.getMonth()) {
+          info.date = `${startDate.getFullYear()}年${startDate.getMonth() + 1}月`
+        } else {
+          info.date = `${startDate.getFullYear()}年${startDate.getMonth() + 1}月-${endDate.getFullYear()}年${endDate.getMonth() + 1}月`
+        }
+
+        /* 行程天数（x天） */
+        let days = []
+        info.session.forEach(session => {
+          let startDate = new Date(formatTimeStamp(session.begin_time))
+          let endDate = new Date(formatTimeStamp(session.end_time))
+          let dayDiff = (endDate - startDate) / (1000 * 60 * 60 * 24)
+          let day = Math.ceil(dayDiff)
+          session.days = day
+          days.push(day)
+
+          // 价格单位处理
+          session.money = Number((session.money / 100).toFixed(2))
+        })
+        let min = Math.min(...days)
+        let max = Math.max(...days)
+        if (min == max) {
+          info.days = `${min}天`
+        } else {
+          info.days = `${min}天-${max}天`
+        }
+      })
+
+      yield put({
+        type: 'save',
+        payload: {
+          courseInfo: courseInfo[0]
         }
       })
 
@@ -148,6 +205,30 @@ export default {
         }
       })
     },
+    /* 单独获取预报名信息 */
+    * getPreApply({ payload }, { call, put }) {
+      let preApply = yield call(mgetPreApply, payload)
+      preApply = preApply[0]
+
+      /* 订单状态 */
+      let statusArr = [, '已取消', '预报名', , '已报名']
+      preApply.status_text = statusArr[preApply.status]
+
+      yield put({
+        type: 'save',
+        payload: {
+          apply: preApply
+        }
+      })
+
+      // 批量获取课程信息
+      yield put({
+        type: 'getCourseInfo',
+        payload: {
+          ids: [Number(preApply.course_id)]
+        }
+      })
+    },
     /* 获取报名列表 */
     * getApplyList({ payload }, { call, put }) {
       const res = yield call(getApplyList, payload)
@@ -197,6 +278,33 @@ export default {
         }
       })
     },
+    /* 单独获取报名信息 */
+    * getApply({ payload }, { call, put }) {
+      let apply = yield call(mgetApply, payload)
+      apply = apply[0]
+
+      /* 订单状态 */
+      let statusArr = [, '未支付', '已支付', , '已取消']
+      apply.status_text = statusArr[apply.status]
+
+      /* 订单价格 */
+      apply.total_price = Number((apply.total_money / 100).toFixed(2))
+
+      // 批量获取课程信息
+      yield put({
+        type: 'getCourseInfo',
+        payload: {
+          ids: [Number(apply.course_id)]
+        }
+      })
+
+      yield put({
+        type: 'save',
+        payload: {
+          apply: apply
+        }
+      })
+    },
     /* 取消预报名 */
     * canclePreApply({ payload }, { call, put }) {
       const res = yield call(canclePreApply, payload)
@@ -229,7 +337,7 @@ export default {
       })
     },
     /* 批量获取咨询 */
-    * mgetNews({ payload }, { call, put}) {
+    * mgetNews({ payload }, { call, put }) {
       const newsList = yield call(mgetNews, payload)
 
       yield put({

@@ -4,6 +4,7 @@ import { View, Text, Image } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
 import { connect } from "react-redux"
 import { formatTimeStamp } from '@utils/time'
+import { payApply } from '@utils/pay'
 
 import './index.less'
 
@@ -139,6 +140,15 @@ function PreApplyList(props) {
     })
   }
 
+  /* 统一下单 */
+  function pay(pid) {
+    payApply(pid, null, null, () => {
+      Taro.navigateTo({
+        url: '/pages/studies/apply_detail/index?id=' + pid
+      })
+    })
+  }
+
   return (
     <View className={isIphoneX ? 'isIphoneX preApply_list' : 'preApply_list'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
       <Navbar
@@ -166,8 +176,12 @@ function PreApplyList(props) {
                 ? <Text className='create_time'>{'预报名日期：' + new Date(formatTimeStamp(data.create_time)).toLocaleDateString()}</Text>
                 : null
               }
-              {currTab == (2 || 3)
+              {currTab == 2
                 ? <Text className='create_time'>{'报名日期：' + new Date(formatTimeStamp(data.create_time)).toLocaleDateString()}</Text>
+                : null
+              }
+              {currTab == 3
+                ? <Text className='create_time'>{'支付日期：' + new Date(formatTimeStamp(data.update_time)).toLocaleDateString()}</Text>
                 : null
               }
               {currTab == 4
@@ -176,12 +190,15 @@ function PreApplyList(props) {
               }
               <Text className='status'>{data.status_text}</Text>
             </View>
-            <View className='info_wrap' onClick={() => {Taro.navigateTo({ url: '/pages/studies/apply_detail/index?id=' + data.id })}}>
+            <View className='info_wrap' onClick={() => { Taro.navigateTo({ url: `/pages/studies/apply_detail/index?id=${data.id}&status=${currTab}` }) }}>
               <Image src={data.courseInfo.cover} className='cover' />
               <View className='info'>
                 <View className='name'>{data.courseInfo.name}</View>
                 <View className='session'>{'第' + (data.courseInfo.session.findIndex(item => data.session_id === item.id) + 1) + '期：' + new Date(data.courseInfo.session.find(item => data.session_id === item.id).begin_time).toLocaleDateString()}</View>
                 <View className='people'>{`人数：${data.people} 人`}</View>
+                {currTab == 2 && data.total_price
+                  ? <View className='price'>{`应付 ¥${data.total_price}`}</View>
+                  : null}
               </View>
             </View>
             {currTab == 1
@@ -196,7 +213,7 @@ function PreApplyList(props) {
               ? <View className='btn_wrap'>
                 <View className='btn cancle' onClick={cancle.bind(this, data.id)}>取消</View>
                 <View className='btn plain' onClick={() => Taro.navigateTo({ url: `/pages/studies/update_apply/index?pid=${data.id}` })}>修改</View>
-                <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${data.id}&cid=${data.course_id}` })}>支付</View>
+                <View className='btn' onClick={pay.bind(this, data.id)}>支付</View>
               </View>
               : null
             }
