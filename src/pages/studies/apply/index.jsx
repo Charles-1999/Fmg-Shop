@@ -106,20 +106,15 @@ function Apply(props) {
         number: idCard,
         phone: phone
       }
-    }).then(() => {
+    }).then((apply_id) => {
       Taro.showToast({
         title: '报名成功！',
-        icon: 'success'
+        icon: 'success',
+        duration: 2000
       })
       setTimeout(() => {
-        const pages = getCurrentPages().reverse()
-        Taro.navigateBack({
-          delta: pages.findIndex(item => item.route == 'pages/studies/index/index'),
-          success() {
-            Taro.navigateTo({
-              url: '/pages/studies/preApply_list/index?status=2'
-            })
-          }
+        Taro.redirectTo({
+          url: `/pages/studies/apply_detail/index?id=${apply_id}`
         })
       }, 2000)
     }).catch(err => {

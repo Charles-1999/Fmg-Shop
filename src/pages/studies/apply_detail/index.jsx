@@ -5,7 +5,6 @@ import Navbar from '@components/navbar/navbar'
 import { connect } from 'react-redux'
 import { timeFormat } from '@utils/time'
 import { payApply } from '@utils/pay'
-import STATUS from '../../../constants/status'
 
 import './index.less'
 

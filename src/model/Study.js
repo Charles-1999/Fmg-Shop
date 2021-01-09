@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-12-31 01:02:57
+ * @LastEditTime: 2020-12-31 01:22:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
@@ -324,6 +324,7 @@ export default {
     /* 通过预报名创建报名 */
     * preToApply({ payload }, { call, put }) {
       const res = yield call(preToApply, payload)
+      return res.id
     },
     /* 获取咨询列表 */
     * getNewsList({ payload }, { call, put }) {
