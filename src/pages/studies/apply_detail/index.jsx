@@ -153,7 +153,7 @@ function ApplyDetail(props) {
           : null
         }
       </View>}
-      {apply && !['已支付', '已取消'].includes(apply.status_text) && <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
+      {apply && ['预报名', '未支付'].includes(apply.status_text) && <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
         {apply && apply.status_text == '预报名'
           ? <View className='bar_item' onClick={() => { Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${apply.id}&cid=${apply.course_id}` }) }}>报名</View>
           : null

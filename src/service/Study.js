@@ -1,7 +1,7 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:26:50
- * @LastEditTime: 2020-12-06 22:27:02
+ * @LastEditTime: 2021-01-09 23:16:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/service/Study.js
@@ -183,6 +183,17 @@ export const getNewsList = params => {
 export const mgetNews = params => {
   return request(API.STUDY.NEWS.MGET, {
     body: params,
+    method: 'POST'
+  })
+}
+
+/**
+ * 退款
+ * @param {Number} aid  报名id
+ */
+export const refund = params => {
+  const pattern = compile(API.STUDY.COURSE.APPLY.REFUND)
+  return request(pattern({ aid: params.aid }), {
     method: 'POST'
   })
 }

@@ -1,12 +1,12 @@
 /*
  * @Author: Charles
  * @Date: 2020-11-10 19:34:39
- * @LastEditTime: 2020-12-31 01:22:10
+ * @LastEditTime: 2021-01-10 01:05:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/model/Study.js
  */
-import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, cancleApply, updatePreApply, updateApply, preToApply, getNewsList, mgetNews } from '../service/Study'
+import { getCourseList, mgetCourseInfo, mgetCourseTags, preApply, getPreApplyList, mgetPreApply, getApplyList, mgetApply, canclePreApply, cancleApply, updatePreApply, updateApply, preToApply, getNewsList, mgetNews, refund } from '../service/Study'
 import { formatTimeStamp } from '@utils/time'
 
 export default {
@@ -256,7 +256,7 @@ export default {
 
       apply.forEach(item => {
         /* 订单状态 */
-        let statusArr = [, '未支付', '已支付', , '已取消']
+        let statusArr = [, '未支付', '已支付', , '已取消', '退款申请中', '退款成功']
         item.status_text = statusArr[item.status]
 
         /* 订单价格 */
@@ -284,7 +284,7 @@ export default {
       apply = apply[0]
 
       /* 订单状态 */
-      let statusArr = [, '未支付', '已支付', , '已取消']
+      let statusArr = [, '未支付', '已支付', , '已取消', '退款申请中', '退款成功']
       apply.status_text = statusArr[apply.status]
 
       /* 订单价格 */
@@ -347,6 +347,10 @@ export default {
           newsList
         }
       })
+    },
+    /* 退款 */
+    * refund({ payload }, { call, put }) {
+      const res = yield call(refund, payload)
     }
   },
   reducers: {
