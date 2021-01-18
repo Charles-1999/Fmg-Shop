@@ -8,6 +8,7 @@ import Navbar from '../../../components/navbar/navbar'
 import './userComment.scss'
 import formatTime from '../../.../../../utils/time'
 import CommentListGood from './comment_list_good'
+import { getToNow } from '../../../utils/time'
 
 @connect(({ comment, goods}) => ({
   ...comment,...goods
@@ -68,6 +69,15 @@ class userComment extends Component {
     })
   }  
 
+  prevSecImg(url, index) {
+    let urls = []
+    urls.push(...this.state.userCommentList[index].second_pictures)
+    Taro.previewImage({
+      urls,
+      current: url
+    })
+  }  
+
   render () {
     const {statusBarHeight, capsule} = this.state; 
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
@@ -100,6 +110,19 @@ class userComment extends Component {
                   <View className='picture' key={pic_index}><Image src={pic} onClick={this.prevImg.bind(this, pic,index)} mode='aspectFill'></Image></View>
                 ))}
               </View>
+              {item.second_create_time == 0 ? '':
+                <View className='second-comment'>
+                  <View className='line'></View>
+                  <View className='second-date'>{getToNow(item.second_content)}追加评论</View>
+                  <View className='second-content'>{item.second_content}</View>
+                  <View className='picture_list'>
+                    {item.second_pictures.map((pic, pic_index) => (
+                      <View className='picture' key={pic_index}><Image src={pic} onClick={this.prevSecImg.bind(this, pic,index)} mode='aspectFill'></Image></View>
+                    ))}
+                  </View>
+                </View>
+              }
+             
               <CommentListGood 
                 goodsInfo={this.state.goods_info}
                 goodId={item.good_id}

@@ -83,19 +83,24 @@ export default {
     //获取用户评论
     * getUserComment({ payload }, { call, put }) {
       let res = yield call(getUserComment, payload);
+      console.log(res)
       let userId = [res[0].author_id]
       res = res.map(item=> {
         if(item.pictures){
           item.pictures = item.pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
         }
+    
         // if(get(item,'second_pictures',[])){
         //   item.second_pictures = get(item,'second_pictures',[]).map(pic => 'http://qiniu.daosuan.net/' + pic)
         // }
-        // if(get(item,'second_pictures')){
-        //   item.second_pictures = item.second_pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
-        // }
-        else{
+        if(item.second_pictures !== ''){
+          item.second_pictures = item.second_pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+        }
+        if(item.pictures == ''){
           item.pictures = []
+         
+        }
+        if(item.second_pictures == ''){
           item.second_pictures = []
         }
        

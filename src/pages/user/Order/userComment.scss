@@ -27,6 +27,23 @@
         margin-top: 10rpx;
         font-size: 29rpx;
       }
+      .second-comment{
+        .line{
+          height: 1rpx;
+          width: 100%;
+          background-color: #dfdfdf;
+          border-radius: 30px;
+        }
+        .second-date{
+          margin-top: 10rpx;
+          font-size: 28rpx;
+          color: rgb(199, 87, 46);
+        }
+        .second-content{
+          margin-top: 10rpx;
+          font-size: 29rpx;
+        }
+      }
       .picture_list {
         display: flex;
         flex-flow: row wrap;
