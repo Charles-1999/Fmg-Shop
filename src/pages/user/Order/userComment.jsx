@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Image } from '@tarojs/components'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import Taro, {Current} from '@tarojs/taro'; 
+import Taro, {Current} from '@tarojs/taro';
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import './userComment.scss'
@@ -22,7 +22,7 @@ class userComment extends Component {
     userCommentList:[],
     goods_info:[],
   }
- 
+
   async componentDidMount () {
     await this.getUserCommentList();
     await this.getGoodsList();
@@ -54,11 +54,11 @@ class userComment extends Component {
     console.log(this.state.goods_info);
   }
 
-    /** 
+    /**
    * 预览图片
    * @param {Stirng} url    当前图片的url
    * @param {Number} index  当前评论的索引
-   * @return {void} 
+   * @return {void}
   */
   prevImg(url, index) {
     let urls = []
@@ -67,7 +67,7 @@ class userComment extends Component {
       urls,
       current: url
     })
-  }  
+  }
 
   prevSecImg(url, index) {
     let urls = []
@@ -76,10 +76,10 @@ class userComment extends Component {
       urls,
       current: url
     })
-  }  
+  }
 
   render () {
-    const {statusBarHeight, capsule} = this.state; 
+    const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
 
     console.log('render')
@@ -113,7 +113,7 @@ class userComment extends Component {
               {item.second_create_time == 0 ? '':
                 <View className='second-comment'>
                   <View className='line'></View>
-                  <View className='second-date'>{getToNow(item.second_content)}追加评论</View>
+                  <View className='second-date'>{getToNow(item.second_create_time)}追加评论</View>
                   <View className='second-content'>{item.second_content}</View>
                   <View className='picture_list'>
                     {item.second_pictures.map((pic, pic_index) => (
@@ -122,17 +122,17 @@ class userComment extends Component {
                   </View>
                 </View>
               }
-             
-              <CommentListGood 
+
+              <CommentListGood
                 goodsInfo={this.state.goods_info}
                 goodId={item.good_id}
                 key={this.state.goods_info}
-               
+
               />
             </View>
           ))}
         </View>
-       
+
       </View>
     )
   }
