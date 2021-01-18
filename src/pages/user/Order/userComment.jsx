@@ -66,8 +66,7 @@ class userComment extends Component {
       urls,
       current: url
     })
-  }
-  
+  }  
 
   render () {
     const {statusBarHeight, capsule} = this.state; 
@@ -105,6 +104,7 @@ class userComment extends Component {
                 goodsInfo={this.state.goods_info}
                 goodId={item.good_id}
                 key={this.state.goods_info}
+               
               />
             </View>
           ))}

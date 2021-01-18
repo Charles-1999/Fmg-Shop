@@ -28,7 +28,7 @@ class CommentListGood extends Component {
   render () {
     const {goodInfo} =  this.state.goodInfo
     return (
-      <Navigator className='comment-list-good' url={'pages/details/index?gid='+this.props.goodId}>
+      <Navigator className='comment-list-good' url={'/pages/details/index?gid='+this.props.goodId}>
         {this.state.goodInfo !== {} ? 
         <Image src={get(this.state.goodInfo,'cover','')} />
         :''}

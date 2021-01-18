@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-26 15:46:00
- * @LastEditTime: 2020-12-30 23:32:22
+ * @LastEditTime: 2020-12-08 17:08:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /凤鸣谷商城/src/app.config.js
@@ -35,10 +35,7 @@ export default {
     'pages/user/Order/refundDetail',
     'pages/user/Order/refundCenter',
     'pages/user/Order/userRefundDetail',
-<<<<<<< HEAD
     //'pages/studies/index',
-=======
->>>>>>> 12cdd2fdef9fce34ba88c902fb3a0ebb0fece370
     'pages/studies/index/index',
     'pages/studies/course/index',
     'pages/studies/news/index',
