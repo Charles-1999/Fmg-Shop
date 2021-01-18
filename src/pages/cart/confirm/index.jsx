@@ -3,7 +3,7 @@ import Taro, { Current } from '@tarojs/taro'
 import { View, Text, Image, Navigator, Checkbox, CheckboxGroup, Input } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
 import { get as getGlobalData } from '../../../global_data'
-import request, {getGoodsList} from '../../../utils/request'
+import request, { getGoodsList } from '../../../utils/request'
 
 import './index.less'
 import { connect } from 'react-redux'
@@ -41,9 +41,21 @@ export default class Confirm extends Component {
     })
   }
 
+  /* 选择收货地址 */
+  chooseAddress() {
+    const { currAddress } = this.state
+    // 非自提的情况下才允许选择收货地址
+    if (currAddress && currAddress.id === Infinity) {
+      return;
+    }
+    Taro.navigateTo({
+      url: '/pages/cart/address_list/index'
+    })
+  }
+
   /* 获取价格信息 */
-  getPrice = async() => {
-    const {checkList} = this.state
+  getPrice = async () => {
+    const { checkList } = this.state
     let goodsList = []
     checkList.forEach(item => {
       goodsList.push({
@@ -60,7 +72,7 @@ export default class Confirm extends Component {
       method: 'POST'
     })
 
-    const {total_coupon, total_exp_fare, total_goods_amount, total_order_amount} = res
+    const { total_coupon, total_exp_fare, total_goods_amount, total_order_amount } = res
 
     this.setData({
       total_coupon, total_exp_fare, total_goods_amount, total_order_amount
@@ -107,42 +119,42 @@ export default class Confirm extends Component {
     * @params: index 商品在list中的索引
   */
   getGetWayList(index) {
-    const {goodsList,checkList} = this.state;
+    const { goodsList, checkList } = this.state;
     const goodsGetWay = goodsList[index].get_way; // 商品可选的方式
     const get_way = checkList[index].delivery_kind; // 用户选择的方式
     let getWayList = [];
     switch (goodsGetWay) {
       case 1:
         // getWayList.push('快递');
-        getWayList.push({id: 1, checked: true});
+        getWayList.push({ id: 1, checked: true });
         break;
       case 2:
         // getWayList.push('同城配送');
-        getWayList.push({id: 2, checked: true});
+        getWayList.push({ id: 2, checked: true });
         break;
       case 3:
         // getWayList.push('快递','同城配送');
-        getWayList.push({id: 1, checked: true},{id: 2, checked: false});
+        getWayList.push({ id: 1, checked: true }, { id: 2, checked: false });
         break;
       case 4:
         // getWayList.push('自取');
-        getWayList.push({id: 4, checked: true});
+        getWayList.push({ id: 4, checked: true });
         break;
       case 5:
         // getWayList.push('快递','自取');
-        getWayList.push({id: 1, checked: true},{id: 4, checked: false});
+        getWayList.push({ id: 1, checked: true }, { id: 4, checked: false });
         break;
       case 6:
         // getWayList.push('同城配送','自取');
-        getWayList.push({id: 2, checked: false},{id: 4, checked: false});
+        getWayList.push({ id: 2, checked: false }, { id: 4, checked: false });
         break;
       case 7:
         // getWayList.push('快递','同城配送','自取');
-        getWayList.push({id: 1, checked: true},{id: 2, checked: false},{id: 4, checked: false});
+        getWayList.push({ id: 1, checked: true }, { id: 2, checked: false }, { id: 4, checked: false });
         break;
     }
     const indexInGetWayList = getWayList.findIndex(item => item.id === get_way);
-    getWayList.forEach((item,index) => {
+    getWayList.forEach((item, index) => {
       item.checked = index === indexInGetWayList;
     })
     this.setData({
@@ -154,16 +166,16 @@ export default class Confirm extends Component {
 
   /* 修改收货方式 */
   selectGetWay(index) {
-    let {getWayList} = this.state;
+    let { getWayList } = this.state;
     let get_way;
-    getWayList.forEach((item,i) => {
-      if(index === i) {
+    getWayList.forEach((item, i) => {
+      if (index === i) {
         get_way = item.id;
-        if(item.checked) return;
+        if (item.checked) return;
         else {
           item.checked = true;
         }
-      }else {
+      } else {
         item.checked = false;
       }
     })
@@ -175,28 +187,49 @@ export default class Confirm extends Component {
 
   /* 确认修改收货方式 */
   changeGetWay() {
-    const {get_way,currGoodsIndex,checkList} = this.state;
+    const { get_way, currGoodsIndex, checkList } = this.state;
     checkList[currGoodsIndex].delivery_kind = get_way;
     this.setData({
       checkList,
       isOpen: false
     });
     this.getPrice()
+    this.checkGetWay();
     Taro.setStorageSync("checkList", checkList);
   }
 
+  /**
+   * 检查是否全部为自取
+   * 如果是，则收货地址改为“请到自取点自取”
+   */
+  checkGetWay() {
+    const { checkList } = this.state;
+    let currAddress = null;
+    if (checkList.every(item => item.delivery_kind === 4)) {
+      currAddress = {
+        id: Infinity,
+        detail: '请到自取点自取'
+      };
+    } else {
+      currAddress = Taro.getStorageSync('currAddress');
+    }
+    this.setData({
+      currAddress
+    })
+  }
+
   /* 添加留言 */
-  addMessage(index,e) {
-    console.log(index,e);
-    let {checkList} = this.state;
+  addMessage(index, e) {
+    console.log(index, e);
+    let { checkList } = this.state;
     checkList[index].message = e.detail.value;
     this.setData({ checkList });
   }
 
   /* 提交订单 */
   order = async () => {
-    const { currAddress,checkList } = this.state;
-    if(!currAddress) {
+    const { currAddress, checkList } = this.state;
+    if (!currAddress) {
       Taro.showToast({
         title: '请选择收货地址',
         icon: 'none'
@@ -272,7 +305,7 @@ export default class Confirm extends Component {
       signType: data.signType, // 签名算法
       paySign: data.paySign, // 签名
       success: res => {
-        console.log('发起微信支付：' , res);
+        console.log('发起微信支付：', res);
         Taro.showToast({
           title: '支付成功',
           icon: 'success',
@@ -301,8 +334,8 @@ export default class Confirm extends Component {
   }
 
   // 删除购物车
-  delCart = async() => {
-    const {checkList} = this.state
+  delCart = async () => {
+    const { checkList } = this.state
     // 如果checkList中没有id（购物车id），则是立即购买渠道，无需删除购物车
     if (!('id' in checkList[0])) return
     let cartIds = []
@@ -358,22 +391,29 @@ export default class Confirm extends Component {
           title='确认订单'
         >
         </Navbar>
-        <Navigator className='address_wrap' url='/pages/cart/address_list/index'>
+        <View className='address_wrap' onClick={this.chooseAddress.bind(this)}>
           <Image className='icon_address' src='http://qiniu.daosuan.net/picture-1598883667000' />
-          { currAddress
-            ? <View className='address_info' onClick={this.toAddress}>
-                <View className='personal_info'>
-                  <Text className='name'>{currAddress.name}</Text>
-                  <Text className='phone'>{currAddress.phone}</Text>
-                </View>
-                <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
+          {currAddress && currAddress.id != Infinity &&
+            <View className='address_info'>
+              <View className='personal_info'>
+                <Text className='name'>{currAddress.name}</Text>
+                <Text className='phone'>{currAddress.phone}</Text>
               </View>
-            : <View className='no'>
-                请选择收货地址
-              </View>
+              <Text className='address'>{currAddress.province_name}{currAddress.city_name}{currAddress.district_name}{currAddress.detail}</Text>
+            </View>
+          }
+          {currAddress && currAddress.id === Infinity &&
+            <View className='no'>
+              请到自取点自取
+            </View>
+          }
+          {currAddress === "" &&
+            <View className='no' >
+              请选择收货地址
+            </View>
           }
           <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
-        </Navigator>
+        </View>
         <View className='goods_list'>
           {checkList.map((item, index) => (
             <View className='goods' key={item.id}>
@@ -384,7 +424,7 @@ export default class Confirm extends Component {
                   <View className='specification'>{goodsList ? (goodsList[index].template.map(temp => temp) + '：' + goodsList[index].specification[item.spec_index].specification_text) : ''}</View>
                 </View>
                 <View className='price_wrap'>
-                  <Text className='price'><Text className='sign'>￥</Text>{goodsList?goodsList[index].specification[item.spec_index].showPrice:0}</Text>
+                  <Text className='price'><Text className='sign'>￥</Text>{goodsList ? goodsList[index].specification[item.spec_index].showPrice : 0}</Text>
                   <Text className='count'>×{item.goods_count}</Text>
                 </View>
               </View>
@@ -397,22 +437,22 @@ export default class Confirm extends Component {
                   <Text className='title'>运费</Text>
                   <Text className='content'>￥{goodsList ? goodsList[index].carriage : ''}</Text>
                 </View> */}
-                <View className='info_wrap' onClick={this.getGetWayList.bind(this,index)}>
+                <View className='info_wrap' onClick={this.getGetWayList.bind(this, index)}>
                   <Text className='title'>配送方式</Text>
                   <Text className='content'>{checkList ? this.getGetWay(checkList[index].delivery_kind) : ''}</Text>
                   <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
                 </View>
                 <View className='info_wrap'>
                   <Text className='title'>订单备注</Text>
-                  <Input type='text' className='content' placeholder='选填，请先和商家协商一致' placeholderStyle='color: #aaa' onBlur={this.addMessage.bind(this,index)} />
+                  <Input type='text' className='content' placeholder='选填，请先和商家协商一致' placeholderStyle='color: #aaa' onBlur={this.addMessage.bind(this, index)} />
                 </View>
                 {/* 选择模块 */}
                 <View className={isOpen ? 'active float_wrap' : 'float_wrap'}>
                   <View className='mask' onClick={this.hiddenFloat}></View>
                   <View className={isOpen ? 'container active' : 'container'}>
                     <View className='title'>配送方式</View>
-                    {(getWayList??[]).map((item,index) => (
-                      <View className='item' key={index} onClick={this.selectGetWay.bind(this,index)}>
+                    {(getWayList ?? []).map((item, index) => (
+                      <View className='item' key={index} onClick={this.selectGetWay.bind(this, index)}>
                         <Text className='item_text'>{this.getGetWay(item.id)}</Text>
                         <CheckboxGroup className='checkBox'>
                           <Checkbox checked={item.checked}></Checkbox>
@@ -432,28 +472,28 @@ export default class Confirm extends Component {
           <View className='order_info'>
             <View className='info_wrap'>
               <Text className='title'>商品总额</Text>
-              <Text className='content'>￥{Number(total_goods_amount/100).toFixed(2)}</Text>
+              <Text className='content'>￥{Number(total_goods_amount / 100).toFixed(2)}</Text>
             </View>
             <View className='info_wrap'>
               <Text className='title'>运费</Text>
-              <Text className='content price'>￥{Number(total_exp_fare/100).toFixed(2)}</Text>
+              <Text className='content price'>￥{Number(total_exp_fare / 100).toFixed(2)}</Text>
             </View>
-            { total_coupon != 0 ?
+            {total_coupon != 0 ?
               <View className='info_wrap'>
                 <Text className='title'>促销优惠</Text>
-                <Text className='content price'>-￥{Number(total_coupon/100).toFixed(2)}</Text>
+                <Text className='content price'>-￥{Number(total_coupon / 100).toFixed(2)}</Text>
               </View>
               : ''
             }
             <View className='order_count'>
-              <Text>总计：<Text className='price'>￥{Number(total_order_amount/100).toFixed(2)}</Text></Text>
+              <Text>总计：<Text className='price'>￥{Number(total_order_amount / 100).toFixed(2)}</Text></Text>
             </View>
           </View>
         </View>
         <View className={isIphoneX ? 'isIphoneX bottom_bar' : 'bottom_bar'}>
           <View className='price_wrap'>
             <Text className='count'>共<Text className='text'> {total_count} </Text>件，</Text>
-            <Text className='price'>合计：<Text className='sign'>￥</Text><Text className='text'>{Number(total_order_amount/100).toFixed(2)}</Text></Text>
+            <Text className='price'>合计：<Text className='sign'>￥</Text><Text className='text'>{Number(total_order_amount / 100).toFixed(2)}</Text></Text>
           </View>
           <View className='order' onClick={this.order}>提交订单</View>
         </View>
