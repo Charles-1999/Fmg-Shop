@@ -49,7 +49,7 @@ class CommentCenter extends Component {
       payload: {
         author_id:this.state.userId,
         status: status,
-        limit:100,
+        limit:10,
       },
     })
     const orderList = this.props.orderList;
