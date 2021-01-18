@@ -23,7 +23,7 @@
       border-radius: 10PX;
       display: flex;
       .img{
-        width: 100PX;
+        width: 45PX;
         height: 30PX;
         /* flex: 1; */
         align-self: center;
@@ -34,6 +34,7 @@
       }
       .info{
         margin-left: 30rpx;
+        width: 96%;
         .none-status{
           font-size: 30rpx;
           font-weight: 500;margin-top: 10rpx;

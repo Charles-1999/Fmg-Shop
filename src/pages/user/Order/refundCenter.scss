@@ -1,5 +1,31 @@
 .refund-center-wrap{
-  padding-top: 10rpx;
+  .refund-tab{
+    padding: 15rpx 75rpx;
+    background-color: white;
+    .list{
+      display: flex;
+      .item-active{
+        background-color: #92b8fd;
+        font-size: 29rpx;
+        color: white;
+        flex: 1;
+        text-align: center;
+        align-self: center;
+        padding: 7rpx 0;
+        border-radius: 10px;
+        
+      }
+      .item{
+        flex: 1;
+        color: black;
+        font-size: 29rpx;
+        text-align: center;
+        align-self: center;
+        padding: 7rpx 0;
+        border-radius: 10px;
+      }
+    }
+  }
   .refund-center-list{
     .refund-card{
       background-color: white;
