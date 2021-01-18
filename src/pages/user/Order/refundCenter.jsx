@@ -19,6 +19,7 @@ class RefundCenter extends Component {
     refundList:[],
     orderDetailList:[],
     goods_info:[],
+    currentIndex:1,
   }
   /**
    *  SUMMIT  = 1 //已提交 / 等待审核
@@ -43,7 +44,15 @@ class RefundCenter extends Component {
         ids:ids
       }
     });
-    const detail_ids = this.props.refundInfoList.map((arr) => {return arr.order_detail_id})
+    this.setState({
+      refundList:this.props.refundInfoList.filter(item => item.status == 1)
+    })
+   this.getRedunfList();
+  }
+
+  //获取售后list
+  async getRedunfList(){
+    const detail_ids = this.state.refundList.map((arr) => {return arr.order_detail_id})
     //获取订单明细list
     await this.props.dispatch({
       type: 'order/mgetOrderDetailList',
@@ -59,12 +68,30 @@ class RefundCenter extends Component {
     })
     this.setState({
       orderDetailList:this.props.orderDetailList,
-      refundList:this.props.refundInfoList,
       goods_info:this.props.goodsList,
     })
     console.log(this.state.refundList)
     console.log(this.state.orderDetailList)
     console.log(this.state.goods_info)
+  }
+
+  //切换tab
+  handleChangeTab(index){
+    this.setState({
+      currentIndex: index
+    })
+    if(index==1){
+      this.setState({
+        refundList:this.props.refundInfoList.filter(item => item.status == 1)
+      })
+      this.getRedunfList();
+    }
+    else{
+      this.setState({
+        refundList:this.props.refundInfoList.filter(item => item.status == 2 || item.status ==4 || item.status ==8)
+      })
+      this.getRedunfList();
+    }
   }
  
  
@@ -82,6 +109,21 @@ class RefundCenter extends Component {
           showBack
           title='售后/退款'
         ></Navbar>
+        <View className='refund-tab'>
+          {this.state.currentIndex==1?
+          <View className='list'>
+            <View className='item-active' onClick={this.handleChangeTab.bind(this,1)}>待审核</View>
+            <View className='item' onClick={this.handleChangeTab.bind(this,2)}>已审核</View>
+          </View>
+           :
+          <View className='list'>
+           <View className='item' onClick={this.handleChangeTab.bind(this,1)}>待审核</View>
+           <View className='item-active' onClick={this.handleChangeTab.bind(this,2)}>已审核</View>
+          </View>
+           
+        }
+         
+        </View>
         <View className='refund-center-list'>
           {this.state.refundList.map((item,index) =>(
             <View className='refund-card' key={get(item,'id')}>
