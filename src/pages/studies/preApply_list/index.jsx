@@ -4,6 +4,7 @@ import { View, Text, Image } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
 import { connect } from "react-redux"
 import { formatTimeStamp } from '@utils/time'
+import { payApply } from '@utils/pay'
 
 import './index.less'
 
@@ -90,33 +91,23 @@ function PreApplyList(props) {
 
     // 预报名状态 1: 取消, 2: 预报名, 4: 已报名
     const preApplyMap = new Map([['已取消', 1], ['预报名', 2], ['已报名', 4]])
-    // 已报名状态 1: 未支付, 2: 已支付, 4: 已取消
-    const applyMap = new Map([['未支付', 1], ['已支付', 2], ['已取消', 4]])
-    // status 0: 全部, 1: 预报名, 2: 未支付, 3: 已支付, 4: 已取消
-    const statusMap = new Map([['预报名', 1], ['未支付', 2], ['已支付', 3], ['已取消', 4]])
-    const statusArr = [null, preApplyMap.get('预报名'), applyMap.get('未支付'), applyMap.get('已支付'), applyMap.get('已取消')]
+    // 已报名状态 1: 未支付, 2: 已支付, 3: 已完成, 4: 已取消, 5: 申请退款中, 6: 已退款
+    const applyMap = new Map([['未支付', 1], ['已支付', 2], ['已完成', 3], ['已取消', 4], ['申请退款中', 5], ['已退款', 6], ['售后', 7]])
+    // status 0: 全部, 1: 预报名, 2: 未支付, 3: 已支付, 4: 已取消, 5: 售后
+    const statusMap = new Map([['预报名', 1], ['未支付', 2], ['已支付', 3], ['已取消', 4], ['售后', 5]])
+    const statusArr = [null, preApplyMap.get('预报名'), applyMap.get('未支付'), applyMap.get('已支付'), applyMap.get('已取消'), applyMap.get('售后')]
 
-    // 获取预报名列表
-    if (status == statusMap.get('预报名')) {
-      props.dispatch({
-        type: 'study/getPreApplyList',
-        payload: {
-          status: statusArr[status],
-          page,
-          limit,
-        }
-      })
-    } else {
-      // 获取报名列表
-      props.dispatch({
-        type: 'study/getApplyList',
-        payload: {
-          status: statusArr[status],
-          page,
-          limit,
-        }
-      })
-    }
+    // 获取预报名或报名列表
+    let type = 'study/'
+    status == statusMap.get('预报名') ? type += 'getPreApplyList' : type += 'getApplyList'
+    props.dispatch({
+      type,
+      payload: {
+        status: statusArr[status],
+        page,
+        limit,
+      }
+    })
   }
 
   /* 取消报名 */
@@ -133,6 +124,38 @@ function PreApplyList(props) {
             }
           }).then(() => {
             getApplyList(currTab)
+          })
+        }
+      }
+    })
+  }
+
+  /* 统一下单 */
+  function pay(pid) {
+    payApply(pid, null, null, () => {
+      Taro.navigateTo({
+        url: '/pages/studies/apply_detail/index?id=' + pid
+      })
+    })
+  }
+
+  /**
+   * 退款
+   * @param {Number} aid 报名id
+   */
+  function refund(aid) {
+    Taro.showModal({
+      title: '提示',
+      content: '是否确认退款？',
+      success: res => {
+        if (res.confirm) {
+          props.dispatch({
+            type: 'study/refund',
+            payload: {
+              aid
+            }
+          }).then(() => {
+
           })
         }
       }
@@ -157,6 +180,7 @@ function PreApplyList(props) {
         <View className={currTab == 2 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 2)}>未支付</View>
         <View className={currTab == 3 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 3)}>已支付</View>
         <View className={currTab == 4 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 4)}>已取消</View>
+        <View className={currTab == 5 ? 'tab_item active' : 'tab_item'} onClick={switchTab.bind(this, 5)}>售后</View>
       </View>
       <View className='list_wrap'>
         {dataList.map((data, index) => (
@@ -166,22 +190,37 @@ function PreApplyList(props) {
                 ? <Text className='create_time'>{'预报名日期：' + new Date(formatTimeStamp(data.create_time)).toLocaleDateString()}</Text>
                 : null
               }
-              {currTab == (2 || 3)
+              {currTab == 2
                 ? <Text className='create_time'>{'报名日期：' + new Date(formatTimeStamp(data.create_time)).toLocaleDateString()}</Text>
+                : null
+              }
+              {currTab == 3
+                ? <Text className='create_time'>{'支付日期：' + new Date(formatTimeStamp(data.update_time)).toLocaleDateString()}</Text>
                 : null
               }
               {currTab == 4
                 ? <Text className='create_time'>{'取消日期：' + new Date(formatTimeStamp(data.update_time)).toLocaleDateString()}</Text>
                 : null
               }
+              {currTab == 5
+                ? <Text className='create_time'>{'申请日期：' + new Date(formatTimeStamp(data.update_time)).toLocaleDateString()}</Text>
+                : null
+              }
+              {currTab == 6
+                ? <Text className='create_time'>{'处理日期：' + new Date(formatTimeStamp(data.update_time)).toLocaleDateString()}</Text>
+                : null
+              }
               <Text className='status'>{data.status_text}</Text>
             </View>
-            <View className='info_wrap' onClick={() => {Taro.navigateTo({ url: '/pages/studies/apply_detail/index?id=' + data.id })}}>
+            <View className='info_wrap' onClick={() => { Taro.navigateTo({ url: `/pages/studies/apply_detail/index?id=${data.id}&status=${currTab}` }) }}>
               <Image src={data.courseInfo.cover} className='cover' />
               <View className='info'>
                 <View className='name'>{data.courseInfo.name}</View>
                 <View className='session'>{'第' + (data.courseInfo.session.findIndex(item => data.session_id === item.id) + 1) + '期：' + new Date(data.courseInfo.session.find(item => data.session_id === item.id).begin_time).toLocaleDateString()}</View>
                 <View className='people'>{`人数：${data.people} 人`}</View>
+                {currTab == 2 && data.total_price
+                  ? <View className='price'>{`应付 ¥${data.total_price}`}</View>
+                  : null}
               </View>
             </View>
             {currTab == 1
@@ -196,7 +235,13 @@ function PreApplyList(props) {
               ? <View className='btn_wrap'>
                 <View className='btn cancle' onClick={cancle.bind(this, data.id)}>取消</View>
                 <View className='btn plain' onClick={() => Taro.navigateTo({ url: `/pages/studies/update_apply/index?pid=${data.id}` })}>修改</View>
-                <View className='btn' onClick={() => Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${data.id}&cid=${data.course_id}` })}>支付</View>
+                <View className='btn' onClick={pay.bind(this, data.id)}>支付</View>
+              </View>
+              : null
+            }
+            {currTab == 3
+              ? <View className='btn_wrap'>
+                <View className='btn plain' onClick={refund.bind(this, data.id)}>退款</View>
               </View>
               : null
             }

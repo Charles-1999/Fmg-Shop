@@ -1,12 +1,12 @@
-import Taro, { getCurrentInstance } from '@tarojs/taro'
+import Taro, { getCurrentInstance, useDidShow } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { View, Text } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
 import { connect } from 'react-redux'
 import { timeFormat } from '@utils/time'
+import { payApply } from '@utils/pay'
 
 import './index.less'
-// import '../style/study_common.less'
 
 function ApplyDetail(props) {
   const statusBarHeight = Taro.getStorageSync('statusBarHeight')
@@ -14,26 +14,54 @@ function ApplyDetail(props) {
   const isIphoneX = Taro.getStorageSync('isIphoneX')
   const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3
 
-  const { dataList } = props
-  const [currCourse, setCurrCourse] = useState({})
-  const [apply, setApply] = useState(null)
+  const { apply } = props
+  const currCourse = props.courseInfo
   const [sessionIndex, setSessionIndex] = useState(0)
 
-  useEffect(() => {
-    const { id } = getCurrentInstance().router.params
+  useDidShow(() => {
+    const { id, status } = getCurrentInstance().router.params
+    if (status == 1) {
+      // 设置当前预报名信息
+      getPreApply(id).then(() => {
+        // 设置场次在场次列表中的索引
+        const sessionIndex = currCourse.session.findIndex(item => item.id === apply.session_id)
+        setSessionIndex(sessionIndex)
+      })
+    } else {
+      // 设置当前报名信息
+      getApply(id).then(() => {
+        // 设置场次在场次列表中的索引
+        const sessionIndex = currCourse.session.findIndex(item => item.id === apply.session_id)
+        setSessionIndex(sessionIndex)
+      })
+    }
+  })
 
-    // 设置当前报名信息
-    const apply = dataList.find(item => item.id == id)
-    setApply(apply)
+  /* 获取当前预报名信息 */
+  function getPreApply(id) {
+    return props.dispatch({
+      type: 'study/getPreApply',
+      payload: {
+        ids: [Number(id)]
+      }
+    })
+  }
 
-    // 设置当前课程信息
-    const currCourse = apply.courseInfo
-    setCurrCourse(currCourse)
+  /* 获取当前报名信息 */
+  function getApply(id) {
+    return props.dispatch({
+      type: 'study/getApply',
+      payload: {
+        ids: [Number(id)]
+      }
+    })
+  }
 
-    // 设置场次在场次列表中的索引
-    const sessionIndex = currCourse.session.findIndex(item => item.id === apply.session_id)
-    setSessionIndex(sessionIndex)
-  }, [])
+  /* 支付 */
+  function pay() {
+    // 统一下单
+    payApply(apply.id, null, null, null)
+  }
 
   return (
     <View className={isIphoneX ? 'isIphoneX apply_detail' : 'apply_detail'} style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -47,7 +75,7 @@ function ApplyDetail(props) {
         color='#fff'
         backColor='white'
       />
-      <View className='container_study'>
+      {currCourse && <View className='container_study'>
         <View className='course_info'>
           <Text className='name'>{currCourse.name}</Text>
           <View className='time'>
@@ -124,17 +152,17 @@ function ApplyDetail(props) {
           </View>
           : null
         }
-      </View>
-      <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
+      </View>}
+      {apply && ['预报名', '未支付'].includes(apply.status_text) && <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
         {apply && apply.status_text == '预报名'
-          ? <View className='bar_item' onClick={() => {Taro.navigateTo({url: `/pages/studies/apply/index?pid=${apply.id}&cid=${apply.course_id}`})}}>报名</View>
+          ? <View className='bar_item' onClick={() => { Taro.navigateTo({ url: `/pages/studies/apply/index?pid=${apply.id}&cid=${apply.course_id}` }) }}>报名</View>
           : null
         }
         {apply && apply.status_text == '未支付'
-          ? <View className='bar_item' onClick={() => { }}>支付</View>
+          ? <View className='bar_item' onClick={pay.bind(this)}>支付</View>
           : null
         }
-      </View>
+      </View>}
     </View>
   )
 }

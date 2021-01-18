@@ -1,4 +1,4 @@
-import Taro, { getCurrentInstance, useDidShow } from '@tarojs/taro'
+import Taro, { getCurrentInstance, useDidShow, getCurrentPages } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, Input, Picker } from "@tarojs/components"
 import Navbar from '@components/navbar/navbar'
@@ -106,14 +106,15 @@ function Apply(props) {
         number: idCard,
         phone: phone
       }
-    }).then(() => {
+    }).then((apply_id) => {
       Taro.showToast({
         title: '报名成功！',
-        icon: 'success'
+        icon: 'success',
+        duration: 2000
       })
       setTimeout(() => {
         Taro.redirectTo({
-          url: '/pages/studies/preApply_list/index?status=' + 2
+          url: `/pages/studies/apply_detail/index?id=${apply_id}`
         })
       }, 2000)
     }).catch(err => {
@@ -185,7 +186,7 @@ function Apply(props) {
         </View>
       </View>
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'}>
-        <View className='bar_item' onClick={checkOut.bind(this)}>去支付</View>
+        <View className='bar_item' onClick={checkOut.bind(this)}>提交报名</View>
       </View>
     </View>
   )

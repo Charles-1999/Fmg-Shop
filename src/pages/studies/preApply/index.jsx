@@ -76,7 +76,7 @@ function PreApply(props) {
       duration: 1000
     })
     setTimeout(() => {
-      Taro.reLaunch({
+      Taro.redirectTo({
         url: '/pages/studies/preApply_list/index?status=' + 1
       })
     }, 1000)
