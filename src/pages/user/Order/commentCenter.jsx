@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Navigator } from '@tarojs/components'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
@@ -23,6 +23,7 @@ class CommentCenter extends Component {
     commentList:[],
     goods_info:[],
     isHaveComment:true,
+    userCommentList:[],
   }
  
   async componentDidMount () {
@@ -32,7 +33,12 @@ class CommentCenter extends Component {
   async getUserCommentList(){
     await this.props.dispatch({
       type: 'comment/getUserComment',
-      payload: {},
+      payload: {
+        uid:this.state.userId
+      },
+    })
+    this.setState({
+      userCommentList:this.props.userCommentList,
     })
   }
   //获取评价信息列表
@@ -133,14 +139,14 @@ class CommentCenter extends Component {
           <View className='touxiang'>
             <Image circle size='large' src={userInfo.avatarUrl}></Image>
           </View>
-          <View className='number-card'>
+          <Navigator className='number-card' url='/pages/user/Order/userComment'>
             <View className='number'>
-              3
+              {this.state.userCommentList.length}
             </View>
             <View className='title'>
               全部评价
             </View>
-          </View>
+          </Navigator>
         </View>
         <View className='select-tab'>
           {this.state.tag==0?

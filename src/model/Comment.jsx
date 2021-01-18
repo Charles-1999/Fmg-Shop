@@ -1,5 +1,6 @@
 import {get2Today} from '@utils/time'
 import { compose } from 'redux'
+import { get } from 'lodash';
 import { getGoodsComments } from '../service/Comment'
 import { mgetAccountInfo } from '../service/Account'
 import { getToNow } from '../utils/time'
@@ -12,7 +13,9 @@ export default {
     pictureList: [],
     goodComments: [],
     mediumComments: [],
-    badComments: []
+    badComments: [],
+    userCommentList: [],
+    userInfo: {},
   },
   effects: {
     /* 获取商品评价 */
@@ -76,13 +79,48 @@ export default {
         }
       })
     },
+
     //获取用户评论
     * getUserComment({ payload }, { call, put }) {
-      const res = yield call(getUserComment, payload);
+      let res = yield call(getUserComment, payload);
+      let userId = [res[0].author_id]
+      res = res.map(item=> {
+        if(item.pictures){
+          item.pictures = item.pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+        }
+        // if(get(item,'second_pictures',[])){
+        //   item.second_pictures = get(item,'second_pictures',[]).map(pic => 'http://qiniu.daosuan.net/' + pic)
+        // }
+        // if(get(item,'second_pictures')){
+        //   item.second_pictures = item.second_pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+        // }
+        else{
+          item.pictures = []
+          item.second_pictures = []
+        }
+       
+       return item;
+      })
+    
+      /* 请求 批量获取用户信息 接口 */
+      let accountList = yield call(mgetAccountInfo, userId)
+      console.log(accountList)
+      res.forEach(comment => {
+        if (accountList) {
+          comment.nickname = accountList[0].nickname
+          comment.avator = accountList[0].avator
+        } else {
+          comment.nickname = ''
+          comment.avator = ''
+        }
+        return comment
+      })
       console.log(res)
       yield put({
         type: 'save',
-        payload:res,
+        payload:{
+          userCommentList:res
+        },
       });
     },
 

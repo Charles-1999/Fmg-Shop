@@ -8,8 +8,8 @@
  */
 export default {
   pages: [
-    'pages/index/index',
     'pages/login/index',
+    'pages/index/index',
     'pages/user/index',
     'pages/cart/index',
     'pages/cart/confirm/index',
@@ -30,11 +30,12 @@ export default {
     'pages/user/Order/comment',
     'pages/user/Order/commentSuccess',
     'pages/user/Order/commentCenter',
+    'pages/user/Order/userComment',
     'pages/user/Order/refundSelect',
     'pages/user/Order/refundDetail',
     'pages/user/Order/refundCenter',
     'pages/user/Order/userRefundDetail',
-    'pages/studies/index',
+    //'pages/studies/index',
     'pages/studies/index/index',
     'pages/studies/course/index',
     'pages/studies/news/index',

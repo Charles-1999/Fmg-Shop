@@ -655,14 +655,13 @@
   }
   .index-search-wrap{
     //margin-left: 40rpx;
-    .searchBar {
+    .index-searchBar {
       position: relative;
       text-align: center;
       align-self: center;
-      width: 865rpx;
-      height: 70rpx;
+      width: 695rpx;
+      height: 80rpx;
       input {
-        width: 80%;
         height: 90%;
         text-align: center;
         border-radius: 50rpx;
@@ -675,7 +674,7 @@
         top: 50%;
         transform: translate(0,-50%);
         height: 50rpx;
-        margin-left: 21%;
+        margin-left: 38%;
         width: 50rpx;
       }
     }

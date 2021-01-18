@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import Taro, {Current} from '@tarojs/taro'; 
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
-import SaleNew from '../../index/Components/SaleNew'
+import SaleRecommend from '../../index/Components/SaleRecommend'
 
 class CommentSuccess extends Component {
   state = {
@@ -54,7 +54,7 @@ class CommentSuccess extends Component {
             <View className='to-comment' onclick={this.handlePage.bind(this,2)}>查看评论</View>
           </View>
         </View>
-        <SaleNew />
+        <SaleRecommend />
       </View>
     )
   }

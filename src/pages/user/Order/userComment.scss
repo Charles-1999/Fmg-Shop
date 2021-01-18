@@ -1,0 +1,82 @@
+.user-comment-wrap{
+  .user-comment-list-wrap{
+    padding-top:20rpx;
+    .comment-item{
+      background-color: white;
+      margin:20rpx 0;
+      padding: 20rpx 20rpx;
+      .user-info{
+        display: flex;
+        image{
+          width: 60rpx;
+          height: 60rpx;
+          border-radius: 40rpx;
+        }
+        .name{
+          margin-left: 20rpx;
+          font-size: 28rpx;
+          align-self: center;
+        }
+      }
+      .date{
+        font-size: 25rpx;
+        margin-top: 10rpx;
+        color: rgba(54, 54, 54, 0.6);
+      }
+      .content{
+        margin-top: 10rpx;
+        font-size: 29rpx;
+      }
+      .picture_list {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+        box-sizing: border-box;
+        .picture {
+          width: calc(25% - 12rpx);
+          height: calc(25vw - 32rpx);
+          margin-right: 14rpx;
+          margin-top: 14rpx;
+          border-radius: 20rpx;
+          overflow: hidden;
+          background-color: pink;
+          image {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .picture:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+.comment-list-good{
+  margin-top: 20rpx;
+  display: flex;
+  background-color: #f7f7f7;
+  image{
+    //border-radius: 5PX;
+    width: 150rpx;
+    height: 150rpx;
+  }
+  .info{
+    padding: 10rpx 20rpx;
+    flex: auto;
+    .title{
+      margin-left: 20rpx;
+      .name{
+        font-size: 30rpx;
+      }
+    }
+    .price{
+      margin-left: 20rpx;
+      font-size: 30rpx;
+      margin-top: 50rpx;
+      color:rgb(27, 27, 27);
+    }
+  }
+ 
+
+}

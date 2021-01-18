@@ -322,6 +322,7 @@ class MyOrderList extends Component {
                         {item.order_status == 6 ? <View>订单已取消</View> : ''}
                         {item.order_status == 7 ? <View>售后申请中</View> : ''}
                         {item.order_status == 8 ? <View>退款成功</View> : ''}
+                        {item.order_status == 9 ? <View>申请被拒绝</View> : ''}
                       </View>
                     </View>
                                  

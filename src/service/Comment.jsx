@@ -16,9 +16,9 @@ export const getGoodsComments = gid => {
 
 //获取用户评论
 export const getUserComment = params => {
-  console.log(params)
+  console.log(params);
   return request(`/comment/info/get_by_user`, {
     body: {},
-    method: 'GET'
+    method: 'POST'
   })
 }

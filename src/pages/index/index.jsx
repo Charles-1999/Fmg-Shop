@@ -121,10 +121,10 @@ class Index extends Component {
             <Image src='http://qiniu.daosuan.net/picture-1602721913000' />
           </View> */}
           <View className='index-search-wrap'>
-            <View className='searchBar'>
-            <Input placeholder='搜索'  maxLength='50' confirmType='search' onConfirm={this.search.bind(this)} value={input_Val} />
-            <Image className='index-search' src='http://qiniu.daosuan.net/icon-1598881971000'  />
-          </View>
+            <View className='index-searchBar'>
+              <Input placeholder='搜索'  maxLength='50' confirmType='search' onConfirm={this.search.bind(this)} value={input_Val} />
+              <Image className='index-search' src='http://qiniu.daosuan.net/icon-1598881971000'  />
+            </View>
           </View>
         </View>
         {/* <Navbar
