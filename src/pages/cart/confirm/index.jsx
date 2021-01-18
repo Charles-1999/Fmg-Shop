@@ -1,6 +1,6 @@
 import React, { Component, useCallback } from 'react'
 import Taro, { Current } from '@tarojs/taro'
-import { View, Text, Image, Navigator, Checkbox, CheckboxGroup, Input } from '@tarojs/components'
+import { View, Text, Image, Radio, RadioGroup, Input } from '@tarojs/components'
 import Navbar from '@components/navbar/navbar'
 import { get as getGlobalData } from '../../../global_data'
 import request, { getGoodsList } from '../../../utils/request'
@@ -454,9 +454,9 @@ export default class Confirm extends Component {
                     {(getWayList ?? []).map((item, index) => (
                       <View className='item' key={index} onClick={this.selectGetWay.bind(this, index)}>
                         <Text className='item_text'>{this.getGetWay(item.id)}</Text>
-                        <CheckboxGroup className='checkBox'>
-                          <Checkbox checked={item.checked}></Checkbox>
-                        </CheckboxGroup>
+                        <RadioGroup>
+                          <Radio checked={item.checked}></Radio>
+                        </RadioGroup>
                       </View>
                     ))}
                     <View className='btn_ok' onClick={this.changeGetWay.bind(this)}>完成</View>
