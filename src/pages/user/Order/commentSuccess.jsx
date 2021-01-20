@@ -25,8 +25,11 @@ class CommentSuccess extends Component {
     }
     if(value == 2){
       Taro.redirectTo({
-        url: `/pages/details/index?gid=${this.state.good_id}`,
+        url: `/pages/user/Order/userComment`,
       });
+      // Taro.redirectTo({
+      //   url: `/pages/details/index?gid=${this.state.good_id}`,
+      // });
     }
   }
 

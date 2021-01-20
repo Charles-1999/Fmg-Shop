@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import Taro, {Current} from '@tarojs/taro'; 
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
+import request from '../../../utils/request'
 import './refundCenter.scss'
 import RefundListGood from './refund_list_good'
+
 
 @connect(({ order, goods, comment }) => ({
   ...order,...goods,...comment,
@@ -30,6 +32,10 @@ class RefundCenter extends Component {
       Contact     = 2  //自行退货 这个是return
    */
   async componentDidMount () {
+   this.getExchangeList(1)
+  }
+
+  async getExchangeList(){
     //获取售后list
     await this.props.dispatch({
       type: 'order/getExchangeList',
@@ -47,7 +53,7 @@ class RefundCenter extends Component {
     this.setState({
       refundList:this.props.refundInfoList.filter(item => item.status == 1)
     })
-   this.getRedunfList();
+
   }
 
   //获取售后list
@@ -75,8 +81,44 @@ class RefundCenter extends Component {
     console.log(this.state.goods_info)
   }
 
+  //删除退款、售后记录
+  handleDelete(eid){
+    const handleChangeTab = () => this.handleChangeTab(2);
+    try{
+      Taro.showModal({
+        title: '删除记录',
+        //icon: 'success',
+        content: '请确认该售后记录？',
+        confirmText: '确认',
+        cancelText:'取消',
+        async success(res) {
+          console.log(res)
+          if(res.confirm){
+            console.log('deling')
+            await request(`/exchange/del/${eid}`,{
+              method: 'DELETE',
+            })
+            handleChangeTab(2)
+            Taro.showToast({
+              title: '记录删除成功',
+              icon: 'none'
+            })
+           
+          }  
+        }
+      })
+    }
+    catch(error){
+      Taro.showToast({
+        title: '记录删除失败',
+        icon: 'none'
+      })
+    }
+  }
+
   //切换tab
-  handleChangeTab(index){
+  async handleChangeTab(index){
+    await this.getExchangeList()
     this.setState({
       currentIndex: index
     })
@@ -84,13 +126,14 @@ class RefundCenter extends Component {
       this.setState({
         refundList:this.props.refundInfoList.filter(item => item.status == 1)
       })
-      this.getRedunfList();
+      await this.getRedunfList();
     }
     else{
+      console.log(23434)
       this.setState({
         refundList:this.props.refundInfoList.filter(item => item.status == 2 || item.status ==4 || item.status ==8)
       })
-      this.getRedunfList();
+      await this.getRedunfList();
     }
   }
  
@@ -170,7 +213,7 @@ class RefundCenter extends Component {
                 </View>:''
               }
               <View className='btn-list'>
-                <View className='refund-delete'>
+                <View className='refund-delete' onClick={this.handleDelete.bind(this,item.id)}>
                   删除记录
                 </View>
                 <Navigator url={'/pages/user/Order/userRefundDetail?id=' + get(item,'id')} className='refund-detail' >

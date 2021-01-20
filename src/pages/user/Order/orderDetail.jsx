@@ -79,12 +79,14 @@ class OrderDetail extends Component {
   //获取地址信息
   async getAddressInfo(){
     const id = get(this.state.order_info,'address_id')
-    const info = await request(`/address/info/get/${id}`, {
-      method: 'GET'
-    })
-    this.setState({
-      address_info: info 
-    })
+    if(id !== 0){
+      const info = await request(`/address/info/get/${id}`, {
+        method: 'GET'
+      })
+      this.setState({
+        address_info: info 
+      })
+    } 
   }
   /**获取快递信息 */
   async getDeliveryInfo(){
@@ -183,9 +185,10 @@ class OrderDetail extends Component {
               {get(this.state.order_info,'order_status')  == 6 ? <View>·订单已取消</View> : ''}
               {get(this.state.order_info,'order_status')  == 7 ? <View>·售后申请中</View> : ''}
               {get(this.state.order_info,'order_status')  == 8 ? <View>·退款成功</View> : ''}
+              {get(this.state.order_info,'order_status')  == 9 ? <View>·待自取</View> : ''}
             </View>
           </View>
-          {get(this.state.deliveryInfo,'data') == null? 
+          {get(this.state.deliveryInfo,'data') == null ? 
           <View className='delivery-wrap'>
             <Image className='none-img' src='http://qiniu.daosuan.net/picture-1598882531000' />
             <View className='info'>
@@ -201,6 +204,7 @@ class OrderDetail extends Component {
             </View>
           </View>
           }
+          {get(this.state.order_info,'delivery') == 4 ? '':
           <View className='address-wrap'>
             <Image className='icon-address' src='http://qiniu.daosuan.net/picture-1598883667000' ></Image>
             <View className='info'>
@@ -216,6 +220,8 @@ class OrderDetail extends Component {
               </View>
             </View>
           </View>
+          }
+         
           <View className='goods-wrap'>
             {get(this.state.order_info,'order_detail',[]).map(item => (
               <View key={item.id}>

@@ -197,6 +197,14 @@ class RefundDetail extends Component {
   }
   async handleSubmit(){
     //退换货接口
+    const pictures=[]
+    this.state.pictures.map((item,index)=>{
+      const obj = {}
+      obj.picture = item
+      obj.order = index
+      pictures.push(obj)
+    })
+    console.log(pictures)
     await this.props.dispatch({
       type: 'order/exchangeOrder',
       payload:{
@@ -208,7 +216,7 @@ class RefundDetail extends Component {
         goods_stats: this.state.status,
         reason: this.state.reasonCheck,
         return_mode:2,//默认自行寄回
-        picture:this.state.pictures,
+        pictures:pictures,
         message:this.state.message,
       }
     })

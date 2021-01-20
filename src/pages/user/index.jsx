@@ -141,7 +141,7 @@ class UserList extends Component {
               <Image src='http://qiniu.daosuan.net/picture-1598882446000' style='width:90rpx;height:90rpx' />
               <View className='name'>待发货</View>
             </View>
-            <View className='myorder-list-item'onClick={this.handleOrder.bind(this,3)}>
+            <View className='myorder-list-item'onClick={this.handleOrder.bind(this,10)}>
               {this.state.code3 == 0 ?
                 '':
                 <View className='count'>{this.state.code3}</View>

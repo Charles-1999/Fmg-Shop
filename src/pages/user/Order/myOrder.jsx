@@ -25,7 +25,7 @@ class MyOrderList extends Component {
       {id:0, title:' 全 部 '},
       {id:1, title:'待付款'},
       {id:2, title:'待发货'},
-      {id:3, title:'待收货'},
+      {id:10, title:'待收货'},
       {id:4, title:'待评价'},
       {id:7, title:'售后/退款'},
     ],
@@ -321,9 +321,10 @@ class MyOrderList extends Component {
                         {item.order_status == 5 ? <View>订单已完成</View> : ''}
                         {item.order_status == 6 ? <View>订单已取消</View> : ''}
                         {item.order_status == 7 ? <View>售后申请中</View> : ''}
-                        {item.order_status == 8 ? <View>退款成功</View> : ''}
-                        {item.order_status == 9 ? <View>申请被拒绝</View> : ''}
-                        {item.order_status == 10 ? <View>审核通过</View> : ''}
+                        {item.order_status == 8 ? <View>售后完成</View> : ''}
+                        {item.order_status == 9 ? <View>待自取</View> : ''}
+                        {/* {item.order_status == 9 ? <View>申请被拒绝</View> : ''}
+                        {item.order_status == 10 ? <View>审核通过</View> : ''} */}
                       </View>
                     </View>
                                  
@@ -346,6 +347,7 @@ class MyOrderList extends Component {
                             isShowComment
                             is_comment={get(goods_item,'is_comment')}
                             status={item.order_status}
+                            isPass={get(goods_item,'is_pass')}
                           />  :''
                           }
                                              
@@ -356,12 +358,12 @@ class MyOrderList extends Component {
                       <View className='detail-fee'>
                       <View className='fee-wrap'>
                         <View className='all-fee'>总价：</View>
-                        <View className='money'>¥{Number(get(item,'child_goods_amount') / 100).toFixed(2)},&ensp;</View>
+                        <View className='money'>¥{Number(get(item,'child_goods_amount') / 100).toFixed(2)}&ensp;</View>
                       </View>
                       {get(item,'child_total_coupon') ? 
                         <View className='fee-wrap'>
                           <View className='all-coupon'> 优惠：</View>
-                          <View className='money'> ¥{Number(get(item,'child_total_coupon') / 100).toFixed(2)},&ensp;</View>
+                          <View className='money'> ¥{Number(get(item,'child_total_coupon') / 100).toFixed(2)}&ensp;</View>
                         </View>
                       :''}
                       {get(item,'child_exp_fare') ? 
@@ -408,6 +410,10 @@ class MyOrderList extends Component {
                           <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
                           <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
                         </View> : ''}
+                      {item.order_status == 9  ? 
+                        <View style='display:inline-flex'>
+                          <View className='getDelivery' onClick={this.handleCheckDelivery.bind(this,item.id,get(item,'order_id'))}>确认收货</View>
+                        </View> : ''} 
                     </View>
                     <View style='clear:both'></View>
                   </View>             

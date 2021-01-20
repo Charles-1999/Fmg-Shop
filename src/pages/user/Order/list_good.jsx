@@ -20,7 +20,7 @@ class ListGood extends Component {
     isShowSecondComment:0,
   }
   componentDidMount(){
-    const {goodId,speId,price,quality,message,goodsInfo,IsRefund,status} = this.props;
+    const {goodId,speId,price,quality,message,goodsInfo,IsRefund,status,isPass} = this.props;
     if(goodsInfo.length !== 0){
       const data = goodsInfo.filter(item => item.id == goodId)[0]
       const specification_list = get(data,'specification',[])
@@ -36,6 +36,7 @@ class ListGood extends Component {
         IsRefund:IsRefund,
         status:status,
         is_after_serve:is_after_serve,
+        isPass:isPass,
       })
     }
 
@@ -44,7 +45,7 @@ class ListGood extends Component {
         isShowComment: true,
       })
     }
-    if(this.props.isShowComment && this.props.status == 5){
+    if(this.props.isShowComment && (this.props.status == 5 || this.props.status == 4)){
       this.setState({
         isShowSecondComment: true,
       })
@@ -94,16 +95,32 @@ class ListGood extends Component {
           {this.state.isShowSecondComment && this.props.is_comment==1 ?
             <View className='secont-commit' onClick={this.toComment.bind(this,1)}>可追评</View>: ''
           }
-          {this.state.IsRefund && this.state.status==5  ? 
-            <View className='after-sale' onClick={this.toSelect.bind(this)}>申请售后</View>: ''  
-          }
           {this.state.IsRefund && (this.state.status==2||this.state.status==3||this.state.status==4)? 
             <View className='refund' onClick={this.toSelect.bind(this)}>退款</View>: ''  
           }
-          {
-            this.state.IsRefund &&  !this.state.is_after_serve  && this.state.status==7? 
+          {this.state.IsRefund && !this.state.is_after_serve  && (this.state.status==5 || this.state.status==7 || this.state.status==8 || this.state.status==9)  ? 
             <View className='after-sale' onClick={this.toSelect.bind(this)}>申请售后</View>: ''  
           }
+          {
+            this.state.isPass==1 ?
+            <View class='refund-success'>等待审核</View>:''
+          }
+          {
+            this.state.isPass==2 ?
+            <View class='refund-success'>退款中</View>:''
+          }
+          {
+            this.state.isPass==4 ?
+            <View class='refund-success'>已拒绝</View>:''
+          }
+          {
+            this.state.isPass==8 ?
+            <View class='refund-success'>退款成功</View>:''
+          }
+          {/* {
+            this.state.IsRefund &&   && this.state.status==7? 
+            <View className='after-sale' onClick={this.toSelect.bind(this)}>申请售后</View>: ''  
+          } */}
    
 
         
