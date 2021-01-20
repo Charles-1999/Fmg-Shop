@@ -21,27 +21,27 @@ const store = dvaApp.getStore();
 
 class App extends Component {
   async onLaunch() {
-    // const userInfo = Taro.getStorageSync("userInfo");
-    // if(!userInfo) {
-    //   Taro.redirectTo({ url:"/pages/login/index" });
-    // }
-    // else {
-    //   try {
-    //     const js_code = await appLogin();
-    //     const res = await login(js_code);
-    //     // res中存在key，即账号没注册
-    //     if(res.key) {
-    //       await register(res.key, userInfo);
-    //     }
-    //   }catch(err) {
-    //     console.log(err)
-    //     Taro.showToast({
-    //       title: '小程序登录失败，请重新进入小程序。',
-    //       icon: 'none',
-    //       duration: 2500
-    //     })
-    //   }
-    // }
+    const userInfo = Taro.getStorageSync("userInfo");
+    if(!userInfo) {
+      Taro.redirectTo({ url:"/pages/login/index" });
+    }
+    else {
+      try {
+        const js_code = await appLogin();
+        const res = await login(js_code);
+        // res中存在key，即账号没注册
+        if(res.key) {
+          await register(res.key, userInfo);
+        }
+      }catch(err) {
+        console.log(err)
+        Taro.showToast({
+          title: '小程序登录失败，请重新进入小程序。',
+          icon: 'none',
+          duration: 2500
+        })
+      }
+    }
   }
 
   componentWillMount(){

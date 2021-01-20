@@ -101,7 +101,6 @@ class CommentCenter extends Component {
         isHaveComment:true,
       })
     }
-   
   }
 
   handleChangeTag=e=>{
@@ -113,10 +112,10 @@ class CommentCenter extends Component {
       })
     }
     else{
-      this.getList(5,1)
+      this.getList(4,1)
       this.setState({
         tag:1,
-        status:5
+        status:4
       })
     }
   }
