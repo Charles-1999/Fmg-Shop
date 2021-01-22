@@ -32,7 +32,8 @@ class RefundCenter extends Component {
       Contact     = 2  //自行退货 这个是return
    */
   async componentDidMount () {
-   this.getExchangeList(1)
+   await this.getExchangeList(1)
+   await this.getRedunfList()
   }
 
   async getExchangeList(){
