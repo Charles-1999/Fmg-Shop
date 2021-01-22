@@ -78,6 +78,12 @@ class AddAddressList extends Component {
         icon: 'none'
       })
     }
+    else if(!(/^1[34578]\d{9}$/.test(this.state.phone))){
+      Taro.showToast({
+        title: '手机号格式错误，请重新输入',
+        icon: 'none'
+      })
+    }
     else if(this.state.detail == ""){
       Taro.showToast({
         title: '地址详情不能为空，请输入',
