@@ -45,7 +45,7 @@ class ListGood extends Component {
         isShowComment: true,
       })
     }
-    if(this.props.isShowComment && (this.props.status == 4)){
+    if(this.props.isShowComment && (this.props.status == 4 || this.props.status == 5)){
       this.setState({
         isShowSecondComment: true,
       })

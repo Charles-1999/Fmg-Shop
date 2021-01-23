@@ -213,6 +213,10 @@ class MyOrderList extends Component {
             await request(`/_order/${ooid}/child_order/${oid}`,{
               method: 'DELETE',
             })
+            Taro.showToast({
+              title: '删除订单成功',
+              icon: 'success'
+            })
             getOrderList();
           }  
         }

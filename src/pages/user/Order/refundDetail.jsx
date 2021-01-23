@@ -205,34 +205,42 @@ class RefundDetail extends Component {
       pictures.push(obj)
     })
     console.log(pictures)
-    await this.props.dispatch({
-      type: 'order/exchangeOrder',
-      payload:{
-        oId:this.state.oId,
-        ooId:this.state.ooId,
-        dId:this.state.dId,
-        return_amount:parseFloat(this.state.money)*100,
-        service_type:parseInt(Current.router.params.status),
-        goods_stats: this.state.status,
-        reason: this.state.reasonCheck,
-        return_mode:2,//默认自行寄回
-        pictures:pictures,
-        message:this.state.message,
-      }
-    })
-    let id = this.props.exchangeId;
-    console.log(id)
-    if(id!==0){
-      Taro.showToast({
-        title: '提交成功',
-        icon: 'success',
-        duration: 2000
-      }).then(()=>{
-        Taro.redirectTo({
-          url:'/pages/user/Order/myOrder?status=0'
-        })
+
+    try{
+      await this.props.dispatch({
+        type: 'order/exchangeOrder',
+        payload:{
+          oId:this.state.oId,
+          ooId:this.state.ooId,
+          dId:this.state.dId,
+          return_amount:parseFloat(this.state.money)*100,
+          service_type:parseInt(Current.router.params.status),
+          goods_stats: this.state.status,
+          reason: this.state.reasonCheck,
+          return_mode:2,//默认自行寄回
+          pictures:pictures,
+          message:this.state.message,
+        }
       })
-    
+      if(this.props.exchangeId!==0){
+        Taro.showToast({
+          title: '提交成功',
+          icon: 'success',
+          duration: 2000
+        }).then(()=>{
+          Taro.redirectTo({
+            url:'/pages/user/Order/myOrder?status=0'
+          })
+        })
+      }
+    }
+    catch(err){
+      console.log(err)
+      Taro.showToast({
+        title: '提交失败!'+err.data.message,
+        icon:'none',
+        duration: 2000
+      })
     }
   }
 

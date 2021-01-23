@@ -58,7 +58,6 @@ class CommentCenter extends Component {
       type: 'order/getOrderList',
       payload: {
         author_id:this.state.userId,
-        status: status,
         limit:total,
       },
     })
@@ -70,7 +69,8 @@ class CommentCenter extends Component {
         ids:Ids
       },
     })
-    const list = this.props.orderInfoList.map(item=> {return item.order_detail})
+    const orderInfoList = this.props.orderInfoList.filter(item=>item.order_status==status||item.order_status==this.state.status)
+    const list = orderInfoList.map(item=> {return item.order_detail})
     console.log(list);
     if(list == ""){
       this.setState({
@@ -112,7 +112,7 @@ class CommentCenter extends Component {
       })
     }
     else{
-      this.getList(4,1)
+      this.getList(5,1)
       this.setState({
         tag:1,
         status:4

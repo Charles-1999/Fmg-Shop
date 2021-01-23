@@ -93,67 +93,71 @@ class Comment extends Component {
       })
     }
     else if(this.state.status==0){
-      await request(`/comment/info/${this.state.good_id}/${this.state.dId}`, {
-        method: 'POST',
-        body:{
-          content:this.state.content,
-          tag:this.state.tag,
-          pictures:this.state.pictures,
-        }
-
-      }).then(async(res)=>{
-        if(res){
-          Taro.showToast({
-            title: '谢谢您的评价',
-            icon: 'success',
-            duration: 3000,
-          })
-          Taro.redirectTo({
-            url:`/pages/user/Order/commentSuccess?gid=${this.state.good_id}`,
-          });
-        }
-        else{
-          this.setState({
-            pictures:[],
-          })
-          Taro.showToast({
-            title: '评价失败',
-            icon: 'fail',
-            duration: 3000,
-          })
-        }
-      })
+      try{
+        await request(`/comment/info/${this.state.good_id}/${this.state.dId}`, {
+          method: 'POST',
+          body:{
+            content:this.state.content,
+            tag:this.state.tag,
+            pictures:this.state.pictures,
+          }
+  
+        }).then(async(res)=>{
+          if(res){
+            Taro.showToast({
+              title: '谢谢您的评价',
+              icon: 'success',
+              duration: 3000,
+            })
+            Taro.redirectTo({
+              url:`/pages/user/Order/commentSuccess?gid=${this.state.good_id}`,
+            });
+          }
+        })
+      }
+      catch(err){
+        this.setState({
+          pictures:[],
+        })
+        Taro.showToast({
+          title: '评价失败!'+err.data.message,
+          icon: 'none',
+          duration: 3000,
+        })
+      }
     }
     else if(this.state.status==1){
-      await request(`/comment/info/put/${this.state.dId}`, {
-        method: 'PUT',
-        body:{
-          // content:'',
-          second_content:this.state.content,
-          second_pictures:this.state.pictures,
-        }
-      }).then(async(res)=>{
-        if(res){
-          Taro.showToast({
-            title: '谢谢您的追评',
-            icon: 'success',
-            duration: 3000,
-          })
-          Taro.redirectTo({
-            url:`/pages/user/Order/commentSuccess?gid=${this.state.good_id}`,
-          });
-        }
-        else{
-          this.setState({
-            pictures:[],
-          })
-          Taro.showToast({
-            title: '评价失败',
-            icon: 'fail',
-            duration: 3000,
-          })
-        }
-      })
+      try{
+        await request(`/comment/info/put/${this.state.dId}`, {
+          method: 'PUT',
+          body:{
+            // content:'',
+            second_content:this.state.content,
+            second_pictures:this.state.pictures,
+          }
+        }).then(async(res)=>{
+          if(res){
+            Taro.showToast({
+              title: '谢谢您的追评',
+              icon: 'success',
+              duration: 3000,
+            })
+            Taro.redirectTo({
+              url:`/pages/user/Order/commentSuccess?gid=${this.state.good_id}`,
+            });
+          }
+        })
+      }
+      catch(err){
+        this.setState({
+          pictures:[],
+        })
+        Taro.showToast({
+          title: '追评失败!'+err.data.message,
+          icon: 'none',
+          duration: 3000,
+        })
+      }
     }
   }
   //修改tag
