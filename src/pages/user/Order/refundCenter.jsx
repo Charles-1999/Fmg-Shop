@@ -84,7 +84,7 @@ class RefundCenter extends Component {
 
   //删除退款、售后记录
   handleDelete(eid){
-    const handleChangeTab = () => this.handleChangeTab(2);
+    const handleChangeTab = () => this.handleChangeTab(this.state.currentIndex);
     try{
       Taro.showModal({
         title: '删除记录',
@@ -93,13 +93,11 @@ class RefundCenter extends Component {
         confirmText: '确认',
         cancelText:'取消',
         async success(res) {
-          console.log(res)
           if(res.confirm){
-            console.log('deling')
             await request(`/exchange/del/${eid}`,{
               method: 'DELETE',
             })
-            handleChangeTab(2)
+            handleChangeTab()
             Taro.showToast({
               title: '记录删除成功',
               icon: 'none'
@@ -130,7 +128,6 @@ class RefundCenter extends Component {
       await this.getRedunfList();
     }
     else{
-      console.log(23434)
       this.setState({
         refundList:this.props.refundInfoList.filter(item => item.status == 2 || item.status ==4 || item.status ==8)
       })
