@@ -3,7 +3,7 @@ import { View, Image } from '@tarojs/components'
 //import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import Taro, {Current} from '@tarojs/taro'; 
+import Taro, {Current} from '@tarojs/taro';
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import Loading from '../../../components/Loading'
@@ -37,7 +37,7 @@ class MyOrderList extends Component {
     isMore:true,
   }
   componentDidMount() {
-    this.getOrderList();   
+    this.getOrderList();
   }
 
   /**获取订单列表信息 */
@@ -74,13 +74,13 @@ class MyOrderList extends Component {
         return get(good,'goods_id')
       })
     })
-    const goodsInfo = await request('/goods/_mget',{ 
-      body: { ids: this.state.goodsList }, 
-      method: 'POST' 
+    const goodsInfo = await request('/goods/_mget',{
+      body: { ids: this.state.goodsList },
+      method: 'POST'
     })
     goodsInfo.map(item => {
       if(item.cover!==""){
-        item.cover = 'http://qiniu.daosuan.net/' + item.cover;
+        item.cover = 'http://qiniu.fmg.net.cn/' + item.cover;
       }
       return item.cover;
     })
@@ -126,9 +126,9 @@ class MyOrderList extends Component {
     try {
       const res_pay = await request(`/pay/unified/${order_id}`, {
         body: {
-          body: '凤鸣谷-商城', // 
-          detail: '测试', // 
-          device_info: sysInfo.model, // 
+          body: '凤鸣谷-商城', //
+          detail: '测试', //
+          device_info: sysInfo.model, //
         },
         method: 'POST'
       })
@@ -186,7 +186,7 @@ class MyOrderList extends Component {
               getOrderList()
             })
           }
-          }  
+          }
       })
     }catch(error){
       Taro.showToast({
@@ -218,7 +218,7 @@ class MyOrderList extends Component {
               icon: 'success'
             })
             getOrderList();
-          }  
+          }
         }
       })
     }
@@ -249,7 +249,7 @@ class MyOrderList extends Component {
               }
             })
             await getOrderList();//重新加载列表
-          }  
+          }
         }
       })
     }
@@ -268,17 +268,17 @@ class MyOrderList extends Component {
     Taro.navigateTo({
       url: `/pages/user/Order/orderDetail?oid=${oid}&ooid=${ooid}`,
     });
-  } 
+  }
   //跳转到物流详情页面
   toDeliveryDetail= (id) => {
     Taro.navigateTo({
       url: `/pages/user/Order/deliveryDetail?id=${id}`,
     });
-  } 
+  }
 
 
   render () {
-    const {statusBarHeight, capsule} = this.state; 
+    const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     return (
       <View className='my-order' style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -292,7 +292,7 @@ class MyOrderList extends Component {
         <View className='my-order-list'>
           <View className='my-order-bar'>
             {this.state.tabList.map(item =>(
-              item.id == this.state.currentIndex ? 
+              item.id == this.state.currentIndex ?
               <View className='tab-item-active' key={item.id} onClick={this.setCurrentIndex.bind(this,item.id)} >
                 {item.title}
               </View>
@@ -302,7 +302,7 @@ class MyOrderList extends Component {
               </View>
             ))}
           </View>
-          {this.state.orderList !== null ? 
+          {this.state.orderList !== null ?
             <View className='list-item-wrap' key={this.state.currentIndex}>
               {this.state.orderList.map(item=>(
                 <View key={item.id}>
@@ -331,18 +331,18 @@ class MyOrderList extends Component {
                         {item.order_status == 10 ? <View>审核通过</View> : ''} */}
                       </View>
                     </View>
-                                 
+
                     </View>
                     <View key={item.id}>
                       {get(item,'order_detail',[]).map(goods_item=>(
                         <View className='good-item' key={goods_item.id} onClick={this.toDetail.bind(this,item.id,item.order_id)}>
                           {this.state.goodsInfo.length !== 0 ?
-                          <ListGood 
+                          <ListGood
                             key={this.state.goodsInfo}
-                            goodId={get(goods_item,'goods_id','')} 
-                            speId={get(goods_item,'goods_specification_id','')} 
-                            price={get(goods_item,'goods_amount','')} 
-                            quality={get(goods_item,'purchase_qty','')} 
+                            goodId={get(goods_item,'goods_id','')}
+                            speId={get(goods_item,'goods_specification_id','')}
+                            price={get(goods_item,'goods_amount','')}
+                            quality={get(goods_item,'purchase_qty','')}
                             goodsInfo={this.state.goodsInfo}
                             message={get(goods_item,'message','')}
                             ooId={get(item,'order_id')}
@@ -354,7 +354,7 @@ class MyOrderList extends Component {
                             isPass={get(goods_item,'is_pass')}
                           />  :''
                           }
-                                             
+
                         </View>
                       ))}
                     </View>
@@ -364,20 +364,20 @@ class MyOrderList extends Component {
                         <View className='all-fee'>总价：</View>
                         <View className='money'>¥{Number(get(item,'child_goods_amount') / 100).toFixed(2)}&ensp;</View>
                       </View>
-                      {get(item,'child_total_coupon') ? 
+                      {get(item,'child_total_coupon') ?
                         <View className='fee-wrap'>
                           <View className='all-coupon'> 优惠：</View>
                           <View className='money'> ¥{Number(get(item,'child_total_coupon') / 100).toFixed(2)}&ensp;</View>
                         </View>
                       :''}
-                      {get(item,'child_exp_fare') ? 
+                      {get(item,'child_exp_fare') ?
                         <View className='fee-wrap'>
                           <View className='all-coupon'> 运费：</View>
                           <View className='money'> ¥{Number(get(item,'child_exp_fare') / 100).toFixed(2)}</View>
                         </View>
                       :''}
                       </View>
-                      {item.order_status == 6 || item.order_status == 1 ? 
+                      {item.order_status == 6 || item.order_status == 1 ?
                       <View className='fee-wrap'>
                         <View className='pay-fee'> 应付款：</View>
                         <View className='pay-fee-money'> ¥{Number(get(item,'child_order_amount') / 100).toFixed(2)}</View>
@@ -388,7 +388,7 @@ class MyOrderList extends Component {
                         <View className='pay-fee-money'> ¥{Number(get(item,'child_order_amount') / 100).toFixed(2)}</View>
                       </View>
                       }
-                     
+
                     </View>
                     <View className='btn'>
                       {item.order_status == 1  ? <View style='display:inline-flex'>
@@ -396,40 +396,40 @@ class MyOrderList extends Component {
                         <View className='pay' onClick={this.pay.bind(this,get(item,'order_id'))}>付款</View>
                         </View> : ''}
                       {item.order_status == 2  ? '' : ''}
-                      {item.order_status == 3  ? 
+                      {item.order_status == 3  ?
                         <View style='display:inline-flex'>
                           <View className='delivery' onClick={this.toDeliveryDetail.bind(this,item.id)}>查看物流</View>
                           <View className='getDelivery' onClick={this.handleCheckDelivery.bind(this,item.id,get(item,'order_id'))}>确认收货</View>
                         </View> : ''}
-                      {item.order_status == 4  ? 
+                      {item.order_status == 4  ?
                         <View style='display:inline-flex'>
                         </View> : ''}
-                      {item.order_status == 5  ? 
-                        <View style='display:inline-flex'> 
+                      {item.order_status == 5  ?
+                        <View style='display:inline-flex'>
                           <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
-                          <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
+                          <Image src='http://qiniu.fmg.net.cn/picture-1602728418000' /></View>
                         </View> : ''}
-                      {item.order_status == 6  ? 
-                        <View style='display:inline-flex'> 
+                      {item.order_status == 6  ?
+                        <View style='display:inline-flex'>
                           <View className='del' onClick={this.delOrder.bind(this,item.id,get(item,'order_id'))}>
-                          <Image src='http://qiniu.daosuan.net/picture-1602728418000' /></View> 
+                          <Image src='http://qiniu.fmg.net.cn/picture-1602728418000' /></View>
                         </View> : ''}
-                      {item.order_status == 9  ? 
+                      {item.order_status == 9  ?
                         <View style='display:inline-flex'>
                           <View className='getDelivery' onClick={this.handleCheckDelivery.bind(this,item.id,get(item,'order_id'))}>确认收货</View>
-                        </View> : ''} 
+                        </View> : ''}
                     </View>
                     <View style='clear:both'></View>
-                  </View>             
-               </View>  
+                  </View>
+               </View>
               ))}
             </View>
-          : ''} 
+          : ''}
           {this.state.isMore && this.state.total>=10 ?
            <View className='have-more'>上拉加载更多...</View>  :
-           <View className='no-more'>没有更多了噢</View>    
+           <View className='no-more'>没有更多了噢</View>
           }
-               
+
       </View>
         <Loading isLoading={this.state.isLoading} />
       </View>

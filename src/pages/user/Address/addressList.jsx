@@ -4,7 +4,7 @@ import { AtIcon, AtAvatar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import { get } from 'lodash';
 import './address.scss'
 import { connect } from 'react-redux';
-import Taro from '@tarojs/taro'; 
+import Taro from '@tarojs/taro';
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 
@@ -64,7 +64,7 @@ class AddressList extends Component {
               getAddressInfo()
             })
           }
-          }  
+          }
       })
     }catch(error){
       Taro.showToast({
@@ -139,7 +139,7 @@ class AddressList extends Component {
   }
 
   render () {
-    const {statusBarHeight, capsule} = this.state; 
+    const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     return (
       <View className='address-list-wrap' style={{ marginTop: statusBarHeight + capsuleHeight }}>
@@ -165,11 +165,11 @@ class AddressList extends Component {
                       </View>
                     </View>
                     <View className='edit' onClick={this.handlePage.bind(this,'edit',item.id)}>
-                      <Image src='http://qiniu.daosuan.net/picture-1598883556000' style='width:40rpx;height:40rpx' />
+                      <Image src='http://qiniu.fmg.net.cn/picture-1598883556000' style='width:40rpx;height:40rpx' />
                       <View className='text'>编辑</View>
                     </View>
                   </View>
-      
+
                 </View>
             </MovableView>
             <View className='out_view'>

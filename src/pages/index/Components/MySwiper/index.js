@@ -32,7 +32,7 @@ class MySwiper extends Component {
             <View className='demo-text'>
               <Navigator url={'/pages/details/index?gid=' + get(item,'goods_id')}>
                 <View className='photo'>
-                  <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
+                  <Image src={'http://qiniu.fmg.net.cn/'+get(item,'picture','')} className='img' />
                 </View>
               </Navigator>
             </View>

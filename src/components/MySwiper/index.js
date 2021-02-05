@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import './index.scss';
 
 class MySwiper extends Component {
-  
+
   static propTypes = {
     banner: PropTypes.array,
     home: PropTypes.bool,
@@ -32,14 +32,14 @@ class MySwiper extends Component {
           <SwiperItem key={item.id}>
             <View className='demo-text-1'>
               <View className='photo-1'>
-                <Image src={'http://qiniu.daosuan.net/'+ get(item,'picture','')} className='first-img' />
+                <Image src={'http://qiniu.fmg.net.cn/'+ get(item,'picture','')} className='first-img' />
               </View>
             </View>
           </SwiperItem>
         ))}
-       
- 
-       
+
+
+
       </Swiper>
     );
   }

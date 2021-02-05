@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Image } from '@tarojs/components'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import Taro, {Current} from '@tarojs/taro'; 
+import Taro, {Current} from '@tarojs/taro';
 import { get as getGlobalData } from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import request from '../../../utils/request'
@@ -69,7 +69,7 @@ class OrderDetail extends Component {
     })
     await this.props.dispatch({
       type: 'goods/mgetGoodsListEntity',
-      payload: 
+      payload:
         this.state.ids
     })
     this.setState({
@@ -84,16 +84,16 @@ class OrderDetail extends Component {
         method: 'GET'
       })
       this.setState({
-        address_info: info 
+        address_info: info
       })
-    } 
+    }
   }
   /**获取快递信息 */
   async getDeliveryInfo(){
     const info = await request('/delivery/info/post', {
       body: {
         "delivry_corp_name":get(this.state.order_info,'tracking_company',''),
-        "delivry_sheet_code":get(this.state.order_info,'tracking_id','') 
+        "delivry_sheet_code":get(this.state.order_info,'tracking_id','')
       },
       method: 'POST'
     })
@@ -117,24 +117,24 @@ class OrderDetail extends Component {
         case '1':
           this.setState({
             status:'揽收中'
-          }) 
+          })
           break;
         case '3':
           this.setState({
             status:'已签收'
-          }) 
+          })
           break;
         case '5':
           this.setState({
             status:'派件中'
-          }) 
+          })
           break;
         case '6':
           this.setState({
             status:'快递已退回'
-          }) 
+          })
           break;
-        
+
       }
     }
     else if(get(this.state.order_info,'delivery') == 2){
@@ -162,7 +162,7 @@ class OrderDetail extends Component {
   }
 
   render () {
-    const {statusBarHeight, capsule} = this.state; 
+    const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
 
     return (
@@ -188,15 +188,15 @@ class OrderDetail extends Component {
               {get(this.state.order_info,'order_status')  == 9 ? <View>·待自取</View> : ''}
             </View>
           </View>
-          {get(this.state.deliveryInfo,'data') == null ? 
+          {get(this.state.deliveryInfo,'data') == null ?
           <View className='delivery-wrap'>
-            <Image className='none-img' src='http://qiniu.daosuan.net/picture-1598882531000' />
+            <Image className='none-img' src='http://qiniu.fmg.net.cn/picture-1598882531000' />
             <View className='info'>
               <View className='none-status'>{this.state.status}</View>
             </View>
           </View>:
           <View className='delivery-wrap' onClick={this.toDeliveryDetail.bind(this)}>
-            <Image className='img' src='http://qiniu.daosuan.net/picture-1598882531000' />
+            <Image className='img' src='http://qiniu.fmg.net.cn/picture-1598882531000' />
             <View className='info'>
               <View className='delivery-status'>{this.state.status}</View>
               <View className='newest-status'>{get(get(this.state.deliveryInfo,'data',[])[0],'context','')}</View>
@@ -206,7 +206,7 @@ class OrderDetail extends Component {
           }
           {get(this.state.order_info,'delivery') == 4 ? '':
           <View className='address-wrap'>
-            <Image className='icon-address' src='http://qiniu.daosuan.net/picture-1598883667000' ></Image>
+            <Image className='icon-address' src='http://qiniu.fmg.net.cn/picture-1598883667000' ></Image>
             <View className='info'>
               <View className='name-phone'>
                 <View className='name'>{get(this.state.address_info,'name')}</View>
@@ -221,16 +221,16 @@ class OrderDetail extends Component {
             </View>
           </View>
           }
-         
+
           <View className='goods-wrap'>
             {get(this.state.order_info,'order_detail',[]).map(item => (
               <View key={item.id}>
-                <ListGood 
+                <ListGood
                   key={this.state.goods_info}
-                  goodId={get(item,'goods_id','')} 
-                  speId={get(item,'goods_specification_id','')} 
-                  price={get(item,'goods_amount','')} 
-                  quality={get(item,'purchase_qty','')} 
+                  goodId={get(item,'goods_id','')}
+                  speId={get(item,'goods_specification_id','')}
+                  price={get(item,'goods_amount','')}
+                  quality={get(item,'purchase_qty','')}
                   message={get(item,'message','')}
                   goodsInfo={this.state.goods_info}
                   status={get(this.state.order_info,'order_status')}
@@ -239,7 +239,7 @@ class OrderDetail extends Component {
                   ooId={this.state.test_order_id}
                   isShowRefund={get(item,'is_after_serve','')}
                   IsRefund
-                /> 
+                />
               </View>
             ))}
             <View className='total-fee-wrap'>
@@ -248,10 +248,10 @@ class OrderDetail extends Component {
                 <View className='money'>¥{Number(get(this.state.order_info,'child_goods_amount') / 100).toFixed(2)}</View>
               </View>
               <View className='list'>
-                <View className='dil-fee'>运费：</View> 
+                <View className='dil-fee'>运费：</View>
                 <View className='money'>¥{Number(get(this.state.order_info,'child_exp_fare') / 100).toFixed(2)}</View>
               </View>
-              {get(this.state.order_info,'sale','') ? 
+              {get(this.state.order_info,'sale','') ?
                 <View className='list'>
                   <View className='all-coupon'> 优惠：</View>
                   <View className='money'> -¥{Number(get(this.state.order_info,'child_total_coupon')/ 100).toFixed(2)*0.01}</View>
@@ -268,7 +268,7 @@ class OrderDetail extends Component {
                   <View className='pay-money'> ¥{Number(get(this.state.order_info,'child_order_amount') / 100).toFixed(2)}</View>
                 </View>
               }
-           
+
             </View>
           </View>
           <View className='order-detail'>
@@ -298,21 +298,21 @@ class OrderDetail extends Component {
                 <View className='name'>更新时间：</View>
                 <View className='info'>{formatTime(get(this.state.order_info,'update_time',''),'Y/M/D h:m:s') }</View>
               </View>
-              {get(this.state.order_info,'delivery_time','') ? 
+              {get(this.state.order_info,'delivery_time','') ?
                 <View className='list'>
                   <View className='name'>发货时间：</View>
                   <View className='info'>{formatTime(get(this.state.order_info,'delivery_time',''),'Y/M/D h:m:s') }</View>
                 </View>
               :''
               }
-              {get(this.state.order_info,'get_time','') ? 
+              {get(this.state.order_info,'get_time','') ?
                 <View className='list'>
                   <View className='name'>收货时间：</View>
                   <View className='info'>{formatTime(get(this.state.order_info,'get_time',''),'Y/M/D h:m:s') }</View>
                 </View>
               :''
               }
-            </View>  
+            </View>
           </View>
         </View>
         </View>

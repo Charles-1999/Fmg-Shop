@@ -78,7 +78,7 @@ class UserList extends Component {
         url: `/pages/user/Order/myOrder?status=${status}`,
       });
     }
-   
+
   }
 
   render () {
@@ -108,7 +108,7 @@ class UserList extends Component {
                 <View className='info'>
                   个人信息
                 </View>
-                <image src='http://qiniu.daosuan.net/picture-1598883556000' />
+                <image src='http://qiniu.fmg.net.cn/picture-1598883556000' />
               </View>
             </View>
           </View>
@@ -130,7 +130,7 @@ class UserList extends Component {
                 '':
                 <View className='count'>{this.state.code1}</View>
               }
-              <Image src='http://qiniu.daosuan.net/picture-1598882483000' style='width:90rpx;height:90rpx' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598882483000' style='width:90rpx;height:90rpx' />
               <View className='name'>待付款</View>
             </View>
             <View className='myorder-list-item' onClick={this.handleOrder.bind(this,2)}>
@@ -138,7 +138,7 @@ class UserList extends Component {
                 '':
                 <View className='count'>{this.state.code2}</View>
               }
-              <Image src='http://qiniu.daosuan.net/picture-1598882446000' style='width:90rpx;height:90rpx' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598882446000' style='width:90rpx;height:90rpx' />
               <View className='name'>待发货</View>
             </View>
             <View className='myorder-list-item'onClick={this.handleOrder.bind(this,10)}>
@@ -146,7 +146,7 @@ class UserList extends Component {
                 '':
                 <View className='count'>{this.state.code3}</View>
               }
-              <Image src='http://qiniu.daosuan.net/picture-1598882531000' style='width:90rpx;height:90rpx' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598882531000' style='width:90rpx;height:90rpx' />
               <View className='name'>待收货</View>
             </View>
             <View className='myorder-list-item' onClick={this.handleOrder.bind(this,4)}>
@@ -154,7 +154,7 @@ class UserList extends Component {
                 '':
                 <View className='count'>{this.state.code4}</View>
               }
-              <Image src='http://qiniu.daosuan.net/picture-1598882509000' style='width:90rpx;height:90rpx' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598882509000' style='width:90rpx;height:90rpx' />
               <View className='name'>待评价</View>
             </View>
             <View className='myorder-list-item' onClick={this.handleOrder.bind(this,7)}>
@@ -162,7 +162,7 @@ class UserList extends Component {
                 '':
                 <View className='count'>{this.state.code5}</View>
               }
-              <Image src='http://qiniu.daosuan.net/picture-1599033897000' style='width:90rpx;height:90rpx' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1599033897000' style='width:90rpx;height:90rpx' />
               <View className='name-last'>退款/售后</View>
             </View>
           </View>
@@ -171,11 +171,11 @@ class UserList extends Component {
           <View className='other-service-title'>其他服务</View>
           <View className='other-service-list'>
             <View className='other-service-item' onClick={this.handlePage.bind(this,'address')}>
-              <Image src='http://qiniu.daosuan.net/picture-1598883667000' style='width:90rpx;height:90rpx' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598883667000' style='width:90rpx;height:90rpx' />
               <View className='name'>收货地址</View>
             </View>
             {/* <View className='other-service-item'>
-              <Image src='http://qiniu.daosuan.net/picture-1598883277000' style='width:90rpx;height:90rpx' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598883277000' style='width:90rpx;height:90rpx' />
               <View className='name'>账号设置</View>
             </View> */}
           </View>

@@ -68,7 +68,7 @@ export default function MemberList(props) {
       <View className='container_study'>
         <View className='btn_wrap wrapper'>
           <View className='btn' onClick={addMember.bind(this)}>
-            <Image src='http://qiniu.daosuan.net/picture-1606228515000' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1606228515000' />
               新增成员
             </View>
         </View>
@@ -76,7 +76,7 @@ export default function MemberList(props) {
           {memberList.length > 0 ?
             memberList.map((item, index) => (
               <View className='member_wrap' key={item.id}>
-                <Image src='http://qiniu.daosuan.net/icon-1606046423000' className='edit' onClick={updataMember.bind(this, item.id)} />
+                <Image src='http://qiniu.fmg.net.cn/icon-1606046423000' className='edit' onClick={updataMember.bind(this, item.id)} />
                 <View className='info_wrap'>
                   <View className='name'>{item.name}</View>
                   <View className='idCard'>

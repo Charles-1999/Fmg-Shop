@@ -26,7 +26,7 @@ class PlaceKindTab extends Component {
       type: 'goods/getGoodsPlace',
     });
     const { placeList, kindList} = this.props
-    kindList.forEach(item => item.picture =  'http://qiniu.daosuan.net/' + item.picture);
+    kindList.forEach(item => item.picture =  'http://qiniu.fmg.net.cn/' + item.picture);
     this.setState({
       placeList:placeList,
       kindList:kindList,
@@ -49,14 +49,14 @@ class PlaceKindTab extends Component {
       <View className='place-kind-list'>
         {placeList.map(item => (
           <View className='place-kind-list-item' key={item.id}>
-            {kindList.filter(e => get(e, 'parent_id', '') == item.id)  ? 
+            {kindList.filter(e => get(e, 'parent_id', '') == item.id)  ?
             <View className='title-list'>
               <View className='name'>
                 {item.place}
               </View>
               <View className='more' onClick={this.handleTypeTab.bind(this,item.id)}>
                 <View className='checkmore'>进入专题</View>
-                <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
+                <Image src='http://qiniu.fmg.net.cn/picture-1598883365000' style='width:50rpx;height:30rpx' />
               </View>
             </View>
             :''}
@@ -67,11 +67,11 @@ class PlaceKindTab extends Component {
                   <View className='title'>{kind.title}</View>
                 </View>
               ))}
-              
+
             </View>
           </View>
         ))}
-        
+
       </View>
     )
   }

@@ -3,7 +3,7 @@ import { View, Text, Image } from '@tarojs/components'
 import { get } from 'lodash';
 import './refundSelect.scss'
 import { connect } from 'react-redux';
-import Taro, {Current} from '@tarojs/taro'; 
+import Taro, {Current} from '@tarojs/taro';
 import request, { getGoodsList } from '../../../utils/request'
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
@@ -60,7 +60,7 @@ class RefundSelect extends Component {
     }
   }
 
-  
+
   render () {
     const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
@@ -92,21 +92,21 @@ class RefundSelect extends Component {
         <View className='select-wrap'>
           <View className='select-text'>选择服务类型</View>
           <View className='item-wrap' onClick={this.toDetail.bind(this,1)}>
-            <Image src='http://qiniu.daosuan.net/picture-1606629874000 ' className='icon' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1606629874000 ' className='icon' />
             <View className='info'>
               <View className='title'>我要退款(无须退货)</View>
               <View className='desc'>没收到货，或与买家协商同意不用退款只退货</View>
             </View>
-            <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1598883337000' className='more' />
           </View>
           <View className='item-wrap' onClick={this.toDetail.bind(this,2)}>
-            <Image src='http://qiniu.daosuan.net/picture-1606629896000 ' className='icon' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1606629896000 ' className='icon' />
             <View className='info'>
               <View className='title'>我要退货退款</View>
               <View className='desc'>已收到货，需要退还收到的货物</View>
             </View>
-            <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
-          </View>      
+            <Image src='http://qiniu.fmg.net.cn/picture-1598883337000' className='more' />
+          </View>
         </View>
       </View>
     )

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Image, Navigator} from '@tarojs/components'
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import Taro, {Current} from '@tarojs/taro'; 
+import Taro, {Current} from '@tarojs/taro';
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
 import request from '../../../utils/request'
@@ -102,8 +102,8 @@ class RefundCenter extends Component {
               title: '记录删除成功',
               icon: 'none'
             })
-           
-          }  
+
+          }
         }
       })
     }
@@ -134,11 +134,11 @@ class RefundCenter extends Component {
       await this.getRedunfList();
     }
   }
- 
- 
+
+
 
   render () {
-    const {statusBarHeight, capsule} = this.state; 
+    const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
     console.log('render')
     return (
@@ -161,9 +161,9 @@ class RefundCenter extends Component {
            <View className='item' onClick={this.handleChangeTab.bind(this,1)}>待审核</View>
            <View className='item-active' onClick={this.handleChangeTab.bind(this,2)}>已审核</View>
           </View>
-           
+
         }
-         
+
         </View>
         <View className='refund-center-list'>
           {this.state.refundList.map((item,index) =>(
@@ -171,25 +171,25 @@ class RefundCenter extends Component {
               {get(item,'service_type')==1?
                 <View className='refund-type'>
                 <View className='out_refund_no'>售后单号：{get(item,'out_refund_no')}</View>
-                <Image className='icon' src="http://qiniu.daosuan.net/picture-1606629874000" />
+                <Image className='icon' src="http://qiniu.fmg.net.cn/picture-1606629874000" />
                 <View className='text'>退款</View>
                 </View>:
                   <View className='refund-type'>
                   <View className='out_refund_no'>售后单号：{get(item,'out_refund_no')}</View>
-                  <Image className='icon' src="http://qiniu.daosuan.net/picture-1606629896000" />
+                  <Image className='icon' src="http://qiniu.fmg.net.cn/picture-1606629896000" />
                   <View className='text'>退货退款</View>
                 </View>
               }
-              <RefundListGood 
+              <RefundListGood
                 key={this.state.goods_info}
-                goodId={get(this.state.orderDetailList[index],'goods_id','')} 
-                speId={get(this.state.orderDetailList[index],'goods_specification_id','')} 
-                price={get(this.state.orderDetailList[index],'goods_amount','')} 
-                quality={get(this.state.orderDetailList[index],'purchase_qty','')} 
+                goodId={get(this.state.orderDetailList[index],'goods_id','')}
+                speId={get(this.state.orderDetailList[index],'goods_specification_id','')}
+                price={get(this.state.orderDetailList[index],'goods_amount','')}
+                quality={get(this.state.orderDetailList[index],'purchase_qty','')}
                 goodsInfo={this.state.goods_info}
                 detailID={get(item,'id')}
                 amount={get(item,'return_amount')}
-              /> 
+              />
               {get(item,'status')==1?
                 <View className='refund-status-list'>
                   待审核 待退款金额 ¥{Number(get(item,'return_amount')/100).toFixed(2)}元

@@ -23,7 +23,7 @@ export default function request(url, option) {
         console.log('res', res)
         if(res.statusCode === 200)
           resolve(res.data)
-        else 
+        else
           reject(res)
       },
       fail: err => {
@@ -35,7 +35,7 @@ export default function request(url, option) {
 }
 
 
-/* 
+/*
   * 获取商品列表
   * @params ids 商品id数组 Array
   * @return goodsList 商品列表 Array
@@ -49,17 +49,17 @@ export function getGoodsList(ids) {
       },
       method: 'POST'
     })
-  
+
     goodsList.forEach(goods => {
       // 封面前缀处理
-      goods.cover = 'http://qiniu.daosuan.net/' + goods.cover
-  
+      goods.cover = 'http://qiniu.fmg.net.cn/' + goods.cover
+
       // 运费单位处理
       goods.carriage = Number(goods.carriage / 100).toFixed(2)
-  
+
       // 商品是否使用促销
       const isSale = goods.sale
-  
+
       // 每个规格的价格处理和图片前缀处理
       get(goods,'specification',[]).forEach(spec => {
         spec.price = Number(spec.price / 100).toFixed(2)
@@ -70,7 +70,7 @@ export function getGoodsList(ids) {
           spec.showPrice = spec.reduced_price
         }
 
-        spec.picture = 'http://qiniu.daosuan.net/' + spec.picture
+        spec.picture = 'http://qiniu.fmg.net.cn/' + spec.picture
       })
 
       // 商品显示的价格（显示最低价）
@@ -80,7 +80,7 @@ export function getGoodsList(ids) {
         goods.showPrice = Math.min(... get(goods,'specification',[]).map(spec => spec.price)).toFixed(2)
       }
     })
-    
+
     resolve(goodsList)
   })
 }

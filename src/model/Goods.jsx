@@ -55,7 +55,7 @@ export default {
       const res = yield call(mgetGoodsPlace,{ payload});
       res.map(item => {
         if(item.picture!==""){
-          item.picture = 'http://qiniu.daosuan.net/' + item.picture;
+          item.picture = 'http://qiniu.fmg.net.cn/' + item.picture;
         }
         return item.picture;
       })
@@ -84,7 +84,7 @@ export default {
       const res = yield call(mgetGoodsKind,{ payload});
       res.map(item => {
         if(item.picture!==""){
-          item.picture = 'http://qiniu.daosuan.net/' + item.picture;
+          item.picture = 'http://qiniu.fmg.net.cn/' + item.picture;
         }
         return item.picture;
       })
@@ -128,7 +128,7 @@ export default {
       const res = yield call(mgetGoodsList,{ payload });
       res.map(item => {
         if(item.cover!==""){
-          item.cover = 'http://qiniu.daosuan.net/' + item.cover;
+          item.cover = 'http://qiniu.fmg.net.cn/' + item.cover;
         }
         return item;
       })
@@ -157,7 +157,7 @@ export default {
       res = processGoodsList(res)
       // res.map(item => {
       //   if(item.cover!==""){
-      //     item.cover = 'http://qiniu.daosuan.net/' + item.cover;
+      //     item.cover = 'http://qiniu.fmg.net.cn/' + item.cover;
       //   }
       //   return item.cover;
       // })
@@ -207,7 +207,7 @@ export default {
 function processGoodsList(goodsList) {
   goodsList.forEach(goods => {
     // 封面前缀处理
-    goods.cover = 'http://qiniu.daosuan.net/' + goods.cover
+    goods.cover = 'http://qiniu.fmg.net.cn/' + goods.cover
 
     // 运费单位处理
     goods.carriage = Number(goods.carriage / 100).toFixed(2)
@@ -234,7 +234,7 @@ function processGoodsList(goodsList) {
       }
 
       // 规格图片前缀处理
-      spec.picture = 'http://qiniu.daosuan.net/' + spec.picture
+      spec.picture = 'http://qiniu.fmg.net.cn/' + spec.picture
     })
 
     /* 商品列表显示的价格（显示全部规格中最低价）*/

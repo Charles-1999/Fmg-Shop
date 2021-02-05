@@ -109,7 +109,7 @@ class Index extends Component {
               <View className='demo-text'>
                 <Navigator url={'/pages/details/index?gid=' + get(item,'goods_id')}>
                   <View className='photo'>
-                    <Image src={'http://qiniu.daosuan.net/'+get(item,'picture','')} className='img' />
+                    <Image src={'http://qiniu.fmg.net.cn/'+get(item,'picture','')} className='img' />
                   </View>
                 </Navigator>
               </View>
@@ -118,12 +118,12 @@ class Index extends Component {
         </Swiper>
         <View className='logo-search-wrap'>
           {/* <View className='logo'>
-            <Image src='http://qiniu.daosuan.net/picture-1602721913000' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1602721913000' />
           </View> */}
           <View className='index-search-wrap'>
             <View className='index-searchBar'>
               <Input placeholder='搜索'  maxLength='50' confirmType='search' onConfirm={this.search.bind(this)} value={input_Val} />
-              <Image className='index-search' src='http://qiniu.daosuan.net/icon-1598881971000'  />
+              <Image className='index-search' src='http://qiniu.fmg.net.cn/icon-1598881971000'  />
             </View>
           </View>
         </View>

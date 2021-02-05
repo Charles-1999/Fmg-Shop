@@ -93,7 +93,7 @@ function Studies(props) {
       {currTab == 1 ?
         <View className='container_course'>
           <View className='big_title'>
-            <Image src='http://qiniu.daosuan.net/picture-1598883875000' mode='heightFix' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1598883875000' mode='heightFix' />
             <Text>最新课程</Text>
           </View>
           <View className='course_list'>
@@ -114,7 +114,7 @@ function Studies(props) {
             ))}
           </View>
           <View className='big_title'>
-            <Image src='http://qiniu.daosuan.net/picture-1598884155000' mode='heightFix' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1598884155000' mode='heightFix' />
             <Text>热门课程</Text>
           </View>
         </View>
@@ -123,7 +123,7 @@ function Studies(props) {
       {currTab == 2 ?
         <View className='container_course'>
           <View className='big_title'>
-            <Image src='http://qiniu.daosuan.net/picture-1598883875000' mode='heightFix' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1598883875000' mode='heightFix' />
             <Text>最新资讯</Text>
           </View>
           <View className='news_list'>

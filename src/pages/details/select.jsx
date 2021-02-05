@@ -21,14 +21,14 @@ class Select extends Component {
           <Text className='title'>选择</Text>
           <Text className='content'>{template.join("、")}</Text>
           <View className='type_list'>
-            {data.map((item,index) => 
+            {data.map((item,index) =>
               index <= 4 ?
               <Image key={index} src={item.picture} />
               : ''
             )}
             <Text>共{data.length}种{template}可选</Text>
           </View>
-          <Image className='more' src='http://qiniu.daosuan.net/picture-1598883365000' />
+          <Image className='more' src='http://qiniu.fmg.net.cn/picture-1598883365000' />
         </View>
         <View className='info_wrap'>
           <Text className='title'>保障</Text>
@@ -37,11 +37,11 @@ class Select extends Component {
         <View className='info_wrap'>
           <Text className='title'>参数</Text>
           <Text className='content'>阿巴阿巴阿巴阿巴阿巴阿巴</Text>
-          <Image className='more' src='http://qiniu.daosuan.net/picture-1598883365000' />
+          <Image className='more' src='http://qiniu.fmg.net.cn/picture-1598883365000' />
         </View>
       </View>
     )
   }
 }
 
-export default Select; 
+export default Select;

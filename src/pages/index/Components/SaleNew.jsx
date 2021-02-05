@@ -20,7 +20,7 @@ class SaleNew extends Component {
     this.state={
     }
   }
-    
+
   componentDidMount(){
     this.props.dispatch({
       type: 'goods/getGoodsNewList',
@@ -30,7 +30,7 @@ class SaleNew extends Component {
     });
 
   }
-  
+
   onLikeTab = () => {
     let status = this.state.like;
     this.setState({
@@ -53,11 +53,11 @@ class SaleNew extends Component {
             新品榜
           </View>
           <View className='icon'>
-            <Image src='http://qiniu.daosuan.net/picture-1598883875000' style='width:140rpx;height:80rpx' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1598883875000' style='width:140rpx;height:80rpx' />
           </View>
           {/* <View className='more'>
             <View className='checkmore'>进入专题</View>
-            <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1598883365000' style='width:50rpx;height:30rpx' />
           </View> */}
         </View>
         <View className='goods-items-wrap'>

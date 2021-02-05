@@ -3,7 +3,7 @@ import { View, Text, Image, Checkbox } from '@tarojs/components'
 import { get } from 'lodash';
 import './refundDetail.scss'
 import { connect } from 'react-redux';
-import Taro, { Current } from '@tarojs/taro'; 
+import Taro, { Current } from '@tarojs/taro';
 import request, { getGoodsList } from '../../../utils/request'
 import { get as getGlobalData , set as setGlobalData} from '../../../global_data'
 import Navbar from '../../../components/navbar/navbar'
@@ -66,7 +66,7 @@ class RefundDetail extends Component {
         ]
       }
     ]
-  } 
+  }
   async componentDidMount(){
     await this.getOrderInfo();
     await this.getGoodInfo();
@@ -146,7 +146,7 @@ class RefundDetail extends Component {
         isOpenReason: false
       })
     }
- 
+
   }
   //货品状态选择框
   statusCheck=(value)=>{
@@ -345,7 +345,7 @@ class RefundDetail extends Component {
     })
   }
 
-  
+
   render () {
     const {statusBarHeight, capsule} = this.state;
     const capsuleHeight = capsule.height + (capsule.top - statusBarHeight) * 3;
@@ -385,8 +385,8 @@ class RefundDetail extends Component {
               :
               <View className='info'>{this.state.data.filter(item=>item.id==this.state.statusCheck)[0].title}</View>
               }
-              
-              <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
+
+              <Image src='http://qiniu.fmg.net.cn/picture-1598883337000' className='more' />
             </View>
             <View className='info-item' onclick={this.handleOpen.bind(this,'reason')}>
               <View className='title'>退款原因*</View>
@@ -395,7 +395,7 @@ class RefundDetail extends Component {
               :
               <View className='info'>{this.state.data.filter(item=>item.id==this.state.statusCheck)[0].reason.filter(reason=>reason.id==this.state.reasonCheck)[0].text}</View>
               }
-              <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598883337000' className='more' />
             </View>
             <View className='info-item'>
               <View className='title'>退款金额*</View>
@@ -405,12 +405,12 @@ class RefundDetail extends Component {
               <View className='info-item' >
                 <View className='title'>退货方式</View>
                 <View className='info'>自行寄回</View>
-                {/* <Image src='http://qiniu.daosuan.net/picture-1598883337000' className='more' /> */}
-              
+                {/* <Image src='http://qiniu.fmg.net.cn/picture-1598883337000' className='more' /> */}
+
               </View>
             :''}
-           
-          </View>     
+
+          </View>
         </View>
         <View className='content-pic-wrap'>
           <View className='info-text'>补充描述和凭证</View>
@@ -428,15 +428,15 @@ class RefundDetail extends Component {
                 <View className='select-item' key={item.id}>
                   <View className='select-title'>{item.title}</View>
                   {this.state.statusCheck==item.id?
-                    <Image src='http://qiniu.daosuan.net/picture-1606717726000' className='check' onClick={this.statusCheck.bind(this,item.id)} />:
-                    <Image src='http://qiniu.daosuan.net/picture-1606717705000' className='check' onClick={this.statusCheck.bind(this,item.id)} />
+                    <Image src='http://qiniu.fmg.net.cn/picture-1606717726000' className='check' onClick={this.statusCheck.bind(this,item.id)} />:
+                    <Image src='http://qiniu.fmg.net.cn/picture-1606717705000' className='check' onClick={this.statusCheck.bind(this,item.id)} />
                   }
-                  
+
                 </View>
               ))}
-             
+
             </View>
-             
+
           </View>
         </View>
         {
@@ -452,12 +452,12 @@ class RefundDetail extends Component {
                   <View className='select-item' key={item.id}>
                   <View className='select-title'>{item.text}</View>
                     {this.state.reasonCheck==item.id?
-                      <Image src='http://qiniu.daosuan.net/picture-1606717726000' className='check' onClick={this.reasonCheck.bind(this,item.id)} />:
-                      <Image src='http://qiniu.daosuan.net/picture-1606717705000' className='check' onClick={this.reasonCheck.bind(this,item.id)} />
+                      <Image src='http://qiniu.fmg.net.cn/picture-1606717726000' className='check' onClick={this.reasonCheck.bind(this,item.id)} />:
+                      <Image src='http://qiniu.fmg.net.cn/picture-1606717705000' className='check' onClick={this.reasonCheck.bind(this,item.id)} />
                     }
                   </View>
                 ))}
-              
+
               </View>
             </View>
           </View>:''

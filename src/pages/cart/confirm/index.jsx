@@ -392,7 +392,7 @@ export default class Confirm extends Component {
         >
         </Navbar>
         <View className='address_wrap' onClick={this.chooseAddress.bind(this)}>
-          <Image className='icon_address' src='http://qiniu.daosuan.net/picture-1598883667000' />
+          <Image className='icon_address' src='http://qiniu.fmg.net.cn/picture-1598883667000' />
           {currAddress && currAddress.id != Infinity &&
             <View className='address_info'>
               <View className='personal_info'>
@@ -412,7 +412,7 @@ export default class Confirm extends Component {
               请选择收货地址
             </View>
           }
-          <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
+          <Image className='icon_more' src='http://qiniu.fmg.net.cn/picture-1598883365000' />
         </View>
         <View className='goods_list'>
           {checkList.map((item, index) => (
@@ -440,7 +440,7 @@ export default class Confirm extends Component {
                 <View className='info_wrap' onClick={this.getGetWayList.bind(this, index)}>
                   <Text className='title'>配送方式</Text>
                   <Text className='content'>{checkList ? this.getGetWay(checkList[index].delivery_kind) : ''}</Text>
-                  <Image className='icon_more' src='http://qiniu.daosuan.net/picture-1598883365000' />
+                  <Image className='icon_more' src='http://qiniu.fmg.net.cn/picture-1598883365000' />
                 </View>
                 <View className='info_wrap'>
                   <Text className='title'>订单备注</Text>

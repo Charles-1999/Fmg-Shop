@@ -53,7 +53,7 @@ class CategoryListView extends Component {
   /* 获取商品详情列表 */
   getGoodsList = async (goodsIdList) => {
     let goodsList = await getGoodsList(goodsIdList)
-    
+
     // 筛选 只保留上架的商品
     goodsList = goodsList.filter(item => item.on_sale)
     this.setData({
@@ -133,17 +133,17 @@ class CategoryListView extends Component {
           <View className='filter_bar' style={{ marginTop: statusBarHeight + capsuleHeight }}>
             <View className={sort_id === 4 ? 'bar_item' : 'bar_item active'} onClick={this.handleSortTypeClick}>
               <Text>{sort_id === 4 ? '综合' : sort_type.find(item => item.id === sort_id).text}</Text>
-              <Image className={isOpen ? 'isOpen' : ''} src='http://qiniu.daosuan.net/picture-1598883801000' />
+              <Image className={isOpen ? 'isOpen' : ''} src='http://qiniu.fmg.net.cn/picture-1598883801000' />
             </View>
             <View className={sort_id === 4 ? 'bar_item active' : 'bar_item'} onClick={this.changeSortType.bind(this, 4)}>
               <Text>销量</Text>
             </View>
             <View className='bar_item view' onClick={this.changeListStyle}>
-              <Image src='http://qiniu.daosuan.net/picture-1598882804000' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598882804000' />
             </View>
             <View className='bar_item filter'>
               <Text>筛选</Text>
-              <Image src='http://qiniu.daosuan.net/picture-1598883801000' />
+              <Image src='http://qiniu.fmg.net.cn/picture-1598883801000' />
             </View>
           </View>
           {/* 选择排序模块 */}
@@ -155,7 +155,7 @@ class CategoryListView extends Component {
                   ? item.id === sort_id
                     ? <View className='sort_item sort_active' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>
                       {item.text}
-                      <Image src='http://qiniu.daosuan.net/picture-1598883365000' />
+                      <Image src='http://qiniu.fmg.net.cn/picture-1598883365000' />
                     </View>
                     : <View className='sort_item' onClick={this.changeSortType.bind(this, item.id)} key={item.id}>{item.text}</View>
                   : ''

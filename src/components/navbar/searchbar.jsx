@@ -22,7 +22,7 @@ export default class Navbar extends Component {
     return (
       <View className='searchBar-component' style={{marginRight,marginLeft}}>
         <Input placeholder='搜索' confirmType='search' onConfirm={this.search.bind(this)} value={input_Val}/>
-        <Image className='search' src='http://qiniu.daosuan.net/icon-1598881971000' mode='heightFix' onClick={this.search.bind(this)} />
+        <Image className='search' src='http://qiniu.fmg.net.cn/icon-1598881971000' mode='heightFix' onClick={this.search.bind(this)} />
       </View>
     )
   }

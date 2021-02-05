@@ -495,7 +495,7 @@ class CartListView extends Component {
                       <View className='select'>
                         <View className='main' onClick={this.handleTapSpecification.bind(this, cart.id)}>
                           {cart.goods.specification[cart.spec_index].specification_text}
-                          <Image src='http://qiniu.daosuan.net/picture-1598883801000' />
+                          <Image src='http://qiniu.fmg.net.cn/picture-1598883801000' />
                         </View>
                         <View className='flex'></View>
                       </View>

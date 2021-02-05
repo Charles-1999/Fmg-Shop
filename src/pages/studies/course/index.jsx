@@ -110,12 +110,12 @@ function Course(props) {
       </View>
       <View className={isIphoneX ? 'isIphoneX tool_bar' : 'tool_bar'} >
         <View className='tool_item'>
-          <Image src='http://qiniu.daosuan.net/picture-1598882867000' mode='widthFix' />
+          <Image src='http://qiniu.fmg.net.cn/picture-1598882867000' mode='widthFix' />
           <Text>分享</Text>
           <Button openType='share'></Button>
         </View>
         <View className='tool_item'>
-          <Image src='http://qiniu.daosuan.net/picture-1598883925000' mode='widthFix' />
+          <Image src='http://qiniu.fmg.net.cn/picture-1598883925000' mode='widthFix' />
           <Text>收藏</Text>
         </View>
         <View className='tool_item_2' onClick={apply.bind(this)}>

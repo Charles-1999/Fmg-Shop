@@ -35,7 +35,7 @@ class AddressList extends Component {
       }
     })
     let currAddress = Taro.getStorageSync("currAddress");
-    this.setData({ 
+    this.setData({
       addressList: this.props.addressList,
       currAddress
      });
@@ -67,7 +67,7 @@ class AddressList extends Component {
               getAddressList()
             })
           }
-          }  
+          }
       })
     }catch(error){
       Taro.showToast({
@@ -85,7 +85,7 @@ class AddressList extends Component {
       item.checked = i === index ? true : false;
     })
     Taro.setStorageSync('currAddress', addressList[index]);
-    this.setData({ 
+    this.setData({
       addressList
      });
   }
@@ -188,7 +188,7 @@ class AddressList extends Component {
                       </View>
                     </View>
                   <View className='edit' onClick={this.handlePage.bind(this, 'edit', item.id)}>
-                    <Image src='http://qiniu.daosuan.net/picture-1598883556000' style='width:40rpx;height:40rpx' />
+                    <Image src='http://qiniu.fmg.net.cn/picture-1598883556000' style='width:40rpx;height:40rpx' />
                     <View className='text'>编辑</View>
                   </View>
                 </View>

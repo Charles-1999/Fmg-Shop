@@ -42,7 +42,7 @@ export default {
       /* 课程信息数据处理 */
       courseInfo.forEach(info => {
         /* 封面前缀 */
-        info.cover = 'http://qiniu.daosuan.net/' + info.cover
+        info.cover = 'http://qiniu.fmg.net.cn/' + info.cover
 
         /* 价格单位处理 */
         info.min_price = Number((info.min_price / 100).toFixed(2))
@@ -99,7 +99,7 @@ export default {
       /* 课程信息数据处理 */
       courseInfo.forEach(info => {
         /* 封面前缀 */
-        info.cover = 'http://qiniu.daosuan.net/' + info.cover
+        info.cover = 'http://qiniu.fmg.net.cn/' + info.cover
 
         /* 价格单位处理 */
         info.min_price = Number((info.min_price / 100).toFixed(2))
@@ -367,7 +367,7 @@ export default {
       let { newsList } = payload
 
       newsList.forEach(news => {
-        news.cover = `http://qiniu.daosuan.net/` + news.cover
+        news.cover = `http://qiniu.fmg.net.cn/` + news.cover
       })
 
       return { state, newsList }

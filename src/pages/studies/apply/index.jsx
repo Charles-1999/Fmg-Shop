@@ -158,7 +158,7 @@ function Apply(props) {
         <View className='wrapper'>
           {memberList.map(member => (
             <View className='member_wrap' key={member.id}>
-              <Image src='http://qiniu.daosuan.net/picture-1606228544000' className='del' onClick={removeMember.bind(this, member.id)} />
+              <Image src='http://qiniu.fmg.net.cn/picture-1606228544000' className='del' onClick={removeMember.bind(this, member.id)} />
               <View className='info_wrap'>
                 <View className='name'>{member.name}</View>
                 <View className='idCard'>
@@ -169,7 +169,7 @@ function Apply(props) {
             </View>
           ))}
           <View className='add_wrap' onClick={addMember.bind(this)}>
-            <Image src='http://qiniu.daosuan.net/picture-1606228515000' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1606228515000' />
             添加成员
           </View>
         </View>

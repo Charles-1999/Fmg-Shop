@@ -51,7 +51,7 @@ class CategoryListView extends Component {
       },
       method: 'POST'
     })
-    res.forEach(item => item.picture =  'http://qiniu.daosuan.net/' + item.picture);
+    res.forEach(item => item.picture =  'http://qiniu.fmg.net.cn/' + item.picture);
     let cateList = {
       time: '',
       data: [...res.filter(item => item.parent_id === 0)]

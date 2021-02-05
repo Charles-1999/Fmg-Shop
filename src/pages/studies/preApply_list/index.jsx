@@ -249,7 +249,7 @@ function PreApplyList(props) {
         ))}
         {page * LIMIT >= total
           ? <View className='no_wrap'>
-            <Image src='http://qiniu.daosuan.net/picture-1598884234000' mode='widthFix' className='icon_noMore' />
+            <Image src='http://qiniu.fmg.net.cn/picture-1598884234000' mode='widthFix' className='icon_noMore' />
             <Text>没有更多啦</Text>
           </View>
           : <View className='get_more'>上拉加载更多</View>

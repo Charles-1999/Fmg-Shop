@@ -49,7 +49,7 @@ class PlaceGoodsList extends Component {
         ids:Ids
       }
     });
-   
+
     const { placeList, kindInfoList} = this.props
     //数据过滤
     const current_place = placeList.filter(item => item.id == Current.router.params.id)[0];
@@ -64,11 +64,11 @@ class PlaceGoodsList extends Component {
       url: `/pages/goods_list/index?kind_tag=${id}`
     })
   }
- 
+
 
   render () {
     const capsuleHeight = this.state.capsule.height + (this.state.capsule.top - this.state.statusBarHeight) * 3
- 
+
     return (
       <View className='place-goods-list-wrap' style={{ marginTop: this.state.statusBarHeight + capsuleHeight }}>
         <Navbar
@@ -96,7 +96,7 @@ class PlaceGoodsList extends Component {
               </View>
               <View className='more' onClick={this.toKindList.bind(this,item.id)}>
                 <View className='checkmore'>查看更多</View>
-                <Image src='http://qiniu.daosuan.net/picture-1598883365000' style='width:50rpx;height:30rpx' />
+                <Image src='http://qiniu.fmg.net.cn/picture-1598883365000' style='width:50rpx;height:30rpx' />
               </View>
             </View>
             <GoodsCard place_tag={parseInt(Current.router.params.id)} kind_tag={item.id} />

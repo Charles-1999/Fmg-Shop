@@ -35,7 +35,7 @@ export default {
 
         if(comment.pictures) {
           /* 图片前缀处理 */
-          pictures = comment.pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+          pictures = comment.pictures.map(pic => 'http://qiniu.fmg.net.cn/' + pic)
 
           /* 评论图片列表，只插入每条评论的第一张图片 */
           if(pic_count < 5){
@@ -87,26 +87,26 @@ export default {
       let userId = [res[0].author_id]
       res = res.map(item=> {
         if(item.pictures){
-          item.pictures = item.pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+          item.pictures = item.pictures.map(pic => 'http://qiniu.fmg.net.cn/' + pic)
         }
-    
+
         // if(get(item,'second_pictures',[])){
-        //   item.second_pictures = get(item,'second_pictures',[]).map(pic => 'http://qiniu.daosuan.net/' + pic)
+        //   item.second_pictures = get(item,'second_pictures',[]).map(pic => 'http://qiniu.fmg.net.cn/' + pic)
         // }
         if(item.second_pictures !== ''){
-          item.second_pictures = item.second_pictures.map(pic => 'http://qiniu.daosuan.net/' + pic)
+          item.second_pictures = item.second_pictures.map(pic => 'http://qiniu.fmg.net.cn/' + pic)
         }
         if(item.pictures == ''){
           item.pictures = []
-         
+
         }
         if(item.second_pictures == ''){
           item.second_pictures = []
         }
-       
+
        return item;
       })
-    
+
       /* 请求 批量获取用户信息 接口 */
       let accountList = yield call(mgetAccountInfo, userId)
       console.log(accountList)

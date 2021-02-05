@@ -37,7 +37,7 @@ export default class Navbar extends Component {
           }
           {showBack ?
             <View className='back' onClick={this.back} style={{ height: capsuleHeight, width: capsuleHeight }}>
-              {backColor == 'black' ? <Image src={'http://qiniu.daosuan.net/picture-1604460100000'} /> : <Image src={'http://qiniu.daosuan.net/picture-1607398148000'} />}
+              {backColor == 'black' ? <Image src={'http://qiniu.fmg.net.cn/picture-1604460100000'} /> : <Image src={'http://qiniu.fmg.net.cn/picture-1607398148000'} />}
             </View>
             : ''
           }

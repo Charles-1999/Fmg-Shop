@@ -11,11 +11,11 @@ class MySwiper extends Component {
   prevImg = e => {
     let urls = [];
     this.props.pictures.forEach(item => {
-      urls.push('http://qiniu.daosuan.net/' + item.picture)
+      urls.push('http://qiniu.fmg.net.cn/' + item.picture)
     });
     Taro.previewImage({
       urls,
-      current: 'http://qiniu.daosuan.net/' + e.target.dataset.url
+      current: 'http://qiniu.fmg.net.cn/' + e.target.dataset.url
     })
   }
 
@@ -26,7 +26,7 @@ class MySwiper extends Component {
         <Swiper>
           {pictures.map((item, index) =>
             <SwiperItem key={index} onClick={this.prevImg}>
-              <Image mode='scaleToFill' src={'http://qiniu.daosuan.net/' + item.picture} data-url={item.picture}></Image>
+              <Image mode='scaleToFill' src={'http://qiniu.fmg.net.cn/' + item.picture} data-url={item.picture}></Image>
             </SwiperItem>
           )}
         </Swiper>

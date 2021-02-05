@@ -22,7 +22,7 @@ class Comment extends Component {
     return (
       <View className='comment' onClick={this.toComments}>
         <View className='title'>买家评论（{commentList.length}）</View>
-        <Image className='more' src='http://qiniu.daosuan.net/picture-1598883365000' />
+        <Image className='more' src='http://qiniu.fmg.net.cn/picture-1598883365000' />
         <View className='comment_list'>
           {pictureList.length > 0
             ? pictureList.map((pic, index) => (
